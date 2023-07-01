@@ -1,0 +1,11 @@
+---
+name:  jtTranspose
+title: Transpose the dataset
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Transpose the dataset
+      type:  Preformatted
+
+...

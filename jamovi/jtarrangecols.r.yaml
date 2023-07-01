@@ -1,0 +1,11 @@
+---
+name:  jtArrangeCols
+title: Change the order of variables
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Change the order of variables
+      type:  Preformatted
+
+...

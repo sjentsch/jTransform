@@ -47,3 +47,25 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# renv library
+renv/library/
+renv/staging/
+
+# jamovi options js
+jamovi/ui/*.options.js
+
+# files created during build
+build/
+build*/
+inst/doc/
+*.jmo
+
+# other files / folders
+temp/
+man/
+npm-debug.log
+tests/testthat/Rplots.pdf
+
+# custom attributes on MacOS 
+.DS_Store

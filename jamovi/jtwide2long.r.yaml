@@ -1,0 +1,11 @@
+---
+name:  jtWide2Long
+title: Transform dataset from wide to long
+jrs:   '1.1'
+
+items:
+    - name:  text
+      title: Transform dataset from wide to long
+      type:  Preformatted
+
+...

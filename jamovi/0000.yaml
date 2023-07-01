@@ -1,0 +1,43 @@
+---
+title: What the Package Does (Title Case)
+name: jTransform
+version: 0.0.0
+jms: '1.0'
+authors:
+  - Who wrote it
+maintainer: The package maintainer <yourself@somewhere.net>
+date: '1970-01-01'
+type: R
+description: >-
+  More about what it does (maybe more than one line) Use four spaces when
+  indenting paragraphs within the Description.
+analyses:
+  - title: Sort data set
+    name: jtSort
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Sort data set
+  - title: Transform dataset from long to wide
+    name: jtLong2Wide
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Transform dataset from long to wide
+  - title: Transform dataset from wide to long
+    name: jtWide2Long
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Transform dataset from wide to long
+  - title: Change the order of variables
+    name: jtArrangeCols
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Change the order of variables
+  - title: Transpose the dataset
+    name: jtTranspose
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Transpose the dataset
+usesNative: true
+minApp: 1.0.8
+
+...
