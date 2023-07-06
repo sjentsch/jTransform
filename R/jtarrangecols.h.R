@@ -6,10 +6,10 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            varOrd = NULL,
+            fleOut = "Dataset_arrCol.omv",
+            btnOut = NULL,
+            blnOut = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -17,47 +17,50 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
-                options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+            private$..varOrd <- jmvcore::OptionVariables$new(
+                "varOrd",
+                varOrd,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..fleOut <- jmvcore::OptionString$new(
+                "fleOut",
+                fleOut,
+                default="Dataset_arrCol.omv")
+            private$..btnOut <- jmvcore::OptionString$new(
+                "btnOut",
+                btnOut,
+                hidden=TRUE)
+            private$..blnOut <- jmvcore::OptionBool$new(
+                "blnOut",
+                blnOut,
+                default=FALSE,
+                hidden=TRUE)
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..varOrd)
+            self$.addOption(private$..fleOut)
+            self$.addOption(private$..btnOut)
+            self$.addOption(private$..blnOut)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        varOrd = function() private$..varOrd$value,
+        fleOut = function() private$..fleOut$value,
+        btnOut = function() private$..btnOut$value,
+        blnOut = function() private$..blnOut$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..varOrd = NA,
+        ..fleOut = NA,
+        ..btnOut = NA,
+        ..blnOut = NA)
 )
 
 jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtArrangeColsResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        txtInf = function() private$.items[["txtInf"]],
+        txtOut = function() private$.items[["txtOut"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -65,10 +68,16 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 options=options,
                 name="",
                 title="Change the order of variables")
-            self$add(jmvcore::Preformatted$new(
+            self$add(jmvcore::Html$new(
                 options=options,
-                name="text",
-                title="Change the order of variables"))}))
+                name="txtInf",
+                title="",
+                content="<b>This function re-arranges the order of columns in a jamovi data file.</b><br> Please assign the variables in their desired order to \u201CDesired order of variables\u201D. Please note that variables that you leave in the variable list to the left are not included in the output file.<br> Under \u201COutput file\u201D, you can adjust the name of the output file. You may also add a directory to the file name. If no path is given, the output file is stored in the home directory.<br>\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="txtOut",
+                title="",
+                content=""))}))
 
 jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtArrangeColsBase",
@@ -86,49 +95,56 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Change the order of variables
 #'
-#' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' Change the order of variables
+#'
+#' @examples
+#' # the function is a wrapper for jmvReadWrite::arrange_cols_omv
+#' # please use that function when using R
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'
+#' @param data the data as a data frame
+#' @param varOrd a vector of strings containing the desired order of variables
+#'   in the output data set
+#' @param fleOut a string with name and location of the output file (the home
+#'   directory, if no directory is given)
+#' @param btnOut .
+#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
 #' @export
 jtArrangeCols <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    varOrd,
+    fleOut = "Dataset_arrCol.omv",
+    btnOut,
+    blnOut = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtArrangeCols requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(varOrd)) varOrd <- jmvcore::resolveQuo(jmvcore::enquo(varOrd))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(varOrd), varOrd, NULL))
 
 
     options <- jtArrangeColsOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        varOrd = varOrd,
+        fleOut = fleOut,
+        btnOut = btnOut,
+        blnOut = blnOut)
 
     analysis <- jtArrangeColsClass$new(
         options = options,

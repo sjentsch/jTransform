@@ -5,32 +5,117 @@ menuGroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
+description:
+    main: Transform dataset from wide to long
+    R:
+        dontrun: false
+        usage: |
+            # the function is a wrapper for jmvReadWrite::wide2long_omv
+            # please use that function when using R
+            # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
 options:
     - name: data
       type: Data
+      description:
+          R: the data as a data frame
 
-    - name: dep
-      title: Dependent Variable
-      type: Variable
-
-    - name: group
-      title: Grouping Variable
-      type: Variable
-
-    - name: alt
-      title: Alternative hypothesis
+    - name: chcEnI
+      title: Variables are to be...
       type: List
       options:
-        - title: Not equal
-          name:  notequal
-        - title: One greater
-          name:  onegreater
-        - title: Two greater
-          name:  twogreater
-      default: notequal
+        - title: excluded
+          name:  excluded
+        - title: included
+          name:  included
+      default: excluded
+      description:
+          R: >
+            a string (either "excluded" [default] or "included") determining
+            how to treat the entries of the variable list (varEnI)
 
-    - name: varEq
-      title: Assume equal variances
+    - name: varEnI
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+      description:
+          R: >
+            if chcEnI is "excluded" and this variable list is empty (i.e., no
+            variables are excluded) then all variables are included; if chcEnI
+            is "excluded" and this variable list contains entries then varID,
+            varTme and all variables except those on this list are included;
+            if chcEnI is "included" then varID, varTme and all variables on
+            this list are included
+
+    - name: varID
+      title: Variables that identify the same unit
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+      description:
+          R: >
+            a vector of strings containing the names of the variables that
+            identify the same unit (e.g., an individual, a group, an
+            organization, etc.)
+
+    - name: varTme
+      title: Prefix
+      type: String
+      default: "cond"
+      description:
+          R: >
+            variable that (is created to) differentiates multiple records from
+            the same unit (e.g., an individual, a group, an organization,
+            etc.); default: "cond", a counter is added for each time-varying
+            part
+
+    - name: varSep
+      title: "Separator"
+      type: String
+      default: "_"
+      description:
+          R: >
+            separator character between the fixed and the time-varying part of
+            the variable name ("VAR1_1", "VAR1_2"; default: "_")
+
+    - name: varOrd
+      title: How are the variables organized?
+      type: List
+      options:
+        - title: time steps are adjacent
+          name:  times
+        - title: variables are adjacent
+          name:  variables
+      default: times
+      description:
+          R: >
+            a string (either "times" or "vars") describing how variables /
+            columns are organized: for "times" (default) the steps of the time
+            varying variable are adjacent, for "vars" the steps of the original
+            columns in the long dataset
+
+    - name: fleOut
+      title: "Output file:"
+      type: String
+      default: "Dataset_wide.omv"
+      description:
+          R: >
+            a string with name and location of the output file (the home
+            directory, if no directory is given)
+
+    - name: btnOut
+      type: String
+      hidden: true
+
+    - name: blnOut
       type: Bool
-      default: true
+      default: false
+      hidden: true      
+
 ...

@@ -5,32 +5,82 @@ menuGroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
+description:
+    main: Sort data set
+    R:
+        dontrun: false
+        usage: |
+            # the function is a wrapper for jmvReadWrite::sort_omv
+            # please use that function when using R
+            # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
 options:
     - name: data
       type: Data
+      description:
+          R: the data as a data frame
 
-    - name: dep
-      title: Dependent Variable
-      type: Variable
+    - name: varSrt
+      title: Variable(s) to sort after
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+      description:
+          ui: the variables to sort `data` with
+          R: a vector of strings naming the variables to sort `data` with
 
-    - name: group
-      title: Grouping Variable
-      type: Variable
+    - name: varAll
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#     hidden: true
 
-    - name: alt
-      title: Alternative hypothesis
-      type: List
-      options:
-        - title: Not equal
-          name:  notequal
-        - title: One greater
-          name:  onegreater
-        - title: Two greater
-          name:  twogreater
-      default: notequal
+    - name: ordSrt
+      type: Array
+      items: (varSrt)
+      default: null
+      template:
+        type: Group
+        elements:
+          - name: var
+            type: Variable
+            content: $key
+          - name: order
+            type: List
+            options:
+              - name: ascend
+                title: ascending
+              - name: descend
+                title: descending
+      description:
+          ui: >
+            the order with which variables are sorted
+          R: >
+            a list of lists specifying the order with which variables are
+            sorted, either `'ascending'`, or `'descending'`
 
-    - name: varEq
-      title: Assume equal variances
+    - name: fleOut
+      title: "Output file:"
+      type: String
+      default: "Dataset_sort.omv"
+      description:
+          R: >
+            a string with name and location of the output file (the home
+            directory, if no directory is given)
+
+    - name: btnOut
+      type: String
+      hidden: true
+
+    - name: blnOut
       type: Bool
-      default: true
+      default: false
+      hidden: true      
+
 ...

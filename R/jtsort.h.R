@@ -6,10 +6,12 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            varSrt = NULL,
+            varAll = NULL,
+            ordSrt = NULL,
+            fleOut = "Dataset_sort.omv",
+            btnOut = NULL,
+            blnOut = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -17,47 +19,82 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
-                options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+            private$..varSrt <- jmvcore::OptionVariables$new(
+                "varSrt",
+                varSrt,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..varAll <- jmvcore::OptionVariables$new(
+                "varAll",
+                varAll,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..ordSrt <- jmvcore::OptionArray$new(
+                "ordSrt",
+                ordSrt,
+                items="(varSrt)",
+                default=NULL,
+                template=jmvcore::OptionGroup$new(
+                    "ordSrt",
+                    NULL,
+                    elements=list(
+                        jmvcore::OptionVariable$new(
+                            "var",
+                            NULL,
+                            content="$key"),
+                        jmvcore::OptionList$new(
+                            "order",
+                            NULL,
+                            options=list(
+                                "ascend",
+                                "descend")))))
+            private$..fleOut <- jmvcore::OptionString$new(
+                "fleOut",
+                fleOut,
+                default="Dataset_sort.omv")
+            private$..btnOut <- jmvcore::OptionString$new(
+                "btnOut",
+                btnOut,
+                hidden=TRUE)
+            private$..blnOut <- jmvcore::OptionBool$new(
+                "blnOut",
+                blnOut,
+                default=FALSE,
+                hidden=TRUE)
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..varSrt)
+            self$.addOption(private$..varAll)
+            self$.addOption(private$..ordSrt)
+            self$.addOption(private$..fleOut)
+            self$.addOption(private$..btnOut)
+            self$.addOption(private$..blnOut)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        varSrt = function() private$..varSrt$value,
+        varAll = function() private$..varAll$value,
+        ordSrt = function() private$..ordSrt$value,
+        fleOut = function() private$..fleOut$value,
+        btnOut = function() private$..btnOut$value,
+        blnOut = function() private$..blnOut$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..varSrt = NA,
+        ..varAll = NA,
+        ..ordSrt = NA,
+        ..fleOut = NA,
+        ..btnOut = NA,
+        ..blnOut = NA)
 )
 
 jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSortResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        txtInf = function() private$.items[["txtInf"]],
+        txtOut = function() private$.items[["txtOut"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -65,10 +102,16 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Sort data set")
-            self$add(jmvcore::Preformatted$new(
+            self$add(jmvcore::Html$new(
                 options=options,
-                name="text",
-                title="Sort data set"))}))
+                name="txtInf",
+                title="",
+                content="<b>This function sorts a dataset after one or more variables.</b><br> Please assign one or more variables to the variable box \u201CVariable(s) to be sorted after\u201D. The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age).<br> Variables are sorted in ascending order (as default), but you can change the order if desired.<br> Currently, the remaining variables (i.e., those not to be used for sorting but to be included into the output file) have to be assigned to \u201CFurther variables in the output\u201D.<br> Under \u201COutput file\u201D, you can adjust the name of the output file. You may also add a directory to the file name. If no path is given, the output file is stored in the home directory.<br>\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="txtOut",
+                title="",
+                content=""))}))
 
 jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSortBase",
@@ -86,49 +129,65 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Sort data set
 #'
-#' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' Sort data set
+#'
+#' @examples
+#' # the function is a wrapper for jmvReadWrite::sort_omv
+#' # please use that function when using R
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'
+#' @param data the data as a data frame
+#' @param varSrt a vector of strings naming the variables to sort \code{data}
+#'   with
+#' @param varAll .
+#' @param ordSrt a list of lists specifying the order with which variables are
+#'   sorted, either \code{'ascending'}, or \code{'descending'}
+#' @param fleOut a string with name and location of the output file (the home
+#'   directory, if no directory is given)
+#' @param btnOut .
+#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
 #' @export
 jtSort <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    varSrt,
+    varAll,
+    ordSrt = NULL,
+    fleOut = "Dataset_sort.omv",
+    btnOut,
+    blnOut = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtSort requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(varSrt)) varSrt <- jmvcore::resolveQuo(jmvcore::enquo(varSrt))
+    if ( ! missing(varAll)) varAll <- jmvcore::resolveQuo(jmvcore::enquo(varAll))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(varSrt), varSrt, NULL),
+            `if`( ! missing(varAll), varAll, NULL))
 
 
     options <- jtSortOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        varSrt = varSrt,
+        varAll = varAll,
+        ordSrt = ordSrt,
+        fleOut = fleOut,
+        btnOut = btnOut,
+        blnOut = blnOut)
 
     analysis <- jtSortClass$new(
         options = options,

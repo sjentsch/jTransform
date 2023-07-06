@@ -2,33 +2,92 @@ title: Transform dataset from wide to long
 name: jtWide2Long
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
+
+events:
+  creating: './main::rstBtn'
+  loaded:   './main::rstBtn'
+  update:   './main::rstBtn'
+
 children:
   - type: VariableSupplier
+    permitted:
+      - numeric
+      - factor
+      - id
     persistentItems: false
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Dependent Variable
+        label: Variables that identify the same unit
         children:
           - type: VariablesListBox
-            name: dep
-            maxItemCount: 1
+            name: varID
             isTarget: true
-      - type: TargetLayoutBox
-        label: Grouping Variable
-        children:
-          - type: VariablesListBox
-            name: group
-            maxItemCount: 1
-            isTarget: true
+            events:
+              change: './main::rstBtn'
+          - type: TextBox
+            name: varTme
+            format: string
+            events:
+              change: './main::rstBtn'
+
   - type: LayoutBox
+    style: inline
+    stretchFactor: 1
     margin: large
+    children:
+      - type: TextBox
+        name: fleOut
+        format: string
+        stretchFactor: 5
+        margin: large
+        events:
+          change: './main::rstBtn'
+      - type: CustomControl
+        stretchFactor: 1
+        name: btnOut
+        horizontalAlignment: right
+        verticalAlignment: center
+        events:
+          creating: './main::crtBtn'
+
+  - type: LayoutBox
+    style: inline
     children:
       - type: ComboBox
-        name: alt
-  - type: LayoutBox
+        name: varOrd
+        margin: large
+        events:
+          change: './main::rstBtn'
+      - type: TextBox
+        name: varSep
+        format: string
+        margin: large
+        horizontalAlignment: right
+        events:
+          change: './main::rstBtn'
+
+  - type: CollapseBox
+    label: Variables to be excluded / included
+    collapsed: true
     margin: large
+    stretchFactor: 1
     children:
-      - type: CheckBox
-        name: varEq
+      - type: VariableSupplier
+        persistentItems: false
+        stretchFactor: 1
+        children:
+          - type: TargetLayoutBox
+            children:
+              - type: VariablesListBox
+                name: varEnI
+                isTarget: true
+                events:
+                  change: './main::rstBtn'
+              - type: ComboBox
+                name: chcEnI
+                horizontalAlignment: right
+                events:
+                  change: './main::rstBtn'
+

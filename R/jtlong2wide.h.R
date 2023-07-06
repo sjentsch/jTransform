@@ -6,10 +6,15 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            varID = NULL,
+            varTme = NULL,
+            chcEnI = "excluded",
+            varEnI = NULL,
+            varSep = "_",
+            varOrd = "times",
+            fleOut = "Dataset_wide.omv",
+            btnOut = NULL,
+            blnOut = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -17,47 +22,97 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
+            private$..varID <- jmvcore::OptionVariables$new(
+                "varID",
+                varID,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..varTme <- jmvcore::OptionVariables$new(
+                "varTme",
+                varTme,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..chcEnI <- jmvcore::OptionList$new(
+                "chcEnI",
+                chcEnI,
                 options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+                    "excluded",
+                    "included"),
+                default="excluded")
+            private$..varEnI <- jmvcore::OptionVariables$new(
+                "varEnI",
+                varEnI,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..varSep <- jmvcore::OptionString$new(
+                "varSep",
+                varSep,
+                default="_")
+            private$..varOrd <- jmvcore::OptionList$new(
+                "varOrd",
+                varOrd,
+                options=list(
+                    "times",
+                    "variables"),
+                default="times")
+            private$..fleOut <- jmvcore::OptionString$new(
+                "fleOut",
+                fleOut,
+                default="Dataset_wide.omv")
+            private$..btnOut <- jmvcore::OptionString$new(
+                "btnOut",
+                btnOut,
+                hidden=TRUE)
+            private$..blnOut <- jmvcore::OptionBool$new(
+                "blnOut",
+                blnOut,
+                default=FALSE,
+                hidden=TRUE)
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..varID)
+            self$.addOption(private$..varTme)
+            self$.addOption(private$..chcEnI)
+            self$.addOption(private$..varEnI)
+            self$.addOption(private$..varSep)
+            self$.addOption(private$..varOrd)
+            self$.addOption(private$..fleOut)
+            self$.addOption(private$..btnOut)
+            self$.addOption(private$..blnOut)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        varID = function() private$..varID$value,
+        varTme = function() private$..varTme$value,
+        chcEnI = function() private$..chcEnI$value,
+        varEnI = function() private$..varEnI$value,
+        varSep = function() private$..varSep$value,
+        varOrd = function() private$..varOrd$value,
+        fleOut = function() private$..fleOut$value,
+        btnOut = function() private$..btnOut$value,
+        blnOut = function() private$..blnOut$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..varID = NA,
+        ..varTme = NA,
+        ..chcEnI = NA,
+        ..varEnI = NA,
+        ..varSep = NA,
+        ..varOrd = NA,
+        ..fleOut = NA,
+        ..btnOut = NA,
+        ..blnOut = NA)
 )
 
 jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtLong2WideResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        txtInf = function() private$.items[["txtInf"]],
+        txtOut = function() private$.items[["txtOut"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -65,10 +120,16 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="",
                 title="Transform dataset from long to wide")
-            self$add(jmvcore::Preformatted$new(
+            self$add(jmvcore::Html$new(
                 options=options,
-                name="text",
-                title="Transform dataset from long to wide"))}))
+                name="txtInf",
+                title="",
+                content="Trial text"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="txtOut",
+                title="",
+                content=""))}))
 
 jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtLong2WideBase",
@@ -86,49 +147,88 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Transform dataset from long to wide
 #'
-#' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' Transform dataset from long to wide
+#'
+#' @examples
+#' # the function is a wrapper for jmvReadWrite::long2wide_omv
+#' # please use that function when using R
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'
+#' @param data the data as a data frame
+#' @param varID a vector of strings containing the names of the variables that
+#'   identify the same unit (e.g., an individual, a group, an organization,
+#'   etc.)
+#' @param varTme a vector of strings containing the names of the variables
+#'   that differentiate multiple records from the same unit (e.g., an
+#'   individual, a group, an organization, etc.)
+#' @param chcEnI a string (either "excluded" [default] or "included")
+#'   determining how to treat the entries of the variable list (varEnI)
+#' @param varEnI if chcEnI is "excluded" and this variable list is empty
+#'   (i.e., no variables are excluded) then all variables are included; if
+#'   chcEnI is "excluded" and this variable list contains entries then varID,
+#'   varTme and all variables except those on this list are included; if chcEnI
+#'   is "included" then varID, varTme and all variables on this list are
+#'   included
+#' @param varSep separator character between the fixed and the time-varying
+#'   part of the variable name ("VAR1_1", "VAR1_2"; default: "_")
+#' @param varOrd a string (either "times" or "vars") describing how variables
+#'   / columns are organized: for "times" (default) the steps of the time
+#'   varying variable are adjacent, for "vars" the steps of the original columns
+#'   in the long dataset
+#' @param fleOut a string with name and location of the output file (the home
+#'   directory, if no directory is given)
+#' @param btnOut .
+#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
 #' @export
 jtLong2Wide <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    varID,
+    varTme,
+    chcEnI = "excluded",
+    varEnI,
+    varSep = "_",
+    varOrd = "times",
+    fleOut = "Dataset_wide.omv",
+    btnOut,
+    blnOut = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtLong2Wide requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(varID)) varID <- jmvcore::resolveQuo(jmvcore::enquo(varID))
+    if ( ! missing(varTme)) varTme <- jmvcore::resolveQuo(jmvcore::enquo(varTme))
+    if ( ! missing(varEnI)) varEnI <- jmvcore::resolveQuo(jmvcore::enquo(varEnI))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(varID), varID, NULL),
+            `if`( ! missing(varTme), varTme, NULL),
+            `if`( ! missing(varEnI), varEnI, NULL))
 
 
     options <- jtLong2WideOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        varID = varID,
+        varTme = varTme,
+        chcEnI = chcEnI,
+        varEnI = varEnI,
+        varSep = varSep,
+        varOrd = varOrd,
+        fleOut = fleOut,
+        btnOut = btnOut,
+        blnOut = blnOut)
 
     analysis <- jtLong2WideClass$new(
         options = options,

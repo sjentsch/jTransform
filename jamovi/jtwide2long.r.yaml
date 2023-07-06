@@ -4,8 +4,14 @@ title: Transform dataset from wide to long
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Transform dataset from wide to long
-      type:  Preformatted
+    - name:  txtInf
+      title: ''
+      type:  Html
+      content: Trial text   
+
+    - name:  txtOut
+      title: ''
+      type:  Html
+      content: ''
 
 ...

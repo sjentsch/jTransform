@@ -6,10 +6,10 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            dep = NULL,
-            group = NULL,
-            alt = "notequal",
-            varEq = TRUE, ...) {
+            varCol = NULL,
+            fleOut = "Dataset_xpsd.omv",
+            btnOut = NULL,
+            blnOut = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -17,47 +17,50 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 requiresData=TRUE,
                 ...)
 
-            private$..dep <- jmvcore::OptionVariable$new(
-                "dep",
-                dep)
-            private$..group <- jmvcore::OptionVariable$new(
-                "group",
-                group)
-            private$..alt <- jmvcore::OptionList$new(
-                "alt",
-                alt,
-                options=list(
-                    "notequal",
-                    "onegreater",
-                    "twogreater"),
-                default="notequal")
-            private$..varEq <- jmvcore::OptionBool$new(
-                "varEq",
-                varEq,
-                default=TRUE)
+            private$..varCol <- jmvcore::OptionVariables$new(
+                "varCol",
+                varCol,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..fleOut <- jmvcore::OptionString$new(
+                "fleOut",
+                fleOut,
+                default="Dataset_xpsd.omv")
+            private$..btnOut <- jmvcore::OptionString$new(
+                "btnOut",
+                btnOut,
+                hidden=TRUE)
+            private$..blnOut <- jmvcore::OptionBool$new(
+                "blnOut",
+                blnOut,
+                default=FALSE,
+                hidden=TRUE)
 
-            self$.addOption(private$..dep)
-            self$.addOption(private$..group)
-            self$.addOption(private$..alt)
-            self$.addOption(private$..varEq)
+            self$.addOption(private$..varCol)
+            self$.addOption(private$..fleOut)
+            self$.addOption(private$..btnOut)
+            self$.addOption(private$..blnOut)
         }),
     active = list(
-        dep = function() private$..dep$value,
-        group = function() private$..group$value,
-        alt = function() private$..alt$value,
-        varEq = function() private$..varEq$value),
+        varCol = function() private$..varCol$value,
+        fleOut = function() private$..fleOut$value,
+        btnOut = function() private$..btnOut$value,
+        blnOut = function() private$..blnOut$value),
     private = list(
-        ..dep = NA,
-        ..group = NA,
-        ..alt = NA,
-        ..varEq = NA)
+        ..varCol = NA,
+        ..fleOut = NA,
+        ..btnOut = NA,
+        ..blnOut = NA)
 )
 
 jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtTransposeResults",
     inherit = jmvcore::Group,
     active = list(
-        text = function() private$.items[["text"]]),
+        txtInf = function() private$.items[["txtInf"]],
+        txtOut = function() private$.items[["txtOut"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -65,10 +68,16 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="",
                 title="Transpose the dataset")
-            self$add(jmvcore::Preformatted$new(
+            self$add(jmvcore::Html$new(
                 options=options,
-                name="text",
-                title="Transpose the dataset"))}))
+                name="txtInf",
+                title="",
+                content="Trial text"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="txtOut",
+                title="",
+                content=""))}))
 
 jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtTransposeBase",
@@ -86,49 +95,56 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Transpose the dataset
 #'
-#' 
-#' @param data .
-#' @param dep .
-#' @param group .
-#' @param alt .
-#' @param varEq .
+#' Transpose the dataset
+#'
+#' @examples
+#' # the function is a wrapper for jmvReadWrite::transpose_omv
+#' # please use that function when using R
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'
+#' @param data the data as a data frame
+#' @param varCol a vector of strings containing the names of the variables in
+#'   the output data frame
+#' @param fleOut a string with name and location of the output file (the home
+#'   directory, if no directory is given)
+#' @param btnOut .
+#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$text} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
 #' @export
 jtTranspose <- function(
     data,
-    dep,
-    group,
-    alt = "notequal",
-    varEq = TRUE) {
+    varCol,
+    fleOut = "Dataset_xpsd.omv",
+    btnOut,
+    blnOut = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtTranspose requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(dep)) dep <- jmvcore::resolveQuo(jmvcore::enquo(dep))
-    if ( ! missing(group)) group <- jmvcore::resolveQuo(jmvcore::enquo(group))
+    if ( ! missing(varCol)) varCol <- jmvcore::resolveQuo(jmvcore::enquo(varCol))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(dep), dep, NULL),
-            `if`( ! missing(group), group, NULL))
+            `if`( ! missing(varCol), varCol, NULL))
 
 
     options <- jtTransposeOptions$new(
-        dep = dep,
-        group = group,
-        alt = alt,
-        varEq = varEq)
+        varCol = varCol,
+        fleOut = fleOut,
+        btnOut = btnOut,
+        blnOut = blnOut)
 
     analysis <- jtTransposeClass$new(
         options = options,

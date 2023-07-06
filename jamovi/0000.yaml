@@ -1,12 +1,12 @@
 ---
-title: What the Package Does (Title Case)
+title: jamovi-Module To Carry Out Data Set Transformations
 name: jTransform
-version: 0.0.0
+version: 0.1.0
 jms: '1.0'
 authors:
-  - Who wrote it
-maintainer: The package maintainer <yourself@somewhere.net>
-date: '1970-01-01'
+  - Sebastian Jentschke
+maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
+date: '2023-07-03'
 type: R
 description: >-
   More about what it does (maybe more than one line) Use four spaces when
@@ -17,26 +17,31 @@ analyses:
     ns: jTransform
     menuGroup: jTransform
     menuTitle: Sort data set
-  - title: Transform dataset from long to wide
-    name: jtLong2Wide
-    ns: jTransform
-    menuGroup: jTransform
-    menuTitle: Transform dataset from long to wide
-  - title: Transform dataset from wide to long
-    name: jtWide2Long
-    ns: jTransform
-    menuGroup: jTransform
-    menuTitle: Transform dataset from wide to long
+    description: Sort data set
   - title: Change the order of variables
     name: jtArrangeCols
     ns: jTransform
     menuGroup: jTransform
     menuTitle: Change the order of variables
+    description: Change the order of variables
+  - title: Transform dataset from long to wide
+    name: jtLong2Wide
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Transform dataset from long to wide
+    description: Transform dataset from long to wide
+  - title: Transform dataset from wide to long
+    name: jtWide2Long
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Transform dataset from wide to long
+    description: Transform dataset from wide to long
   - title: Transpose the dataset
     name: jtTranspose
     ns: jTransform
     menuGroup: jTransform
     menuTitle: Transpose the dataset
+    description: Transpose the dataset
 usesNative: true
 minApp: 1.0.8
 

@@ -4,8 +4,14 @@ title: Transpose the dataset
 jrs:   '1.1'
 
 items:
-    - name:  text
-      title: Transpose the dataset
-      type:  Preformatted
+    - name:  txtInf
+      title: ''
+      type:  Html
+      content: Trial text   
+
+    - name:  txtOut
+      title: ''
+      type:  Html
+      content: ''
 
 ...

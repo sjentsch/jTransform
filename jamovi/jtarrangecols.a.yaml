@@ -5,32 +5,51 @@ menuGroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
+description:
+    main: Change the order of variables
+    R:
+        dontrun: false
+        usage: |
+            # the function is a wrapper for jmvReadWrite::arrange_cols_omv
+            # please use that function when using R
+            # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
 options:
     - name: data
       type: Data
+      description:
+          R: the data as a data frame
 
-    - name: dep
-      title: Dependent Variable
-      type: Variable
+    - name: varOrd
+      title: Desired order of variable(s)
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+      description:
+          R: >
+            a vector of strings containing the desired order of variables in
+            the output data set
 
-    - name: group
-      title: Grouping Variable
-      type: Variable
+    - name: fleOut
+      title: "Output file:"
+      type: String
+      default: "Dataset_arrCol.omv"
+      description:
+          R: >
+            a string with name and location of the output file (the home
+            directory, if no directory is given)
 
-    - name: alt
-      title: Alternative hypothesis
-      type: List
-      options:
-        - title: Not equal
-          name:  notequal
-        - title: One greater
-          name:  onegreater
-        - title: Two greater
-          name:  twogreater
-      default: notequal
+    - name: btnOut
+      type: String
+      hidden: true
 
-    - name: varEq
-      title: Assume equal variances
+    - name: blnOut
       type: Bool
-      default: true
+      default: false
+      hidden: true      
+
 ...
