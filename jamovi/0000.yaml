@@ -12,12 +12,6 @@ description: >-
   More about what it does (maybe more than one line) Use four spaces when
   indenting paragraphs within the Description.
 analyses:
-  - title: Sort data set
-    name: jtSort
-    ns: jTransform
-    menuGroup: jTransform
-    menuTitle: Sort data set
-    description: Sort data set
   - title: Change the order of variables
     name: jtArrangeCols
     ns: jTransform
@@ -36,12 +30,22 @@ analyses:
     menuGroup: jTransform
     menuTitle: Transform dataset from wide to long
     description: Transform dataset from wide to long
+  - title: Sort data set
+    name: jtSort
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: Sort data set
+    description: Sort data set
   - title: Transpose the dataset
     name: jtTranspose
     ns: jTransform
     menuGroup: jTransform
     menuTitle: Transpose the dataset
     description: Transpose the dataset
+datasets:
+  - name: example4Transpose
+    path: example4Transpose.csv
+    description: A data set to demonstrate jtTranspose
 usesNative: true
 minApp: 1.0.8
 
