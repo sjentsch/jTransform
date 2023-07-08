@@ -3,7 +3,7 @@
 
 module.exports = {
 
-    varSrt_changed: function(ui) {
+    varSrt_Chg: function(ui) {
         var varVal = utils.clone(ui.varSrt.value(), []);
         var ordVal = utils.clone(ui.ordSrt.value(), []);
         var ordUpd = [];
@@ -23,6 +23,18 @@ module.exports = {
 
         if (ordVal === null ? 0 : ordVal.length !== ordUpd.length || JSON.stringify(ordVal) !== JSON.stringify(ordUpd))
             ui.ordSrt.setValue(ordUpd);
+    },
+
+    varOth: function(ui) {
+/*  varAll = async(ui) => {
+
+        let columns = [];
+        columns = await this.getColumnNames();
+        columns.diff(ui.varSrt.value());
+        
+        /* const dif2 = ["test1", "test2","test3","test4","test5","test6"].diff(["test1","test2","test3","test4"]); */
+
+/*      ui.varOth.setValue(columns); */
     }
 
 };
