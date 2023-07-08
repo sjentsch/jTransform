@@ -25,7 +25,7 @@ children:
             name: varOrd
             isTarget: true
             events:
-              change: './main::rstBtn'
+              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
@@ -38,7 +38,7 @@ children:
         stretchFactor: 5
         margin: large
         events:
-          change: './main::rstBtn'
+          changing: './main::rstBtn'
       - type: CustomControl
         stretchFactor: 1
         name: btnOut

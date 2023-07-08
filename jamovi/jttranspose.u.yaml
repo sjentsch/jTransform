@@ -6,8 +6,8 @@ compilerMode: tame
 
 events:
   creating: './main::rstBtn'
-  loaded:   './main::rstBtn'
-  update:   './main::rstBtn'
+  loaded: './main::rstBtn'
+  update: './main::rstBtn'
 
 children:
   - type: VariableSupplier
@@ -16,16 +16,25 @@ children:
       - factor
       - id
     persistentItems: false
+# needs to be changed to true with hiding varOth and filling it using js
+#   persistentItems: true
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Variable with variable names of the output
+        label: Variable with column names for the output
         children:
           - type: VariablesListBox
-            name: varCol
+            name: varNme
+            maxItemCount: 1
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Variables to be transposed
+        children:
+          - type: VariablesListBox
+            name: varOth
             isTarget: true
             events:
-              change: './main::rstBtn'
+              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
@@ -38,7 +47,7 @@ children:
         stretchFactor: 5
         margin: large
         events:
-          change: './main::rstBtn'
+          changing: './main::rstBtn'
       - type: CustomControl
         stretchFactor: 1
         name: btnOut
@@ -46,4 +55,3 @@ children:
         verticalAlignment: center
         events:
           creating: './main::crtBtn'
-

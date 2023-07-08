@@ -42,6 +42,11 @@ analyses:
     menuGroup: jTransform
     menuTitle: Transpose the dataset
     description: Transpose the dataset
+  - title: jtMergeCols
+    name: jtMergeCols
+    ns: jTransform
+    menuGroup: jTransform
+    menuTitle: jtMergeCols
 datasets:
   - name: example4Transpose
     path: example4Transpose.csv

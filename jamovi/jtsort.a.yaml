@@ -33,7 +33,7 @@ options:
           ui: the variables to sort `data` with
           R: a vector of strings naming the variables to sort `data` with
 
-    - name: varAll
+    - name: varOth
       type: Variables
       permitted:
         - numeric

@@ -22,17 +22,31 @@ options:
       description:
           R: the data as a data frame
 
-    - name: varCol
-      title: Variable with the column names of the output 
+    - name: varNme
+      title: Variable with column names for the output 
+      type: Variable
+      permitted:
+        - numeric
+        - factor
+        - id
+      required: false
+      description:
+          R: >
+            a string containing the variable containing the variable names
+            for the output data frame
+
+    - name: varOth
+      title: Variables to be transposed
       type: Variables
       permitted:
         - numeric
         - factor
         - id
+      required: true
       description:
           R: >
-            a vector of strings containing the names of the variables in the
-            output data frame
+            a vector of strings containing the names of the variables to be
+            transposed
 
     - name: fleOut
       title: "Output file:"
@@ -50,6 +64,6 @@ options:
     - name: blnOut
       type: Bool
       default: false
-      hidden: true      
+      hidden: true
 
 ...

@@ -13,12 +13,12 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
             fleOut <- chkFle(self$options$fleOut)
             
             # add column attributes (measureType and dataTye)
-            crrDta <- addAtt(self$data)
+            crrDta <- jmvReadWrite:::jmvAtt(self$data)
 
             txtOut <- c()
             # assemble and run jmvReadWrite command
             eval(parse(text = "jmvReadWrite::arrange_cols_omv(crrDta, fleOut = fleOut, varOrd = self$options$varOrd)"))
-            txtOut <- c(txtOut, sprintf("%s successfully written to %s.", basename(fleOut), dirname(fleOut)))
+            txtOut <- c(txtOut, sprintf("<b>%s</b> successfully written to %s.", basename(fleOut), dirname(fleOut)))
             
             self$results$txtOut$setContent(paste(txtOut, collapse = "<br>\n"))
 
