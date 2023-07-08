@@ -16,9 +16,9 @@ const events = {
     },
 
     crtFlC: function(ui) {
-        let $contents = ui.fleInp.$el;
-        $contents.append(`<input type="file" accept=".omv,.csv,.sav,.xpt,.sas7bdat,.dta,.jasp" multiple/>`);
-        $contents.on("click", () =>  { ui.fleInp.setValue(""); });
+        let $contents = ui.fleChs.$el;
+        $contents.append(`<input type="file" if = "" accept=".omv,.csv,.sav,.xpt,.sas7bdat,.dta,.jasp" multiple/>`);
+        $contents.on("change", function(e) =>  { if (e.target.files[0]) { ui.fleInp.setValue(e.target.files.name); } });
         ui.fleInp.setValue("");
     }
 
