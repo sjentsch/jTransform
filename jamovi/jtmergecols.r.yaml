@@ -1,0 +1,28 @@
+---
+name: jtMergeCols
+title: Add columns (from another data set)
+jrs:   '1.1'
+
+items:
+    - name:  txtInf
+      title: ''
+      type:  Html
+      content: >
+        <b>This function adds columns another jamovi data file(s) to the
+        current data set (matching them by an ID variable).</b><br>
+        <br>
+        There are four different types of merging operations: The first option
+        keeps all cases (but columns in the resulting data set may be empty if
+        they did not contain values in same input data sets), the second option
+        keeps only those cases where all datasets contain the same value in the
+        matching variable, for "left" all cases from the first data set in
+        fleInp are kept (whereas cases that are only contained in input data
+        set two or higher are dropped), for "right" all cases from the second
+        (or any higher) data set in fleInp are kept.<br>
+
+    - name:  txtOut
+      title: ''
+      type:  Html
+      content: ''
+
+...

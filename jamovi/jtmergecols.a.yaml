@@ -1,0 +1,83 @@
+---
+name:  jtMergeCols
+title: Add columns (from another data set)
+menuGroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+description:
+    main: Add columns (from another data set)
+    R:
+        dontrun: false
+        usage: |
+            # the function is a wrapper for jmvReadWrite::merge_cols_omv
+            # please use that function from R
+            # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
+options:
+    - name: data
+      type: Data
+      description:
+          R: the data as a data frame
+
+    - name: varBy
+      title: Variable(s) to match the data sets by
+      type: Variable
+      permitted:
+        - numeric
+        - factor
+        - id
+
+    - name: varOth
+      title: Further variables in the output
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#     hidden: true
+
+    - name: fleChs
+      type: String
+      hidden: true
+
+    - name: fleInp
+      type: String
+      default: ""
+#     hidden: true      
+
+    - name: typMrg
+      title: Type of merging operation
+      type: List
+      options:
+        - title: Keeps all cases (rows)
+          name:  outer
+        - title: Keeps only rows contained in all merged data sets
+          name:  inner
+        - title: Keeps all cases from the currently opened data set
+          name:  left
+        - title: Keeps all cases from the to be added data sets
+          name:  right
+      default: outer
+
+    - name: fleOut
+      title: "Output file:"
+      type: String
+      default: "Dataset_sort.omv"
+      description:
+          R: >
+            a string with name and location of the output file (the home
+            directory, if no directory is given)
+
+    - name: btnOut
+      type: String
+      hidden: true
+
+    - name: blnOut
+      type: Bool
+      default: false
+      hidden: true      
+
+...

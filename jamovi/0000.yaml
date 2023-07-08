@@ -42,7 +42,7 @@ analyses:
     menuGroup: jTransform
     menuTitle: Transpose the dataset
     description: Transpose the dataset
-  - title: jtMergeCols
+  - title: Add columns (from another data set)
     name: jtMergeCols
     ns: jTransform
     menuGroup: jTransform
