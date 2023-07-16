@@ -19,18 +19,54 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Variables that identify the same unit
         children:
           - type: VariablesListBox
             name: varID
+            height: small
             isTarget: true
             events:
-              change: './main::rstBtn'
-          - type: TextBox
-            name: varTme
-            format: string
+              changing: './main::rstBtn'
+      - type: TargetLayoutBox
+        children:
+          - type: VariablesListBox
+            name: varLst
+            isTarget: true
             events:
-              change: './main::rstBtn'
+              changing: './main::rstBtn'
+      - type: TargetLayoutBox
+        children:
+          - type: VariablesListBox
+            name: varExc
+            height: small
+            isTarget: true
+            events:
+              changing: './main::rstBtn'
+
+  - type: LayoutBox
+    style: inline
+    margin: large
+    children:
+      - type: TextBox
+        name: varTme
+        format: string
+        margin: large
+        horizontalAlignment: left
+        events:
+          changing: './main::rstBtn'
+      - type: TextBox
+        name: varSep
+        format: string
+        width: small
+        margin: large
+        events:
+          changing: './main::rstBtn'
+      - type: TextBox
+        name: excLvl
+        format: string
+        margin: large
+        horizontalAlignment: right
+        events:
+          changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
@@ -43,7 +79,7 @@ children:
         stretchFactor: 5
         margin: large
         events:
-          change: './main::rstBtn'
+          changing: './main::rstBtn'
       - type: CustomControl
         stretchFactor: 1
         name: btnOut
@@ -51,43 +87,3 @@ children:
         verticalAlignment: center
         events:
           creating: './main::crtBtn'
-
-  - type: LayoutBox
-    style: inline
-    children:
-      - type: ComboBox
-        name: varOrd
-        margin: large
-        events:
-          change: './main::rstBtn'
-      - type: TextBox
-        name: varSep
-        format: string
-        margin: large
-        horizontalAlignment: right
-        events:
-          change: './main::rstBtn'
-
-  - type: CollapseBox
-    label: Variables to be excluded / included
-    collapsed: true
-    margin: large
-    stretchFactor: 1
-    children:
-      - type: VariableSupplier
-        persistentItems: false
-        stretchFactor: 1
-        children:
-          - type: TargetLayoutBox
-            children:
-              - type: VariablesListBox
-                name: varEnI
-                isTarget: true
-                events:
-                  change: './main::rstBtn'
-              - type: ComboBox
-                name: chcEnI
-                horizontalAlignment: right
-                events:
-                  change: './main::rstBtn'
-
