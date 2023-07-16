@@ -42,15 +42,22 @@ analyses:
     menuGroup: jTransform
     menuTitle: Transpose the dataset
     description: Transpose the dataset
-  - title: Add columns (from another data set)
+  - title: Add columns (from other data sets)
     name: jtMergeCols
     ns: jTransform
     menuGroup: jTransform
-    menuTitle: jtMergeCols
+    menuTitle: Add columns (from other data sets)
+    description: Add columns (from other data sets)
 datasets:
-  - name: example4Transpose
-    path: example4Transpose.csv
+  - name: example4jtTranspose
+    path: example4jtTranspose.omv
     description: A data set to demonstrate jtTranspose
+  - name: example4jtLong2Wide
+    path: example4jtLong2Wide.omv
+    description: A data set to demonstrate jtLong2Wide
+  - name: example4jtWide2Long
+    path: example4jtWide2Long.omv
+    description: A data set to demonstrate jtWide2Long
 usesNative: true
 minApp: 1.0.8
 

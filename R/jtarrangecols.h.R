@@ -109,11 +109,9 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' # please use that function when using R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'
-#' @param data the data as a data frame
-#' @param varOrd a vector of strings containing the desired order of variables
-#'   in the output data set
-#' @param fleOut a string with name and location of the output file (the home
-#'   directory, if no directory is given)
+#' @param data .
+#' @param varOrd .
+#' @param fleOut .
 #' @param btnOut .
 #' @param blnOut .
 #' @return A results object containing:

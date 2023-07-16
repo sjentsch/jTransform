@@ -8,10 +8,11 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varID = NULL,
             varTme = NULL,
-            chcEnI = "excluded",
-            varEnI = NULL,
-            varSep = "_",
+            varTgt = NULL,
+            varExc = NULL,
             varOrd = "times",
+            varAgg = "mean",
+            varSep = "_",
             fleOut = "Dataset_wide.omv",
             btnOut = NULL,
             blnOut = FALSE, ...) {
@@ -36,31 +37,38 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "numeric",
                     "factor",
                     "id"))
-            private$..chcEnI <- jmvcore::OptionList$new(
-                "chcEnI",
-                chcEnI,
-                options=list(
-                    "excluded",
-                    "included"),
-                default="excluded")
-            private$..varEnI <- jmvcore::OptionVariables$new(
-                "varEnI",
-                varEnI,
+            private$..varTgt <- jmvcore::OptionVariables$new(
+                "varTgt",
+                varTgt,
                 permitted=list(
                     "numeric",
                     "factor",
                     "id"))
-            private$..varSep <- jmvcore::OptionString$new(
-                "varSep",
-                varSep,
-                default="_")
+            private$..varExc <- jmvcore::OptionVariables$new(
+                "varExc",
+                varExc,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
             private$..varOrd <- jmvcore::OptionList$new(
                 "varOrd",
                 varOrd,
                 options=list(
                     "times",
-                    "variables"),
+                    "vars"),
                 default="times")
+            private$..varAgg <- jmvcore::OptionList$new(
+                "varAgg",
+                varAgg,
+                options=list(
+                    "mean",
+                    "first"),
+                default="mean")
+            private$..varSep <- jmvcore::OptionString$new(
+                "varSep",
+                varSep,
+                default="_")
             private$..fleOut <- jmvcore::OptionString$new(
                 "fleOut",
                 fleOut,
@@ -77,10 +85,11 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
 
             self$.addOption(private$..varID)
             self$.addOption(private$..varTme)
-            self$.addOption(private$..chcEnI)
-            self$.addOption(private$..varEnI)
-            self$.addOption(private$..varSep)
+            self$.addOption(private$..varTgt)
+            self$.addOption(private$..varExc)
             self$.addOption(private$..varOrd)
+            self$.addOption(private$..varAgg)
+            self$.addOption(private$..varSep)
             self$.addOption(private$..fleOut)
             self$.addOption(private$..btnOut)
             self$.addOption(private$..blnOut)
@@ -88,20 +97,22 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     active = list(
         varID = function() private$..varID$value,
         varTme = function() private$..varTme$value,
-        chcEnI = function() private$..chcEnI$value,
-        varEnI = function() private$..varEnI$value,
-        varSep = function() private$..varSep$value,
+        varTgt = function() private$..varTgt$value,
+        varExc = function() private$..varExc$value,
         varOrd = function() private$..varOrd$value,
+        varAgg = function() private$..varAgg$value,
+        varSep = function() private$..varSep$value,
         fleOut = function() private$..fleOut$value,
         btnOut = function() private$..btnOut$value,
         blnOut = function() private$..blnOut$value),
     private = list(
         ..varID = NA,
         ..varTme = NA,
-        ..chcEnI = NA,
-        ..varEnI = NA,
-        ..varSep = NA,
+        ..varTgt = NA,
+        ..varExc = NA,
         ..varOrd = NA,
+        ..varAgg = NA,
+        ..varSep = NA,
         ..fleOut = NA,
         ..btnOut = NA,
         ..blnOut = NA)
@@ -124,7 +135,7 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="txtInf",
                 title="",
-                content="Trial text"))
+                content="<b>This function transforms a dataset from long to wide format.</b><br> \u201CVariables that identify the same unit\u201D is an ID variable (e.g., a participant code). This code needs to be unique (i.e., there can't be two participants, or other units, with the same ID).<br> \u201CVariables that differentiate within an unit\u201D are the so-called time-varying variables, i.e., variables that are originally are arranged in rows and whose steps shall be transformed into columns (a new column created for the each combination of a target variable, e.g., reaction time [RT], with each experimental condition [cond\u2026] leading RT_cond1, RT_cond2, \u2026). There can be several time-varying variables (e.g., several facors in an experiment, each represented by a different column in the input data set).<br> \u201CVariables to be transformed\u201D are the so-called target variables, i.e., variables that exist as one column in the input data set and are going to be transformed / combined with each step of a time-varying variable resulting in as many columns as there are steps (e.g., would reaction time be one column in the input data set, resulting in as many columns as there are different combinations of time-varying variables in the output data set; if there are 3 steps on the first time-varying variable and 4 steps on the second, this would result in 12 columns in the output data set).<br> \u201CVariables NOT to be transformed\u201D are variables that \u201Ccharacterize\u201D a participant (or another unit), often also called between-subjects variables, e.g., age or sex. However, they are not unique (and thus no ID variables; there may be several participant with the same age or sex).<br> \u201CVariable organization in the output\u201D determines how the variables are to be arranged in the output data set. This is only relevant if there is more than one target variable (e.g., if you want to transform both correct responses and reaction times). \u201CVariables are adjacent\u201D keeps the target variables in adjacent columns (for the example above, correct responses and reaction time would be adjacent, and on the higher levels, the steps of the time-varying variable / conditions would vary). \u201CTime steps are adjacent\u201D would produce a block where all steps of the time-varying variable / conditions for the first target variable are adjacent, followed by a block of all conditions of the second variable and so on.<br> \u201CHow to accumulate?\u201D determines how different rows may be accumulated. The setting does not apply if there is only one occurence / row for each possible combination of conditions. Let's assume that you ran an experiment with two factors: the experimental condition and which repetition of that condition an entry represents. For evaluation, you want to drop the repetition (you thus only assign the variable representing the condition to \u201CVariables that differentiate within an unit\u201D. The setting determines whether the mean of the repetitions shall be taken or the first occurence of each condition.<br> \u201CSeparator\u201D defines which character(s) should be placed between the target variable and the steps of the time-varying variable / conditions when assembling the variable names (e.g., VAR_COND).<br> Under \u201COutput file\u201D, you can adjust the name of the output file. You may also add a directory to the file name. If no path is given, the output file is stored in the home directory.<br><br> The principle of the transformation from long to wide can perhaps easiest be understood by looking at example4jtLong2Wide from the Data Library of this module. It contains results from a Stroop experiment (in long format) with seven variables: ID (identifies the participant), sex (of the participant), cond (of the Stroop experiment; congruent, neutral, and incongruent), colour (in which the target word was written), rep (which repetition of a particular cond-colour-combination this entry is), rspCrr (whether the participant named the correct colour), and rspTme (the reaction time for that response). These variables have to be assigned to the following fields: ID to \u201CVariables that identify the same unit\u201D (it is an unique identifier of each participant); cond, colour and rep to \u201CVariables that differentiate within an unit\u201D (representing all possible combinations of experimental conditions); rspCrr and rspTme to \u201CVariables to be transformed\u201D (these measurements are repeated for each combination of conditions, and in a result we want a column each for all possible combinations of those variables and the experimental conditions, i.e., within-subject variables); and finally sex to \u201CVariables NOT to be transformed\u201D (since sex is a between-subjects variable that doesn't change between experimental condition, we thus only need one column in the output; however, it is not unique and thus not suited as ID variable).\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtOut",
@@ -161,29 +172,15 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' # please use that function when using R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'
-#' @param data the data as a data frame
-#' @param varID a vector of strings containing the names of the variables that
-#'   identify the same unit (e.g., an individual, a group, an organization,
-#'   etc.)
-#' @param varTme a vector of strings containing the names of the variables
-#'   that differentiate multiple records from the same unit (e.g., an
-#'   individual, a group, an organization, etc.)
-#' @param chcEnI a string (either "excluded" [default] or "included")
-#'   determining how to treat the entries of the variable list (varEnI)
-#' @param varEnI if chcEnI is "excluded" and this variable list is empty
-#'   (i.e., no variables are excluded) then all variables are included; if
-#'   chcEnI is "excluded" and this variable list contains entries then varID,
-#'   varTme and all variables except those on this list are included; if chcEnI
-#'   is "included" then varID, varTme and all variables on this list are
-#'   included
-#' @param varSep separator character between the fixed and the time-varying
-#'   part of the variable name ("VAR1_1", "VAR1_2"; default: "_")
-#' @param varOrd a string (either "times" or "vars") describing how variables
-#'   / columns are organized: for "times" (default) the steps of the time
-#'   varying variable are adjacent, for "vars" the steps of the original columns
-#'   in the long dataset
-#' @param fleOut a string with name and location of the output file (the home
-#'   directory, if no directory is given)
+#' @param data .
+#' @param varID .
+#' @param varTme .
+#' @param varTgt .
+#' @param varExc .
+#' @param varOrd .
+#' @param varAgg .
+#' @param varSep .
+#' @param fleOut .
 #' @param btnOut .
 #' @param blnOut .
 #' @return A results object containing:
@@ -197,10 +194,11 @@ jtLong2Wide <- function(
     data,
     varID,
     varTme,
-    chcEnI = "excluded",
-    varEnI,
-    varSep = "_",
+    varTgt,
+    varExc,
     varOrd = "times",
+    varAgg = "mean",
+    varSep = "_",
     fleOut = "Dataset_wide.omv",
     btnOut,
     blnOut = FALSE) {
@@ -210,22 +208,25 @@ jtLong2Wide <- function(
 
     if ( ! missing(varID)) varID <- jmvcore::resolveQuo(jmvcore::enquo(varID))
     if ( ! missing(varTme)) varTme <- jmvcore::resolveQuo(jmvcore::enquo(varTme))
-    if ( ! missing(varEnI)) varEnI <- jmvcore::resolveQuo(jmvcore::enquo(varEnI))
+    if ( ! missing(varTgt)) varTgt <- jmvcore::resolveQuo(jmvcore::enquo(varTgt))
+    if ( ! missing(varExc)) varExc <- jmvcore::resolveQuo(jmvcore::enquo(varExc))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(varID), varID, NULL),
             `if`( ! missing(varTme), varTme, NULL),
-            `if`( ! missing(varEnI), varEnI, NULL))
+            `if`( ! missing(varTgt), varTgt, NULL),
+            `if`( ! missing(varExc), varExc, NULL))
 
 
     options <- jtLong2WideOptions$new(
         varID = varID,
         varTme = varTme,
-        chcEnI = chcEnI,
-        varEnI = varEnI,
-        varSep = varSep,
+        varTgt = varTgt,
+        varExc = varExc,
         varOrd = varOrd,
+        varAgg = varAgg,
+        varSep = varSep,
         fleOut = fleOut,
         btnOut = btnOut,
         blnOut = blnOut)

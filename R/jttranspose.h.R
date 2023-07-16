@@ -45,7 +45,8 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             private$..blnOut <- jmvcore::OptionBool$new(
                 "blnOut",
                 blnOut,
-                default=FALSE)
+                default=FALSE,
+                hidden=TRUE)
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
