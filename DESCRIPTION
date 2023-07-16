@@ -1,11 +1,24 @@
 Package: jTransform
+Title: "jTransform: Helper Functions for Common Transformations of Data Sets"
 Type: Package
-Title: jamovi-Module To Carry Out Data Set Transformations
 Version: 0.1.0
-Author: Sebastian Jentschke
+Author: Sebastian Jentschke [aut, cre]
+    (<https://orcid.org/0000-0003-2576-5432>)
+Authors@R:
+    person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432"))
 Maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Description:
+    jTransform carries out common data management tasks and transformations of
+    data sets. It includes functions to change the order of / re-arrange
+    variables in a data set, transforming a data set from long to wide or from
+    wide to long, transposing a data set (make rows into columns and columns
+    into rows), sorting a data set after one or more variable, and adding
+    columns from one or more additional data sets to the currently opened data
+    set.
+    jTransform calls functions from the R-package `jmvReadWrite`,
+    (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to
+    these functions via a graphical user interface (without the need to use
+    a R command line for these transformations).
 License: AGPL-3
 Encoding: UTF-8
 LazyData: true
