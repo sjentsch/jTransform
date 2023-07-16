@@ -1,12 +1,12 @@
 ---
 name:  jtMergeCols
-title: Add columns (from another data set)
+title: Add columns (from other data sets)
 menuGroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Add columns (from another data set)
+    main: Add columns (from other data sets)
     R:
         dontrun: false
         usage: |
@@ -24,7 +24,7 @@ options:
 
     - name: varBy
       title: Variable(s) to match the data sets by
-      type: Variable
+      type: Variables
       permitted:
         - numeric
         - factor
@@ -39,14 +39,14 @@ options:
         - id
 #     hidden: true
 
+    - name: fleInp
+      type: String
+      title: "Data set(s) to add:"
+      default: ""
+
     - name: fleChs
       type: String
       hidden: true
-
-    - name: fleInp
-      type: String
-      default: ""
-#     hidden: true      
 
     - name: typMrg
       title: Type of merging operation
@@ -65,11 +65,7 @@ options:
     - name: fleOut
       title: "Output file:"
       type: String
-      default: "Dataset_sort.omv"
-      description:
-          R: >
-            a string with name and location of the output file (the home
-            directory, if no directory is given)
+      default: "Dataset_mergeCols.omv"
 
     - name: btnOut
       type: String
