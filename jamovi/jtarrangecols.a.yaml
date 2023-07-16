@@ -19,8 +19,8 @@ completeWhenFilled: true
 options:
     - name: data
       type: Data
-      description:
-          R: the data as a data frame
+#     description:
+#         R: the data as a data frame
 
     - name: varOrd
       title: Desired order of variable(s)
@@ -29,19 +29,19 @@ options:
         - numeric
         - factor
         - id
-      description:
-          R: >
-            a vector of strings containing the desired order of variables in
-            the output data set
+#     description:
+#         R: >
+#           a vector of strings containing the desired order of variables in
+#           the output data set
 
     - name: fleOut
       title: "Output file:"
       type: String
       default: "Dataset_arrCol.omv"
-      description:
-          R: >
-            a string with name and location of the output file (the home
-            directory, if no directory is given)
+#     description:
+#         R: >
+#           a string with name and location of the output file (the home
+#           directory, if no directory is given)
 
     - name: btnOut
       type: String
