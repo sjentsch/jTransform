@@ -7,6 +7,7 @@ items:
     - name:  txtInf
       title: ''
       type:  Html
+      refs: jmvReadWrite
       content: >
         <b>This function re-arranges the order of columns in a jamovi data
         file.</b><br>

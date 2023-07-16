@@ -7,6 +7,7 @@ items:
     - name:  txtInf
       title: ''
       type:  Html
+      refs: jmvReadWrite
       content: >
         <b>This function sorts a dataset after one or more variables.</b><br>
         Please assign one or more variables to the variable box “Variable(s) to

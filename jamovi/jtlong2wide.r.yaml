@@ -7,6 +7,7 @@ items:
     - name:  txtInf
       title: ''
       type:  Html
+      refs: jmvReadWrite
       content: >
         <b>This function transforms a dataset from long to wide format.</b><br>
         “Variables that identify the same unit” is an ID variable (e.g., a
