@@ -4,16 +4,16 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     private = list(
 
         .run = function() {
-            # if not blnOut -> exit
+            # reset the output text, if not blnOut -> exit
+            self$results$txtOut$setContent("")
+            Sys.sleep(0.01)
             if (!self$options$blnOut) return()
-
-            # assemble (add directory - HOME on *nix, USERPROFILE on Windows -
-            # if necessary) and check existence of the directory, that the file
-            # doesn't exist already and the correct file extension
-            fleOut <- chkFle(self$options$fleOut)
 
             # add column attributes (measureType and dataTye)
             crrDta <- jmvReadWrite:::jmvAtt(self$data)
+
+            # assemble and check output file name (chkFle in utils.R)
+            fleOut <- chkFle(self$options$fleOut)
             
             txtOut <- c()
             # issue a warning if only a very small number of variables is in the output dataset
@@ -28,10 +28,14 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                           sapply(self$options$ordSrt, "[[", "var"))
 
             # assemble and run jmvReadWrite command
-            eval(parse(text = "jmvReadWrite::sort_omv(dtaInp = crrDta, fleOut = fleOut, varSrt = varSrt)"))
-            txtOut <- c(txtOut, sprintf("<b>%s</b> successfully written to %s.", basename(fleOut), dirname(fleOut)))
-            
-            self$results$txtOut$setContent(paste(txtOut, collapse = "<br>\n"))
+            jmvReadWrite::sort_omv(dtaInp = crrDta, fleOut = fleOut, varSrt = varSrt)
+            while (!file.exists(fleOut)) Sys.sleep(0.01)
+            if (file.exists(fleOut)) {
+                txtOut <- c(txtOut, sprintf("<b>%s</b> successfully written to %s.", basename(fleOut), dirname(fleOut)))
+                self$results$txtOut$setContent(paste(txtOut, collapse = "<br>\n"))
+            } else {
+                jmvcore::reject(.("Error when writing '{file}' to '{dir}'."), code = '', file = basename(fleOut), dir = dirname(fleOut))
+            }
 
         })
 )
