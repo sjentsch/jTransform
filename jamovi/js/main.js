@@ -12,13 +12,15 @@ const events = {
     },
 
     rstFlC: function(ui) {
+        ui.blnOut.setValue(false);
         ui.fleInp.setValue("");
     },
 
     crtFlC: function(ui) {
         let $contents = ui.fleChs.$el;
-        $contents.append(`<input type="file" if = "" accept=".omv,.csv,.sav,.xpt,.sas7bdat,.dta,.jasp" multiple/>`);
-        $contents.on("change", function(e) =>  { if (e.target.files[0]) { ui.fleInp.setValue(e.target.files.name); } });
+        $contents.append(`<label><input type="file" multiple accept=".omv,.csv,.sav,.xpt,.sas7bdat,.dta,.jasp" style="display: none;" /><span style="font-size: 1.2em;">Browse...</span></label>`);
+        $contents.on("change", (f) =>  { var crrTxt = ""; for (const crrFle of f.target.files) { crrTxt += `${crrFle.name}; `; }; ui.fleInp.setValue(crrTxt.slice(0, -2)); });
+        ui.blnOut.setValue(false);
         ui.fleInp.setValue("");
     }
 
