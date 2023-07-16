@@ -106,6 +106,7 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="txtInf",
                 title="",
+                refs="jmvReadWrite",
                 content="<b>This function sorts a dataset after one or more variables.</b><br> Please assign one or more variables to the variable box \u201CVariable(s) to be sorted after\u201D. The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age).<br> Variables are sorted in ascending order (as default), but you can change the order if desired.<br> Currently, the remaining variables (i.e., those not to be used for sorting but to be included into the output file) have to be assigned to \u201CFurther variables in the output\u201D.<br> Under \u201COutput file\u201D, you can adjust the name of the output file. You may also add a directory to the file name. If no path is given, the output file is stored in the home directory.<br>\n"))
             self$add(jmvcore::Html$new(
                 options=options,

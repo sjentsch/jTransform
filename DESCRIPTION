@@ -1,5 +1,5 @@
 Package: jTransform
-Title: "jTransform: Helper Functions for Common Transformations of Data Sets"
+Title: "jTransform: Functions for Common Data Set Transformations"
 Type: Package
 Version: 0.1.0
 Author: Sebastian Jentschke [aut, cre]

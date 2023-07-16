@@ -8,11 +8,4 @@
         `year`=2023, 
         `title`="jmvReadWrite: Read and Write jamovi Files (.omv)", 
         `publisher`="[R package]. Retrieved from https://cran.r-project.org/package=jmvReadWrite", 
-        `url`="https://cran.r-project.org/package=jmvReadWrite"), 
-    `R`=list(
-        `type`="software", 
-        `author`="R Core Team", 
-        `year`=2018, 
-        `title`="A Language and Envionment for Statistical Computing", 
-        `publisher`="[Computer software]. Retrieved from https://cran.r-project.org/", 
-        `url`="https://cran.r-project.org/"))
+        `url`="https://cran.r-project.org/package=jmvReadWrite"))

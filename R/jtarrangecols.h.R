@@ -72,6 +72,7 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 options=options,
                 name="txtInf",
                 title="",
+                refs="jmvReadWrite",
                 content="<b>This function re-arranges the order of columns in a jamovi data file.</b><br> Please assign the variables in their desired order to \u201CDesired order of variables\u201D. Please note that variables that you leave in the variable list to the left are not included in the output file.<br> Under \u201COutput file\u201D, you can adjust the name of the output file. You may also add a directory to the file name. If no path is given, the output file is stored in the home directory.<br>\n"))
             self$add(jmvcore::Html$new(
                 options=options,

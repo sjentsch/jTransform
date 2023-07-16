@@ -1,5 +1,5 @@
 ---
-title: "jTransform: Helper Functions for Common Transformations of Data Sets"
+title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
 version: 0.1.0
 jms: '1.0'
@@ -9,17 +9,12 @@ maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 date: '2023-07-16'
 type: R
 description: >-
-    jTransform carries out common data management tasks and transformations of
-    data sets. It includes functions to change the order of / re-arrange
-    variables in a data set, transforming a data set from long to wide or from
-    wide to long, transposing a data set (make rows into columns and columns
-    into rows), sorting a data set after one or more variable, and adding
-    columns from one or more additional data sets to the currently opened data
-    set.
-    jTransform calls functions from the R-package `jmvReadWrite`,
-    (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to
-    these functions via a graphical user interface (without the need to use
-    a R command line for these transformations).
+  jTransform carries out common data management tasks and transformations of
+  data sets. It includes functions to change the order of / re-arrange variables
+  in a data set, transforming a data set from long to wide or from wide to long,
+  transposing a data set (make rows into columns and columns into rows), sorting
+  a data set after one or more variable, and adding columns from one or more
+  additional data sets to the currently opened data set.
 analyses:
   - title: Change the order of variables
     name: jtArrangeCols
