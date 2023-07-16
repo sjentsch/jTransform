@@ -19,8 +19,8 @@ completeWhenFilled: true
 options:
     - name: data
       type: Data
-      description:
-          R: the data as a data frame
+#      description:
+#          R: the data as a data frame
 
     - name: varID
       title: Variables that identify the same unit 
@@ -29,11 +29,11 @@ options:
         - numeric
         - factor
         - id
-      description:
-          R: >
-            a vector of strings containing the names of the variables that
-            identify the same unit (e.g., an individual, a group, an
-            organization, etc.)
+#      description:
+#          R: >
+#            a vector of strings containing the names of the variables that
+#            identify the same unit (e.g., an individual, a group, an
+#            organization, etc.)
 
     - name: varTme
       title: Variables that differentiate within an unit
@@ -42,74 +42,71 @@ options:
         - numeric
         - factor
         - id
-      description:
-          R: >
-            a vector of strings containing the names of the variables that
-            differentiate multiple records from the same unit (e.g., an
-            individual, a group, an organization, etc.)
-
-    - name: chcEnI
-      title: Variables are to be...
-      type: List
-      options:
-        - title: excluded
-          name:  excluded
-        - title: included
-          name:  included
-      default: excluded
-      description:
-          R: >
-            a string (either "excluded" [default] or "included") determining
-            how to treat the entries of the variable list (varEnI)
-
-    - name: varEnI
+#      description:
+#          R: >
+#            a vector of strings containing the names of the variables that
+#            differentiate multiple records from the same unit (e.g., an
+#            individual, a group, an organization, etc.)
+            
+    - name: varTgt
+      title: Variables to be transformed
       type: Variables
       permitted:
         - numeric
         - factor
         - id
-      description:
-          R: >
-            if chcEnI is "excluded" and this variable list is empty (i.e., no
-            variables are excluded) then all variables are included; if chcEnI
-            is "excluded" and this variable list contains entries then varID,
-            varTme and all variables except those on this list are included;
-            if chcEnI is "included" then varID, varTme and all variables on
-            this list are included
-            
+
+    - name: varExc
+      title: Variables NOT to be transformed
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+
+    - name: varOrd
+      title: Variable organization in the output
+      type: List
+      options:
+        - title: Time steps are adjacent
+          name:  times
+        - title: Variables are adjacent
+          name:  vars
+      default: times
+#      description:
+#          R: >
+#            a string (either "times" or "vars") describing how variables /
+#            columns are organized: for "times" (default) the steps of the time
+#            varying variable are adjacent, for "vars" the steps of the original
+#            columns in the long dataset
+
+    - name: varAgg
+      title: How to accumulate?
+      type: List
+      options:
+        - title: Calculate mean
+          name:  mean
+        - title: First occurence
+          name:  first
+      default: mean
+
     - name: varSep
       title: "Separator"
       type: String
       default: "_"
-      description:
-          R: >
-            separator character between the fixed and the time-varying part of
-            the variable name ("VAR1_1", "VAR1_2"; default: "_")
-
-    - name: varOrd
-      title: How are the variables organized?
-      type: List
-      options:
-        - title: time steps are adjacent
-          name:  times
-        - title: variables are adjacent
-          name:  variables
-      default: times
-      description:
-          R: >
-            a string (either "times" or "vars") describing how variables /
-            columns are organized: for "times" (default) the steps of the time
-            varying variable are adjacent, for "vars" the steps of the original
-            columns in the long dataset
+#      description:
+#          R: >
+#            separator character between the fixed and the time-varying part of
+#            the variable name ("VAR1_1", "VAR1_2"; default: "_")
 
     - name: fleOut
       title: "Output file:"
       type: String
       default: "Dataset_wide.omv"
-      description:
-          R: >
-            a string with name and location of the output file (the home
-            directory, if no directory is given)
+#      description:
+#          R: >
+#            a string with name and location of the output file (the home
+#            directory, if no directory is given)
 
     - name: btnOut
       type: String
