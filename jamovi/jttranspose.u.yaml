@@ -27,6 +27,8 @@ children:
             name: varNme
             maxItemCount: 1
             isTarget: true
+            events:
+              changing: './main::rstBtn'
       - type: TargetLayoutBox
         label: Variables to be transposed
         children:

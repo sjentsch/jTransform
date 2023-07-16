@@ -19,7 +19,6 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Desired order of variables
         children:
           - type: VariablesListBox
             name: varOrd
@@ -46,4 +45,3 @@ children:
         verticalAlignment: center
         events:
           creating: './main::crtBtn'
-

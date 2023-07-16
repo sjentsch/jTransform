@@ -8,7 +8,7 @@ events:
   creating: './main::rstBtn'
   loaded:   './main::rstBtn'
   update:   './main::rstBtn'
-# remoteDataChanged: './jtsort::onDataChanged'
+# remoteDataChanged: './jtsort::data_changed'
 
 children:
   - type: VariableSupplier

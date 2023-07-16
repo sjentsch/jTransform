@@ -1,34 +1,93 @@
-title: jtMergeCols
+title: Add columns (from other data sets)
 name: jtMergeCols
 jus: '3.0'
 stage: 0
-compilerMode: aggressive
+compilerMode: tame
+
+events:
+  creating: './main::rstFlC'
+  loaded:   './main::rstFlC'
+  update:   './main::rstFlC'
+# remoteDataChanged: './main::dtaChg'
+
 children:
   - type: VariableSupplier
+    permitted:
+      - numeric
+      - factor
+      - id
     persistentItems: false
+# needs to be changed to true with hiding varOth and filling it using js
+#   persistentItems: true
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Dependent Variable
+        label: Variable(s) to match the data sets by
         children:
           - type: VariablesListBox
-            name: dep
-            maxItemCount: 1
+            name: varBy
+            height: small
             isTarget: true
+            events:
+              changing: './main::rstBtn'
       - type: TargetLayoutBox
-        label: Grouping Variable
+        label: Further variables in the output
         children:
           - type: VariablesListBox
-            name: group
-            maxItemCount: 1
+            name: varOth
             isTarget: true
+            events:
+              changing: './main::rstBtn'
+
+  - type: LayoutBox
+    style: inline
+    stretchFactor: 1
+    margin: large
+    children:
+      - type: TextBox
+        name: fleInp
+        format: string
+        stretchFactor: 6
+        margin: large
+        events:
+          changing: './main::rstBtn'
+      - type: CustomControl
+        stretchFactor: 1
+        name: fleChs
+        horizontalAlignment: right
+        verticalAlignment: center
+        events:
+          creating: './main::crtFlC'
+
   - type: LayoutBox
     margin: large
     children:
       - type: ComboBox
-        name: alt
+        name: typMrg
+        stretchFactor: 1
+        events:
+          changing: './main::rstBtn'
+
   - type: LayoutBox
+    style: inline
+    stretchFactor: 1
     margin: large
     children:
-      - type: CheckBox
-        name: varEq
+      - type: TextBox
+        name: fleOut
+        format: string
+        stretchFactor: 6
+        margin: large
+        events:
+          changing: './main::rstBtn'
+      - type: CustomControl
+        stretchFactor: 1
+        name: btnOut
+        horizontalAlignment: right
+        verticalAlignment: center
+        events:
+          creating: './main::crtBtn'
+
+
+
+
