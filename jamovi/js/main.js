@@ -5,9 +5,13 @@ const events = {
     },
 
     crtBtn: function(ui) {
+        // I am using a (bit of a) trick here: typically, blnOut would be false (it is created with false and whenever
+        // an UI element is changed, it is reset to false, however, if it is true after an error, the function under
+        // click toggles it (i.e., first resets it to false and afterwards sets it to true again; this ensures that
+        // run() is called (if the value isn't changed, it isn't)
         let $contents = ui.btnOut.$el;
         $contents.append(`<input type="submit" value="WRITE" style="font-size: 1.2em; font-weight: bold">`);
-        $contents.on("click", () => { ui.blnOut.setValue(true); });
+        $contents.on("click", () => { ui.blnOut.setValue(!ui.blnOut.value()); });
         ui.blnOut.setValue(false);
     },
 

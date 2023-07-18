@@ -19,11 +19,6 @@ chkFle <- function(fleNme = "") {
 #       jmvcore::reject(.("'{file}' doesn't have the correct file extension (.omv)."), file = basename(fleNme))
         jmvcore::reject("'{file}' doesn't have the correct file extension (.omv).", file = basename(fleNme))
     }
-    # check existence of the output file
-    if (file.exists(fleNme)) {
-#       jmvcore::reject(.("'{file}' already exists. Change the name of the output file or remove the exisiting file."), file = basename(fleNme))
-        jmvcore::reject("'{file}' already exists. Change the name of the output file or remove the exisiting file.", file = basename(fleNme))
-    }
 
     fleNme
 }
