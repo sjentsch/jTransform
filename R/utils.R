@@ -20,3 +20,26 @@ splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
     }
     strOut
 }
+
+crtPvw <- function(dtaFrm = NULL) {
+    sprintf("Variables in the output file:\n%s\n\n%s\n\n(max. 10 rows and max. 8 variables are shown)\n",
+      paste(splStr(names(dtaFrm), maxLng = 81), collapse = ",\n"),
+      paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), seq(min(8, dim(dtaFrm)[2]))], row.names = FALSE)), collapse="\n"))
+}
+
+fndFlI <- function(fleInp = c()) {
+    for (i in seq_along(fleInp)) {
+        if (dirname(fleInp[i]) == ".") {
+            tmpFlN <- list.files(path = hmeDir(), pattern = fleInp[i], recursive = TRUE);
+            if (length(tmpFlN) == 1) {
+                fleInp[i] <- file.path(hmeDir(), tmpFlN);
+            } else {
+                jmvcore::reject("'{file}' either doesn't exists or exists more than once in the home directory. Please add the exact path under “Input file(s)”.", file = fleInp[i])
+            }
+        } else {
+            fleInp[i] <- jmvReadWrite:::nrmFle(fleInp[i]);
+        }
+    }
+
+    fleInp
+}
