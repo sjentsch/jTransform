@@ -70,18 +70,9 @@ children:
 
   - type: LayoutBox
     style: inline
-    stretchFactor: 1
     margin: large
     children:
-      - type: TextBox
-        name: fleOut
-        format: string
-        stretchFactor: 6
-        margin: large
-        events:
-          changing: './main::rstBtn'
       - type: CustomControl
-        stretchFactor: 1
         name: btnOut
         horizontalAlignment: right
         verticalAlignment: center

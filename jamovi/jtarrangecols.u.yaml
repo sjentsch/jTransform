@@ -3,10 +3,12 @@ name: jtArrangeCols
 jus: '3.0'
 stage: 0
 compilerMode: tame
+
 events:
   creating: './main::rstBtn'
   loaded: './main::rstBtn'
   update: './main::rstBtn'
+
 children:
   - type: VariableSupplier
     permitted:
@@ -23,13 +25,12 @@ children:
             isTarget: true
             events:
               changing: './main::rstBtn'
+
   - type: LayoutBox
     style: inline
-    stretchFactor: 1
     margin: large
     children:
       - type: CustomControl
-        stretchFactor: 1
         name: btnOut
         horizontalAlignment: right
         verticalAlignment: center
