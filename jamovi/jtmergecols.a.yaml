@@ -8,7 +8,7 @@ jas: '1.2'
 description:
     main: Add columns (from other data sets)
     R:
-        dontrun: false
+        dontrun: true
         usage: |
             # the function is a wrapper for jmvReadWrite::merge_cols_omv
             # please use that function from R
@@ -61,11 +61,6 @@ options:
         - title: Keeps all cases from the to be added data sets
           name:  right
       default: outer
-
-    - name: fleOut
-      title: "Output file:"
-      type: String
-      default: "Dataset_mergeCols.omv"
 
     - name: btnOut
       type: String

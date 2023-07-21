@@ -8,7 +8,7 @@ jas: '1.2'
 description:
     main: Transpose the dataset
     R:
-        dontrun: false
+        dontrun: true
         usage: |
             # the function is a wrapper for jmvReadWrite::transpose_omv
             # please use that function when using R
@@ -30,10 +30,10 @@ options:
         - factor
         - id
       required: false
-      description:
-          R: >
-            a string containing the variable containing the variable names
-            for the output data frame
+#      description:
+#          R: >
+#            a string containing the variable containing the variable names
+#            for the output data frame
 
     - name: varOth
       title: Variables to be transposed
@@ -43,19 +43,10 @@ options:
         - factor
         - id
       required: true
-      description:
-          R: >
-            a vector of strings containing the names of the variables to be
-            transposed
-
-    - name: fleOut
-      title: "Output file:"
-      type: String
-      default: "Dataset_xpsd.omv"
-      description:
-          R: >
-            a string with name and location of the output file (the home
-            directory, if no directory is given)
+#      description:
+#          R: >
+#            a vector of strings containing the names of the variables to be
+#            transposed
 
     - name: btnOut
       type: String

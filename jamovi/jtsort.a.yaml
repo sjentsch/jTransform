@@ -8,7 +8,7 @@ jas: '1.2'
 description:
     main: Sort data set
     R:
-        dontrun: false
+        dontrun: true
         usage: |
             # the function is a wrapper for jmvReadWrite::sort_omv
             # please use that function when using R
@@ -19,8 +19,8 @@ completeWhenFilled: true
 options:
     - name: data
       type: Data
-      description:
-          R: the data as a data frame
+#      description:
+#          R: the data as a data frame
 
     - name: varSrt
       title: Variable(s) to sort after
@@ -29,9 +29,9 @@ options:
         - numeric
         - factor
         - id
-      description:
-          ui: the variables to sort `data` with
-          R: a vector of strings naming the variables to sort `data` with
+#      description:
+#          ui: the variables to sort `data` with
+#          R: a vector of strings naming the variables to sort `data` with
 
     - name: varOth
       title: Further variables in the output
@@ -59,21 +59,12 @@ options:
                 title: ascending
               - name: descend
                 title: descending
-      description:
-          ui: >
-            the order with which variables are sorted
-          R: >
-            a list of lists specifying the order with which variables are
-            sorted, either `'ascending'`, or `'descending'`
-
-    - name: fleOut
-      title: "Output file:"
-      type: String
-      default: "Dataset_sort.omv"
-      description:
-          R: >
-            a string with name and location of the output file (the home
-            directory, if no directory is given)
+#      description:
+#          ui: >
+#            the order with which variables are sorted
+#          R: >
+#            a list of lists specifying the order with which variables are
+#            sorted, either `'ascending'`, or `'descending'`
 
     - name: btnOut
       type: String

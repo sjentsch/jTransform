@@ -8,7 +8,7 @@ jas: '1.2'
 description:
     main: Transform dataset from long to wide
     R:
-        dontrun: false
+        dontrun: true
         usage: |
             # the function is a wrapper for jmvReadWrite::long2wide_omv
             # please use that function when using R
@@ -98,15 +98,6 @@ options:
 #          R: >
 #            separator character between the fixed and the time-varying part of
 #            the variable name ("VAR1_1", "VAR1_2"; default: "_")
-
-    - name: fleOut
-      title: "Output file:"
-      type: String
-      default: "Dataset_wide.omv"
-#      description:
-#          R: >
-#            a string with name and location of the output file (the home
-#            directory, if no directory is given)
 
     - name: btnOut
       type: String
