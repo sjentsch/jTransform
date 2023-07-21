@@ -33,7 +33,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 self$results$txtOut$setContent(
                   sprintf("<p><strong>%s already exists</strong>. Change the name of the output file or remove the exisiting file.</p>", basename(fleOut)))
             } else {
-                self$results$txtOut$setContent(paste("<p>“Variables that identify the same unit”, “Variables to be transformed”,"
+                self$results$txtOut$setContent(paste("<p>“Variables that identify the same unit”, “Variables to be transformed”,",
                                                      "“Prefix”, and “Separator” are required and must not be empty.</p>"))
             }
 

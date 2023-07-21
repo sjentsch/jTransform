@@ -19,8 +19,8 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # issue a warning if varOth is left empty
             if (length(self$options$varOth) == 0)
-                txtOut <- c(txtOut, paste("<strong>You only included are very small number of variables in the output data"
-                                          "set.</strong> Was this intended? Remember to assign variables to be included in"
+                txtOut <- c(txtOut, paste("<strong>You only included are very small number of variables in the output data",
+                                          "set.</strong> Was this intended? Remember to assign variables to be included in",
                                           "the output to “Further variables in the output”."))
             
             # check whether all required variables are present; assemble and run jmvReadWrite command if the output file doesn't already exist
