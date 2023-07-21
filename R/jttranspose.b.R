@@ -4,6 +4,9 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     private = list(
 
         .run = function() {
+
+#      default: "Dataset_xpsd.omv"
+
             # reset the output text, if not blnOut -> exit
             if (!self$options$blnOut) {
                 self$results$txtOut$setContent(" ")

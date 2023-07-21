@@ -8,6 +8,8 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         .run = function() {
 
+#      default: "Dataset_mergeCols.omv"
+
             # reset the output text, if not blnOut -> exit
             if (!self$options$blnOut) {
                 self$results$txtOut$setContent(" ")
