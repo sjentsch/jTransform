@@ -10,7 +10,7 @@ const events = {
         // click toggles it (i.e., first resets it to false and afterwards sets it to true again; this ensures that
         // run() is called (if the value isn't changed, it isn't)
         let $contents = ui.btnOut.$el;
-        $contents.append(`<input type="submit" value="WRITE" style="font-size: 1.2em; font-weight: bold">`);
+        $contents.append(`<input type="submit" value="CREATE" style="font-size: 1.2em; font-weight: bold">`);
         $contents.on("click", () => { ui.blnOut.setValue(!ui.blnOut.value()); });
         ui.blnOut.setValue(false);
     },
