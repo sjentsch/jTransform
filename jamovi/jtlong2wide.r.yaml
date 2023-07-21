@@ -4,13 +4,24 @@ title: Transform dataset from long to wide
 jrs:   '1.1'
 
 items:
-    - name:  txtInf
-      title: ''
+    - name:  txtHdr
       type:  Html
       refs: jmvReadWrite
       content: >
-        <p><strong>This function transforms a dataset from long to wide format.
-        </strong></p>
+        <h2>This function transforms a dataset from long to wide format.</h2>
+
+    - name:  txtOut
+      type:  Html
+      content: ''
+
+    - name:  txtPvw
+      title: 'Preview of the output'
+      type:  Preformatted
+    
+    - name:  txtInf
+      type:  Html
+      content: >
+        <h2>More detailed explanation</h2>
         <p>“Variables that identify the same unit” is an ID variable (e.g., a
         participant code). This code needs to be unique (i.e., there can't be
         two participants, or other units, with the same ID).</p>
@@ -60,9 +71,6 @@ items:
         <p>“Separator” defines which character(s) should be placed between the
         target variable and the steps of the time-varying variable /
         conditions when assembling the variable names (e.g., VAR_COND).</p>
-        <p>Under “Output file”, you can adjust the name of the output file. You
-        may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.</p>
         <p></p>
         <p>The principle of the transformation from long to wide can perhaps
         easiest be understood by looking at example4jtLong2Wide from the Data
@@ -85,10 +93,5 @@ items:
         sex is a between-subjects variable that doesn't change between
         experimental condition, we thus only need one column in the output;
         however, it is not unique and thus not suited as ID variable).</p>
-
-    - name:  txtOut
-      title: ''
-      type:  Html
-      content: ''
 
 ...

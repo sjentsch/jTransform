@@ -4,13 +4,25 @@ title: Transpose the dataset
 jrs:   '1.1'
 
 items:
-    - name:  txtInf
-      title: ''
+    - name:  txtHdr
       type:  Html
       refs: jmvReadWrite
       content: >
-        <p><strong>This function transposes a dataset (i.e., rows are made into
-        columns and columns into rows).</strong></p>
+        <h2>This function transposes a dataset (i.e., rows are made into
+        columns and columns into rows).</h2>
+
+    - name:  txtOut
+      type:  Html
+      content: ''
+
+    - name:  txtPvw
+      title: 'Preview of the output'
+      type:  Preformatted
+    
+    - name:  txtInf
+      type:  Html
+      content: >
+        <h2>More detailed explanation</h2>
         <p>Please assign maximally one variable to the variable box “Variable
         with column names for the output” (this variable might contain names of
         trials or questionnaire items). If you leave the box empty, generic
@@ -18,13 +30,5 @@ items:
         <p>The variables to be transposed (i.e., those to become rows in your
         output data set) have to be assigned to “Variables to be
         transposed”.</p>
-        <p>Under “Output file”, you can adjust the name of the output file. You
-        may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.</p>
-
-    - name:  txtOut
-      title: ''
-      type:  Html
-      content: ''
 
 ...

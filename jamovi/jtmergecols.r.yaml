@@ -4,13 +4,25 @@ title: Add columns (from other data sets)
 jrs:   '1.1'
 
 items:
-    - name:  txtInf
-      title: ''
+    - name:  txtHdr
       type:  Html
       refs: jmvReadWrite
       content: >
-        <p><strong>Adds columns from other jamovi data file(s) to the current
-        data set (matching them by one or more ID variables).</strong></p>
+        <h2>Adds columns from other jamovi data file(s) to the current data set
+        (matching them by one or more ID variables).</h2>
+
+    - name:  txtOut
+      type:  Html
+      content: ''
+
+    - name:  txtPvw
+      title: 'Preview of the output'
+      type:  Preformatted
+    
+    - name:  txtInf
+      type:  Html
+      content: >
+        <h2>More detailed explanation</h2>
         <p>Assign one or more variables that appear in all data sets (e.g.,
         with a participant code) to “Variable(s) to match the data sets by”.
         Afterwards, you need to assign the remaining variables (i.e., those
@@ -32,13 +44,5 @@ items:
         fleInp are kept (whereas cases that are only contained in input data
         set two or higher are dropped), for "right" all cases from the second
         (or any higher) data set in fleInp are kept.</p>
-        <p>Under “Output file”, you can adjust the name of the output file. You
-        may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.</p>
-
-    - name:  txtOut
-      title: ''
-      type:  Html
-      content: ''
 
 ...

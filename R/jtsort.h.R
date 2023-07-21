@@ -93,8 +93,10 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSortResults",
     inherit = jmvcore::Group,
     active = list(
-        txtInf = function() private$.items[["txtInf"]],
-        txtOut = function() private$.items[["txtOut"]]),
+        txtHdr = function() private$.items[["txtHdr"]],
+        txtOut = function() private$.items[["txtOut"]],
+        txtPvw = function() private$.items[["txtPvw"]],
+        txtInf = function() private$.items[["txtInf"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -104,15 +106,21 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 title="Sort data set")
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
-                title="",
+                name="txtHdr",
                 refs="jmvReadWrite",
-                content="<p><strong>This function sorts a dataset after one or more variables. </strong></p> <p>Please assign one or more variables to the variable box \u201CVariable(s) to be sorted after\u201D. The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age).</p> <p>Variables are sorted in ascending order (as default), but you can change the order if desired.</p> <p>Currently, the remaining variables (i.e., those not to be used for sorting but to be included into the output file) have to be assigned to \u201CFurther variables in the output\u201D.</p> <p>Under \u201COutput file\u201D, you can adjust the name of the output file. You may also add a directory to the file name. If no path is given, the output file is stored in the home directory.</p>\n"))
+                content="<h2>This function sorts a dataset after one or more variables.</h2>\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtOut",
-                title="",
-                content=""))}))
+                content=""))
+            self$add(jmvcore::Preformatted$new(
+                options=options,
+                name="txtPvw",
+                title="Preview of the output"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="txtInf",
+                content="<h2>More detailed explanation</h2> <p>Please assign one or more variables to the variable box \u201CVariable(s) to be sorted after\u201D. The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age).</p> <p>Variables are sorted in ascending order (as default), but you can change the order if desired.</p> <p>Currently, the remaining variables (i.e., those not to be used for sorting but to be included into the output file) have to be assigned to \u201CFurther variables in the output\u201D.</p>\n"))}))
 
 jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSortBase",
@@ -156,8 +164,10 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$txtHdr} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
+#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
 #' @export

@@ -4,13 +4,24 @@ title: Sort data set
 jrs:   '1.1'
 
 items:
-    - name:  txtInf
-      title: ''
+    - name:  txtHdr
       type:  Html
       refs: jmvReadWrite
       content: >
-        <p><strong>This function sorts a dataset after one or more variables.
-        </strong></p>
+        <h2>This function sorts a dataset after one or more variables.</h2>
+
+    - name:  txtOut
+      type:  Html
+      content: ''
+
+    - name:  txtPvw
+      title: 'Preview of the output'
+      type:  Preformatted
+    
+    - name:  txtInf
+      type:  Html
+      content: >
+        <h2>More detailed explanation</h2>
         <p>Please assign one or more variables to the variable box “Variable(s)
         to be sorted after”. The order in which the variables appear in the
         variable box determines after which variable is sorted first (one
@@ -20,13 +31,5 @@ items:
         <p>Currently, the remaining variables (i.e., those not to be used for
         sorting but to be included into the output file) have to be assigned to
         “Further variables in the output”.</p>
-        <p>Under “Output file”, you can adjust the name of the output file. You
-        may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.</p>
-
-    - name:  txtOut
-      title: ''
-      type:  Html
-      content: ''
 
 ...

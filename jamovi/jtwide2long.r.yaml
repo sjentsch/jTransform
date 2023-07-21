@@ -4,12 +4,24 @@ title: Transform dataset from wide to long
 jrs:   '1.1'
 
 items:
-    - name:  txtInf
-      title: ''
+    - name:  txtHdr
       type:  Html
       refs: jmvReadWrite
       content: >
-        <strong>This function transforms a dataset from wide to long format.</strong></p>
+        <h2>This function transforms a dataset from wide to long format.</h2>
+
+    - name:  txtOut
+      type:  Html
+      content: ''
+
+    - name:  txtPvw
+      title: 'Preview of the output'
+      type:  Preformatted
+    
+    - name:  txtInf
+      type:  Html
+      content: >
+        <h2>More detailed explanation</h2>
         <p>“Variables that identify the same unit” is an ID variable (e.g., a
         participant code). This code needs to be unique (i.e., there can't be
         two participants, or other units, with the same ID).</p>
@@ -43,9 +55,6 @@ items:
         types were the first part of the variable name, 1 would have to be
         put into this field. If all levels are to be transformed, the field
         needs to be blank.</p>
-        <p>Under “Output file”, you can adjust the name of the output file. You
-        may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.</p>
         <p></p>
         <p>The principle of the transformation from long to wide can perhaps
         easiest be understood by looking at example4jtWide2Long from the Data
@@ -68,10 +77,5 @@ items:
         transformed”. Under “Prefix” it can be determined how the name for the
         different conditions shall start (a number would be added if there is
         more than one condition).</p>
-
-    - name:  txtOut
-      title: ''
-      type:  Html
-      content: ''
 
 ...
