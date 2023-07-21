@@ -4,7 +4,6 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
     private = list(
 
         .run = function() {
-            self$results$txtOut$setContent(" ")
 
             # check whether all required variables are present
             if (length(self$options$varOrd) > 0) {
@@ -15,20 +14,18 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
                 # assemble and run jmvReadWrite command
                 dtaFrm <- jmvReadWrite::arrange_cols_omv(crrDta, varOrd = self$options$varOrd)
 
-                # depending on whether CREATE was pressed (blnOut == TRUE), either use the data
-                # for preview or open a new jamovi session with them
-                if (blnOut) {
+                # preview the data
+                self$results$txtPvw$setContent(sprintf("Variables in the output file:\n%s\n\n%s\n\n(max. 10 rows and max. 8 variables are shown)\n",
+                                                 paste(splStr(names(dtaFrm), maxLng = 80), collapse = ",\n"),
+                                                 paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), seq(min(8, dim(dtaFrm)[2]))], row.names = FALSE)), collapse="\n")))
+
+                # if CREATE was pressed (blnOut == TRUE), open a new jamovi session with the data
+                if (self$options$blnOut) {
                     tmpOut <- paste0(tempfile(), ".omv")
                     jmvReadWrite::write_omv(dtaFrm, fleOut = tmpOut)
 # TO-DO: replace Dataset with the name of the current data set
                     system(paste0(jmvEXE(), " --temp --title=\"", paste0("Dataset", "_arrCol"), "\" ", tmpOut))
-                } else {
-                    self$results$txtPvw$setContent(paste0("Variables in the output file:\n", strSpl(names(dtaFrm), maxLng = 80), print(data[1:10, 1:8], )))
                 }
-
-            } else {
-
-                self$results$txtOut$setContent("<p>“Desired order of variable(s)” is required and must not be empty.</p>")
 
             }
 
