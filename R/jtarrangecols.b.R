@@ -14,10 +14,8 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
                 # assemble and run jmvReadWrite command
                 dtaFrm <- jmvReadWrite::arrange_cols_omv(crrDta, varOrd = self$options$varOrd)
 
-                # preview the data
-                self$results$txtPvw$setContent(sprintf("Variables in the output file:\n%s\n\n%s\n\n(max. 10 rows and max. 8 variables are shown)\n",
-                                                 paste(splStr(names(dtaFrm), maxLng = 80), collapse = ",\n"),
-                                                 paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), seq(min(8, dim(dtaFrm)[2]))], row.names = FALSE)), collapse="\n")))
+                # preview the data (crtPvw in utils.R)
+                self$results$txtPvw$setContent(crtPvw(dtaFrm))
 
                 # if CREATE was pressed (blnOut == TRUE), open a new jamovi session with the data
                 if (self$options$blnOut) {
