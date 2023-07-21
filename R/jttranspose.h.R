@@ -8,7 +8,6 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varNme = NULL,
             varOth = NULL,
-            fleOut = "Dataset_xpsd.omv",
             btnOut = NULL,
             blnOut = FALSE, ...) {
 
@@ -34,10 +33,6 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "factor",
                     "id"),
                 required=TRUE)
-            private$..fleOut <- jmvcore::OptionString$new(
-                "fleOut",
-                fleOut,
-                default="Dataset_xpsd.omv")
             private$..btnOut <- jmvcore::OptionString$new(
                 "btnOut",
                 btnOut,
@@ -50,20 +45,17 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
-            self$.addOption(private$..fleOut)
             self$.addOption(private$..btnOut)
             self$.addOption(private$..blnOut)
         }),
     active = list(
         varNme = function() private$..varNme$value,
         varOth = function() private$..varOth$value,
-        fleOut = function() private$..fleOut$value,
         btnOut = function() private$..btnOut$value,
         blnOut = function() private$..blnOut$value),
     private = list(
         ..varNme = NA,
         ..varOth = NA,
-        ..fleOut = NA,
         ..btnOut = NA,
         ..blnOut = NA)
 )
@@ -87,7 +79,7 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="txtHdr",
                 refs="jmvReadWrite",
-                content="<h2>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</h2>\n"))
+                content="<p>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</p>\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtOut",
@@ -127,17 +119,14 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Transpose the dataset
 #'
 #' @examples
+#' \dontrun{
 #' # the function is a wrapper for jmvReadWrite::transpose_omv
 #' # please use that function when using R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
-#'
+#'}
 #' @param data the data as a data frame
-#' @param varNme a string containing the variable containing the variable
-#'   names for the output data frame
-#' @param varOth a vector of strings containing the names of the variables to
-#'   be transposed
-#' @param fleOut a string with name and location of the output file (the home
-#'   directory, if no directory is given)
+#' @param varNme .
+#' @param varOth .
 #' @param btnOut .
 #' @param blnOut .
 #' @return A results object containing:
@@ -153,7 +142,6 @@ jtTranspose <- function(
     data,
     varNme,
     varOth,
-    fleOut = "Dataset_xpsd.omv",
     btnOut,
     blnOut = FALSE) {
 
@@ -172,7 +160,6 @@ jtTranspose <- function(
     options <- jtTransposeOptions$new(
         varNme = varNme,
         varOth = varOth,
-        fleOut = fleOut,
         btnOut = btnOut,
         blnOut = blnOut)
 

@@ -52,7 +52,6 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     inherit = jmvcore::Group,
     active = list(
         txtHdr = function() private$.items[["txtHdr"]],
-        txtOut = function() private$.items[["txtOut"]],
         txtPvw = function() private$.items[["txtPvw"]],
         txtInf = function() private$.items[["txtInf"]]),
     private = list(),
@@ -66,11 +65,7 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 options=options,
                 name="txtHdr",
                 refs="jmvReadWrite",
-                content="<h2>This function re-arranges the order of columns in a jamovi data file.</h2>\n"))
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="txtOut",
-                content=""))
+                content="<p>This function re-arranges the order of columns in a jamovi data file.</p>\n"))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
@@ -106,10 +101,11 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Change the order of variables
 #'
 #' @examples
+#' \dontrun{
 #' # the function is a wrapper for jmvReadWrite::arrange_cols_omv
 #' # please use that function when using R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
-#'
+#'}
 #' @param data .
 #' @param varOrd .
 #' @param btnOut .
@@ -117,7 +113,6 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtHdr} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
 #' }

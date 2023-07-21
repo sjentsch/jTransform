@@ -9,7 +9,6 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varSrt = NULL,
             varOth = NULL,
             ordSrt = NULL,
-            fleOut = "Dataset_sort.omv",
             btnOut = NULL,
             blnOut = FALSE, ...) {
 
@@ -52,10 +51,6 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                             options=list(
                                 "ascend",
                                 "descend")))))
-            private$..fleOut <- jmvcore::OptionString$new(
-                "fleOut",
-                fleOut,
-                default="Dataset_sort.omv")
             private$..btnOut <- jmvcore::OptionString$new(
                 "btnOut",
                 btnOut,
@@ -69,7 +64,6 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..varSrt)
             self$.addOption(private$..varOth)
             self$.addOption(private$..ordSrt)
-            self$.addOption(private$..fleOut)
             self$.addOption(private$..btnOut)
             self$.addOption(private$..blnOut)
         }),
@@ -77,14 +71,12 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         varSrt = function() private$..varSrt$value,
         varOth = function() private$..varOth$value,
         ordSrt = function() private$..ordSrt$value,
-        fleOut = function() private$..fleOut$value,
         btnOut = function() private$..btnOut$value,
         blnOut = function() private$..blnOut$value),
     private = list(
         ..varSrt = NA,
         ..varOth = NA,
         ..ordSrt = NA,
-        ..fleOut = NA,
         ..btnOut = NA,
         ..blnOut = NA)
 )
@@ -94,7 +86,6 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
         txtHdr = function() private$.items[["txtHdr"]],
-        txtOut = function() private$.items[["txtOut"]],
         txtPvw = function() private$.items[["txtPvw"]],
         txtInf = function() private$.items[["txtInf"]]),
     private = list(),
@@ -108,11 +99,7 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="txtHdr",
                 refs="jmvReadWrite",
-                content="<h2>This function sorts a dataset after one or more variables.</h2>\n"))
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="txtOut",
-                content=""))
+                content="<p>This function sorts a dataset after one or more variables.</p>\n"))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
@@ -148,24 +135,20 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Sort data set
 #'
 #' @examples
+#' \dontrun{
 #' # the function is a wrapper for jmvReadWrite::sort_omv
 #' # please use that function when using R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
-#'
-#' @param data the data as a data frame
-#' @param varSrt a vector of strings naming the variables to sort \code{data}
-#'   with
+#'}
+#' @param data .
+#' @param varSrt .
 #' @param varOth .
-#' @param ordSrt a list of lists specifying the order with which variables are
-#'   sorted, either \code{'ascending'}, or \code{'descending'}
-#' @param fleOut a string with name and location of the output file (the home
-#'   directory, if no directory is given)
+#' @param ordSrt .
 #' @param btnOut .
 #' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtHdr} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
 #' }
@@ -176,7 +159,6 @@ jtSort <- function(
     varSrt,
     varOth,
     ordSrt = NULL,
-    fleOut = "Dataset_sort.omv",
     btnOut,
     blnOut = FALSE) {
 
@@ -196,7 +178,6 @@ jtSort <- function(
         varSrt = varSrt,
         varOth = varOth,
         ordSrt = ordSrt,
-        fleOut = fleOut,
         btnOut = btnOut,
         blnOut = blnOut)
 

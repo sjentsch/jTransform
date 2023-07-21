@@ -13,7 +13,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varOrd = "times",
             varAgg = "mean",
             varSep = "_",
-            fleOut = "Dataset_wide.omv",
             btnOut = NULL,
             blnOut = FALSE, ...) {
 
@@ -69,10 +68,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "varSep",
                 varSep,
                 default="_")
-            private$..fleOut <- jmvcore::OptionString$new(
-                "fleOut",
-                fleOut,
-                default="Dataset_wide.omv")
             private$..btnOut <- jmvcore::OptionString$new(
                 "btnOut",
                 btnOut,
@@ -90,7 +85,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..varOrd)
             self$.addOption(private$..varAgg)
             self$.addOption(private$..varSep)
-            self$.addOption(private$..fleOut)
             self$.addOption(private$..btnOut)
             self$.addOption(private$..blnOut)
         }),
@@ -102,7 +96,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         varOrd = function() private$..varOrd$value,
         varAgg = function() private$..varAgg$value,
         varSep = function() private$..varSep$value,
-        fleOut = function() private$..fleOut$value,
         btnOut = function() private$..btnOut$value,
         blnOut = function() private$..blnOut$value),
     private = list(
@@ -113,7 +106,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..varOrd = NA,
         ..varAgg = NA,
         ..varSep = NA,
-        ..fleOut = NA,
         ..btnOut = NA,
         ..blnOut = NA)
 )
@@ -123,7 +115,6 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         txtHdr = function() private$.items[["txtHdr"]],
-        txtOut = function() private$.items[["txtOut"]],
         txtPvw = function() private$.items[["txtPvw"]],
         txtInf = function() private$.items[["txtInf"]]),
     private = list(),
@@ -137,11 +128,7 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="txtHdr",
                 refs="jmvReadWrite",
-                content="<h2>This function transforms a dataset from long to wide format.</h2>\n"))
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="txtOut",
-                content=""))
+                content="<p>This function transforms a dataset from long to wide format.</p>\n"))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
@@ -177,10 +164,11 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Transform dataset from long to wide
 #'
 #' @examples
+#' \dontrun{
 #' # the function is a wrapper for jmvReadWrite::long2wide_omv
 #' # please use that function when using R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
-#'
+#'}
 #' @param data .
 #' @param varID .
 #' @param varTme .
@@ -189,13 +177,11 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varOrd .
 #' @param varAgg .
 #' @param varSep .
-#' @param fleOut .
 #' @param btnOut .
 #' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtHdr} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
 #' }
@@ -210,7 +196,6 @@ jtLong2Wide <- function(
     varOrd = "times",
     varAgg = "mean",
     varSep = "_",
-    fleOut = "Dataset_wide.omv",
     btnOut,
     blnOut = FALSE) {
 
@@ -238,7 +223,6 @@ jtLong2Wide <- function(
         varOrd = varOrd,
         varAgg = varAgg,
         varSep = varSep,
-        fleOut = fleOut,
         btnOut = btnOut,
         blnOut = blnOut)
 

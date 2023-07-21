@@ -11,7 +11,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             fleInp = "",
             fleChs = NULL,
             typMrg = "outer",
-            fleOut = "Dataset_mergeCols.omv",
             btnOut = NULL,
             blnOut = FALSE, ...) {
 
@@ -52,10 +51,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "left",
                     "right"),
                 default="outer")
-            private$..fleOut <- jmvcore::OptionString$new(
-                "fleOut",
-                fleOut,
-                default="Dataset_mergeCols.omv")
             private$..btnOut <- jmvcore::OptionString$new(
                 "btnOut",
                 btnOut,
@@ -71,7 +66,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..fleInp)
             self$.addOption(private$..fleChs)
             self$.addOption(private$..typMrg)
-            self$.addOption(private$..fleOut)
             self$.addOption(private$..btnOut)
             self$.addOption(private$..blnOut)
         }),
@@ -81,7 +75,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         fleInp = function() private$..fleInp$value,
         fleChs = function() private$..fleChs$value,
         typMrg = function() private$..typMrg$value,
-        fleOut = function() private$..fleOut$value,
         btnOut = function() private$..btnOut$value,
         blnOut = function() private$..blnOut$value),
     private = list(
@@ -90,7 +83,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..fleInp = NA,
         ..fleChs = NA,
         ..typMrg = NA,
-        ..fleOut = NA,
         ..btnOut = NA,
         ..blnOut = NA)
 )
@@ -100,7 +92,6 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         txtHdr = function() private$.items[["txtHdr"]],
-        txtOut = function() private$.items[["txtOut"]],
         txtPvw = function() private$.items[["txtPvw"]],
         txtInf = function() private$.items[["txtInf"]]),
     private = list(),
@@ -114,11 +105,7 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="txtHdr",
                 refs="jmvReadWrite",
-                content="<h2>Adds columns from other jamovi data file(s) to the current data set (matching them by one or more ID variables).</h2>\n"))
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="txtOut",
-                content=""))
+                content="<p>Adds columns from other jamovi data file(s) to the current data set (matching them by one or more ID variables).</p>\n"))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
@@ -154,23 +141,22 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Add columns (from other data sets)
 #'
 #' @examples
+#' \dontrun{
 #' # the function is a wrapper for jmvReadWrite::merge_cols_omv
 #' # please use that function from R
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
-#'
+#'}
 #' @param data the data as a data frame
 #' @param varBy .
 #' @param varOth .
 #' @param fleInp .
 #' @param fleChs .
 #' @param typMrg .
-#' @param fleOut .
 #' @param btnOut .
 #' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtHdr} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
 #' }
@@ -183,7 +169,6 @@ jtMergeCols <- function(
     fleInp = "",
     fleChs,
     typMrg = "outer",
-    fleOut = "Dataset_mergeCols.omv",
     btnOut,
     blnOut = FALSE) {
 
@@ -205,7 +190,6 @@ jtMergeCols <- function(
         fleInp = fleInp,
         fleChs = fleChs,
         typMrg = typMrg,
-        fleOut = fleOut,
         btnOut = btnOut,
         blnOut = blnOut)
 
