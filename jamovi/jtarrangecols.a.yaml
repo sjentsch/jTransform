@@ -34,15 +34,6 @@ options:
 #           a vector of strings containing the desired order of variables in
 #           the output data set
 
-    - name: fleOut
-      title: "Output file:"
-      type: String
-      default: "Dataset_arrCol.omv"
-#     description:
-#         R: >
-#           a string with name and location of the output file (the home
-#           directory, if no directory is given)
-
     - name: btnOut
       type: String
       hidden: true
