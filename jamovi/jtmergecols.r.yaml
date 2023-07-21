@@ -8,12 +8,8 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <h2>Adds columns from other jamovi data file(s) to the current data set
-        (matching them by one or more ID variables).</h2>
-
-    - name:  txtOut
-      type:  Html
-      content: ''
+        <p>Adds columns from other jamovi data file(s) to the current data set
+        (matching them by one or more ID variables).</p>
 
     - name:  txtPvw
       title: 'Preview of the output'

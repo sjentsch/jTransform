@@ -8,11 +8,7 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <h2>This function transforms a dataset from wide to long format.</h2>
-
-    - name:  txtOut
-      type:  Html
-      content: ''
+        <p>This function transforms a dataset from wide to long format.</p>
 
     - name:  txtPvw
       title: 'Preview of the output'

@@ -8,8 +8,8 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <h2>This function transposes a dataset (i.e., rows are made into
-        columns and columns into rows).</h2>
+        <p>This function transposes a dataset (i.e., rows are made into columns
+        and columns into rows).</p>
 
     - name:  txtOut
       type:  Html

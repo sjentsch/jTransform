@@ -8,11 +8,7 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <h2>This function sorts a dataset after one or more variables.</h2>
-
-    - name:  txtOut
-      type:  Html
-      content: ''
+        <p>This function sorts a dataset after one or more variables.</p>
 
     - name:  txtPvw
       title: 'Preview of the output'
