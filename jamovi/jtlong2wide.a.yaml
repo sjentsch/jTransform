@@ -1,7 +1,8 @@
 ---
 name:  jtLong2Wide
 title: Transform dataset from long to wide
-menuGroup: jTransform
+menuGroup: Data
+menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 

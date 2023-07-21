@@ -1,7 +1,8 @@
 ---
 name:  jtMergeCols
 title: Add columns (from other data sets)
-menuGroup: jTransform
+menuGroup: Data
+menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
