@@ -9,32 +9,32 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <b>Adds columns from other jamovi data file(s) to the current data set
-        (matching them by one or more ID variables).</b><br>
-        Assign one or more variables that appear in all data sets (e.g., with
-        a participant code) to “Variable(s) to match the data sets by”.
+        <p><strong>Adds columns from other jamovi data file(s) to the current
+        data set (matching them by one or more ID variables).</strong></p>
+        <p>Assign one or more variables that appear in all data sets (e.g.,
+        with a participant code) to “Variable(s) to match the data sets by”.
         Afterwards, you need to assign the remaining variables (i.e., those
         that you do not want to exclude from the output data file) to “Further
-        variables in the output”.<br>
-        The file browser under “Data set(s) to add” represents a “tweaked”
+        variables in the output”.</p>
+        <p>The file browser under “Data set(s) to add” represents a “tweaked”
         solution: Because it only delivers the file name back, the home
         directory is afterwards searched for those file name(s). If a file
         can't be located in the home directory, or if it exists in more than
         one locations inside the home directory, an error is returned. Although
         it is less convenient, manually providing the file name including the
         path may therefore be both quicker and less error-prone. If several
-        file names are provided, they have to be separated by semicolons.<br>
-        There are four different types of merging operations: The first option
+        file names are provided, they have to be separated by semicolons.</p>
+        <p>There are four different types of merging operations: The first option
         keeps all cases (but columns in the resulting data set may be empty if
         they did not contain values in same input data sets), the second option
         keeps only those cases where all datasets contain the same value in the
         matching variable, for "left" all cases from the first data set in
         fleInp are kept (whereas cases that are only contained in input data
         set two or higher are dropped), for "right" all cases from the second
-        (or any higher) data set in fleInp are kept.<br>
-        Under “Output file”, you can adjust the name of the output file. You
+        (or any higher) data set in fleInp are kept.</p>
+        <p>Under “Output file”, you can adjust the name of the output file. You
         may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.<br>
+        output file is stored in the home directory.</p>
 
     - name:  txtOut
       title: ''

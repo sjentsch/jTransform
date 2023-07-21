@@ -9,11 +9,11 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <b>This function transforms a dataset from wide to long format.</b><br>
-        “Variables that identify the same unit” is an ID variable (e.g., a
+        <strong>This function transforms a dataset from wide to long format.</strong></p>
+        <p>“Variables that identify the same unit” is an ID variable (e.g., a
         participant code). This code needs to be unique (i.e., there can't be
-        two participants, or other units, with the same ID).<br>
-        “Variables to be transformed” are the so-called target variables, i.e.,
+        two participants, or other units, with the same ID).</p>
+        <p>“Variables to be transformed” are the so-called target variables, i.e.,
         variables that exist as many columns in the input data set and are
         going to be transformed, creating different steps of one or more
         time-varying variable resulting in the output. How many variables are
@@ -25,16 +25,16 @@ items:
         1, 2, 3, and 4). The number of rows would be increased by the number
         of all possible combinations of steps (in the example above 2 * 2 * 2
         * 2 = 16, mulitiplied by the number of rows in the input data set,
-        e.g., 50 rows becoming 50 * 16 = 800 rows).<br>
-        “Variables NOT to be transformed” are variables that “characterize” a
+        e.g., 50 rows becoming 50 * 16 = 800 rows).</p>
+        <p>“Variables NOT to be transformed” are variables that “characterize” a
         participant (or another unit), often also called between-subjects
         variables, e.g., age or sex. However, they are not unique (and thus
         no ID variables; there may be several participant with the same age or
-        sex).<br>
-        “Separator” defines which character(s) should be placed between the
+        sex).</p>
+        <p>“Separator” defines which character(s) should be placed between the
         target variable and the steps of the time-varying variable /
-        conditions when assembling the variable names (e.g., VAR_COND).<br>
-        Often, an input data set contains different types of measures (e.g.,
+        conditions when assembling the variable names (e.g., VAR_COND).</p>
+        <p>Often, an input data set contains different types of measures (e.g.,
         whether a response was correct and the reaction time) that make up a
         part of the variable name. Typically, one wants to keep those
         different measures as separate columns in the output data set.
@@ -42,11 +42,12 @@ items:
         in it) from being transformed from wide to long. If the measurement
         types were the first part of the variable name, 1 would have to be
         put into this field. If all levels are to be transformed, the field
-        needs to be blank.<br>
-        Under “Output file”, you can adjust the name of the output file. You
+        needs to be blank.</p>
+        <p>Under “Output file”, you can adjust the name of the output file. You
         may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.<br><br>
-        The principle of the transformation from long to wide can perhaps
+        output file is stored in the home directory.</p>
+        <p></p>
+        <p>The principle of the transformation from long to wide can perhaps
         easiest be understood by looking at example4jtWide2Long from the Data
         Library of this module. It contains results from a Stroop experiment
         (in wide format) with fifty variables: ID (identifies the participant),
@@ -66,7 +67,7 @@ items:
         variables starting with rspCrr_... or rspTme... to “Variables to be
         transformed”. Under “Prefix” it can be determined how the name for the
         different conditions shall start (a number would be added if there is
-        more than one condition).
+        more than one condition).</p>
 
     - name:  txtOut
       title: ''

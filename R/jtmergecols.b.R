@@ -40,23 +40,24 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             
             # issue a warning if varOth is left empty
             if (length(self$options$varOth) == 0)
-                txtOut <- c(txtOut, paste("<b>You only included are very small number of variables in the output data set.</b>",
-                                          "Was this intended? Remember to assign variables to be included in the output to",
-                                          "“Further variables in the output”."))
+                txtOut <- c(txtOut, paste("<strong>You only included are very small number of variables in the output data"
+                                          "set.</strong> Was this intended? Remember to assign variables to be included in"
+                                          "the output to “Further variables in the output”."))
             
             # check whether all required variables are present; assemble and run jmvReadWrite command if the output file doesn't already exist
             if (!file.exists(fleOut) && length(self$options$varBy)) {
                 jmvReadWrite::merge_cols_omv(dtaInp = crrDta, fleOut = fleOut, varBy = self$options$varBy, typMrg = self$options$typMrg)
                 if (file.exists(fleOut)) {
-                    txtOut <- c(txtOut, sprintf("<b>%s</b> successfully written to %s.", basename(fleOut), dirname(fleOut)))
-                    self$results$txtOut$setContent(paste(txtOut, collapse = "<br><br>\n"))
+                    txtOut <- c(txtOut, sprintf("<strong>%s</strong> successfully written to %s.", basename(fleOut), dirname(fleOut)))
+                    self$results$txtOut$setContent(paste(paste0("<p>", txtOut, "</p>"), collapse = "<p></p>\n"))
                 } else {
-                    self$results$txtOut$setContent(sprintf("<b>Error</b> when writing %s to %s.", basename(fleOut), dirname(fleOut)))
+                    self$results$txtOut$setContent(sprintf("<p><strong>Error</strong> when writing %s to %s.</p>", basename(fleOut), dirname(fleOut)))
                 }
             } else if (file.exists(fleOut)) {
-                self$results$txtOut$setContent(sprintf("<b>%s already exists</b>. Change the name of the output file or remove the exisiting file.", basename(fleOut)))
+                self$results$txtOut$setContent(
+                  sprintf("<p><strong>%s already exists</strong>. Change the name of the output file or remove the exisiting file.</p>", basename(fleOut)))
             } else {
-                self$results$txtOut$setContent("“Variable(s) to match the data sets by” is required and must not be empty.")
+                self$results$txtOut$setContent("<p>“Variable(s) to match the data sets by” is required and must not be empty.</p>")
             }
 
         })

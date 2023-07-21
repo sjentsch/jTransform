@@ -9,14 +9,14 @@ items:
       type:  Html
       refs: jmvReadWrite
       content: >
-        <b>This function re-arranges the order of columns in a jamovi data
-        file.</b><br>
-        Please assign the variables in their desired order to “Desired order
+        <p><strong>This function re-arranges the order of columns in a jamovi data
+        file.</strong></p>
+        <p>Please assign the variables in their desired order to “Desired order
         of variables”. Please note that variables that you leave in the
-        variable list to the left are not included in the output file.<br>
-        Under “Output file”, you can adjust the name of the output file. You
+        variable list to the left are not included in the output file.</p>
+        <p>Under “Output file”, you can adjust the name of the output file. You
         may also add a directory to the file name. If no path is given, the
-        output file is stored in the home directory.<br>
+        output file is stored in the home directory.</p>
 
     - name:  txtOut
       title: ''
