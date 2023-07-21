@@ -1,24 +1,22 @@
-hmeDir <- function() {
-    Sys.getenv(ifelse(.Platform$OS.type == "unix", "HOME", "USERPROFILE"))
+isWin  <- function() {
+    .Platform$OS.type != "unix"
 }
 
-chkFle <- function(fleNme = "") {
-    # check whether fleNme contains a directory
-    # (otherwise, add HOME / USERPROFILE)
-    if (dirname(fleNme) == ".") {
-       fleNme <- file.path(hmeDir(), fleNme)
-    }
+hmeDir <- function() {
+    Sys.getenv(ifelse(isWin, "USERPROFILE", "HOME"))
+}
 
-    # check existence of the output directory
-    # and whether the file has the correct extension
-    if (!file.exists(dirname(fleNme))) {
-#       jmvcore::reject(.("'{dir}' doesn't exists."), dir = dirname(fleNme))
-        jmvcore::reject("'{dir}' doesn't exists.", dir = dirname(fleNme))
-    }
-    if (tools::file_ext(fleNme) != "omv") {
-#       jmvcore::reject(.("'{file}' doesn't have the correct file extension (.omv)."), file = basename(fleNme))
-        jmvcore::reject("'{file}' doesn't have the correct file extension (.omv).", file = basename(fleNme))
-    }
+jmvEXE <- function() {
+    file.path(Sys.getenv("JAMOVI_HOME"), "bin", ifelse(isWin, "jamovi.exe", "jamovi"))
+}
 
-    fleNme
+splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
+    strLng <- unname(sapply(strVec, nchar)) + nchar(strClp)
+    strOut <- c()
+    strPos <- 0
+    while (max(strPos) < length(strVec)) {
+        strPos <- c(max(strPos), max(which(cumsum(strLng[(max(strPos) + 1):length(strVec)]) <= maxLng)) + max(strPos))
+        strOut <- c(strOut, paste0(strVec[seq(strPos[1] + 1, min(strPos[2], length(strVec)))], collapse = strClp))
+    }
+    strOut
 }
