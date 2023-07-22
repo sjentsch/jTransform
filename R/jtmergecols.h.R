@@ -103,11 +103,11 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview",
-                refs="jmvReadWrite"))
+                title="Outout Preview"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
+                refs="jTransform, jmvReadWrite",
                 content="<h2>Details</h2> <p><strong>Adds columns from other jamovi data file(s) to the current data set (matching them by one or more ID variables).</strong></p> <p>Assign one or more variables that appear in all data sets (e.g., with a participant code) to \u201CVariable(s) to match the data sets by\u201D. Afterwards, you need to assign the remaining variables (i.e., those that you do not want to exclude from the output data file) to \u201CFurther variables in the output\u201D.</p> <p>The file browser under \u201CData set(s) to add\u201D represents a \u201Ctweaked\u201D solution: Because it only delivers the file name back, the home directory is afterwards searched for those file name(s). If a file can't be located in the home directory, or if it exists in more than one locations inside the home directory, an error is returned. Although it is less convenient, manually providing the file name including the path may therefore be both quicker and less error-prone. If several file names are provided, they have to be separated by semicolons.</p> <p>There are four different types of merging operations: The first option keeps all cases (but columns in the resulting data set may be empty if they did not contain values in same input data sets), the second option keeps only those cases where all datasets contain the same value in the matching variable, for \"left\" all cases from the first data set in fleInp are kept (whereas cases that are only contained in input data set two or higher are dropped), for \"right\" all cases from the second (or any higher) data set in fleInp are kept.</p>\n"))}))
 
 jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(

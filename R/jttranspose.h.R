@@ -76,11 +76,11 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview",
-                refs="jmvReadWrite"))
+                title="Outout Preview"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
+                refs="jTransform, jmvReadWrite",
                 content="<h2>Details</h2> <p><strong>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</strong></p> <p>Please assign maximally one variable to the variable box \u201CVariable with column names for the output\u201D (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\u201CV_...\u201D).</p> <p>The variables to be transposed (i.e., those to become rows in your output data set) have to be assigned to \u201CVariables to be transposed\u201D.</p>\n"))}))
 
 jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
