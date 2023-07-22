@@ -64,8 +64,6 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     "jtTransposeResults",
     inherit = jmvcore::Group,
     active = list(
-        txtHdr = function() private$.items[["txtHdr"]],
-        txtOut = function() private$.items[["txtOut"]],
         txtPvw = function() private$.items[["txtPvw"]],
         txtInf = function() private$.items[["txtInf"]]),
     private = list(),
@@ -75,23 +73,15 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="",
                 title="Transpose the dataset")
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="txtHdr",
-                refs="jmvReadWrite",
-                content="<p>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</p>\n"))
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="txtOut",
-                content=""))
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Preview of the output"))
+                title="Outout Preview",
+                refs="jmvReadWrite"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
-                content="<h2>More detailed explanation</h2> <p>Please assign maximally one variable to the variable box \u201CVariable with column names for the output\u201D (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\u201CV_...\u201D).</p> <p>The variables to be transposed (i.e., those to become rows in your output data set) have to be assigned to \u201CVariables to be transposed\u201D.</p>\n"))}))
+                content="<h2>Details</h2> <p><strong>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</strong></p> <p>Please assign maximally one variable to the variable box \u201CVariable with column names for the output\u201D (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\u201CV_...\u201D).</p> <p>The variables to be transposed (i.e., those to become rows in your output data set) have to be assigned to \u201CVariables to be transposed\u201D.</p>\n"))}))
 
 jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtTransposeBase",
@@ -131,8 +121,6 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtHdr} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$txtOut} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
 #'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
 #' }

@@ -7,10 +7,10 @@ items:
     - name:  txtPvw
       title: 'Outout Preview'
       type:  Preformatted
-      refs: jmvReadWrite
     
     - name:  txtInf
       type:  Html
+      refs:  jTransform, jmvReadWrite
       content: >
         <h2>Details</h2>
         <p><strong>Adds columns from other jamovi data file(s) to the current
