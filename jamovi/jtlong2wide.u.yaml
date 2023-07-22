@@ -88,7 +88,5 @@ children:
     children:
       - type: CustomControl
         name: btnOut
-        horizontalAlignment: right
-        verticalAlignment: center
         events:
           creating: './main::crtBtn'
