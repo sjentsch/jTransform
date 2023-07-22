@@ -15,7 +15,7 @@ additional data sets to the currently opened data set.
 --->
 
 
-# Install in jamovi
+## Install in jamovi
 
 Please install [jamovi](https://www.jamovi.org/download.html) and open it.
 Select the jamovi modules library and install jTransform from there.
@@ -27,7 +27,7 @@ Select the jamovi modules library and install jTransform from there.
 --->
 
 
-## From source
+## Install the development version (from source)
 
 Please install [jamovi](https://www.jamovi.org/download.html). Then install and
 open [R](https://cloud.r-project.org/) and install the R-package `jmvtools`
