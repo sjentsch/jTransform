@@ -4,20 +4,17 @@ title: Sort data set
 jrs:   '1.1'
 
 items:
-    - name:  txtHdr
-      type:  Html
-      refs: jmvReadWrite
-      content: >
-        <p>This function sorts a dataset after one or more variables.</p>
-
     - name:  txtPvw
-      title: 'Preview of the output'
+      title: 'Outout Preview'
       type:  Preformatted
+      refs: jmvReadWrite
     
     - name:  txtInf
       type:  Html
       content: >
-        <h2>More detailed explanation</h2>
+        <h2>Details</h2>
+        <p><strong>This function sorts a dataset after one or more variables.
+        </strong></p>
         <p>Please assign one or more variables to the variable box “Variable(s)
         to be sorted after”. The order in which the variables appear in the
         variable box determines after which variable is sorted first (one

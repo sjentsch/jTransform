@@ -4,20 +4,17 @@ title: Transform dataset from long to wide
 jrs:   '1.1'
 
 items:
-    - name:  txtHdr
-      type:  Html
-      refs: jmvReadWrite
-      content: >
-        <p>This function transforms a dataset from long to wide format.</p>
-
     - name:  txtPvw
-      title: 'Preview of the output'
+      title: 'Outout Preview'
       type:  Preformatted
+      refs: jmvReadWrite
     
     - name:  txtInf
       type:  Html
       content: >
-        <h2>More detailed explanation</h2>
+        <h2>Details</h2>
+        <p><strong>This function transforms a dataset from long to wide format.
+        </strong></p>
         <p>“Variables that identify the same unit” is an ID variable (e.g., a
         participant code). This code needs to be unique (i.e., there can't be
         two participants, or other units, with the same ID).</p>
@@ -30,8 +27,8 @@ items:
         leading RT_cond1, RT_cond2, …). There can be several time-varying
         variables (e.g., several facors in an experiment, each represented
         by a different column in the input data set).</p>
-        <p>“Variables to be transformed” are the so-called target variables, i.e.,
-        variables that exist as one column in the input data set and are
+        <p>“Variables to be transformed” are the so-called target variables,
+        i.e., variables that exist as one column in the input data set and are
         going to be transformed / combined with each step of a time-varying
         variable resulting in as many columns as there are steps (e.g., would
         reaction time be one column in the input data set, resulting in as
@@ -39,8 +36,8 @@ items:
         variables in the output data set; if there are 3 steps on the first
         time-varying variable and 4 steps on the second, this would result in
         12 columns in the output data set).</p>
-        <p>“Variables NOT to be transformed” are variables that “characterize” a
-        participant (or another unit), often also called between-subjects
+        <p>“Variables NOT to be transformed” are variables that “characterize”
+        a participant (or another unit), often also called between-subjects
         variables, e.g., age or sex. However, they are not unique (and thus
         no ID variables; there may be several participant with the same age or
         sex).</p>
@@ -55,12 +52,12 @@ items:
         steps of the time-varying variable / conditions for the first target
         variable are adjacent, followed by a block of all conditions of the
         second variable and so on.</p>
-        <p>“How to accumulate?” determines how different rows may be accumulated.
-        The setting does not apply if there is only one occurence / row for
-        each possible combination of conditions. Let's assume that you ran an
-        experiment with two factors: the experimental condition and which
-        repetition of that condition an entry represents. For evaluation, you
-        want to drop the repetition (you thus only assign the variable
+        <p>“How to accumulate?” determines how different rows may be
+        accumulated. The setting does not apply if there is only one occurence
+        / row for each possible combination of conditions. Let's assume that
+        you ran an experiment with two factors: the experimental condition and
+        which repetition of that condition an entry represents. For evaluation,
+        you want to drop the repetition (you thus only assign the variable
         representing the condition to “Variables that differentiate within an
         unit”. The setting determines whether the mean of the repetitions
         shall be taken or the first occurence of each condition.</p>

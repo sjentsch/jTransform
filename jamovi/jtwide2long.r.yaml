@@ -4,26 +4,23 @@ title: Transform dataset from wide to long
 jrs:   '1.1'
 
 items:
-    - name:  txtHdr
-      type:  Html
-      refs: jmvReadWrite
-      content: >
-        <p>This function transforms a dataset from wide to long format.</p>
-
     - name:  txtPvw
-      title: 'Preview of the output'
+      title: 'Outout Preview'
       type:  Preformatted
+      refs: jmvReadWrite
     
     - name:  txtInf
       type:  Html
       content: >
-        <h2>More detailed explanation</h2>
+        <h2>Details</h2>
+        <p><strong>This function transforms a dataset from wide to long
+        format.</strong></p>
         <p>“Variables that identify the same unit” is an ID variable (e.g., a
         participant code). This code needs to be unique (i.e., there can't be
         two participants, or other units, with the same ID).</p>
-        <p>“Variables to be transformed” are the so-called target variables, i.e.,
-        variables that exist as many columns in the input data set and are
-        going to be transformed, creating different steps of one or more
+        <p>“Variables to be transformed” are the so-called target variables,
+        i.e., variables that exist as many columns in the input data set and
+        are going to be transformed, creating different steps of one or more
         time-varying variable resulting in the output. How many variables are
         created is determined by how many parts the variable name has (the
         parts are split by the character defined as “Separator”) and how many
@@ -34,8 +31,8 @@ items:
         of all possible combinations of steps (in the example above 2 * 2 * 2
         * 2 = 16, mulitiplied by the number of rows in the input data set,
         e.g., 50 rows becoming 50 * 16 = 800 rows).</p>
-        <p>“Variables NOT to be transformed” are variables that “characterize” a
-        participant (or another unit), often also called between-subjects
+        <p>“Variables NOT to be transformed” are variables that “characterize”
+        a participant (or another unit), often also called between-subjects
         variables, e.g., age or sex. However, they are not unique (and thus
         no ID variables; there may be several participant with the same age or
         sex).</p>

@@ -4,21 +4,17 @@ title: Change the order of variables
 jrs:   '1.1'
 
 items:
-    - name:  txtHdr
-      type:  Html
-      refs: jmvReadWrite
-      content: >
-        <p>This function re-arranges the order of columns in a jamovi data
-        file.</p>
-
     - name:  txtPvw
-      title: 'Preview of the output'
+      title: 'Outout Preview'
       type:  Preformatted
+      refs: jmvReadWrite
     
     - name:  txtInf
       type:  Html
       content: >
-        <h2>More detailed explanation</h2>
+        <h2>Details</h2>
+        <p><strong>This function re-arranges the order of columns in a jamovi
+        data file.</strong></p>
         <p>Please assign the variables in their desired order to “Desired order
         of variables”. Please note that variables that you leave in the
         variable list to the left are not included in the output file.</p>

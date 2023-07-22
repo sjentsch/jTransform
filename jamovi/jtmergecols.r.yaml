@@ -4,21 +4,17 @@ title: Add columns (from other data sets)
 jrs:   '1.1'
 
 items:
-    - name:  txtHdr
-      type:  Html
-      refs: jmvReadWrite
-      content: >
-        <p>Adds columns from other jamovi data file(s) to the current data set
-        (matching them by one or more ID variables).</p>
-
     - name:  txtPvw
-      title: 'Preview of the output'
+      title: 'Outout Preview'
       type:  Preformatted
+      refs: jmvReadWrite
     
     - name:  txtInf
       type:  Html
       content: >
-        <h2>More detailed explanation</h2>
+        <h2>Details</h2>
+        <p><strong>Adds columns from other jamovi data file(s) to the current
+        data set (matching them by one or more ID variables).</strong></p>
         <p>Assign one or more variables that appear in all data sets (e.g.,
         with a participant code) to “Variable(s) to match the data sets by”.
         Afterwards, you need to assign the remaining variables (i.e., those
@@ -32,13 +28,14 @@ items:
         it is less convenient, manually providing the file name including the
         path may therefore be both quicker and less error-prone. If several
         file names are provided, they have to be separated by semicolons.</p>
-        <p>There are four different types of merging operations: The first option
-        keeps all cases (but columns in the resulting data set may be empty if
-        they did not contain values in same input data sets), the second option
-        keeps only those cases where all datasets contain the same value in the
-        matching variable, for "left" all cases from the first data set in
-        fleInp are kept (whereas cases that are only contained in input data
-        set two or higher are dropped), for "right" all cases from the second
-        (or any higher) data set in fleInp are kept.</p>
+        <p>There are four different types of merging operations: The first
+        option keeps all cases (but columns in the resulting data set may be
+        empty if they did not contain values in same input data sets), the
+        second option keeps only those cases where all datasets contain the
+        same value in the matching variable, for "left" all cases from the
+        first data set in fleInp are kept (whereas cases that are only
+        contained in input data set two or higher are dropped), for "right"
+        all cases from the second (or any higher) data set in fleInp are
+        kept.</p>
 
 ...
