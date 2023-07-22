@@ -29,13 +29,13 @@ Select the jamovi modules library and install jTransform from there.
 
 ## Install the development version (from source)
 
-Please install [jamovi](https://www.jamovi.org/download.html). Then install and
-open [R](https://cloud.r-project.org/) and install the R-package `jmvtools`
-using the following commands (this needs to be done only once with the first
-use):
+Assuming that you have [jamovi](https://www.jamovi.org/download.html) and 
+[R](https://cloud.r-project.org/) already installed on your machine, open
+`R` and install the R-package `jmvtools` using the following command (this
+is required to be done only once before the first use):
 
 ```
-
+install.packages('jmvtools', repos='https://repo.jamovi.org')
 ```
 
 
@@ -45,3 +45,5 @@ the place to where you cloned or extracted it to, and compile the module with:
 ```
 jmvtools::install()
 ```
+
+The module then appears among your jamovi modules.
