@@ -87,6 +87,6 @@ options:
     - name: blnOut
       type: Bool
       default: false
-      hidden: true      
+      hidden: true
 
 ...

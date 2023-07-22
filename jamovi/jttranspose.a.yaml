@@ -24,7 +24,7 @@ options:
           R: the data as a data frame
 
     - name: varNme
-      title: Variable with column names for the output 
+      title: Variable with column names for the output
       type: Variable
       permitted:
         - numeric

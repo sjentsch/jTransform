@@ -7,7 +7,7 @@ items:
     - name:  txtPvw
       title: 'Outout Preview'
       type:  Preformatted
-    
+
     - name:  txtInf
       type:  Html
       refs:  jTransform, jmvReadWrite

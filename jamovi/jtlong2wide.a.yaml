@@ -24,7 +24,7 @@ options:
 #          R: the data as a data frame
 
     - name: varID
-      title: Variables that identify the same unit 
+      title: Variables that identify the same unit
       type: Variables
       permitted:
         - numeric
@@ -48,7 +48,7 @@ options:
 #            a vector of strings containing the names of the variables that
 #            differentiate multiple records from the same unit (e.g., an
 #            individual, a group, an organization, etc.)
-            
+
     - name: varTgt
       title: Variables to be transformed
       type: Variables
@@ -107,6 +107,6 @@ options:
     - name: blnOut
       type: Bool
       default: false
-      hidden: true      
+      hidden: true
 
 ...
