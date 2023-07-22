@@ -4,6 +4,9 @@ title: Add columns (from other data sets)
 jrs:   '1.1'
 
 items:
+#   - name:  fleInp
+#     type:  Property
+
     - name:  txtPvw
       title: 'Outout Preview'
       type:  Preformatted
