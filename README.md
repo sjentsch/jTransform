@@ -34,7 +34,7 @@ jTransform from there.
 Assuming that you have [jamovi](https://www.jamovi.org/download.html) and 
 [R](https://cloud.r-project.org/) already installed on your machine, open
 `R` and install the R-package `jmvtools` using the following command (this
-is required to be done only once before the first use):
+is only required once before the first use):
 
 ```
 install.packages('jmvtools', repos='https://repo.jamovi.org')
