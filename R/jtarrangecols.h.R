@@ -67,7 +67,9 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
-                refs="jTransform, jmvReadWrite",
+                refs=list(
+                    "jTransform",
+                    "jmvReadWrite"),
                 content="<h2>Details</h2> <p><strong>This function re-arranges the order of columns in a jamovi data file.</strong></p> <p>Please assign the variables in their desired order to \u201CDesired order of variables\u201D. Please note that variables that you leave in the variable list to the left are not included in the output file.</p>\n"))}))
 
 jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
