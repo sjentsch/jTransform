@@ -10,7 +10,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
-                
+
                 # assemble and run jmvReadWrite command
                 varSrt <- paste0(gsub("descend", "-", gsub("ascend", "", sapply(self$options$ordSrt, "[[", "order"))),
                                  sapply(self$options$ordSrt, "[[", "var"))

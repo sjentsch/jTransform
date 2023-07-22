@@ -10,7 +10,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
-                
+
                 # assemble and run jmvReadWrite command
                 excLvl <- eval(parse(text = paste0("as.integer(c(", self$options$excLvl, "))")))
                 dtaFrm <- jmvReadWrite::wide2long_omv(dtaInp = crrDta, varLst = self$options$varLst, varID = self$options$varID, varTme = self$options$varTme,

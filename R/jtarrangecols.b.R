@@ -10,7 +10,7 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
-                
+
                 # assemble and run jmvReadWrite command
                 dtaFrm <- jmvReadWrite::arrange_cols_omv(crrDta, varOrd = self$options$varOrd)
 

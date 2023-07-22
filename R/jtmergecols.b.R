@@ -15,7 +15,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 # and attach further input files as attribute fleInp
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
                 attr(crrDta, "fleInp") <- fndFlI(self$options$fleInp)
-                
+
                 # assemble and run jmvReadWrite command
                 dtaFrm <- jmvReadWrite::merge_cols_omv(dtaInp = crrDta, varBy = self$options$varBy, typMrg = self$options$typMrg)
 

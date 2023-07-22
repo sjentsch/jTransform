@@ -10,7 +10,7 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
-                
+
                 # assemble and run jmvReadWrite command
                 varNme <- ifelse(is.null(self$options$varNme), "", self$options$varNme)
                 dtaFrm <- jmvReadWrite::transpose_omv(dtaInp = crrDta, varNme = varNme, varOth = self$options$varOth)
@@ -27,6 +27,6 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 }
 
             }
-            
+
         })
 )
