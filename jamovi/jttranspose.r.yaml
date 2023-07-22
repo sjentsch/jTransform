@@ -10,7 +10,7 @@ items:
 
     - name:  txtInf
       type:  Html
-      refs:  jTransform, jmvReadWrite
+      refs:  [ jTransform, jmvReadWrite ]
       content: >
         <h2>Details</h2>
         <p><strong>This function transposes a dataset (i.e., rows are made into

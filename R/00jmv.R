@@ -3,16 +3,16 @@
 
 .jmvrefs <- list(
     `jmvReadWrite`=list(
-        `type`="software", 
-        `author`="Jentschke, S.", 
-        `year`=2023, 
-        `title`="jmvReadWrite: Read and Write jamovi Files (.omv)", 
-        `publisher`="[R package]. Retrieved from https://cran.r-project.org/package=jmvReadWrite", 
-        `url`="https://cran.r-project.org/package=jmvReadWrite"), 
+        `type`="software",
+        `author`="Jentschke, S.",
+        `year`=2023,
+        `title`="jmvReadWrite: Read and Write jamovi Files (.omv)",
+        `publisher`="[R package]. Retrieved from https://cran.r-project.org/package=jmvReadWrite",
+        `url`="https://cran.r-project.org/package=jmvReadWrite"),
     `jTransform`=list(
-        `type`="software", 
-        `author`="Jentschke, S.", 
-        `year`=2023, 
-        `title`="jTransform: Functions for Common Data Set Transformations", 
-        `publisher`="[jamovi module]. Available at https://github.com/sjentsch/jTransform", 
+        `type`="software",
+        `author`="Jentschke, S.",
+        `year`=2023,
+        `title`="jTransform: Functions for Common Data Set Transformations",
+        `publisher`="[jamovi module]. Available at https://github.com/sjentsch/jTransform",
         `url`="https://github.com/sjentsch/jTransform"))
