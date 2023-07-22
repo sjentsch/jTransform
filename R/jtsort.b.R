@@ -6,7 +6,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
 
             # check whether all required variables are present
-            if (length(self$options$varSrt) > 0) {
+            if (length(self$options$varSrt) > 0 && dim(self$data)[2] > 1) {
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
@@ -14,7 +14,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 # assemble and run jmvReadWrite command
                 varSrt <- paste0(gsub("descend", "-", gsub("ascend", "", sapply(self$options$ordSrt, "[[", "order"))),
                                  sapply(self$options$ordSrt, "[[", "var"))
-                dtaFrm <- jmvReadWrite::sort_omv(dtaInp = crrDta, fleOut = fleOut, varSrt = varSrt)
+                dtaFrm <- jmvReadWrite::sort_omv(dtaInp = crrDta, varSrt = varSrt)
 
                 # preview the data (crtPvw in utils.R)
                 self$results$txtPvw$setContent(crtPvw(dtaFrm))

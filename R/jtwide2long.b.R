@@ -13,8 +13,8 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 
                 # assemble and run jmvReadWrite command
                 excLvl <- eval(parse(text = paste0("as.integer(c(", self$options$excLvl, "))")))
-                dtaFrm <- jmvReadWrite::wide2long_omv(dtaInp = crrDta, fleOut = fleOut, varLst = self$options$varLst, varID = self$options$varID,
-                                            varTme = self$options$varTme, varExc = self$options$varExc, varSep = self$options$varSep, excLvl = excLvl)
+                dtaFrm <- jmvReadWrite::wide2long_omv(dtaInp = crrDta, varLst = self$options$varLst, varID = self$options$varID, varTme = self$options$varTme,
+                                                      varExc = self$options$varExc, varSep = self$options$varSep, excLvl = excLvl)
 
                 # preview the data (crtPvw in utils.R)
                 self$results$txtPvw$setContent(crtPvw(dtaFrm))

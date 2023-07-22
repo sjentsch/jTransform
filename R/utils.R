@@ -7,7 +7,7 @@ hmeDir <- function() {
 }
 
 jmvEXE <- function() {
-    file.path(Sys.getenv("JAMOVI_HOME"), "bin", ifelse(isWin, "jamovi.exe", "jamovi"))
+    file.path(Sys.getenv("JAMOVI_HOME"), "bin", ifelse(isWin(), "jamovi.exe", "jamovi"))
 }
 
 splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
@@ -22,7 +22,7 @@ splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
 }
 
 crtPvw <- function(dtaFrm = NULL) {
-    sprintf("Variables in the output file:\n%s\n\n%s\n\n(max. 10 rows and max. 8 variables are shown)\n",
+    sprintf("\nVariables in the output:\n%s\n\n\n%s\n\n(max. 10 rows and max. 8 variables are shown)\n",
       paste(splStr(names(dtaFrm), maxLng = 81), collapse = ",\n"),
       paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), seq(min(8, dim(dtaFrm)[2]))], row.names = FALSE)), collapse="\n"))
 }

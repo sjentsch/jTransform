@@ -6,7 +6,7 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         .run = function() {
 
             # check whether all required variables are present
-            if (length(self$options$varOrd) > 0) {
+            if (length(self$options$varOrd) > 1) {
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)

@@ -9,7 +9,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
 
             # check whether all required variables are present
-            if (length(self$options$varBy) > 0) {
+            if (length(self$options$varBy) > 0 && dim(self$data)[2] > 1) {
 
                 # add column attributes (measureType and dataTye)
                 # and attach further input files as attribute fleInp
@@ -17,7 +17,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 attr(crrDta, "fleInp") <- fndFlI(self$options$fleInp)
                 
                 # assemble and run jmvReadWrite command
-                dtaFrm <- jmvReadWrite::merge_cols_omv(dtaInp = crrDta, fleOut = fleOut, varBy = self$options$varBy, typMrg = self$options$typMrg)
+                dtaFrm <- jmvReadWrite::merge_cols_omv(dtaInp = crrDta, varBy = self$options$varBy, typMrg = self$options$typMrg)
 
                 # preview the data (crtPvw in utils.R)
                 self$results$txtPvw$setContent(crtPvw(dtaFrm))

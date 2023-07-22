@@ -6,14 +6,14 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
 
             # check whether all required variables are present
-            if (length(self$options$varOth) > 0) {
+            if (length(self$options$varOth) > 1) {
 
                 # add column attributes (measureType and dataTye)
                 crrDta <- jmvReadWrite:::jmvAtt(self$data)
                 
                 # assemble and run jmvReadWrite command
                 varNme <- ifelse(is.null(self$options$varNme), "", self$options$varNme)
-                dtaFrm <- jmvReadWrite::transpose_omv(dtaInp = crrDta, fleOut = fleOut, varNme = varNme, varOth = self$options$varOth)
+                dtaFrm <- jmvReadWrite::transpose_omv(dtaInp = crrDta, varNme = varNme, varOth = self$options$varOth)
 
                 # preview the data (crtPvw in utils.R)
                 self$results$txtPvw$setContent(crtPvw(dtaFrm))
