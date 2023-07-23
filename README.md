@@ -42,7 +42,7 @@ install.packages('jmvtools', repos='https://repo.jamovi.org')
 
 
 Clone this repository (or [download the ZIP file](../../archive/refs/heads/main.zip)
-and extract it). In `R`, go to the place to where you cloned or extracted the
+and extract it). In `R`, go to the directory where you cloned or extracted the
 repository to, and compile the module with:
 
 ```
