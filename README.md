@@ -50,3 +50,15 @@ jmvtools::install()
 ```
 
 The module then appears among your jamovi modules.
+
+
+## Giving back
+
+If you find this module helpful, please consider donating to the jamovi project (via
+the Patreon-link on the left side).
+If you can't give money, but would like to support us in another way, you may contribute
+to translating [jamovi](https://hosted.weblate.org/engage/jamovi/), the
+[jamovi documentation](https://hosted.weblate.org/engage/jamovidocs/) or the textbook
+[”learning statistics with jamovi“](https://hosted.weblate.org/engage/jamovi/).
+
+Thank you for your support!
