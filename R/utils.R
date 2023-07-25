@@ -7,7 +7,7 @@ hmeDir <- function() {
 }
 
 jmvEXE <- function() {
-    file.path(Sys.getenv("JAMOVI_HOME"), "bin", ifelse(isWin(), "jamovi.exe", "jamovi"))
+    ifelse(isWin(), "jamovi.exe", "jamovi")
 }
 
 splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
