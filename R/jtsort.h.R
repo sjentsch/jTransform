@@ -9,8 +9,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varSrt = NULL,
             varOth = NULL,
             ordSrt = NULL,
-            btnOut = NULL,
-            blnOut = FALSE, ...) {
+            btnOut = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -51,34 +50,25 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                             options=list(
                                 "ascend",
                                 "descend")))))
-            private$..btnOut <- jmvcore::OptionString$new(
+            private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
-                btnOut,
-                hidden=TRUE)
-            private$..blnOut <- jmvcore::OptionBool$new(
-                "blnOut",
-                blnOut,
-                default=FALSE,
-                hidden=TRUE)
+                btnOut)
 
             self$.addOption(private$..varSrt)
             self$.addOption(private$..varOth)
             self$.addOption(private$..ordSrt)
             self$.addOption(private$..btnOut)
-            self$.addOption(private$..blnOut)
         }),
     active = list(
         varSrt = function() private$..varSrt$value,
         varOth = function() private$..varOth$value,
         ordSrt = function() private$..ordSrt$value,
-        btnOut = function() private$..btnOut$value,
-        blnOut = function() private$..blnOut$value),
+        btnOut = function() private$..btnOut$value),
     private = list(
         ..varSrt = NA,
         ..varOth = NA,
         ..ordSrt = NA,
-        ..btnOut = NA,
-        ..blnOut = NA)
+        ..btnOut = NA)
 )
 
 jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -97,13 +87,15 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview"))
+                title="Output Preview",
+                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
+                clearWith=list(),
                 content="<h2>Details</h2> <p><strong>This function sorts a dataset after one or more variables. </strong></p> <p>Please assign one or more variables to the variable box \u201CVariable(s) to be sorted after\u201D. The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age).</p> <p>Variables are sorted in ascending order (as default), but you can change the order if desired.</p> <p>Currently, the remaining variables (i.e., those not to be used for sorting but to be included into the output file) have to be assigned to \u201CFurther variables in the output\u201D.</p>\n"))}))
 
 jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -142,7 +134,6 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varOth .
 #' @param ordSrt .
 #' @param btnOut .
-#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
@@ -155,8 +146,7 @@ jtSort <- function(
     varSrt,
     varOth,
     ordSrt = NULL,
-    btnOut,
-    blnOut = FALSE) {
+    btnOut) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtSort requires jmvcore to be installed (restart may be required)")
@@ -174,8 +164,7 @@ jtSort <- function(
         varSrt = varSrt,
         varOth = varOth,
         ordSrt = ordSrt,
-        btnOut = btnOut,
-        blnOut = blnOut)
+        btnOut = btnOut)
 
     analysis <- jtSortClass$new(
         options = options,

@@ -11,8 +11,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             fleInp = "",
             fleChs = NULL,
             typMrg = "outer",
-            btnOut = NULL,
-            blnOut = FALSE, ...) {
+            btnOut = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -51,15 +50,9 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "left",
                     "right"),
                 default="outer")
-            private$..btnOut <- jmvcore::OptionString$new(
+            private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
-                btnOut,
-                hidden=TRUE)
-            private$..blnOut <- jmvcore::OptionBool$new(
-                "blnOut",
-                blnOut,
-                default=FALSE,
-                hidden=TRUE)
+                btnOut)
 
             self$.addOption(private$..varBy)
             self$.addOption(private$..varOth)
@@ -67,7 +60,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..fleChs)
             self$.addOption(private$..typMrg)
             self$.addOption(private$..btnOut)
-            self$.addOption(private$..blnOut)
         }),
     active = list(
         varBy = function() private$..varBy$value,
@@ -75,16 +67,14 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         fleInp = function() private$..fleInp$value,
         fleChs = function() private$..fleChs$value,
         typMrg = function() private$..typMrg$value,
-        btnOut = function() private$..btnOut$value,
-        blnOut = function() private$..blnOut$value),
+        btnOut = function() private$..btnOut$value),
     private = list(
         ..varBy = NA,
         ..varOth = NA,
         ..fleInp = NA,
         ..fleChs = NA,
         ..typMrg = NA,
-        ..btnOut = NA,
-        ..blnOut = NA)
+        ..btnOut = NA)
 )
 
 jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -103,13 +93,15 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview"))
+                title="Output Preview",
+                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
+                clearWith=list(),
                 content="<h2>Details</h2> <p><strong>Adds columns from other jamovi data file(s) to the current data set (matching them by one or more ID variables).</strong></p> <p>Assign one or more variables that appear in all data sets (e.g., with a participant code) to \u201CVariable(s) to match the data sets by\u201D. Afterwards, you need to assign the remaining variables (i.e., those that you do not want to exclude from the output data file) to \u201CFurther variables in the output\u201D.</p> <p>The file browser under \u201CData set(s) to add\u201D represents a \u201Ctweaked\u201D solution: Because it only delivers the file name back, the home directory is afterwards searched for those file name(s). If a file can't be located in the home directory, or if it exists in more than one locations inside the home directory, an error is returned. Although it is less convenient, manually providing the file name including the path may therefore be both quicker and less error-prone. If several file names are provided, they have to be separated by semicolons.</p> <p>There are four different types of merging operations: The first option keeps all cases (but columns in the resulting data set may be empty if they did not contain values in same input data sets), the second option keeps only those cases where all datasets contain the same value in the matching variable, for \"left\" all cases from the first data set in fleInp are kept (whereas cases that are only contained in input data set two or higher are dropped), for \"right\" all cases from the second (or any higher) data set in fleInp are kept.</p>\n"))}))
 
 jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -150,7 +142,6 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param fleChs .
 #' @param typMrg .
 #' @param btnOut .
-#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
@@ -165,8 +156,7 @@ jtMergeCols <- function(
     fleInp = "",
     fleChs,
     typMrg = "outer",
-    btnOut,
-    blnOut = FALSE) {
+    btnOut) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtMergeCols requires jmvcore to be installed (restart may be required)")
@@ -186,8 +176,7 @@ jtMergeCols <- function(
         fleInp = fleInp,
         fleChs = fleChs,
         typMrg = typMrg,
-        btnOut = btnOut,
-        blnOut = blnOut)
+        btnOut = btnOut)
 
     analysis <- jtMergeColsClass$new(
         options = options,

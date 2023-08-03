@@ -7,8 +7,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     public = list(
         initialize = function(
             varOrd = NULL,
-            btnOut = NULL,
-            blnOut = FALSE, ...) {
+            btnOut = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -23,28 +22,19 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                     "numeric",
                     "factor",
                     "id"))
-            private$..btnOut <- jmvcore::OptionString$new(
+            private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
-                btnOut,
-                hidden=TRUE)
-            private$..blnOut <- jmvcore::OptionBool$new(
-                "blnOut",
-                blnOut,
-                default=FALSE,
-                hidden=TRUE)
+                btnOut)
 
             self$.addOption(private$..varOrd)
             self$.addOption(private$..btnOut)
-            self$.addOption(private$..blnOut)
         }),
     active = list(
         varOrd = function() private$..varOrd$value,
-        btnOut = function() private$..btnOut$value,
-        blnOut = function() private$..blnOut$value),
+        btnOut = function() private$..btnOut$value),
     private = list(
         ..varOrd = NA,
-        ..btnOut = NA,
-        ..blnOut = NA)
+        ..btnOut = NA)
 )
 
 jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -63,13 +53,15 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview"))
+                title="Output Preview",
+                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
+                clearWith=list(),
                 content="<h2>Details</h2> <p><strong>This function re-arranges the order of columns in a jamovi data file.</strong></p> <p>Please assign the variables in their desired order to \u201CDesired order of variables\u201D. Please note that variables that you leave in the variable list to the left are not included in the output file.</p>\n"))}))
 
 jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -100,13 +92,12 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @examples
 #' \dontrun{
 #' # the function is a wrapper for jmvReadWrite::arrange_cols_omv
-#' # please use that function when using R
+#' # please use that function when using R (or in Rj)
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
 #' @param data .
 #' @param varOrd .
 #' @param btnOut .
-#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
@@ -117,8 +108,7 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtArrangeCols <- function(
     data,
     varOrd,
-    btnOut,
-    blnOut = FALSE) {
+    btnOut) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtArrangeCols requires jmvcore to be installed (restart may be required)")
@@ -132,8 +122,7 @@ jtArrangeCols <- function(
 
     options <- jtArrangeColsOptions$new(
         varOrd = varOrd,
-        btnOut = btnOut,
-        blnOut = blnOut)
+        btnOut = btnOut)
 
     analysis <- jtArrangeColsClass$new(
         options = options,

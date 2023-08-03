@@ -12,8 +12,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varTme = "cond",
             varSep = "_",
             excLvl = "",
-            btnOut = NULL,
-            blnOut = FALSE, ...) {
+            btnOut = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -54,15 +53,9 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "excLvl",
                 excLvl,
                 default="")
-            private$..btnOut <- jmvcore::OptionString$new(
+            private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
-                btnOut,
-                hidden=TRUE)
-            private$..blnOut <- jmvcore::OptionBool$new(
-                "blnOut",
-                blnOut,
-                default=FALSE,
-                hidden=TRUE)
+                btnOut)
 
             self$.addOption(private$..varID)
             self$.addOption(private$..varLst)
@@ -71,7 +64,6 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..varSep)
             self$.addOption(private$..excLvl)
             self$.addOption(private$..btnOut)
-            self$.addOption(private$..blnOut)
         }),
     active = list(
         varID = function() private$..varID$value,
@@ -80,8 +72,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         varTme = function() private$..varTme$value,
         varSep = function() private$..varSep$value,
         excLvl = function() private$..excLvl$value,
-        btnOut = function() private$..btnOut$value,
-        blnOut = function() private$..blnOut$value),
+        btnOut = function() private$..btnOut$value),
     private = list(
         ..varID = NA,
         ..varLst = NA,
@@ -89,8 +80,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..varTme = NA,
         ..varSep = NA,
         ..excLvl = NA,
-        ..btnOut = NA,
-        ..blnOut = NA)
+        ..btnOut = NA)
 )
 
 jtWide2LongResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -109,13 +99,15 @@ jtWide2LongResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview"))
+                title="Output Preview",
+                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
+                clearWith=list(),
                 content="<h2>Details</h2> <p><strong>This function transforms a dataset from wide to long format.</strong></p> <p>\u201CVariables that identify the same unit\u201D is an ID variable (e.g., a participant code). This code needs to be unique (i.e., there can't be two participants, or other units, with the same ID).</p> <p>\u201CVariables to be transformed\u201D are the so-called target variables, i.e., variables that exist as many columns in the input data set and are going to be transformed, creating different steps of one or more time-varying variable resulting in the output. How many variables are created is determined by how many parts the variable name has (the parts are split by the character defined as \u201CSeparator\u201D) and how many steps / different values exist within each part. If we had a variable with 4 parts, each with two steps per step, this would result in four columns (starting with the string defined as \u201CPrefix\u201D and ending with 1, 2, 3, and 4). The number of rows would be increased by the number of all possible combinations of steps (in the example above 2 * 2 * 2 * 2 = 16, mulitiplied by the number of rows in the input data set, e.g., 50 rows becoming 50 * 16 = 800 rows).</p> <p>\u201CVariables NOT to be transformed\u201D are variables that \u201Ccharacterize\u201D a participant (or another unit), often also called between-subjects variables, e.g., age or sex. However, they are not unique (and thus no ID variables; there may be several participant with the same age or sex).</p> <p>\u201CSeparator\u201D defines which character(s) should be placed between the target variable and the steps of the time-varying variable / conditions when assembling the variable names (e.g., VAR_COND).</p> <p>Often, an input data set contains different types of measures (e.g., whether a response was correct and the reaction time) that make up a part of the variable name. Typically, one wants to keep those different measures as separate columns in the output data set. \"Exclude level\" permits to exclude one (or more) part (in the steps in it) from being transformed from wide to long. If the measurement types were the first part of the variable name, 1 would have to be put into this field. If all levels are to be transformed, the field needs to be blank.</p> <p></p> <p>The principle of the transformation from long to wide can perhaps easiest be understood by looking at example4jtWide2Long from the Data Library of this module. It contains results from a Stroop experiment (in wide format) with fifty variables: ID (identifies the participant), sex (of the participant), and afterwards 48 variables that represent a combination of the measurement (first part of the variable name, rspCrr \u2013 whether the response was correct \u2013 or rspTme \u2013 reaction time), the experimental condition / congruency (second part; either cong[ruent], incong[ruent] or neutral), the colour the word was written with (third part; BLUE, GREEN, RED or YELLOW) and which repetition of a particular combination of experimental conditions the variable represents (fourth part, 1 or 2). These variables have to be assigned to the following fields: ID to \u201CVariables that identify the same unit\u201D (it is an unique identifier of each participant); sex to \u201CVariables NOT to be transformed\u201D (sex is a between-subjects variable that doesn't change between experimental conditions; however, it is not unique and thus not suited as ID variable); and the remaining variables (i.e., all variables starting with rspCrr_... or rspTme... to \u201CVariables to be transformed\u201D. Under \u201CPrefix\u201D it can be determined how the name for the different conditions shall start (a number would be added if there is more than one condition).</p>\n"))}))
 
 jtWide2LongBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -157,7 +149,6 @@ jtWide2LongBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varSep .
 #' @param excLvl .
 #' @param btnOut .
-#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
@@ -173,8 +164,7 @@ jtWide2Long <- function(
     varTme = "cond",
     varSep = "_",
     excLvl = "",
-    btnOut,
-    blnOut = FALSE) {
+    btnOut) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtWide2Long requires jmvcore to be installed (restart may be required)")
@@ -197,8 +187,7 @@ jtWide2Long <- function(
         varTme = varTme,
         varSep = varSep,
         excLvl = excLvl,
-        btnOut = btnOut,
-        blnOut = blnOut)
+        btnOut = btnOut)
 
     analysis <- jtWide2LongClass$new(
         options = options,

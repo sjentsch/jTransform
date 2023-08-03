@@ -8,8 +8,7 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varNme = NULL,
             varOth = NULL,
-            btnOut = NULL,
-            blnOut = FALSE, ...) {
+            btnOut = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -33,31 +32,22 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "factor",
                     "id"),
                 required=TRUE)
-            private$..btnOut <- jmvcore::OptionString$new(
+            private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
-                btnOut,
-                hidden=TRUE)
-            private$..blnOut <- jmvcore::OptionBool$new(
-                "blnOut",
-                blnOut,
-                default=FALSE,
-                hidden=TRUE)
+                btnOut)
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
             self$.addOption(private$..btnOut)
-            self$.addOption(private$..blnOut)
         }),
     active = list(
         varNme = function() private$..varNme$value,
         varOth = function() private$..varOth$value,
-        btnOut = function() private$..btnOut$value,
-        blnOut = function() private$..blnOut$value),
+        btnOut = function() private$..btnOut$value),
     private = list(
         ..varNme = NA,
         ..varOth = NA,
-        ..btnOut = NA,
-        ..blnOut = NA)
+        ..btnOut = NA)
 )
 
 jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -76,13 +66,15 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Preformatted$new(
                 options=options,
                 name="txtPvw",
-                title="Outout Preview"))
+                title="Output Preview",
+                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="txtInf",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
+                clearWith=list(),
                 content="<h2>Details</h2> <p><strong>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</strong></p> <p>Please assign maximally one variable to the variable box \u201CVariable with column names for the output\u201D (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\u201CV_...\u201D).</p> <p>The variables to be transposed (i.e., those to become rows in your output data set) have to be assigned to \u201CVariables to be transposed\u201D.</p>\n"))}))
 
 jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -120,7 +112,6 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varNme .
 #' @param varOth .
 #' @param btnOut .
-#' @param blnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
@@ -132,8 +123,7 @@ jtTranspose <- function(
     data,
     varNme,
     varOth,
-    btnOut,
-    blnOut = FALSE) {
+    btnOut) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtTranspose requires jmvcore to be installed (restart may be required)")
@@ -150,8 +140,7 @@ jtTranspose <- function(
     options <- jtTransposeOptions$new(
         varNme = varNme,
         varOth = varOth,
-        btnOut = btnOut,
-        blnOut = blnOut)
+        btnOut = btnOut)
 
     analysis <- jtTransposeClass$new(
         options = options,
