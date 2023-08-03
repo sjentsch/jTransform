@@ -1,0 +1,79 @@
+title: Replace values in the current data set
+name: jtReplace
+jus: '3.0'
+stage: 0
+compilerMode: tame
+
+children:
+  - type: VariableSupplier
+    permitted:
+      - numeric
+      - factor
+      - id
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        children:
+          - type: VariablesListBox
+            name: varAll
+            isTarget: true
+
+  - type: LayoutBox
+    style: inline
+    stretchFactor: 1
+    margin: large
+    children:
+      - type: TextBox
+        name: rplTrm
+        format: string
+        stretchFactor: 5
+        margin: large
+      - type: CheckBox
+        name: whlTrm
+
+  - type: LayoutBox
+    style: inline
+    margin: large
+    horizontalAlignment: right
+    children:
+      - type: ActionButton
+        name: btnOut
+
+  - type: CollapseBox
+    label: Include / exclude
+    collapsed: true
+    style: inline
+    stretchFactor: 1
+    children:
+      - type: Label
+        label: Column type
+        style: list
+        margin: large
+        stretchFactor: 2
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: CheckBox
+                name: incCmp
+              - type: CheckBox
+                name: incRcd
+      - type: Label
+        label: Measurement type
+        style: list
+        margin: large
+        stretchFactor: 3
+        children:
+          - type: LayoutBox
+            style: inline
+            children:
+              - type: CheckBox
+                name: incID
+              - type: CheckBox
+                name: incNom
+              - type: CheckBox
+                name: incOrd
+              - type: CheckBox
+                name: incNum
+

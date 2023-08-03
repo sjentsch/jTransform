@@ -16,6 +16,18 @@ description: >-
   a data set after one or more variable, and adding columns from one or more
   additional data sets to the currently opened data set.
 analyses:
+  - title: Search within the current data set
+    name: jtSearch
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Search within the current data set
+  - title: Replace values in the current data set
+    name: jtReplace
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Replace values in the current data set
   - title: Change the order of variables
     name: jtArrangeCols
     ns: jTransform

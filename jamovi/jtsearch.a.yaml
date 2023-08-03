@@ -1,0 +1,71 @@
+---
+name:  jtSearch
+title: Search within the current data set
+menuGroup: Data
+menuSubgroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+description:
+    main: Search within the current data set
+    R:
+        dontrun: true
+        usage: |
+            # the function is a wrapper for jmvReadWrite::search_omv
+            # please use that function when in R (or in Rj)
+            # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
+options:
+    - name: data
+      type: Data
+
+    - name: varAll
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+
+    - name: srcTrm
+      type: String
+      title: "Search term:"
+      default: ""
+
+    - name: whlTrm
+      title: "Whole word"
+      type: Bool
+      default: false
+
+    - name: incCmp
+      title: "Computed"
+      type: Bool
+      default: true
+
+    - name: incRcd
+      title: "Transformed"
+      type: Bool
+      default: true
+
+    - name: incID
+      title: "ID"
+      type: Bool
+      default: true
+
+    - name: incNom
+      title: "Nominal"
+      type: Bool
+      default: true
+
+    - name: incOrd
+      title: "Ordinal"
+      type: Bool
+      default: true
+
+    - name: incNum
+      title: "Continuous"
+      type: Bool
+      default: true
+
+...

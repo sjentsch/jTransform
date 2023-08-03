@@ -1,0 +1,31 @@
+---
+name:  jtReplace
+title: Replace values in the current data set
+jrs:   '1.1'
+
+items:
+    - name:  txtPvw
+      type:  Preformatted
+      title: 'Output Preview'
+      clearWith: []
+
+    - name:  txtInf
+      type:  Html
+      refs:  [ jTransform, jmvReadWrite ]
+      clearWith: []
+      content: >
+        <h2>Details</h2>
+        <p><strong>This function replaces values in a jamovi data set.</strong>
+        </p>
+        <p>Please type the original value and the replacement into the text
+        box. Original and replacement should be separated by a comma. If you
+        want to have several pairs of original and to replacment values, use
+        separate lines. If you want to replace partial matches, unset the tick
+        box “whole word ” (e.g., for orginal: 24 and replacement: 34, 241 will
+        be changed into 341).</p>
+        <p>The “Include / exclude” collapse box permits to specifically select
+        in which column types and for which measurement type the search shall
+        be conducted.</p>
+
+
+...
