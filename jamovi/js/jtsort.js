@@ -23,4 +23,5 @@ module.exports = {
         if (ordVal === null ? 0 : ordVal.length !== ordUpd.length || JSON.stringify(ordVal) !== JSON.stringify(ordUpd))
             ui.ordSrt.setValue(ordUpd);
     }
+
 };
