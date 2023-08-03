@@ -59,6 +59,7 @@ the Patreon-link on the left side).
 If you can't give money, but would like to support us in another way, you may contribute
 to translating [jamovi](https://hosted.weblate.org/engage/jamovi/), the
 [jamovi documentation](https://hosted.weblate.org/engage/jamovidocs/) or the textbook
-[”learning statistics with jamovi“](https://hosted.weblate.org/engage/jamovi/).
+[”learning statistics with jamovi“](https://hosted.weblate.org/engage/jamovi/) into your
+language.
 
 Thank you for your support!
