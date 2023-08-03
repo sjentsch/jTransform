@@ -7,27 +7,23 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # check whether all required variables are present
             if (length(self$options$varSrt) > 0 && dim(self$data)[2] > 1) {
+                # assemble the arguments for sort_omv
+                crrArg <- list(dtaInp = self$data, fleOut = NULL, varSrt = paste0(gsub("descend", "-", gsub("ascend", "",
+                            sapply(self$options$ordSrt, "[[", "order"))), sapply(self$options$ordSrt, "[[", "var")))
 
-                # add column attributes (measureType and dataTye)
-                crrDta <- jmvReadWrite:::jmvAtt(self$data)
-
-                # assemble and run jmvReadWrite command
-                varSrt <- paste0(gsub("descend", "-", gsub("ascend", "", sapply(self$options$ordSrt, "[[", "order"))),
-                                 sapply(self$options$ordSrt, "[[", "var"))
-                dtaFrm <- jmvReadWrite::sort_omv(dtaInp = crrDta, varSrt = varSrt)
-
-                # preview the data (crtPvw in utils.R)
-                self$results$txtPvw$setContent(crtPvw(dtaFrm))
-
-                # if CREATE was pressed (blnOut == TRUE), open a new jamovi session with the data
-                if (self$options$blnOut) {
-                    tmpOut <- paste0(tempfile(), ".omv")
-                    jmvReadWrite::write_omv(dtaFrm, fleOut = tmpOut)
-# TO-DO: replace Dataset with the name of the current data set
-                    system(paste0(jmvEXE(), " --temp --title=\"", paste0("Dataset", "_sort"), "\" ", tmpOut))
+                # if CREATE was pressed (btnOut == TRUE), open a new jamovi session with the data
+                if (self$options$btnOut) {
+                    do.call(jmvReadWrite::sort_omv, crrArg[-2])
+                    self$results$txtPvw$setContent(self$results$txtPvw)
+                # if not, create a preview of the data (crtPvw in utils.R)
+                } else {
+                    self$results$txtPvw$setContent(crtPvw(do.call(jmvReadWrite::sort_omv, crrArg), varFst = crrArg$varSrt))
                 }
-
+            } else {
+                self$results$txtPvw$setContent("")
             }
 
-        })
+        }
+        
+    )
 )
