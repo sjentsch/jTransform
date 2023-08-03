@@ -1,13 +1,5 @@
-isWin  <- function() {
-    .Platform$OS.type != "unix"
-}
-
 hmeDir <- function() {
-    Sys.getenv(ifelse(isWin(), "USERPROFILE", "HOME"))
-}
-
-jmvEXE <- function() {
-    ifelse(isWin(), "jamovi.exe", "jamovi")
+    Sys.getenv(ifelse(jmvReadWrite::getOS() == "windows", "USERPROFILE", "HOME"))
 }
 
 splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
@@ -21,8 +13,16 @@ splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
     strOut
 }
 
-crtPvw <- function(dtaFrm = NULL) {
-    sprintf("\nVariables in the output:\n%s\n\n\n%s\n\n(max. 10 rows and max. 8 variables are shown)\n",
+crtPvw <- function(dtaFrm = NULL, varFst = c()) {
+    if (length(varFst) > 0) {
+        varOrd <- c(varFst, setdiff(names(dtaFrm), varFst))[seq(min(dim(dtaFrm)[2], 8))]
+        varTxt <- sprintf("Variable%s %s %s", ifelse(length(varFst) > 1, "s", ""), paste0(varFst, collapse = ", "), ifelse(length(varFst) > 1, "are", "is"))
+    } else {
+        varOrd <- names(dtaFrm)[seq(min(dim(dtaFrm)[2], 8))]
+    }
+    sprintf("\nVariables in the output:\n%s\n\n\n%s\n\n(%smax. 10 rows and %s variables are shown)\n",
       paste(splStr(names(dtaFrm), maxLng = 81), collapse = ",\n"),
-      paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), seq(min(8, dim(dtaFrm)[2]))], row.names = FALSE)), collapse="\n"))
+      paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), varOrd], row.names = FALSE)), collapse="\n"),
+      ifelse(length(varFst) > 0, sprintf("%s shown first in this preview,\n in the created data set the order is as in the variable list above,\n ", varTxt), ""),
+      ifelse(length(varOrd) < dim(dtaFrm)[2], sprintf("max. %d", length(varOrd)), "all"))
 }
