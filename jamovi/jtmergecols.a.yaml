@@ -12,7 +12,7 @@ description:
         dontrun: true
         usage: |
             # the function is a wrapper for jmvReadWrite::merge_cols_omv
-            # please use that function from R
+            # please use that function when in R (or in Rj)
             # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
@@ -64,12 +64,7 @@ options:
       default: outer
 
     - name: btnOut
-      type: String
-      hidden: true
-
-    - name: blnOut
-      type: Bool
-      default: false
-      hidden: true
+      type: Action
+      title: CREATE
 
 ...

@@ -12,7 +12,7 @@ description:
         dontrun: true
         usage: |
             # the function is a wrapper for jmvReadWrite::long2wide_omv
-            # please use that function when using R
+            # please use that function when in R (or in Rj)
             # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
@@ -101,12 +101,7 @@ options:
 #            the variable name ("VAR1_1", "VAR1_2"; default: "_")
 
     - name: btnOut
-      type: String
-      hidden: true
-
-    - name: blnOut
-      type: Bool
-      default: false
-      hidden: true
+      type: Action
+      title: CREATE
 
 ...

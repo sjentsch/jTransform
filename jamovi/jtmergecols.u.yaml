@@ -4,11 +4,11 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-events:
-  creating: './main::rstFlC'
-  loaded:   './main::rstFlC'
-  update:   './main::rstFlC'
-# remoteDataChanged: './main::dtaChg'
+#events:
+#  creating: ''
+#  loaded:   ''
+#  update:   ''
+#  remoteDataChanged: './main::dtaChg'
 
 children:
   - type: VariableSupplier
@@ -28,16 +28,12 @@ children:
             name: varBy
             height: small
             isTarget: true
-            events:
-              changing: './main::rstBtn'
       - type: TargetLayoutBox
         label: Further variables in the output
         children:
           - type: VariablesListBox
             name: varOth
             isTarget: true
-            events:
-              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
@@ -49,15 +45,11 @@ children:
         format: string
         stretchFactor: 6
         margin: large
-        events:
-          changing: './main::rstBtn'
       - type: CustomControl
         stretchFactor: 1
         name: fleChs
         horizontalAlignment: right
         verticalAlignment: center
-        events:
-          creating: './main::crtFlC'
 
   - type: LayoutBox
     margin: large
@@ -65,14 +57,11 @@ children:
       - type: ComboBox
         name: typMrg
         stretchFactor: 1
-        events:
-          changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
     margin: large
+    horizontalAlignment: right
     children:
-      - type: CustomControl
+      - type: ActionButton
         name: btnOut
-        events:
-          creating: './main::crtBtn'

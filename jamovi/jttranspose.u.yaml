@@ -4,10 +4,10 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-events:
-  creating: './main::rstBtn'
-  loaded: './main::rstBtn'
-  update: './main::rstBtn'
+#events:
+#  creating: ''
+#  loaded: ''
+#  update: ''
 
 children:
   - type: VariableSupplier
@@ -27,22 +27,17 @@ children:
             name: varNme
             maxItemCount: 1
             isTarget: true
-            events:
-              changing: './main::rstBtn'
       - type: TargetLayoutBox
         label: Variables to be transposed
         children:
           - type: VariablesListBox
             name: varOth
             isTarget: true
-            events:
-              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
     margin: large
+    horizontalAlignment: right
     children:
-      - type: CustomControl
+      - type: ActionButton
         name: btnOut
-        events:
-          creating: './main::crtBtn'

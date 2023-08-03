@@ -4,11 +4,6 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-events:
-  creating: './main::rstBtn'
-  loaded: './main::rstBtn'
-  update: './main::rstBtn'
-
 children:
   - type: VariableSupplier
     permitted:
@@ -23,14 +18,11 @@ children:
           - type: VariablesListBox
             name: varOrd
             isTarget: true
-            events:
-              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
     margin: large
+    horizontalAlignment: right
     children:
-      - type: CustomControl
-        name: btnOut
-        events:
-          creating: './main::crtBtn'
+      - type: ActionButton
+        name: btnOut        

@@ -4,10 +4,10 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-events:
-  creating: './main::rstBtn'
-  loaded:   './main::rstBtn'
-  update:   './main::rstBtn'
+#events:
+#  creating: ''
+#  loaded:   ''
+#  update:   ''
 
 children:
   - type: VariableSupplier
@@ -26,31 +26,23 @@ children:
             name: varID
             height: small
             isTarget: true
-            events:
-              changing: './main::rstBtn'
       - type: TargetLayoutBox
         children:
           - type: VariablesListBox
             name: varTme
             height: small
             isTarget: true
-            events:
-              changing: './main::rstBtn'
       - type: TargetLayoutBox
         children:
           - type: VariablesListBox
             name: varTgt
             isTarget: true
-            events:
-              changing: './main::rstBtn'
       - type: TargetLayoutBox
         children:
           - type: VariablesListBox
             name: varExc
             height: small
             isTarget: true
-            events:
-              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
@@ -62,13 +54,9 @@ children:
           - type: ComboBox
             name: varOrd
             margin: large
-            events:
-              changing: './main::rstBtn'
           - type: ComboBox
             name: varAgg
             margin: large
-            events:
-              changing: './main::rstBtn'
       - type: LayoutBox
         style: list
         margin: large
@@ -79,14 +67,11 @@ children:
             format: string
             margin: large
             width: small
-            events:
-              changing: './main::rstBtn'
 
   - type: LayoutBox
     style: inline
     margin: large
+    horizontalAlignment: right
     children:
-      - type: CustomControl
+      - type: ActionButton
         name: btnOut
-        events:
-          creating: './main::crtBtn'
