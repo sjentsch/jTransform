@@ -7,7 +7,9 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             varAll = NULL,
+            srcCst = "",
             srcTrm = "",
+            ignCse = FALSE,
             whlTrm = FALSE,
             incCmp = TRUE,
             incRcd = TRUE,
@@ -25,14 +27,25 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..varAll <- jmvcore::OptionVariables$new(
                 "varAll",
                 varAll,
+                hidden=TRUE,
                 permitted=list(
                     "numeric",
                     "factor",
                     "id"))
+            private$..srcCst <- jmvcore::OptionString$new(
+                "srcCst",
+                srcCst,
+                default="",
+                hidden=TRUE)
             private$..srcTrm <- jmvcore::OptionString$new(
                 "srcTrm",
                 srcTrm,
-                default="")
+                default="",
+                hidden=TRUE)
+            private$..ignCse <- jmvcore::OptionBool$new(
+                "ignCse",
+                ignCse,
+                default=FALSE)
             private$..whlTrm <- jmvcore::OptionBool$new(
                 "whlTrm",
                 whlTrm,
@@ -63,7 +76,9 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=TRUE)
 
             self$.addOption(private$..varAll)
+            self$.addOption(private$..srcCst)
             self$.addOption(private$..srcTrm)
+            self$.addOption(private$..ignCse)
             self$.addOption(private$..whlTrm)
             self$.addOption(private$..incCmp)
             self$.addOption(private$..incRcd)
@@ -74,7 +89,9 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         }),
     active = list(
         varAll = function() private$..varAll$value,
+        srcCst = function() private$..srcCst$value,
         srcTrm = function() private$..srcTrm$value,
+        ignCse = function() private$..ignCse$value,
         whlTrm = function() private$..whlTrm$value,
         incCmp = function() private$..incCmp$value,
         incRcd = function() private$..incRcd$value,
@@ -84,7 +101,9 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         incNum = function() private$..incNum$value),
     private = list(
         ..varAll = NA,
+        ..srcCst = NA,
         ..srcTrm = NA,
+        ..ignCse = NA,
         ..whlTrm = NA,
         ..incCmp = NA,
         ..incRcd = NA,
@@ -118,7 +137,7 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "jTransform",
                     "jmvReadWrite"),
                 clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function searches values in a jamovi data set.</strong> </p> <p>Please type the term to be search for into the text box. If you want that partial matches (where the search term appears within an values), set the tick box \u201Cwhole word\u201D.</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types and for which measurement type the search shall be conducted.</p>\n"))}))
+                content="<h2>Details</h2> <p><strong>This function searches values in a jamovi data set.</strong> </p> <p>Please type the term to be search for into the text box. If you want that partial matches (i.e., the search term appears within values) are found, leave the tick box \u201Cwhole word\u201D unset.</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types and for which measurement type the search shall be conducted.</p>\n"))}))
 
 jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSearchBase",
@@ -136,17 +155,26 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Search within the current data set
 #'
-#' 
+#' Search within the current data set
+#'
+#' @examples
+#' \dontrun{
+#' # the function is a wrapper for jmvReadWrite::search_omv
+#' # please use that function when in R (or in Rj)
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'}
 #' @param data .
 #' @param varAll .
+#' @param srcCst .
 #' @param srcTrm .
+#' @param ignCse .
 #' @param whlTrm .
 #' @param incCmp .
 #' @param incRcd .
@@ -164,7 +192,9 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtSearch <- function(
     data,
     varAll,
+    srcCst = "",
     srcTrm = "",
+    ignCse = FALSE,
     whlTrm = FALSE,
     incCmp = TRUE,
     incRcd = TRUE,
@@ -185,7 +215,9 @@ jtSearch <- function(
 
     options <- jtSearchOptions$new(
         varAll = varAll,
+        srcCst = srcCst,
         srcTrm = srcTrm,
+        ignCse = ignCse,
         whlTrm = whlTrm,
         incCmp = incCmp,
         incRcd = incRcd,

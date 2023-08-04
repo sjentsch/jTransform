@@ -7,6 +7,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             varAll = NULL,
+            rplCst = "",
             rplTrm = "",
             whlTrm = TRUE,
             btnOut = NULL,
@@ -26,14 +27,21 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..varAll <- jmvcore::OptionVariables$new(
                 "varAll",
                 varAll,
+                hidden=TRUE,
                 permitted=list(
                     "numeric",
                     "factor",
                     "id"))
+            private$..rplCst <- jmvcore::OptionString$new(
+                "rplCst",
+                rplCst,
+                default="",
+                hidden=TRUE)
             private$..rplTrm <- jmvcore::OptionString$new(
                 "rplTrm",
                 rplTrm,
-                default="")
+                default="",
+                hidden=TRUE)
             private$..whlTrm <- jmvcore::OptionBool$new(
                 "whlTrm",
                 whlTrm,
@@ -67,6 +75,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=TRUE)
 
             self$.addOption(private$..varAll)
+            self$.addOption(private$..rplCst)
             self$.addOption(private$..rplTrm)
             self$.addOption(private$..whlTrm)
             self$.addOption(private$..btnOut)
@@ -79,6 +88,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         }),
     active = list(
         varAll = function() private$..varAll$value,
+        rplCst = function() private$..rplCst$value,
         rplTrm = function() private$..rplTrm$value,
         whlTrm = function() private$..whlTrm$value,
         btnOut = function() private$..btnOut$value,
@@ -90,6 +100,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         incNum = function() private$..incNum$value),
     private = list(
         ..varAll = NA,
+        ..rplCst = NA,
         ..rplTrm = NA,
         ..whlTrm = NA,
         ..btnOut = NA,
@@ -126,7 +137,7 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "jTransform",
                     "jmvReadWrite"),
                 clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function replaces values in a jamovi data set.</strong> </p> <p>Please type the original value and the replacement into the text box. Original and replacement should be separated by a comma. If you want to have several pairs of original and to replacment values, use separate lines. If you want to replace partial matches, unset the tick box \u201Cwhole word \u201D (e.g., for orginal: 24 and replacement: 34, 241 will be changed into 341).</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types and for which measurement type the search shall be conducted.</p>\n"))}))
+                content="<h2>Details</h2> <p><strong>This function replaces values in a jamovi data set.</strong> </p> <p>Please type the original value and the replacement into the text box. Original and replacement should be separated by a comma. If you want to have several pairs of original and to replacment values, use separate lines. If you want to replace partial matches, unset the tick box \u201Cwhole word\u201D (e.g., for orginal: 24 and replacement: 34, 241 will be changed into 341).</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types and for which measurement type the search shall be conducted.</p>\n"))}))
 
 jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtReplaceBase",
@@ -144,16 +155,24 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Replace values in the current data set
 #'
-#' 
+#' Replace values in the current data set
+#'
+#' @examples
+#' \dontrun{
+#' # the function is a wrapper for jmvReadWrite::replace_omv
+#' # please use that function when in R (or in Rj)
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'}
 #' @param data .
 #' @param varAll .
+#' @param rplCst .
 #' @param rplTrm .
 #' @param whlTrm .
 #' @param btnOut .
@@ -173,6 +192,7 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtReplace <- function(
     data,
     varAll,
+    rplCst = "",
     rplTrm = "",
     whlTrm = TRUE,
     btnOut,
@@ -195,6 +215,7 @@ jtReplace <- function(
 
     options <- jtReplaceOptions$new(
         varAll = varAll,
+        rplCst = rplCst,
         rplTrm = rplTrm,
         whlTrm = whlTrm,
         btnOut = btnOut,
