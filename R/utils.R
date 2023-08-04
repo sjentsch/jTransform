@@ -2,14 +2,17 @@ hmeDir <- function() {
     Sys.getenv(ifelse(jmvReadWrite::getOS() == "windows", "USERPROFILE", "HOME"))
 }
 
-splStr <- function(strVec = c(), strClp = ", ", maxLng = 80) {
-    strLng <- unname(sapply(strVec, nchar)) + nchar(strClp)
-    strOut <- c()
+splStr <- function(strVec = NULL, strClp = ", ", maxLng = 80, lstInd = 2) {
+    blnLst <- is.list(strVec)
+    if (blnLst) strVec <- c(names(strVec), unlist(strVec, use.names = FALSE))
+    strLng <- c(unname(sapply(strVec, nchar)) + nchar(strClp))
     strPos <- 0
+    strOut <- c()
     while (max(strPos) < length(strVec)) {
-        strPos <- c(max(strPos), max(which(cumsum(strLng[(max(strPos) + 1):length(strVec)]) <= maxLng)) + max(strPos))
-        strOut <- c(strOut, paste0(strVec[seq(strPos[1] + 1, min(strPos[2], length(strVec)))], collapse = strClp))
+        strPos <- c(max(strPos), max(which(cumsum(strLng[(max(strPos) + 1):length(strVec)]) <= maxLng - ifelse(blnLst && strPos[1] > 0, lstInd, 0))) + max(strPos))
+        strOut <- c(strOut, paste0(ifelse(blnLst && strPos[1] > 0, rep(" ", lstInd), ""), paste0(strVec[seq(strPos[1] + 1, min(strPos[2], length(strVec)))], collapse = strClp)))
     }
+    if (blnLst) strOut <- paste(c(sub(strClp, ": ", strOut[1]), strOut[-1]), collapse = "\n")
     strOut
 }
 

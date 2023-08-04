@@ -17,8 +17,8 @@ items:
         <p><strong>This function searches values in a jamovi data set.</strong>
         </p>
         <p>Please type the term to be search for into the text box. If you want
-        that partial matches (where the search term appears within an values),
-        set the tick box “whole word”.</p>
+        that partial matches (i.e., the search term appears within values) are
+        found, leave the tick box “whole word” unset.</p>
         <p>The “Include / exclude” collapse box permits to specifically select
         in which column types and for which measurement type the search shall
         be conducted.</p>

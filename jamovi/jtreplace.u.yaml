@@ -4,41 +4,37 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
+events:
+  loaded:            './varAll::loaded'
+  remoteDataChanged: './varAll::remoteDataChanged'
+
 children:
-  - type: VariableSupplier
-    permitted:
-      - numeric
-      - factor
-      - id
-    persistentItems: false
-    stretchFactor: 1
-    children:
-      - type: TargetLayoutBox
-        children:
-          - type: VariablesListBox
-            name: varAll
-            isTarget: true
-
   - type: LayoutBox
     style: inline
-    stretchFactor: 1
     margin: large
+    stretchFactor: 1
     children:
-      - type: TextBox
-        name: rplTrm
-        format: string
-        stretchFactor: 5
+      - type: Label
+        label: 'Original and replacement values:'
+        style: list
+        stretchFactor: 4
         margin: large
-      - type: CheckBox
-        name: whlTrm
-
-  - type: LayoutBox
-    style: inline
-    margin: large
-    horizontalAlignment: right
-    children:
-      - type: ActionButton
-        name: btnOut
+        children:
+          - type: CustomControl
+            name: rplCst
+      - type: LayoutBox
+        style: list
+        margin: large
+        stretchFactor: 1
+        verticalAlignment: bottom
+        horizontalAlignment: right
+        children:
+          - type: CheckBox
+            name: whlTrm
+            margin: large
+          - type: ActionButton
+            name: btnOut
+            margin: large
 
   - type: CollapseBox
     label: Include / exclude
@@ -76,4 +72,3 @@ children:
                 name: incOrd
               - type: CheckBox
                 name: incNum
-

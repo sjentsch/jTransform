@@ -23,15 +23,21 @@ options:
 
     - name: varAll
       type: Variables
+      hidden: true
       permitted:
         - numeric
         - factor
         - id
 
+    - name: rplCst
+      type: String
+      default: ""
+      hidden: true
+
     - name: rplTrm
       type: String
-      title: "Original and replacement values:"
       default: ""
+      hidden: true
 
     - name: whlTrm
       title: "Whole word"
@@ -40,7 +46,7 @@ options:
 
     - name: btnOut
       type: Action
-      title: REPLACE
+      title: CREATE
 
     - name: incCmp
       title: "Computed"

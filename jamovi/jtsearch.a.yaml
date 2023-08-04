@@ -23,15 +23,26 @@ options:
 
     - name: varAll
       type: Variables
+      hidden: true
       permitted:
         - numeric
         - factor
         - id
 
+    - name: srcCst
+      type: String
+      default: ""
+      hidden: true
+
     - name: srcTrm
       type: String
-      title: "Search term:"
       default: ""
+      hidden: true
+
+    - name: ignCse
+      title: "Ignore case"
+      type: Bool
+      default: false
 
     - name: whlTrm
       title: "Whole word"

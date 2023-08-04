@@ -22,12 +22,14 @@ analyses:
     menuGroup: Data
     menuSubgroup: jTransform
     menuTitle: Search within the current data set
+    description: Search within the current data set
   - title: Replace values in the current data set
     name: jtReplace
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
     menuTitle: Replace values in the current data set
+    description: Replace values in the current data set
   - title: Change the order of variables
     name: jtArrangeCols
     ns: jTransform
