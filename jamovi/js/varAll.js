@@ -29,7 +29,7 @@ module.exports = {
 
     },
 
-    remoteDataChanged(ui, event) {
+    dataChanged(ui, event) {
         if (event.dataType !== 'columns')
             return;
         this.getColumnNames().then((columns) => {
