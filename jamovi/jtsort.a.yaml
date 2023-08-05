@@ -34,14 +34,13 @@ options:
 #          ui: the variables to sort `data` with
 #          R: a vector of strings naming the variables to sort `data` with
 
-    - name: varOth
-      title: Further variables in the output
+    - name: varAll
       type: Variables
+      hidden: true
       permitted:
         - numeric
         - factor
         - id
-#     hidden: true
 
     - name: ordSrt
       type: Array
