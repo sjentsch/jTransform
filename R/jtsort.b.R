@@ -6,7 +6,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
 
             # check whether all required variables are present
-            if (length(self$options$varSrt) > 0 && dim(self$data)[2] > 1) {
+            if (length(self$options$varSrt) > 0 && dim(self$data)[2] >= 1) {
                 # assemble the arguments for sort_omv
                 crrArg <- list(dtaInp = self$data, fleOut = NULL, varSrt = paste0(gsub("descend", "-", gsub("ascend", "",
                             sapply(self$options$ordSrt, "[[", "order"))), sapply(self$options$ordSrt, "[[", "var")))
