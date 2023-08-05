@@ -18,64 +18,80 @@ description:
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
+  - name: data
+    type: Data
 
-    - name: varAll
-      type: Variables
-      hidden: true
-      permitted:
-        - numeric
-        - factor
-        - id
+  - name: varAll
+    type: Variables
+    hidden: true
+    permitted:
+      - numeric
+      - factor
+      - id
 
-    - name: rplCst
-      type: String
-      default: ""
-      hidden: true
+  - name: rplCst
+    type: String
+    default: ""
+    hidden: true
 
-    - name: rplTrm
-      type: String
-      default: ""
-      hidden: true
+  - name: rplTrm
+    type: String
+    default: ""
+    hidden: true
 
-    - name: whlTrm
-      title: "Whole word"
-      type: Bool
-      default: true
+  - name: whlTrm
+    title: "Whole word"
+    type: Bool
+    default: true
 
-    - name: btnOut
-      type: Action
-      title: CREATE
+  - name: btnOut
+    type: Action
+    title: CREATE
 
-    - name: incCmp
-      title: "Computed"
-      type: Bool
-      default: true
+  - name: incCmp
+    title: "Computed"
+    type: Bool
+    default: true
 
-    - name: incRcd
-      title: "Transformed"
-      type: Bool
-      default: true
+  - name: incRcd
+    title: "Transformed"
+    type: Bool
+    default: true
 
-    - name: incID
-      title: "ID"
-      type: Bool
-      default: true
+  - name: incID
+    title: "ID"
+    type: Bool
+    default: true
 
-    - name: incNom
-      title: "Nominal"
-      type: Bool
-      default: true
+  - name: incNom
+    title: "Nominal"
+    type: Bool
+    default: true
 
-    - name: incOrd
-      title: "Ordinal"
-      type: Bool
-      default: true
+  - name: incOrd
+    title: "Ordinal"
+    type: Bool
+    default: true
 
-    - name: incNum
-      title: "Continuous"
-      type: Bool
-      default: true
+  - name: incNum
+    title: "Continuous"
+    type: Bool
+    default: true
+
+  - name: incExc
+    type: List
+    options:
+      - name: include
+        title: include
+      - name: exclude
+        title: exclude
+    default: include
+
+  - name: varSel
+    type: Variables
+    permitted:
+      - numeric
+      - factor
+      - id
 
 ...

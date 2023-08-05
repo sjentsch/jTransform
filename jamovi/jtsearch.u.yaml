@@ -6,7 +6,7 @@ compilerMode: tame
 
 events:
   loaded:            './varAll::loaded'
-  remoteDataChanged: './varAll::remoteDataChanged'
+  remoteDataChanged: './varAll::dataChanged'
 
 children:
   - type: LayoutBox

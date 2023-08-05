@@ -6,7 +6,7 @@ compilerMode: tame
 
 events:
   loaded:            './varAll::loaded'
-  remoteDataChanged: './varAll::remoteDataChanged'
+  remoteDataChanged: './varAll::dataChanged'
 
 children:
   - type: LayoutBox
@@ -39,36 +39,69 @@ children:
   - type: CollapseBox
     label: Include / exclude
     collapsed: true
-    style: inline
+    style: list
     stretchFactor: 1
     children:
+      - type: LayoutBox
+        style: inline
+        margin: large
+        stretchFactor: 1
+        children:
+          - type: Label
+            label: Column type
+            style: list
+            margin: large
+            stretchFactor: 2
+            children:
+              - type: LayoutBox
+                style: inline
+                children:
+                  - type: CheckBox
+                    name: incCmp
+                  - type: CheckBox
+                    name: incRcd
+          - type: Label
+            label: Measurement type
+            style: list
+            margin: large
+            stretchFactor: 3
+            children:
+              - type: LayoutBox
+                style: inline
+                children:
+                  - type: CheckBox
+                    name: incID
+                  - type: CheckBox
+                    name: incNom
+                  - type: CheckBox
+                    name: incOrd
+                  - type: CheckBox
+                    name: incNum
       - type: Label
-        label: Column type
+        label: Select variables... (include or exclude those variables from replacing values)
         style: list
         margin: large
-        stretchFactor: 2
+        stretchFactor: 1
         children:
           - type: LayoutBox
             style: inline
             children:
-              - type: CheckBox
-                name: incCmp
-              - type: CheckBox
-                name: incRcd
-      - type: Label
-        label: Measurement type
-        style: list
-        margin: large
-        stretchFactor: 3
-        children:
-          - type: LayoutBox
-            style: inline
+              - type: RadioButton
+                name: incExc_Inc
+                optionName: incExc
+                optionPart: include
+              - type: RadioButton
+                name: incExc_Exc
+                optionName: incExc
+                optionPart: exclude
+          - type: VariableSupplier
+            persistentItems: false
+            stretchFactor: 1
             children:
-              - type: CheckBox
-                name: incID
-              - type: CheckBox
-                name: incNom
-              - type: CheckBox
-                name: incOrd
-              - type: CheckBox
-                name: incNum
+              - type: TargetLayoutBox
+                label: Variables
+                children:
+                  - type: VariablesListBox
+                    name: varSel
+                    isTarget: true
+                    height: smallest

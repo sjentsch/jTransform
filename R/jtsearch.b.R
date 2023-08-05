@@ -10,7 +10,7 @@ jtSearchClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             # check whether all required variables are present
             srcTrm <- trimws(self$options$srcTrm)
-            if (nzchar(srcTrm) && dim(self$data)[2] > 1) {
+            if (nzchar(srcTrm) && dim(self$data)[2] >= 1) {
                 # assemble the arguments for search_omv and conduct search
                 crrArg <- list(dtaInp = self$data, srcTrm = srcTrm, whlTrm = self$options$whlTrm, ignCse = self$options$ignCse,
                                incCmp = self$options$incCmp, incRcd = self$options$incRcd, incID  = self$options$incID,

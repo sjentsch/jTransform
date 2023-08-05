@@ -24,7 +24,7 @@ items:
       box “whole word” (e.g., for orginal: 24 and replacement: 34, 241 will
       be changed into 341).</p>
       <p>The “Include / exclude” collapse box permits to specifically select
-      in which column types and for which measurement type the search shall
-      be conducted.</p>
+      in which column types, for which measurement type, and in which variables
+      the search shall be conducted.</p>
 
 ...
