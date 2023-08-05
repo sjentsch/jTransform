@@ -16,7 +16,9 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             incID = TRUE,
             incNom = TRUE,
             incOrd = TRUE,
-            incNum = TRUE, ...) {
+            incNum = TRUE,
+            incExc = "include",
+            varSel = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -73,6 +75,20 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "incNum",
                 incNum,
                 default=TRUE)
+            private$..incExc <- jmvcore::OptionList$new(
+                "incExc",
+                incExc,
+                options=list(
+                    "include",
+                    "exclude"),
+                default="include")
+            private$..varSel <- jmvcore::OptionVariables$new(
+                "varSel",
+                varSel,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..rplCst)
@@ -85,6 +101,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..incNom)
             self$.addOption(private$..incOrd)
             self$.addOption(private$..incNum)
+            self$.addOption(private$..incExc)
+            self$.addOption(private$..varSel)
         }),
     active = list(
         varAll = function() private$..varAll$value,
@@ -97,7 +115,9 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         incID = function() private$..incID$value,
         incNom = function() private$..incNom$value,
         incOrd = function() private$..incOrd$value,
-        incNum = function() private$..incNum$value),
+        incNum = function() private$..incNum$value,
+        incExc = function() private$..incExc$value,
+        varSel = function() private$..varSel$value),
     private = list(
         ..varAll = NA,
         ..rplCst = NA,
@@ -109,7 +129,9 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..incID = NA,
         ..incNom = NA,
         ..incOrd = NA,
-        ..incNum = NA)
+        ..incNum = NA,
+        ..incExc = NA,
+        ..varSel = NA)
 )
 
 jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -137,7 +159,7 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "jTransform",
                     "jmvReadWrite"),
                 clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function replaces values in a jamovi data set.</strong> </p> <p>Please type the original value and the replacement into the text box. Original and replacement should be separated by a comma. If you want to have several pairs of original and to replacment values, use separate lines. If you want to replace partial matches, unset the tick box \u201Cwhole word\u201D (e.g., for orginal: 24 and replacement: 34, 241 will be changed into 341).</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types and for which measurement type the search shall be conducted.</p>\n"))}))
+                content="<h2>Details</h2> <p><strong>This function replaces values in a jamovi data set.</strong> </p> <p>Please type the original value and the replacement into the text box. Original and replacement should be separated by a comma. If you want to have several pairs of original and to replacment values, use separate lines. If you want to replace partial matches, unset the tick box \u201Cwhole word\u201D (e.g., for orginal: 24 and replacement: 34, 241 will be changed into 341).</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types, for which measurement type, and in which variables the search shall be conducted.</p>\n"))}))
 
 jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtReplaceBase",
@@ -182,6 +204,8 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param incNom .
 #' @param incOrd .
 #' @param incNum .
+#' @param incExc .
+#' @param varSel .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
@@ -201,16 +225,20 @@ jtReplace <- function(
     incID = TRUE,
     incNom = TRUE,
     incOrd = TRUE,
-    incNum = TRUE) {
+    incNum = TRUE,
+    incExc = "include",
+    varSel) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtReplace requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(varAll)) varAll <- jmvcore::resolveQuo(jmvcore::enquo(varAll))
+    if ( ! missing(varSel)) varSel <- jmvcore::resolveQuo(jmvcore::enquo(varSel))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(varAll), varAll, NULL))
+            `if`( ! missing(varAll), varAll, NULL),
+            `if`( ! missing(varSel), varSel, NULL))
 
 
     options <- jtReplaceOptions$new(
@@ -224,7 +252,9 @@ jtReplace <- function(
         incID = incID,
         incNom = incNom,
         incOrd = incOrd,
-        incNum = incNum)
+        incNum = incNum,
+        incExc = incExc,
+        varSel = varSel)
 
     analysis <- jtReplaceClass$new(
         options = options,

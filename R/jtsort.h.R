@@ -7,7 +7,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             varSrt = NULL,
-            varOth = NULL,
+            varAll = NULL,
             ordSrt = NULL,
             btnOut = NULL, ...) {
 
@@ -24,9 +24,10 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "numeric",
                     "factor",
                     "id"))
-            private$..varOth <- jmvcore::OptionVariables$new(
-                "varOth",
-                varOth,
+            private$..varAll <- jmvcore::OptionVariables$new(
+                "varAll",
+                varAll,
+                hidden=TRUE,
                 permitted=list(
                     "numeric",
                     "factor",
@@ -55,18 +56,18 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 btnOut)
 
             self$.addOption(private$..varSrt)
-            self$.addOption(private$..varOth)
+            self$.addOption(private$..varAll)
             self$.addOption(private$..ordSrt)
             self$.addOption(private$..btnOut)
         }),
     active = list(
         varSrt = function() private$..varSrt$value,
-        varOth = function() private$..varOth$value,
+        varAll = function() private$..varAll$value,
         ordSrt = function() private$..ordSrt$value,
         btnOut = function() private$..btnOut$value),
     private = list(
         ..varSrt = NA,
-        ..varOth = NA,
+        ..varAll = NA,
         ..ordSrt = NA,
         ..btnOut = NA)
 )
@@ -131,7 +132,7 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'}
 #' @param data .
 #' @param varSrt .
-#' @param varOth .
+#' @param varAll .
 #' @param ordSrt .
 #' @param btnOut .
 #' @return A results object containing:
@@ -144,7 +145,7 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtSort <- function(
     data,
     varSrt,
-    varOth,
+    varAll,
     ordSrt = NULL,
     btnOut) {
 
@@ -152,17 +153,17 @@ jtSort <- function(
         stop("jtSort requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(varSrt)) varSrt <- jmvcore::resolveQuo(jmvcore::enquo(varSrt))
-    if ( ! missing(varOth)) varOth <- jmvcore::resolveQuo(jmvcore::enquo(varOth))
+    if ( ! missing(varAll)) varAll <- jmvcore::resolveQuo(jmvcore::enquo(varAll))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(varSrt), varSrt, NULL),
-            `if`( ! missing(varOth), varOth, NULL))
+            `if`( ! missing(varAll), varAll, NULL))
 
 
     options <- jtSortOptions$new(
         varSrt = varSrt,
-        varOth = varOth,
+        varAll = varAll,
         ordSrt = ordSrt,
         btnOut = btnOut)
 

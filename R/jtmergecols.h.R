@@ -7,7 +7,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     public = list(
         initialize = function(
             varBy = NULL,
-            varOth = NULL,
+            varAll = NULL,
             fleInp = "",
             fleChs = NULL,
             typMrg = "outer",
@@ -26,9 +26,10 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "numeric",
                     "factor",
                     "id"))
-            private$..varOth <- jmvcore::OptionVariables$new(
-                "varOth",
-                varOth,
+            private$..varAll <- jmvcore::OptionVariables$new(
+                "varAll",
+                varAll,
+                hidden=TRUE,
                 permitted=list(
                     "numeric",
                     "factor",
@@ -55,7 +56,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 btnOut)
 
             self$.addOption(private$..varBy)
-            self$.addOption(private$..varOth)
+            self$.addOption(private$..varAll)
             self$.addOption(private$..fleInp)
             self$.addOption(private$..fleChs)
             self$.addOption(private$..typMrg)
@@ -63,14 +64,14 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         }),
     active = list(
         varBy = function() private$..varBy$value,
-        varOth = function() private$..varOth$value,
+        varAll = function() private$..varAll$value,
         fleInp = function() private$..fleInp$value,
         fleChs = function() private$..fleChs$value,
         typMrg = function() private$..typMrg$value,
         btnOut = function() private$..btnOut$value),
     private = list(
         ..varBy = NA,
-        ..varOth = NA,
+        ..varAll = NA,
         ..fleInp = NA,
         ..fleChs = NA,
         ..typMrg = NA,
@@ -137,7 +138,7 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'}
 #' @param data the data as a data frame
 #' @param varBy .
-#' @param varOth .
+#' @param varAll .
 #' @param fleInp .
 #' @param fleChs .
 #' @param typMrg .
@@ -152,7 +153,7 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtMergeCols <- function(
     data,
     varBy,
-    varOth,
+    varAll,
     fleInp = "",
     fleChs,
     typMrg = "outer",
@@ -162,17 +163,17 @@ jtMergeCols <- function(
         stop("jtMergeCols requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(varBy)) varBy <- jmvcore::resolveQuo(jmvcore::enquo(varBy))
-    if ( ! missing(varOth)) varOth <- jmvcore::resolveQuo(jmvcore::enquo(varOth))
+    if ( ! missing(varAll)) varAll <- jmvcore::resolveQuo(jmvcore::enquo(varAll))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(varBy), varBy, NULL),
-            `if`( ! missing(varOth), varOth, NULL))
+            `if`( ! missing(varAll), varAll, NULL))
 
 
     options <- jtMergeColsOptions$new(
         varBy = varBy,
-        varOth = varOth,
+        varAll = varAll,
         fleInp = fleInp,
         fleChs = fleChs,
         typMrg = typMrg,
