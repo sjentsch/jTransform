@@ -30,6 +30,13 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Replace values in the current data set
     description: Replace values in the current data set
+  - title: Sort data set
+    name: jtSort
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Sort data set
+    description: Sort data set
   - title: Change the order of variables
     name: jtArrangeCols
     ns: jTransform
@@ -51,13 +58,6 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Transform dataset from wide to long
     description: Transform dataset from wide to long
-  - title: Sort data set
-    name: jtSort
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Sort data set
-    description: Sort data set
   - title: Transpose the dataset
     name: jtTranspose
     ns: jTransform
