@@ -7,7 +7,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
 
             # check whether all required variables are present
-            if (length(self$options$varBy) > 0 && nzchar(self$options$fleInp) && dim(self$data)[2] > 1) {
+            if (length(self$options$varBy) > 0 && nzchar(self$options$fleInp) && dim(self$data)[2] >= 1) {
                 # attach further input files as attribute fleInp to the data frame
                 # and assemble the arguments for merge_cols_omv
                 crrDta <- self$data

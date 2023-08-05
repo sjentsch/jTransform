@@ -31,14 +31,14 @@ options:
         - factor
         - id
 
-    - name: varOth
+    - name: varAll
       title: Further variables in the output
       type: Variables
+      hidden: true
       permitted:
         - numeric
         - factor
         - id
-#     hidden: true
 
     - name: fleInp
       type: String

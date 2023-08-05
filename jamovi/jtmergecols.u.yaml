@@ -4,11 +4,9 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-#events:
-#  creating: ''
-#  loaded:   ''
-#  update:   ''
-#  remoteDataChanged: './main::dtaChg'
+events:
+  loaded:            './varAll::loaded'
+  remoteDataChanged: './varAll::dataChanged'
 
 children:
   - type: VariableSupplier
@@ -17,8 +15,6 @@ children:
       - factor
       - id
     persistentItems: false
-# needs to be changed to true with hiding varOth and filling it using js
-#   persistentItems: true
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
@@ -26,13 +22,6 @@ children:
         children:
           - type: VariablesListBox
             name: varBy
-            height: small
-            isTarget: true
-      - type: TargetLayoutBox
-        label: Further variables in the output
-        children:
-          - type: VariablesListBox
-            name: varOth
             isTarget: true
 
   - type: LayoutBox
