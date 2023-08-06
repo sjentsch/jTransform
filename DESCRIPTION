@@ -9,12 +9,12 @@ Authors@R:
 Maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 Description:
     jTransform carries out common data management tasks and transformations of
-    data sets. It includes functions to change the order of / re-arrange
-    variables in a data set, transforming a data set from long to wide or from
-    wide to long, transposing a data set (make rows into columns and columns
-    into rows), sorting a data set after one or more variable, and adding
-    columns from one or more additional data sets to the currently opened data
-    set.
+    data sets. It includes functions to search and replace values, to sort a
+    data set after one or more variable, to change the order of variables in a
+    data set, to transform data sets from long to wide or from wide to long,
+    to transpose data sets (make rows into columns and columns into rows), and
+    to add columns from one or more additional data sets to the currently
+    opened data set.
     jTransform calls functions from the R-package `jmvReadWrite`,
     (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to
     these functions via a graphical user interface (without the need to use

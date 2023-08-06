@@ -6,15 +6,16 @@ jms: '1.0'
 authors:
   - Sebastian Jentschke
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2023-07-16'
+date: '2023-08-06'
 type: R
 description: >-
-  jTransform carries out common data management tasks and transformations of
-  data sets. It includes functions to change the order of / re-arrange variables
-  in a data set, transforming a data set from long to wide or from wide to long,
-  transposing a data set (make rows into columns and columns into rows), sorting
-  a data set after one or more variable, and adding columns from one or more
-  additional data sets to the currently opened data set.
+    jTransform carries out common data management tasks and transformations of
+    data sets. It includes functions to search and replace values, to sort a
+    data set after one or more variable, to change the order of variables in a
+    data set, to transform data sets from long to wide or from wide to long,
+    to transpose data sets (make rows into columns and columns into rows), and
+    to add columns from one or more additional data sets to the currently
+    opened data set.
 analyses:
   - title: Search within the current data set
     name: jtSearch
