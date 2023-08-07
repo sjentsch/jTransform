@@ -1,13 +1,10 @@
 name: jtSort
 title: Sort data set
 jus: '3.0'
-#stage: 0
 compilerMode: tame
-
 events:
-  loaded:            './varAll::loaded'
+  loaded: './varAll::loaded'
   remoteDataChanged: './varAll::dataChanged'
-
 children:
   - type: VariableSupplier
     permitted:
@@ -23,7 +20,6 @@ children:
           - type: VariablesListBox
             name: varSrt
             isTarget: true
-
   - type: ListBox
     name: ordSrt
     stretchFactor: 1
@@ -40,7 +36,6 @@ children:
         template:
           type: ComboBox
           label: ''
-
   - type: LayoutBox
     style: inline
     margin: large
@@ -48,3 +43,33 @@ children:
     children:
       - type: ActionButton
         name: btnOut
+  - type: CollapseBox
+    label: Variables Selection
+    collapsed: true
+    children:
+      - type: Label
+        label: Clustering Variables
+        margin: large
+        style: list
+        stretchFactor: 1
+        children:
+          - type: VariableSupplier
+            permitted:
+              - numeric
+              - factor
+              - id
+            persistentItems: false
+            stretchFactor: 1
+            children:
+              - type: TargetLayoutBox
+                label: Included Variable(s)
+                children:
+                  - type: VariablesListBox
+                    name: varIncl
+                    isTarget: true
+              - type: TargetLayoutBox
+                label: Exclude Variable(s)
+                children:
+                  - type: VariablesListBox
+                    name: varExcl
+                    isTarget: true

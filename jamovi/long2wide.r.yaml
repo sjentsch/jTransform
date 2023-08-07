@@ -1,36 +1,23 @@
 ---
-name:  jtSort
-title: Sort data set
+name:  long2wide
+title: "Long to wide"
 jrs:   '1.1'
 
 items:
 
-
     - name: help
+      title: Getting started
       type: Html
-      visible: true
-      clearWith: 
-         - varSrt
-         - varIncl
-         - varExcl
-         - ordSrt
-         - btnOut
-
-    - name: desc
-      type: Html
-      visible: false
 
 
     - name: info
       title:  Info Table
       type: Table
-      refs:  [ jTransform, jmvReadWrite ]
-      clearWith: 
-         - varSrt
-         - varIncl
-         - varExcl
-         - ordSrt
-         
+      clearWith:
+          - rowstocols
+          - index
+          - id
+          - covs
       columns:
                     - name: text
                       title: "Info"
@@ -40,36 +27,34 @@ items:
                       type: text
                       
     - name: features
-      title:  Sorting Index Variables
+      title:  New created variables
       type: Table
-      clearWith: 
-               - varSrt
-               - ordSrt
-
+      clearWith:
+          - rowstocols
+          - index
+          - id
+          - covs
+      
       columns:
                     - name: var
-                      title: "Variable"
+                      title: "New Variables"
                       type: text
-                    - name: order
-                      title: "Direction"
+                    - name: lab
+                      title: "Original Levels"
                       type: text
-
 
     - name:  showdata
       title: Data Preview
       type:  Table
-      clearWith: 
-         - varSrt
-         - varIncl
-         - varExcl
-         - ordSrt
+      clearWith:
+          - rowstocols
+          - index
+          - id
+          - covs
       columns:
                     - name: row
                       title: "Rows"
                       type: integer
-
-
-
 
 
 ...

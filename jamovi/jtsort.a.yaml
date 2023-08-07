@@ -24,7 +24,7 @@ options:
 #          R: the data as a data frame
 
     - name: varSrt
-      title: Variable(s) to sort after
+      title: Sort Index Variable(s)
       type: Variables
       permitted:
         - numeric
@@ -69,5 +69,28 @@ options:
     - name: btnOut
       type: Action
       title: CREATE
+
+
+    - name: varIncl
+      title: Variables to include
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#      description:
+#          ui: the variables to include in the new dataset
+#          R: the variables to include in the new data.frame
+
+    - name: varExcl
+      title: Variables to exclude
+      type: Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#      description:
+#          ui: the variables to include in the new dataset
+#          R: the variables to include in the new data.frame
 
 ...

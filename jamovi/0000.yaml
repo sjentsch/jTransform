@@ -45,19 +45,19 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Change the order of variables
     description: Change the order of variables
-  - title: Transform dataset from long to wide
-    name: jtLong2Wide
+  - title: Long to wide
+    name: long2wide
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Transform dataset from long to wide
+    menuTitle: Long to wide
     description: Transform dataset from long to wide
-  - title: Transform dataset from wide to long
-    name: jtWide2Long
+  - title: Wide to Long
+    name: wide2long
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Transform dataset from wide to long
+    menuTitle: Wide to Long
     description: Transform dataset from wide to long
   - title: Transpose the dataset
     name: jtTranspose

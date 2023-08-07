@@ -9,7 +9,9 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varSrt = NULL,
             varAll = NULL,
             ordSrt = NULL,
-            btnOut = NULL, ...) {
+            btnOut = NULL,
+            varIncl = NULL,
+            varExcl = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -54,30 +56,53 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
                 btnOut)
+            private$..varIncl <- jmvcore::OptionVariables$new(
+                "varIncl",
+                varIncl,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..varExcl <- jmvcore::OptionVariables$new(
+                "varExcl",
+                varExcl,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
 
             self$.addOption(private$..varSrt)
             self$.addOption(private$..varAll)
             self$.addOption(private$..ordSrt)
             self$.addOption(private$..btnOut)
+            self$.addOption(private$..varIncl)
+            self$.addOption(private$..varExcl)
         }),
     active = list(
         varSrt = function() private$..varSrt$value,
         varAll = function() private$..varAll$value,
         ordSrt = function() private$..ordSrt$value,
-        btnOut = function() private$..btnOut$value),
+        btnOut = function() private$..btnOut$value,
+        varIncl = function() private$..varIncl$value,
+        varExcl = function() private$..varExcl$value),
     private = list(
         ..varSrt = NA,
         ..varAll = NA,
         ..ordSrt = NA,
-        ..btnOut = NA)
+        ..btnOut = NA,
+        ..varIncl = NA,
+        ..varExcl = NA)
 )
 
 jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSortResults",
     inherit = jmvcore::Group,
     active = list(
-        txtPvw = function() private$.items[["txtPvw"]],
-        txtInf = function() private$.items[["txtInf"]]),
+        help = function() private$.items[["help"]],
+        desc = function() private$.items[["desc"]],
+        info = function() private$.items[["info"]],
+        features = function() private$.items[["features"]],
+        showdata = function() private$.items[["showdata"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -85,19 +110,71 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Sort data set")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="txtPvw",
-                title="Output Preview",
-                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
+                name="help",
+                visible=TRUE,
+                clearWith=list(
+                    "varSrt",
+                    "varIncl",
+                    "varExcl",
+                    "ordSrt",
+                    "btnOut")))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="desc",
+                visible=FALSE))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="info",
+                title="Info Table",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
-                clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function sorts a dataset after one or more variables. </strong></p> <p>Please assign one or more variables to the variable box \u201CVariable(s) to be sorted after\u201D. The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age).</p> <p>Variables are sorted in ascending order (as default), but you can change the order if desired.</p> <p>Currently, the remaining variables (i.e., those not to be used for sorting but to be included into the output file) have to be assigned to \u201CFurther variables in the output\u201D.</p>\n"))}))
+                clearWith=list(
+                    "varSrt",
+                    "varIncl",
+                    "varExcl",
+                    "ordSrt"),
+                columns=list(
+                    list(
+                        `name`="text", 
+                        `title`="Info", 
+                        `type`="text"),
+                    list(
+                        `name`="var", 
+                        `title`="Value", 
+                        `type`="text"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="features",
+                title="Sorting Index Variables",
+                clearWith=list(
+                    "varSrt",
+                    "ordSrt"),
+                columns=list(
+                    list(
+                        `name`="var", 
+                        `title`="Variable", 
+                        `type`="text"),
+                    list(
+                        `name`="order", 
+                        `title`="Direction", 
+                        `type`="text"))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="showdata",
+                title="Data Preview",
+                clearWith=list(
+                    "varSrt",
+                    "varIncl",
+                    "varExcl",
+                    "ordSrt"),
+                columns=list(
+                    list(
+                        `name`="row", 
+                        `title`="Rows", 
+                        `type`="integer"))))}))
 
 jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSortBase",
@@ -135,11 +212,22 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varAll .
 #' @param ordSrt .
 #' @param btnOut .
+#' @param varIncl .
+#' @param varExcl .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$help} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$desc} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$info} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$features} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$showdata} \tab \tab \tab \tab \tab a table \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$info$asDF}
+#'
+#' \code{as.data.frame(results$info)}
 #'
 #' @export
 jtSort <- function(
@@ -147,25 +235,33 @@ jtSort <- function(
     varSrt,
     varAll,
     ordSrt = NULL,
-    btnOut) {
+    btnOut,
+    varIncl,
+    varExcl) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtSort requires jmvcore to be installed (restart may be required)")
 
     if ( ! missing(varSrt)) varSrt <- jmvcore::resolveQuo(jmvcore::enquo(varSrt))
     if ( ! missing(varAll)) varAll <- jmvcore::resolveQuo(jmvcore::enquo(varAll))
+    if ( ! missing(varIncl)) varIncl <- jmvcore::resolveQuo(jmvcore::enquo(varIncl))
+    if ( ! missing(varExcl)) varExcl <- jmvcore::resolveQuo(jmvcore::enquo(varExcl))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
             `if`( ! missing(varSrt), varSrt, NULL),
-            `if`( ! missing(varAll), varAll, NULL))
+            `if`( ! missing(varAll), varAll, NULL),
+            `if`( ! missing(varIncl), varIncl, NULL),
+            `if`( ! missing(varExcl), varExcl, NULL))
 
 
     options <- jtSortOptions$new(
         varSrt = varSrt,
         varAll = varAll,
         ordSrt = ordSrt,
-        btnOut = btnOut)
+        btnOut = btnOut,
+        varIncl = varIncl,
+        varExcl = varExcl)
 
     analysis <- jtSortClass$new(
         options = options,

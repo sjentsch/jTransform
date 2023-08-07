@@ -13,6 +13,7 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
                 # if CREATE was pressed (btnOut == TRUE), open a new jamovi session with the data
                 if (self$options$btnOut) {
+                  
                     do.call(jmvReadWrite::long2wide_omv, crrArg[-2])
                     self$results$txtPvw$setContent(self$results$txtPvw)
                 # if not, create a preview of the data (crtPvw in utils.R)
