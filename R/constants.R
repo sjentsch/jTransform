@@ -91,11 +91,11 @@ HELP_jtsort<-list()
 ladd(HELP_jtsort)<-"
 
   <h2>Getting started</h2>
-  <p><strong>This function sorts a dataset after one or more variables.
+  <p><strong>This function sorts a dataset by one or more variables.
   </strong></p>
   <p>Please assign one or more variables to the variable box “Index Variable(s)”.
-  The order in which the variables appear in the variable box determines after which variable is sorted first (one
-  could, e.g., first sort after gender and afterwards after age).</p>
+  The order in which the variables appear in the variable box determines by which variable is sorted first (one
+  could, e.g., first sort by gender and afterwards by age).</p>
   <p>Variables are sorted in ascending order (as default), but you can
    change the order if desired.</p>
   <p>By default, all variables in the dataset are included in the new sorted dataset. In the <i> Variables Selection </i>
@@ -105,4 +105,20 @@ ladd(HELP_jtsort)<-"
      Click on the <b>Create</b> button to create a new file with the sorted variables.
   </div>"
 
-  
+#### reorder ######
+
+HELP_reorder<-list()
+
+ladd(HELP_reorder)<-"
+
+        <h2>Getting started</h2>
+        <p><strong>This function re-arranges the order of columns in a jamovi
+        data file.</strong></p>
+        <p>Please assign the variables in their desired order to “Desired order
+        of variables”. Please note that variables that you leave in the
+        variable list to the left are not included in the output file.</p>
+        <div>
+           Click on the <b>Create</b> button to create a new file with the sorted variables.
+        </div>"
+
+

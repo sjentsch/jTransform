@@ -1,0 +1,46 @@
+title: Re-order variables
+name: reorder
+jus: '3.0'
+stage: 0
+compilerMode: tame
+events:
+  loaded: './varAll::loaded'
+  remoteDataChanged: './varAll::dataChanged'
+children:
+  - type: VariableSupplier
+    permitted:
+      - numeric
+      - factor
+      - id
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        children:
+          - type: VariablesListBox
+            name: varOrd
+            isTarget: true
+  - type: LayoutBox
+    style: inline
+    margin: large
+    horizontalAlignment: left
+    children:
+      - type: Label
+        label: Variables to include
+        children:
+              - type: RadioButton
+                name: add_all
+                optionName: add
+                optionPart: all
+              - type: RadioButton
+                name: add_sel
+                optionName: add
+                optionPart: sel
+
+  - type: LayoutBox
+    style: inline
+    margin: large
+    horizontalAlignment: right
+    children:
+      - type: ActionButton
+        name: btnOut

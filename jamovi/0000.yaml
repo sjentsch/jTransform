@@ -31,19 +31,19 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Replace values in the current data set
     description: Replace values in the current data set
-  - title: Sort data set
+  - title: Sort datasets
     name: jtSort
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Sort data set
+    menuTitle: Sort datasets
     description: Sort data set
-  - title: Change the order of variables
-    name: jtArrangeCols
+  - title: Re-order variables
+    name: reorder
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Change the order of variables
+    menuTitle: Re-order variables
     description: Change the order of variables
   - title: Long to wide
     name: long2wide

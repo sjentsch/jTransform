@@ -112,7 +112,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                             self$results$showdata$setState(data)
             }
            data
-}
+         }
 
 
         

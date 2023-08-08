@@ -1,6 +1,6 @@
 ---
 name:  jtSort
-title: Sort data set
+title: Sort datasets
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'

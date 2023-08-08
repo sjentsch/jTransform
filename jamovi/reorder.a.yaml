@@ -1,6 +1,6 @@
 ---
-name:  jtArrangeCols
-title: Change the order of variables
+name:  reorder
+title: Re-order variables
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
@@ -23,6 +23,14 @@ options:
 #     description:
 #         R: the data as a data frame
 
+    - name: varAll
+      type: Variables
+      hidden: true
+      permitted:
+        - numeric
+        - factor
+        - id
+
     - name: varOrd
       title: Desired order of variable(s)
       type: Variables
@@ -34,6 +42,16 @@ options:
 #         R: >
 #           a vector of strings containing the desired order of variables in
 #           the output data set
+
+    - name: add
+      type: List
+      options:
+          - name: all
+            title: All variables
+          - name: sel
+            title: Only selected variables
+            
+      default: all
 
     - name: btnOut
       type: Action
