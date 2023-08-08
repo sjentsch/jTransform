@@ -30,6 +30,7 @@ reorderClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         atable$expandOnInit<-TRUE
         atable$expandFrom<-2 
         .names<-private$.names
+        if (length(.names)>10) .names<-.names[1:10]
         tab<-as.data.frame(matrix(".",ncol = length(.names),nrow = 1))
         names(tab)<-.names
         atable$initSource<-tab
@@ -61,14 +62,15 @@ reorderClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         lapply(private$.tables,function(x) x$runTable())
         
-
-        if (self$options$btnOut)
-          private$.create()
+        private$.create()
       },
       .create=function() {
+        if (self$options$btnOut) {
+          
         jinfo("MODULE: creating new dataset")
         .data<-subset(self$data, select=private$.names)
-        jmvReadWrite:::jmvOpn(.data,"Untitled")
+        opendata(.data)
+        }
         
       },
       

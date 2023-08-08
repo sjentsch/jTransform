@@ -1,5 +1,5 @@
 ---
-name:  jtTranspose
+name:  transpose
 title: Transpose the dataset
 menuGroup: Data
 menuSubgroup: jTransform
@@ -23,8 +23,7 @@ options:
       description:
           R: the data as a data frame
 
-    - name: varNme
-      title: Variable with column names for the output
+    - name: varNames
       type: Variable
       permitted:
         - numeric
@@ -36,8 +35,7 @@ options:
 #            a string containing the variable containing the variable names
 #            for the output data frame
 
-    - name: varOth
-      title: Variables to be transposed
+    - name: varTarget
       type: Variables
       permitted:
         - numeric

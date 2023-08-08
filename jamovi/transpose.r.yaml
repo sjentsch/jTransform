@@ -1,0 +1,49 @@
+---
+name:  transpose
+title: Transpose the dataset
+jrs:   '1.1'
+
+items:
+    - name: help
+      type: Html
+      visible: true
+      clearWith: 
+         - varTarget
+         - varNames
+         - btnOut
+
+    - name: desc
+      type: Html
+      visible: false
+
+
+    - name: info
+      title:  Info Table
+      type: Table
+      refs:  [ jTransform, jmvReadWrite ]
+      clearWith: 
+         - varTarget
+         - varNames
+         
+      columns:
+                    - name: text
+                      title: "Info"
+                      type: text
+                    - name: var
+                      title: "Value"
+                      type: text
+                      
+
+    - name:  showdata
+      title: Data Preview
+      type:  Table
+      clearWith: 
+         - varTarget
+         - varNames
+      columns:
+                    - name: row
+                      title: "Rows"
+                      type: integer
+
+
+...

@@ -60,7 +60,7 @@ analyses:
     menuTitle: Wide to Long
     description: Transform dataset from wide to long
   - title: Transpose the dataset
-    name: jtTranspose
+    name: transpose
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform

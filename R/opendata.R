@@ -1,9 +1,5 @@
-savedata<-function(obj,data) {
+opendata<-function(data) {
   
-  if (!obj$options$reshape) {
-    return()
-  }
-
   jmvReadWrite:::jmvOpn(dtaFrm = data,sfxTtl = "Untitled")
 
 }
@@ -22,7 +18,8 @@ showdata<-function(obj,data) {
     cols<-c(nc,1:ncs)
   }
   data<-data[1:nrs,cols]
-  try_hard(data[nrs,]<-rep("...",nc))
+  if (nr>nl)
+      try_hard(data[nrs+1,]<-rep("...",nc))
   data
   
 }

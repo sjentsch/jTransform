@@ -71,16 +71,16 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             self$results$help$setContent(msg)
           }
           
-          if (self$options$btnOut)
-              private$.create()
+          private$.create()
         },
         .create=function() {
+          if (self$options$btnOut) {
           jinfo("MODULE: creating new dataset")
           .data<-subset(self$data, select=private$.names)
           crrArg <- list(dtaInp = .data, fleOut = NULL, varSrt = paste0(gsub("descend", "-", gsub("ascend", "",
                                                             sapply(self$options$ordSrt, "[[", "order"))), sapply(self$options$ordSrt, "[[", "var")))
           do.call(jmvReadWrite::sort_omv, crrArg[-2])
-                  
+          }                  
         },
         .inspect=function() {
           .allnames<-names(self$data)

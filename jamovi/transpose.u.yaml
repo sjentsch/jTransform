@@ -1,5 +1,5 @@
 title: Transpose the dataset
-name: jtTranspose
+name: transpose
 jus: '3.0'
 stage: 0
 compilerMode: tame
@@ -21,17 +21,18 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Variable with column names for the output
-        children:
-          - type: VariablesListBox
-            name: varNme
-            maxItemCount: 1
-            isTarget: true
-      - type: TargetLayoutBox
         label: Variables to be transposed
         children:
           - type: VariablesListBox
-            name: varOth
+            name: varTarget
+            isTarget: true
+
+      - type: TargetLayoutBox
+        label: New columns names
+        children:
+          - type: VariablesListBox
+            name: varNames
+            maxItemCount: 1
             isTarget: true
 
   - type: LayoutBox

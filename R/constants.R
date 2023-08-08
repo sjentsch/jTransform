@@ -121,4 +121,25 @@ ladd(HELP_reorder)<-"
            Click on the <b>Create</b> button to create a new file with the sorted variables.
         </div>"
 
+##### transpose ##########
 
+
+HELP_transpose<-list()
+
+ladd(HELP_transpose)<-"
+
+        <h2>Getting started</h2>
+        <p>This function <strong>transposes</strong> a dataset (i.e., rows are made into
+        columns and columns into rows).</p>
+        <p>The variables to be transposed (i.e., those to become rows in your
+        output data set) have to be assigned to <strong>Variables to be transposed</strong>.</p>
+
+        <p>New columns names are genereated (“V_...”). If you want to assign names to the new columns,
+        define the names in a variable and put it in the <strong>New columns names</strong> field.
+        </p>
+        <div>
+           Click on the <b>Create</b> button to create a new file with the sorted variables.
+        </div>
+
+
+"
