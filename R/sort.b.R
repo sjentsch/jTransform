@@ -1,6 +1,6 @@
-jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
-    "jtSortClass",
-    inherit = jtSortBase,
+sortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+    "sortClass",
+    inherit = sortBase,
     private = list(
         .names=NULL,
         .tables=list(),
@@ -10,7 +10,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           jinfo("MODULE: jtSort init phase started")
 
           if (!is.something(self$options$varSrt)) {
-                       self$results$help$setContent(HELP_jtsort[[1]])
+                       self$results$help$setContent(HELP_sort[[1]])
                        return()
             
           }
@@ -33,6 +33,7 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
           atable$expandOnInit<-TRUE
           atable$expandFrom<-2 
           .names<-private$.names
+          if (length(.names)>10) .names<-.names[1:10]
           tab<-as.data.frame(matrix(".",ncol = length(.names),nrow = 1))
           names(tab)<-.names
           atable$initSource<-tab

@@ -16,3 +16,25 @@ getmode <- function(v) {
   uniqv <- unique(v)
   uniqv[which.max(tabulate(match(v, uniqv)))]
 }
+
+notmissing<-function(vars,data) {
+  
+  m<-lapply(vars, function(x) which(is.na(data[[x]])))
+  miss <-unique(unlist(m))
+  sel  <-setdiff(seq_len(nrow(data)),miss)
+  data<-data[sel,]
+  m<-lapply(vars, function(x) which(is.nan(data[[x]])))
+  miss <-unique(unlist(m))
+  sel  <-setdiff(seq_len(nrow(data)),miss)
+  data<-data[sel,]
+  data
+  
+}
+
+
+notallmissing<-function(data) {
+  
+  sel <- apply(data, 1, function(x){all(is.na(x))})
+  data[!sel,]
+  
+}

@@ -86,9 +86,9 @@ ladd(HELP_long2wide)<-"
 
 ############# jtSort #####################
 
-HELP_jtsort<-list()
+HELP_sort<-list()
 
-ladd(HELP_jtsort)<-"
+ladd(HELP_sort)<-"
 
   <h2>Getting started</h2>
   <p><strong>This function sorts a dataset by one or more variables.
@@ -141,5 +141,31 @@ ladd(HELP_transpose)<-"
            Click on the <b>Create</b> button to create a new file with the sorted variables.
         </div>
 
+"
+
+##### transpose ##########
+
+
+HELP_merge<-list()
+
+ladd(HELP_merge)<-"
+
+        <h2>Getting started</h2>
+        <p>Adds columns from other jamovi data file(s) to the current
+        dataset (matching them by one or more ID variables)</p>
+        <p>Select an external jamovi dataset by clicking on <strong>Browse</strong></p>
+        <p>Select the index variable(s) used to match the cases in the <strong>Matching Variables (ID variables)</strong></p>
+        <div>
+           Click on the <b>Create</b> button to create a new file with the sorted variables.
+        </div>
+
+"
+ladd(HELP_merge)<-"
+
+        <h2>Getting started</h2>
+        <p>Select the index variable(s) (ID variables) used to match the cases in the <strong>Matching Variables (ID variables)</strong></p>
+        <div>
+           Click on the <b>Create</b> button to create a new file with the sorted variables.
+        </div>
 
 "

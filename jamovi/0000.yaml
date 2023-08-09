@@ -32,7 +32,7 @@ analyses:
     menuTitle: Replace values in the current data set
     description: Replace values in the current data set
   - title: Sort datasets
-    name: jtSort
+    name: sort
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
@@ -66,12 +66,12 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Transpose the dataset
     description: Transpose the dataset
-  - title: Add columns (from other data sets)
-    name: jtMergeCols
+  - title: Merge Datasets (add columns)
+    name: jtmerge
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Add columns (from other data sets)
+    menuTitle: Merge Datasets (add columns)
     description: Add columns (from other data sets)
 datasets:
   - name: example4jtTranspose
