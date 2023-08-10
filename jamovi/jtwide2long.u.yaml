@@ -1,5 +1,5 @@
 title: Wide to Long
-name: wide2long
+name: jtwide2long
 jus: '3.0'
 stage: 0
 compilerMode: tame
@@ -63,8 +63,8 @@ children:
                     height: large
                     addButton: Add new long variable
                     events:
-                      listItemAdded: './wide2long::onChange_items_changed'
-                      listItemRemoved: './wide2long::onChange_items_changed'
+                      listItemAdded: './jtwide2long::onChange_items_changed'
+                      listItemRemoved: './jtwide2long::onChange_items_changed'
                     templateName: linreg-block-template
                     template:
                       type: LayoutBox
@@ -108,8 +108,8 @@ children:
                     addButton: Add a index variable
                     height: large
                     events:
-                      listItemAdded: './wide2long::onChange_index_added'
-                      listItemRemoved: './wide2long::onChange_index_removed'
+                      listItemAdded: './jtwide2long::onChange_index_added'
+                      listItemRemoved: './jtwide2long::onChange_index_removed'
                     showColumnHeaders: true
                     columns:
                       - name: var
@@ -124,7 +124,9 @@ children:
                           format: number
                         stretchFactor: 1.2
   - type: LayoutBox
+    style: inline
     margin: large
+    horizontalAlignment: right
     children:
       - type: ActionButton
-        name: reshape
+        name: btnOut

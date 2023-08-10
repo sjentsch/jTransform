@@ -1,5 +1,5 @@
 ---
-name:  long2wide
+name:  jtlong2wide
 title: "Long to wide"
 menuGroup: Data
 version: '1.0.0'
@@ -26,8 +26,8 @@ options:
       title: ID Variable
       type: Variable
 
-    - name: reshape
-      title: Reshape
+    - name: btnOut
+      title: CREATE
       type: Action
 
 ...

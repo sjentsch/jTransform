@@ -1,6 +1,6 @@
-sortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
-    "sortClass",
-    inherit = sortBase,
+jtsortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+    "jtsortClass",
+    inherit = jtsortBase,
     private = list(
         .names=NULL,
         .tables=list(),

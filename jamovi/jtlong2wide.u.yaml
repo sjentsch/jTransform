@@ -1,4 +1,4 @@
-name: long2wide
+name: jtlong2wide
 title: Long to wide
 jus: '3.0'
 stage: 0
@@ -34,7 +34,9 @@ children:
             name: covs
             isTarget: true
   - type: LayoutBox
+    style: inline
     margin: large
+    horizontalAlignment: right
     children:
       - type: ActionButton
-        name: reshape
+        name: btnOut

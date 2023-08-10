@@ -1,5 +1,5 @@
 ---
-name:  sort
+name:  jtsort
 title: Sort datasets
 menuGroup: Data
 menuSubgroup: jTransform

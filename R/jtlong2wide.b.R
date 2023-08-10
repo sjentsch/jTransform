@@ -1,9 +1,8 @@
 
-# This file is a generated template, your changes will not be overwritten
 
-long2wideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
-    "long2wideClass",
-    inherit = long2wideBase,
+jtlong2wideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+    "jtlong2wideClass",
+    inherit = jtlong2wideBase,
     private = list(
       # this is a list that contains all the SmartTables
       .tables=list(),
@@ -100,8 +99,8 @@ long2wideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         lapply(private$.tables,function(x) x$runTable())          
         
-        if (self$options$reshape)
-          savedata(self,private$.rdata)
+        if (self$options$btnOut)
+          opendata(private$.rdata)
         
         },
       .infotable=function() {
@@ -190,7 +189,7 @@ long2wideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         data<-merge(data,alllevels,by=c("id.","int.index."),all.y = T)
         ## reshape
-        private$.rdata<-reshape(data,
+        private$.rdata<-stats::reshape(data,
                                 v.names=deps,
                                 direction="wide", 
                                 timevar = "int.index.",

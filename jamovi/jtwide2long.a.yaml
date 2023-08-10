@@ -1,5 +1,5 @@
 ---
-name:  wide2long
+name:  jtwide2long
 title: "Wide to Long"
 menuGroup: Data
 version: '1.0.0'
@@ -70,7 +70,7 @@ options:
       title: Non-varying variables
       type: Variables
 
-    - name: reshape
-      title: Reshape
+    - name: btnOut
+      title: CREATE
       type: Action
 ...

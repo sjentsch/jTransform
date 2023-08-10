@@ -1,8 +1,8 @@
 
 
-wide2longClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
-  "wide2longClass",
-  inherit = wide2longBase,
+jtwide2longClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+  "jtwide2longClass",
+  inherit = jtwide2longBase,
   private = list(
     # this is a list that contains all the SmartTables
     .createfile=FALSE,
@@ -24,7 +24,8 @@ wide2longClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
       
       jinfo("MODULE: init phase started")
       self$results$desc$setContent(" ")
-      private$.createfile<-self$options$reshape
+      private$.createfile<-self$options$btnOut
+      
       if (self$options$mode=="complex") {
         private$.deps<-lapply(self$options$comp_colstorows,function(x) x$label)
         private$.colstorows<-lapply(self$options$comp_colstorows,function(x) x$vars)
@@ -154,8 +155,8 @@ wide2longClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
       lapply(private$.tables,function(x) x$runTable())
 
-      if (self$options$reshape)
-            savedata(self,private$.rdata)
+      if (self$options$btnOut)
+            opendata(private$.rdata)
     },
     .infotable=function() {
       atab<-list()
@@ -183,7 +184,7 @@ wide2longClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
       indexes<-private$.indexes
       id<-"id"
-      private$.rdata<-reshape(data,varying = colstorows, v.names=dep,direction="long", timevar = "int.index.")
+      private$.rdata<-stats::reshape(data,varying = colstorows, v.names=dep,direction="long", timevar = "int.index.")
       private$.rdata<-private$.rdata[order(private$.rdata[[id]]),]
 
       if (length(indexes)>1) {
