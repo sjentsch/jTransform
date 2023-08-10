@@ -1,5 +1,5 @@
 ---
-name:  transpose
+name:  jttranspose
 title: Transpose the dataset
 menuGroup: Data
 menuSubgroup: jTransform

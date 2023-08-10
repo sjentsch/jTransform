@@ -5,6 +5,7 @@ version: 0.2.1
 jms: '1.0'
 authors:
   - Sebastian Jentschke
+  - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 date: '2023-08-06'
 type: R
@@ -39,7 +40,7 @@ analyses:
     menuTitle: Long to wide
     description: Transform dataset from long to wide
   - title: Transpose the dataset
-    name: transpose
+    name: jttranspose
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
@@ -60,7 +61,7 @@ analyses:
     menuTitle: Replace values in the current data set
     description: Replace values in the current data set
   - title: Re-order variables
-    name: reorder
+    name: jtreorder
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform

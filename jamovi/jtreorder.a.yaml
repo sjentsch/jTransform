@@ -1,5 +1,5 @@
 ---
-name:  reorder
+name:  jtreorder
 title: Re-order variables
 menuGroup: Data
 menuSubgroup: jTransform

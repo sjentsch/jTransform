@@ -1,5 +1,5 @@
 title: Transpose the dataset
-name: transpose
+name: jttranspose
 jus: '3.0'
 stage: 0
 compilerMode: tame

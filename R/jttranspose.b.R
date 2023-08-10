@@ -1,6 +1,6 @@
-transposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
-    "transposeClass",
-    inherit = transposeBase,
+jttransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+    "jttransposeClass",
+    inherit = jttransposeBase,
     private = list(
 
       .names=NULL,
