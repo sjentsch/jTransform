@@ -18,34 +18,6 @@ description: >-
   columns from one or more additional data sets to the currently opened data
   set.
 analyses:
-  - title: Merge Datasets (add columns)
-    name: jtmerge
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Merge Datasets (add columns)
-    description: Add columns (from other data sets)
-  - title: Wide to Long
-    name: jtwide2long
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Wide to Long
-    description: Transform dataset from wide to long
-  - title: Long to wide
-    name: jtlong2wide
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Long to wide
-    description: Transform dataset from long to wide
-  - title: Transpose the dataset
-    name: jttranspose
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Transpose the dataset
-    description: Transpose the dataset
   - title: Search within the current data set
     name: jtSearch
     ns: jTransform
@@ -60,13 +32,6 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Replace values in the current data set
     description: Replace values in the current data set
-  - title: Re-order variables
-    name: jtreorder
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Re-order variables
-    description: Change the order of variables
   - title: Sort datasets
     name: jtsort
     ns: jTransform
@@ -74,6 +39,42 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Sort datasets
     description: Sort data set
+  - title: Re-order variables
+    name: jtreorder
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Re-order variables
+    description: Change the order of variables
+  - title: Wide to Long
+    name: jtwide2long
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Wide to Long
+    description: Transform dataset from wide to long
+  - title: Long to wide
+    name: jtlong2wide
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Long to wide
+    description: Transform dataset from long to wide
+  - title: Merge Datasets (add columns)
+    name: jtmerge
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Merge Datasets (add columns)
+    description: Add columns (from other data sets)
+  - title: Transpose the dataset
+    name: jttranspose
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Transpose the dataset
+    description: Transpose the dataset
+s
 datasets:
   - name: example4jtTranspose
     path: example4jtTranspose.omv
