@@ -1,11 +1,11 @@
 opendata<-function(data) {
-  
-  jmvReadWrite:::jmvOpn(dtaFrm = data,sfxTtl = "Untitled")
+
+  jmvReadWrite:::jmvOpn(dtaFrm = data, nmeTtl = "Untitled")
 
 }
 
 showdata<-function(obj,data) {
-  
+
   nl<-50
   data$row<-1:dim(data)[1]
   nr<-nrow(data)
