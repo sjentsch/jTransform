@@ -46,6 +46,13 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Re-order variables
     description: Change the order of variables
+  - title: Merge Datasets (add columns)
+    name: jtmerge
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Merge Datasets (add columns)
+    description: Add columns (from other data sets)
   - title: Wide to Long
     name: jtwide2long
     ns: jTransform
@@ -60,13 +67,6 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Long to wide
     description: Transform dataset from long to wide
-  - title: Merge Datasets (add columns)
-    name: jtmerge
-    ns: jTransform
-    menuGroup: Data
-    menuSubgroup: jTransform
-    menuTitle: Merge Datasets (add columns)
-    description: Add columns (from other data sets)
   - title: Transpose the dataset
     name: jttranspose
     ns: jTransform
