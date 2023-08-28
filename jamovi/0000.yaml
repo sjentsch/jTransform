@@ -74,7 +74,6 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Transpose the dataset
     description: Transpose the dataset
-s
 datasets:
   - name: example4jtTranspose
     path: example4jtTranspose.omv
