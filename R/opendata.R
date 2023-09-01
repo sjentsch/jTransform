@@ -1,6 +1,6 @@
 opendata<-function(data) {
 
-  jmvReadWrite:::jmvOpn(dtaFrm = data, nmeTtl = "Untitled")
+  jmvReadWrite:::jmvOpn(dtaFrm = data, dtaTtl =  "Untitled")
 
 }
 
