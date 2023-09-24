@@ -17,7 +17,7 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     self$results$txtPvw$setContent(self$results$txtPvw)
                 # if not, create a preview of the data (crtPvw in utils.R)
                 } else {
-                    self$results$txtPvw$setContent(crtPvw(do.call(jmvReadWrite::long2wide_omv, crrArg)))
+                    self$results$txtPvw$setContent(oldPvw(do.call(jmvReadWrite::long2wide_omv, crrArg)))
                 }
             } else {
                 self$results$txtPvw$setContent("")

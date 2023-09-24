@@ -6,7 +6,9 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
+            varAll = NULL,
             varOrd = NULL,
+            blnAll = FALSE,
             btnOut = NULL, ...) {
 
             super$initialize(
@@ -15,6 +17,14 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 requiresData=TRUE,
                 ...)
 
+            private$..varAll <- jmvcore::OptionVariables$new(
+                "varAll",
+                varAll,
+                hidden=TRUE,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
             private$..varOrd <- jmvcore::OptionVariables$new(
                 "varOrd",
                 varOrd,
@@ -22,18 +32,28 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                     "numeric",
                     "factor",
                     "id"))
+            private$..blnAll <- jmvcore::OptionBool$new(
+                "blnAll",
+                blnAll,
+                default=FALSE)
             private$..btnOut <- jmvcore::OptionAction$new(
                 "btnOut",
                 btnOut)
 
+            self$.addOption(private$..varAll)
             self$.addOption(private$..varOrd)
+            self$.addOption(private$..blnAll)
             self$.addOption(private$..btnOut)
         }),
     active = list(
+        varAll = function() private$..varAll$value,
         varOrd = function() private$..varOrd$value,
+        blnAll = function() private$..blnAll$value,
         btnOut = function() private$..btnOut$value),
     private = list(
+        ..varAll = NA,
         ..varOrd = NA,
+        ..blnAll = NA,
         ..btnOut = NA)
 )
 
@@ -41,8 +61,9 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     "jtArrangeColsResults",
     inherit = jmvcore::Group,
     active = list(
-        txtPvw = function() private$.items[["txtPvw"]],
-        txtInf = function() private$.items[["txtInf"]]),
+        varInf = function() private$.items[["varInf"]],
+        pvwDta = function() private$.items[["pvwDta"]],
+        genInf = function() private$.items[["genInf"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -50,19 +71,29 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 options=options,
                 name="",
                 title="Change the order of variables")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="txtPvw",
-                title="Output Preview",
-                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
+                name="varInf",
+                clearWith=list()))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="pvwDta",
+                title="<strong>Trial</strong>",
+                rows=20,
+                clearWith=list(),
+                columns=list(
+                    list(
+                        `name`="rowNme", 
+                        `title`="Rows", 
+                        `type`="integer"))))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="genInf",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
                 clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function re-arranges the order of columns in a jamovi data file.</strong></p> <p>Please assign the variables in their desired order to \u201CDesired order of variables\u201D. Please note that variables that you leave in the variable list to the left are not included in the output file.</p>\n"))}))
+                content="<h2>Details</h2> <p><strong>This function re-arranges the order of columns in a jamovi data file.</strong></p> <p>Please assign the variables in their desired order to \u201CDesired order of variables\u201D. By setting \u201CInclude all variables\u201D, variables from the original dataset that are not contained in \u201CDesired order of variables\u201D are appended after the variables in that list.</p> <p>Once you are satisfied with with the preview, click on \u201CCREATE\u201D to open the modified dataset in a new jamovi window.</p>\n"))}))
 
 jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtArrangeColsBase",
@@ -96,32 +127,47 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
 #' @param data .
+#' @param varAll .
 #' @param varOrd .
+#' @param blnAll .
 #' @param btnOut .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$varInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$pvwDta$asDF}
+#'
+#' \code{as.data.frame(results$pvwDta)}
 #'
 #' @export
 jtArrangeCols <- function(
     data,
+    varAll,
     varOrd,
+    blnAll = FALSE,
     btnOut) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtArrangeCols requires jmvcore to be installed (restart may be required)")
 
+    if ( ! missing(varAll)) varAll <- jmvcore::resolveQuo(jmvcore::enquo(varAll))
     if ( ! missing(varOrd)) varOrd <- jmvcore::resolveQuo(jmvcore::enquo(varOrd))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
+            `if`( ! missing(varAll), varAll, NULL),
             `if`( ! missing(varOrd), varOrd, NULL))
 
 
     options <- jtArrangeColsOptions$new(
+        varAll = varAll,
         varOrd = varOrd,
+        blnAll = blnAll,
         btnOut = btnOut)
 
     analysis <- jtArrangeColsClass$new(

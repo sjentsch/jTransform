@@ -1,21 +1,23 @@
 ---
 title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
-version: 0.1.0
+version: 0.2.2
 jms: '1.0'
 authors:
   - Sebastian Jentschke
+  - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 date: '2023-08-06'
 type: R
 description: >-
-    jTransform carries out common data management tasks and transformations of
-    data sets. It includes functions to search and replace values, to sort a
-    data set after one or more variable, to change the order of variables in a
-    data set, to transform data sets from long to wide or from wide to long,
-    to transpose data sets (make rows into columns and columns into rows), and
-    to add columns from one or more additional data sets to the currently
-    opened data set.
+  jTransform carries out common data management tasks and transformations of
+  data sets. It includes functions to search and replace values, to sort a data
+  set after one or more variable, to change the order of variables in a data
+  set, to transform data sets from long to wide or from wide to long, to
+  transpose data sets (make rows into columns and columns into rows), and to add
+  columns from one or more additional data sets to the currently opened data
+  set.
+
 analyses:
   - title: Search within the current data set
     name: jtSearch
@@ -73,17 +75,28 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Add columns (from other data sets)
     description: Add columns (from other data sets)
+
 datasets:
-  - name: example4jtTranspose
-    path: example4jtTranspose.omv
-    description: A data set to demonstrate jtTranspose
-  - name: example4jtLong2Wide
-    path: example4jtLong2Wide.omv
-    description: A data set to demonstrate jtLong2Wide
-  - name: example4jtWide2Long
-    path: example4jtWide2Long.omv
-    description: A data set to demonstrate jtWide2Long
+  - name: Bem & Honorton (1994)
+    path: data_bem_and_honorton_1994.rda
+    description: Does telepathy work (Ch. 13)?
+  - name: Bushman (2005)
+    path: data_bushman_2005.rda
+    description: Is people's memory for ads affected by violent or sexual content (ch. 13)? 
+  - name: Halagappa et al. (2007)
+    path: data_halagappa_et_al_2007.rda
+    description: Could eating less delay Alzheimer's (Ch. 14)? 
+  - name:
+    path: data_latimier.rda
+    description:
+  - name: Mueller & Oppenheimer (2014)
+    path: data_penlaptop1.rda
+    description: Does students learn more if they take notes by hand (Ch. 7)?
+  - name: 
+    path: data_thomason1.rda
+    description:
+
 usesNative: true
-minApp: 1.0.8
+minApp: 2.4.1
 
 ...

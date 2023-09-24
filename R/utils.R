@@ -17,7 +17,7 @@ splStr <- function(strVec = NULL, strClp = ", ", maxLng = 80, lstInd = 2) {
     strOut
 }
 
-crtPvw <- function(dtaFrm = NULL, varFst = c(), varMax = 8) {
+oldPvw <- function(dtaFrm = NULL, varFst = c(), varMax = 8) {
     if (length(varFst) > 0) {
         varOrd <- c(varFst, setdiff(names(dtaFrm), varFst))[seq(min(dim(dtaFrm)[2], varMax))]
         varTxt <- sprintf("Variable%s %s %s", ifelse(length(varFst) > 1, "s", ""), paste0(varOrd, collapse = ", "), ifelse(length(varFst) > 1, "are", "is"))
@@ -29,4 +29,33 @@ crtPvw <- function(dtaFrm = NULL, varFst = c(), varMax = 8) {
       paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), varOrd], row.names = FALSE)), collapse="\n"),
       ifelse(length(varFst) > 0, sprintf("%s shown first in this preview,\n in the created data set the order is as in the variable list above,\n ", varTxt), ""),
       ifelse(length(varOrd) < dim(dtaFrm)[2], sprintf("max. %d", length(varOrd)), "all"))
+}
+
+crtPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
+    dtaTbl <- crrTbl$state
+print(str(dtaTbl))
+print(str(dtaFrm))
+    if (is.null(dtaTbl)) {
+        attr(dtaFrm, "notes") <- c()
+        crrRow <- dim(dtaFrm)[1]
+        maxRow <- min(crrRow, 20)
+        dtaFrm <- cbind(data.frame(rowNme = seq(crrRow)), dtaFrm)
+        crrCol <- dim(dtaFrm)[2]
+        maxCol <- min(crrCol, 10)
+        dtaFrm <- dtaFrm[seq(maxRow), seq(maxCol)]
+print(str(dtaFrm))
+        if (crrRow > maxRow) {
+            attr(dtaFrm, "notes") <- c(attr(dtaFrm, "notes"), sprintf("There are %d more rows in the dataset not shown here.",   crrRow - maxRow))
+            dtaFrm[maxRow, ] <- "..."
+        }
+        if (crrCol > maxCol) {
+            attr(dtaFrm, "notes") <- c(attr(dtaFrm, "notes"), sprintf("There are %d more colums in the dataset not shown here.", crrCol - maxCol))
+            dtaFrm[, maxCol] <- "..."
+        }
+        crrTbl$setState(dtaFrm)
+    }
+}
+
+rszTbl <- function(crrTbl = NULL, tgtRow = NA, tgtCol = NA) {
+    
 }

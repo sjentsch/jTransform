@@ -23,6 +23,14 @@ options:
 #     description:
 #         R: the data as a data frame
 
+    - name: varAll
+      type: Variables
+      hidden: true
+      permitted:
+        - numeric
+        - factor
+        - id
+
     - name: varOrd
       title: Desired order of variable(s)
       type: Variables
@@ -34,6 +42,11 @@ options:
 #         R: >
 #           a vector of strings containing the desired order of variables in
 #           the output data set
+
+    - name: blnAll
+      title: Include all variables
+      type: Bool
+      default: false
 
     - name: btnOut
       type: Action

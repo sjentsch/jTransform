@@ -4,6 +4,10 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
+events:
+  loaded: './varAll::loaded'
+  remoteDataChanged: './varAll::dataChanged'
+
 children:
   - type: VariableSupplier
     permitted:
@@ -22,7 +26,15 @@ children:
   - type: LayoutBox
     style: inline
     margin: large
+    horizontalAlignment: left
+    children:
+      - type: CheckBox
+        name: blnAll
+
+  - type: LayoutBox
+    style: inline
+    margin: large
     horizontalAlignment: right
     children:
       - type: ActionButton
-        name: btnOut        
+        name: btnOut

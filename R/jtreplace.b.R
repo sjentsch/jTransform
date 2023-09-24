@@ -33,7 +33,7 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 } else {
                     srcTrm <- list(srcTrm = paste0(rep("^", crrArg$whlTrm), paste(sapply(rplLst, "[[", 1), collapse = ifelse(crrArg$whlTrm, "$|^", "|")), rep("$", crrArg$whlTrm)))
                     varFst <- names(do.call(jmvReadWrite::search_omv, c(srcTrm, crrArg[setdiff(names(crrArg), c("rplLst", "varInc", "varExc"))])))
-                    self$results$txtPvw$setContent(crtPvw(do.call(jmvReadWrite::replace_omv, crrArg), varFst = varFst))
+                    self$results$txtPvw$setContent(oldPvw(do.call(jmvReadWrite::replace_omv, crrArg), varFst = varFst))
                 }
             } else {
                 self$results$txtPvw$setContent("")

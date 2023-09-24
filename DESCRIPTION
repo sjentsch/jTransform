@@ -1,11 +1,13 @@
 Package: jTransform
 Title: "jTransform: Functions for Common Data Set Transformations"
 Type: Package
-Version: 0.1.0
-Author: Sebastian Jentschke [aut, cre]
-    (<https://orcid.org/0000-0003-2576-5432>)
+Version: 0.2.2
+Author: 
+    - Sebastian Jentschke [aut, cre] (<https://orcid.org/0000-0003-2576-5432>)
+    - Marcello Gallucci [aut]
 Authors@R:
     person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432"))
+    person(given = "Marcello",  family = "Gallucci",  role = c("aut"),        email = "mcfanda@gmail.com")
 Maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 Description:
     jTransform carries out common data management tasks and transformations of
@@ -23,5 +25,4 @@ License: AGPL-3
 Encoding: UTF-8
 LazyData: true
 Imports: R6
-Remotes: sjentsch/jmvReadWrite,
-         jamovi/jmvcore
+Remotes: sjentsch/jmvReadWrite
