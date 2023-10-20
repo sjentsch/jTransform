@@ -84,6 +84,12 @@ datasets:
   - name: example4jtWide2Long
     path: example4jtWide2Long.omv
     description: A data set to demonstrate jtWide2Long
+  - name: example4example4jtMergeCols_1
+    path: example4example4jtMergeCols_1.omv
+    description: A data set to demonstrate jtMergeCols (first file)
+  - name: example4example4jtMergeCols_2
+    path: example4example4jtMergeCols_2.omv
+    description: A data set to demonstrate jtMergeCols (second file)
 usesNative: true
 minApp: 2.4.1
 
