@@ -49,6 +49,9 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .mrkDff = function(crrTbl = NULL, dtaOld = NULL, dtaNew = NULL) {
+            selFac <- sapply(dtaOld, is.factor)
+            dtaOld[, selFac] <- as.data.frame(sapply(dtaOld[, selFac], as.character))
+            dtaNew[, selFac] <- as.data.frame(sapply(dtaNew[, selFac], as.character))
             selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
             selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))
             if        (private$.chkDff(dtaOld[selRow, selCol], dtaNew[selRow, selCol])) {
