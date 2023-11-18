@@ -7,10 +7,10 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             varAll = NULL,
-            rplCst = "",
-            rplTrm = "",
+            rplOnN = list(
+                list(rplOld="", rplNew="")),
             whlTrm = TRUE,
-            btnOut = NULL,
+            btnCrt = NULL,
             incCmp = TRUE,
             incRcd = TRUE,
             incID = TRUE,
@@ -34,23 +34,28 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "numeric",
                     "factor",
                     "id"))
-            private$..rplCst <- jmvcore::OptionString$new(
-                "rplCst",
-                rplCst,
-                default="",
-                hidden=TRUE)
-            private$..rplTrm <- jmvcore::OptionString$new(
-                "rplTrm",
-                rplTrm,
-                default="",
-                hidden=TRUE)
+            private$..rplOnN <- jmvcore::OptionArray$new(
+                "rplOnN",
+                rplOnN,
+                template=jmvcore::OptionGroup$new(
+                    "rplOnN",
+                    NULL,
+                    elements=list(
+                        jmvcore::OptionString$new(
+                            "rplOld",
+                            NULL),
+                        jmvcore::OptionString$new(
+                            "rplNew",
+                            NULL))),
+                default=list(
+                    list(rplOld="", rplNew="")))
             private$..whlTrm <- jmvcore::OptionBool$new(
                 "whlTrm",
                 whlTrm,
                 default=TRUE)
-            private$..btnOut <- jmvcore::OptionAction$new(
-                "btnOut",
-                btnOut)
+            private$..btnCrt <- jmvcore::OptionAction$new(
+                "btnCrt",
+                btnCrt)
             private$..incCmp <- jmvcore::OptionBool$new(
                 "incCmp",
                 incCmp,
@@ -91,10 +96,9 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "id"))
 
             self$.addOption(private$..varAll)
-            self$.addOption(private$..rplCst)
-            self$.addOption(private$..rplTrm)
+            self$.addOption(private$..rplOnN)
             self$.addOption(private$..whlTrm)
-            self$.addOption(private$..btnOut)
+            self$.addOption(private$..btnCrt)
             self$.addOption(private$..incCmp)
             self$.addOption(private$..incRcd)
             self$.addOption(private$..incID)
@@ -106,10 +110,9 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         }),
     active = list(
         varAll = function() private$..varAll$value,
-        rplCst = function() private$..rplCst$value,
-        rplTrm = function() private$..rplTrm$value,
+        rplOnN = function() private$..rplOnN$value,
         whlTrm = function() private$..whlTrm$value,
-        btnOut = function() private$..btnOut$value,
+        btnCrt = function() private$..btnCrt$value,
         incCmp = function() private$..incCmp$value,
         incRcd = function() private$..incRcd$value,
         incID = function() private$..incID$value,
@@ -120,10 +123,9 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         varSel = function() private$..varSel$value),
     private = list(
         ..varAll = NA,
-        ..rplCst = NA,
-        ..rplTrm = NA,
+        ..rplOnN = NA,
         ..whlTrm = NA,
-        ..btnOut = NA,
+        ..btnCrt = NA,
         ..incCmp = NA,
         ..incRcd = NA,
         ..incID = NA,
@@ -138,8 +140,8 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtReplaceResults",
     inherit = jmvcore::Group,
     active = list(
-        txtPvw = function() private$.items[["txtPvw"]],
-        txtInf = function() private$.items[["txtInf"]]),
+        genInf = function() private$.items[["genInf"]],
+        pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -147,19 +149,44 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Replace values in the current data set")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="txtPvw",
-                title="Output Preview",
-                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
+                name="genInf",
+                clearWith=list(
+                    "rplOnN",
+                    "whlTrm",
+                    "incCmp",
+                    "incRcd",
+                    "incID",
+                    "incNom",
+                    "incOrd",
+                    "incNum",
+                    "incExc",
+                    "varSel",
+                    "btnCrt")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="pvwDta",
+                title="Data Preview",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
-                clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function replaces values in a jamovi data set.</strong> </p> <p>Please type the original value and the replacement into the text box. Original and replacement should be separated by a comma. If you want to have several pairs of original and to replacment values, use separate lines. If you want to replace partial matches, unset the tick box \u201Cwhole word\u201D (e.g., for orginal: 24 and replacement: 34, 241 will be changed into 341).</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types, for which measurement type, and in which variables the search shall be conducted.</p>\n"))}))
+                clearWith=list(
+                    "rplOnN",
+                    "whlTrm",
+                    "incCmp",
+                    "incRcd",
+                    "incID",
+                    "incNom",
+                    "incOrd",
+                    "incNum",
+                    "incExc",
+                    "varSel"),
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="fstCol", 
+                        `title`=""))))}))
 
 jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtReplaceBase",
@@ -194,10 +221,9 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'}
 #' @param data .
 #' @param varAll .
-#' @param rplCst .
-#' @param rplTrm .
+#' @param rplOnN .
 #' @param whlTrm .
-#' @param btnOut .
+#' @param btnCrt .
 #' @param incCmp .
 #' @param incRcd .
 #' @param incID .
@@ -208,18 +234,24 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varSel .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$pvwDta$asDF}
+#'
+#' \code{as.data.frame(results$pvwDta)}
 #'
 #' @export
 jtReplace <- function(
     data,
     varAll,
-    rplCst = "",
-    rplTrm = "",
+    rplOnN = list(
+                list(rplOld="", rplNew="")),
     whlTrm = TRUE,
-    btnOut,
+    btnCrt,
     incCmp = TRUE,
     incRcd = TRUE,
     incID = TRUE,
@@ -243,10 +275,9 @@ jtReplace <- function(
 
     options <- jtReplaceOptions$new(
         varAll = varAll,
-        rplCst = rplCst,
-        rplTrm = rplTrm,
+        rplOnN = rplOnN,
         whlTrm = whlTrm,
-        btnOut = btnOut,
+        btnCrt = btnCrt,
         incCmp = incCmp,
         incRcd = incRcd,
         incID = incID,

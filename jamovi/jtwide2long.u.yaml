@@ -4,62 +4,183 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-#events:
-#  creating: ''
-#  loaded:   ''
-#  update:   ''
-
 children:
-  - type: VariableSupplier
-    permitted:
-      - numeric
-      - factor
-      - id
-    persistentItems: false
+  - type: ModeSelector
+    name: mdeW2L
     stretchFactor: 1
     children:
-      - type: TargetLayoutBox
+# =============================================================================
+      - type: Content
+        name: Sep
         children:
-          - type: VariablesListBox
-            name: varID
-            height: small
-            isTarget: true
-      - type: TargetLayoutBox
+          - type: VariableSupplier
+            permitted:
+              - numeric
+              - factor
+              - id
+            persistentItems: false
+            stretchFactor: 1
+            children:
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: id_Sep
+                    isTarget: true
+                    height: small
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: xfmSep
+                    isTarget: true
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: excSep
+                    isTarget: true
+                    height: small
+          - type: LayoutBox
+            style: inline
+            margin: large
+            children:
+              - type: TextBox
+                name: pfxSep
+                format: string
+                margin: large
+                horizontalAlignment: left
+              - type: TextBox
+                name: chrSep
+                format: string
+                width: small
+                margin: large
+              - type: TextBox
+                name: lvlSep
+                format: string
+                margin: large
+                horizontalAlignment: right
+# =============================================================================
+      - type: Content
+        name: NSS
         children:
-          - type: VariablesListBox
-            name: varLst
-            isTarget: true
-      - type: TargetLayoutBox
+          - type: VariableSupplier
+            permitted:
+              - numeric
+              - factor
+              - id
+            persistentItems: false
+            stretchFactor: 1
+            children:
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: id_NSS
+                    isTarget: true
+                    height: small
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: xfmNSS
+                    isTarget: true
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: excNSS
+                    isTarget: true
+                    height: small
+          - type: LayoutBox
+            margin: large
+            children:
+              - type: Label
+                label: New variables
+                margin: large
+                children:
+                  - type: TextBox
+                    name: idxNSS
+                    format: string
+                    stretchFactor: 1
+                  - type: TextBox
+                    name: tgtNSS
+                    format: string
+                    stretchFactor: 1
+# =============================================================================
+      - type: Content
+        name: NSA
         children:
-          - type: VariablesListBox
-            name: varExc
-            height: small
-            isTarget: true
-
-  - type: LayoutBox
-    style: inline
-    margin: large
-    children:
-      - type: TextBox
-        name: varTme
-        format: string
-        margin: large
-        horizontalAlignment: left
-      - type: TextBox
-        name: varSep
-        format: string
-        width: small
-        margin: large
-      - type: TextBox
-        name: excLvl
-        format: string
-        margin: large
-        horizontalAlignment: right
-
+          - type: VariableSupplier
+            permitted:
+              - numeric
+              - factor
+              - id
+            persistentItems: true
+            stretchFactor: 1
+            children:
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: id_NSA
+                    isTarget: true
+                    height: small
+              - type: TargetLayoutBox
+                label: Variables to be transformed
+                children:
+                  - type: ListBox
+                    name: xfmNSA
+                    height: large
+                    addButton: Add new long variable
+                    templateName: linreg-block-template
+                    template:
+                      type: LayoutBox
+                      margin: normal
+                      children:
+                        - type: TextBox
+                          valueKey:
+                            - label
+                          borderless: true
+                          name: blockName
+                          stretchFactor: 1
+                          margin: normal
+                        - type: VariablesListBox
+                          name: blocklist
+                          valueFilter: unique
+                          valueKey:
+                            - vars
+                          isTarget: true
+                          height: auto
+                          ghostText: drag columns to rows variables here
+              - type: TargetLayoutBox
+                children:
+                  - type: VariablesListBox
+                    name: excNSA
+                    isTarget: true
+                    height: small
+          - type: Label
+            label: Index variables (can be nested)
+            margin: large
+            style: list
+            stretchFactor: 1
+            children:
+              - type: ListBox
+                name: idxNSA
+                fullRowSelect: true
+                addButton: Add an index variable
+                height: large
+                showColumnHeaders: true
+                columns:
+                  - name: var
+                    label: Name
+                    template:
+                      type: TextBox
+                    stretchFactor: 1.8
+                  - name: levels
+                    label: N levels
+                    template:
+                      type: TextBox
+                      format: number
+                    stretchFactor: 1.2
+# =============================================================================
   - type: LayoutBox
     style: inline
     margin: large
     horizontalAlignment: right
     children:
       - type: ActionButton
-        name: btnOut
+        name: btnCrt

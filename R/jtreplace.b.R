@@ -6,39 +6,65 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     inherit = jtReplaceBase,
     private = list(
 
-        .run = function() {
+        .init = function() {
+            if (private$.chkVar()) {
+                # resize / prepare the output table (prpPvw in utils.R)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = self$readDataset())
+            } else {
+                # reset the output table (rstPvw in utils.R)
+                rstPvw(crrTbl = self$results$pvwDta)
+            }
+        },
 
-            # check whether all required variables are present
-            rplTrm <- self$options$rplTrm
-            if (length(rplTrm) > 0 && nzchar(rplTrm) && dim(self$data)[2] >= 1) {
-                # assemble the arguments for replace_omv
-                rplLst <- sapply(sapply(sapply(strsplit(rplTrm, ";|\n")[[1]], trimws, simplify = FALSE, USE.NAMES = FALSE), strsplit, ",|="), trimws, simplify = FALSE)
-                rplLst <- rplLst[sapply(rplLst, length) > 0]
-                if (any(sapply(rplLst, length) != 2)) {
-                    if (length(rplLst[[1]]) != 2) self$results$txtPvw$setContent("Original and replacement values must come in pairs, separated by a comma.")
-                    return()
-                }
-                crrArg <- list(dtaInp = self$data, fleOut = NULL, rplLst = rplLst, whlTrm = self$options$whlTrm,
-                               incCmp = self$options$incCmp, incRcd = self$options$incRcd, incID  = self$options$incID,
-                               incNom = self$options$incNom, incOrd = self$options$incOrd, incNum = self$options$incNum)
-                varSel <- self$options$varSel
-                if (!is.null(varSel) && length(varSel) > 0) {
-                    if (self$options$incExc == "include") crrArg <- c(crrArg, list(varInc = varSel)) else crrArg <- c(crrArg, list(varExc = varSel))
-                }
-                # if CREATE was pressed (btnOut == TRUE), open a new jamovi session with the data
-                if (self$options$btnOut) {
-                      do.call(jmvReadWrite::replace_omv, crrArg[-2])
-                      return(TRUE)
-                # if not, create a preview of the data (crtPvw in utils.R)
+        .run = function() {
+            # check whether rplTrm has the correct format and whether the data set has at least one row
+            if (private$.chkVar() && dim(self$data)[2] >= 1) {
+                # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                if (self$options$btnCrt) {
+                      do.call(jmvReadWrite::replace_omv, private$.crrArg()[-2])
+                # if not, show the variable list and how to use CREATE as general information
+                # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    srcTrm <- list(srcTrm = paste0(rep("^", crrArg$whlTrm), paste(sapply(rplLst, "[[", 1), collapse = ifelse(crrArg$whlTrm, "$|^", "|")), rep("$", crrArg$whlTrm)))
-                    varFst <- names(do.call(jmvReadWrite::search_omv, c(srcTrm, crrArg[setdiff(names(crrArg), c("rplLst", "varInc", "varExc"))])))
-                    self$results$txtPvw$setContent(oldPvw(do.call(jmvReadWrite::replace_omv, crrArg), varFst = varFst))
+                    rplDta <- do.call(jmvReadWrite::replace_omv, private$.crrArg())
+                    crtInf(crrInf = self$results$genInf, dtaFrm = rplDta, hlpMsg = hlpCrt)
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = rplDta)
+                    private$.mrkDff(crrTbl = self$results$pvwDta, dtaOld = self$data, dtaNew = rplDta)
                 }
             } else {
-                self$results$txtPvw$setContent("")
+                # show getting started as general information (crtInf in utils.R)
+                crtInf(crrInf = self$results$genInf, hlpMsg = hlpRpl)
             }
+        },
 
+        .chkDff = function(dtaOld = NULL, dtaNew = NULL) {
+             (any(is.na(dtaOld) != is.na(dtaNew)) || any(is.null(dtaOld) != is.null(dtaNew)) || any(dtaOld != dtaNew))
+        },
+        
+        .chkVar = function() {
+            (length(self$options$rplOnN) > 0 && all(sapply(self$options$rplOnN, function(x) !any(sapply(x, is.null)) && nzchar(x[1]))))
+        },
+
+        .crrArg = function() {
+            c(list(dtaInp = self$data, fleOut = NULL, rplLst = sapply(self$options$rplOnN, unlist, use.names = FALSE, simplify = FALSE)), optSnR(self$options))
+        },
+
+        .mrkDff = function(crrTbl = NULL, dtaOld = NULL, dtaNew = NULL) {
+            selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
+            selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))
+            if        (private$.chkDff(dtaOld[selRow, selCol], dtaNew[selRow, selCol])) {
+                crrTbl$setNote('diff', '+ Value was replaced / modified.')
+                for (i in selCol) {
+                    for (j in selRow) {
+                        if (private$.chkDff(dtaOld[j, i], dtaNew[j, i])) {
+                            crrTbl$addSymbol(rowNo = j, ifelse(!useIdx && i == 1, "fstCol", names(dtaOld)[i]), '+')
+                        }
+                    }
+                }
+            } else if (private$.chkDff(dtaOld,                 dtaNew)) {
+                crrTbl$setNote('diff', 'Replacements were made, but they are outside the scope (rows / columns) of this preview.')
+            } else {
+                crrTbl$setNote('diff', 'There were no replacements made (in the whole dataset).')
+            }
         }
 
     )

@@ -66,7 +66,7 @@ options:
 #            a list of lists specifying the order with which variables are
 #            sorted, either `'ascending'`, or `'descending'`
 
-    - name: btnOut
+    - name: btnCrt
       type: Action
       title: CREATE
 

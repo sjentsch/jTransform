@@ -4,25 +4,24 @@ title: Transpose the dataset
 jrs:   '1.1'
 
 items:
-    - name:  txtPvw
-      type:  Preformatted
-      title: 'Output Preview'
-      clearWith: []
+  - name:  genInf
+    type:  Html
+    clearWith: [ varNme, varOth, btnCrt ]
 
-    - name:  txtInf
-      type:  Html
-      refs:  [ jTransform, jmvReadWrite ]
-      clearWith: []
-      content: >
-        <h2>Details</h2>
-        <p><strong>This function transposes a dataset (i.e., rows are made into
-        columns and columns into rows).</strong></p>
-        <p>Please assign maximally one variable to the variable box “Variable
-        with column names for the output” (this variable might contain names of
-        trials or questionnaire items). If you leave the box empty, generic
-        variable names are generated (“V_...”).</p>
-        <p>The variables to be transposed (i.e., those to become rows in your
-        output data set) have to be assigned to “Variables to be
-        transposed”.</p>
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ varNme, varOth ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+# take away btnCrt from genInf once Actions is working
+#  - name:  opnDta
+#    type:  Actions
+# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
+#    clearWith: [ btnCrt ]
 
 ...

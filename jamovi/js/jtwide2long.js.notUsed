@@ -1,0 +1,37 @@
+const moveup = 0;
+const movedown = 0;
+const bound = 2000000;
+
+const events = {
+  
+    onChange_varIdA_added: function(ui) {
+        var h = ui.varIdA.$el.height();
+        ui.varIdA.$el.height(h + moveup)
+        updateStructure(ui, this);
+    },
+
+    onChange_varIdA_removed: function(ui) {
+        var h = ui.varIdA.$el.height();
+        if (h > bound)
+            ui.varIdA.$el.height(h - movedown)
+        updateStructure(ui, this);
+    },
+
+    onChange_varCRA_changed: function(ui) {
+        const newvals = ui.varCRA.value().map((e, i) => { 
+            if (e === null) {
+                return {label: "long_y" + (i + 1), vars: []};
+            }
+            if (e.label === null) {
+                return e.label = "long_y" + (i + 1);
+            }
+            return e;
+        });
+        console.log(newvals);
+    }
+};
+
+module.exports = events;
+
+const updateStructure = function(ui, obj) {
+};

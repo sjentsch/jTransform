@@ -6,13 +6,25 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Options,
     public = list(
         initialize = function(
-            varID = NULL,
-            varLst = NULL,
-            varExc = NULL,
-            varTme = "cond",
-            varSep = "_",
-            excLvl = "",
-            btnOut = NULL, ...) {
+            mdeW2L = "Sep",
+            id_Sep = NULL,
+            xfmSep = NULL,
+            excSep = NULL,
+            pfxSep = "cond",
+            chrSep = "_",
+            lvlSep = "",
+            id_NSS = NULL,
+            xfmNSS = NULL,
+            excNSS = NULL,
+            idxNSS = "index",
+            tgtNSS = "var",
+            id_NSA = NULL,
+            xfmNSA = list(
+                list(label="long_y", vars=list())),
+            excNSA = NULL,
+            idxNSA = list(
+                list(var="index1", levels=0)),
+            btnCrt = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -20,75 +32,184 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 requiresData=TRUE,
                 ...)
 
-            private$..varID <- jmvcore::OptionVariables$new(
-                "varID",
-                varID,
+            private$..mdeW2L <- jmvcore::OptionList$new(
+                "mdeW2L",
+                mdeW2L,
+                options=list(
+                    "Sep",
+                    "NSS",
+                    "NSA"),
+                default="Sep")
+            private$..id_Sep <- jmvcore::OptionVariables$new(
+                "id_Sep",
+                id_Sep,
                 permitted=list(
                     "numeric",
                     "factor",
                     "id"))
-            private$..varLst <- jmvcore::OptionVariables$new(
-                "varLst",
-                varLst,
+            private$..xfmSep <- jmvcore::OptionVariables$new(
+                "xfmSep",
+                xfmSep,
                 permitted=list(
                     "numeric",
                     "factor",
                     "id"))
-            private$..varExc <- jmvcore::OptionVariables$new(
-                "varExc",
-                varExc,
+            private$..excSep <- jmvcore::OptionVariables$new(
+                "excSep",
+                excSep,
                 permitted=list(
                     "numeric",
                     "factor",
                     "id"))
-            private$..varTme <- jmvcore::OptionString$new(
-                "varTme",
-                varTme,
+            private$..pfxSep <- jmvcore::OptionString$new(
+                "pfxSep",
+                pfxSep,
                 default="cond")
-            private$..varSep <- jmvcore::OptionString$new(
-                "varSep",
-                varSep,
+            private$..chrSep <- jmvcore::OptionString$new(
+                "chrSep",
+                chrSep,
                 default="_")
-            private$..excLvl <- jmvcore::OptionString$new(
-                "excLvl",
-                excLvl,
+            private$..lvlSep <- jmvcore::OptionString$new(
+                "lvlSep",
+                lvlSep,
                 default="")
-            private$..btnOut <- jmvcore::OptionAction$new(
-                "btnOut",
-                btnOut)
+            private$..id_NSS <- jmvcore::OptionVariables$new(
+                "id_NSS",
+                id_NSS,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..xfmNSS <- jmvcore::OptionVariables$new(
+                "xfmNSS",
+                xfmNSS)
+            private$..excNSS <- jmvcore::OptionVariables$new(
+                "excNSS",
+                excNSS,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..idxNSS <- jmvcore::OptionString$new(
+                "idxNSS",
+                idxNSS,
+                default="index")
+            private$..tgtNSS <- jmvcore::OptionString$new(
+                "tgtNSS",
+                tgtNSS,
+                default="var")
+            private$..id_NSA <- jmvcore::OptionVariables$new(
+                "id_NSA",
+                id_NSA,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..xfmNSA <- jmvcore::OptionArray$new(
+                "xfmNSA",
+                xfmNSA,
+                default=list(
+                    list(label="long_y", vars=list())),
+                template=jmvcore::OptionGroup$new(
+                    "xfmNSA",
+                    NULL,
+                    elements=list(
+                        jmvcore::OptionString$new(
+                            "label",
+                            NULL),
+                        jmvcore::OptionVariables$new(
+                            "vars",
+                            NULL))))
+            private$..excNSA <- jmvcore::OptionVariables$new(
+                "excNSA",
+                excNSA,
+                permitted=list(
+                    "numeric",
+                    "factor",
+                    "id"))
+            private$..idxNSA <- jmvcore::OptionArray$new(
+                "idxNSA",
+                idxNSA,
+                default=list(
+                    list(var="index1", levels=0)),
+                template=jmvcore::OptionGroup$new(
+                    "idxNSA",
+                    NULL,
+                    elements=list(
+                        jmvcore::OptionString$new(
+                            "var",
+                            NULL),
+                        jmvcore::OptionInteger$new(
+                            "levels",
+                            NULL))))
+            private$..btnCrt <- jmvcore::OptionAction$new(
+                "btnCrt",
+                btnCrt)
 
-            self$.addOption(private$..varID)
-            self$.addOption(private$..varLst)
-            self$.addOption(private$..varExc)
-            self$.addOption(private$..varTme)
-            self$.addOption(private$..varSep)
-            self$.addOption(private$..excLvl)
-            self$.addOption(private$..btnOut)
+            self$.addOption(private$..mdeW2L)
+            self$.addOption(private$..id_Sep)
+            self$.addOption(private$..xfmSep)
+            self$.addOption(private$..excSep)
+            self$.addOption(private$..pfxSep)
+            self$.addOption(private$..chrSep)
+            self$.addOption(private$..lvlSep)
+            self$.addOption(private$..id_NSS)
+            self$.addOption(private$..xfmNSS)
+            self$.addOption(private$..excNSS)
+            self$.addOption(private$..idxNSS)
+            self$.addOption(private$..tgtNSS)
+            self$.addOption(private$..id_NSA)
+            self$.addOption(private$..xfmNSA)
+            self$.addOption(private$..excNSA)
+            self$.addOption(private$..idxNSA)
+            self$.addOption(private$..btnCrt)
         }),
     active = list(
-        varID = function() private$..varID$value,
-        varLst = function() private$..varLst$value,
-        varExc = function() private$..varExc$value,
-        varTme = function() private$..varTme$value,
-        varSep = function() private$..varSep$value,
-        excLvl = function() private$..excLvl$value,
-        btnOut = function() private$..btnOut$value),
+        mdeW2L = function() private$..mdeW2L$value,
+        id_Sep = function() private$..id_Sep$value,
+        xfmSep = function() private$..xfmSep$value,
+        excSep = function() private$..excSep$value,
+        pfxSep = function() private$..pfxSep$value,
+        chrSep = function() private$..chrSep$value,
+        lvlSep = function() private$..lvlSep$value,
+        id_NSS = function() private$..id_NSS$value,
+        xfmNSS = function() private$..xfmNSS$value,
+        excNSS = function() private$..excNSS$value,
+        idxNSS = function() private$..idxNSS$value,
+        tgtNSS = function() private$..tgtNSS$value,
+        id_NSA = function() private$..id_NSA$value,
+        xfmNSA = function() private$..xfmNSA$value,
+        excNSA = function() private$..excNSA$value,
+        idxNSA = function() private$..idxNSA$value,
+        btnCrt = function() private$..btnCrt$value),
     private = list(
-        ..varID = NA,
-        ..varLst = NA,
-        ..varExc = NA,
-        ..varTme = NA,
-        ..varSep = NA,
-        ..excLvl = NA,
-        ..btnOut = NA)
+        ..mdeW2L = NA,
+        ..id_Sep = NA,
+        ..xfmSep = NA,
+        ..excSep = NA,
+        ..pfxSep = NA,
+        ..chrSep = NA,
+        ..lvlSep = NA,
+        ..id_NSS = NA,
+        ..xfmNSS = NA,
+        ..excNSS = NA,
+        ..idxNSS = NA,
+        ..tgtNSS = NA,
+        ..id_NSA = NA,
+        ..xfmNSA = NA,
+        ..excNSA = NA,
+        ..idxNSA = NA,
+        ..btnCrt = NA)
 )
 
 jtWide2LongResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtWide2LongResults",
     inherit = jmvcore::Group,
     active = list(
-        txtPvw = function() private$.items[["txtPvw"]],
-        txtInf = function() private$.items[["txtInf"]]),
+        genInf = function() private$.items[["genInf"]],
+        pvwDta = function() private$.items[["pvwDta"]],
+        pvwLvl = function() private$.items[["pvwLvl"]],
+        addInf = function() private$.items[["addInf"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -96,19 +217,71 @@ jtWide2LongResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="",
                 title="Transform dataset from wide to long")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="txtPvw",
-                title="Output Preview",
-                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
+                name="genInf",
+                clearWith=list(
+                    "mdeW2L")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="pvwDta",
+                title="Data Preview",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
-                clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function transforms a dataset from wide to long format.</strong></p> <p>\u201CVariables that identify the same unit\u201D is an ID variable (e.g., a participant code). This code needs to be unique (i.e., there can't be two participants, or other units, with the same ID).</p> <p>\u201CVariables to be transformed\u201D are the so-called target variables, i.e., variables that exist as many columns in the input data set and are going to be transformed, creating different steps of one or more time-varying variable resulting in the output. How many variables are created is determined by how many parts the variable name has (the parts are split by the character defined as \u201CSeparator\u201D) and how many steps / different values exist within each part. If we had a variable with 4 parts, each with two steps per step, this would result in four columns (starting with the string defined as \u201CPrefix\u201D and ending with 1, 2, 3, and 4). The number of rows would be increased by the number of all possible combinations of steps (in the example above 2 * 2 * 2 * 2 = 16, mulitiplied by the number of rows in the input data set, e.g., 50 rows becoming 50 * 16 = 800 rows).</p> <p>\u201CVariables NOT to be transformed\u201D are variables that \u201Ccharacterize\u201D a participant (or another unit), often also called between-subjects variables, e.g., age or sex. However, they are not unique (and thus no ID variables; there may be several participant with the same age or sex).</p> <p>\u201CSeparator\u201D defines which character(s) should be placed between the target variable and the steps of the time-varying variable / conditions when assembling the variable names (e.g., VAR_COND).</p> <p>Often, an input data set contains different types of measures (e.g., whether a response was correct and the reaction time) that make up a part of the variable name. Typically, one wants to keep those different measures as separate columns in the output data set. \"Exclude level\" permits to exclude one (or more) part (in the steps in it) from being transformed from wide to long. If the measurement types were the first part of the variable name, 1 would have to be put into this field. If all levels are to be transformed, the field needs to be blank.</p> <p></p> <p>The principle of the transformation from long to wide can perhaps easiest be understood by looking at example4jtWide2Long from the Data Library of this module. It contains results from a Stroop experiment (in wide format) with fifty variables: ID (identifies the participant), sex (of the participant), and afterwards 48 variables that represent a combination of the measurement (first part of the variable name, rspCrr \u2013 whether the response was correct \u2013 or rspTme \u2013 reaction time), the experimental condition / congruency (second part; either cong[ruent], incong[ruent] or neutral), the colour the word was written with (third part; BLUE, GREEN, RED or YELLOW) and which repetition of a particular combination of experimental conditions the variable represents (fourth part, 1 or 2). These variables have to be assigned to the following fields: ID to \u201CVariables that identify the same unit\u201D (it is an unique identifier of each participant); sex to \u201CVariables NOT to be transformed\u201D (sex is a between-subjects variable that doesn't change between experimental conditions; however, it is not unique and thus not suited as ID variable); and the remaining variables (i.e., all variables starting with rspCrr_... or rspTme... to \u201CVariables to be transformed\u201D. Under \u201CPrefix\u201D it can be determined how the name for the different conditions shall start (a number would be added if there is more than one condition).</p>\n"))}))
+                clearWith=list(
+                    "mdeW2L",
+                    "id_Sep",
+                    "id_NSS",
+                    "id_NSA",
+                    "xfmSep",
+                    "xfmNSS",
+                    "xfmNSA",
+                    "excSep",
+                    "excNSS",
+                    "excNSA",
+                    "idxNSS",
+                    "idxNSA",
+                    "pfxSep",
+                    "chrSep",
+                    "lvlSep",
+                    "tgtNSS"),
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="fstCol", 
+                        `title`=""))))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="pvwLvl",
+                title="Repeated-Measures Levels",
+                clearWith=list(
+                    "mdeW2L",
+                    "id_Sep",
+                    "id_NSS",
+                    "id_NSA",
+                    "xfmSep",
+                    "xfmNSS",
+                    "xfmNSA",
+                    "excSep",
+                    "excNSS",
+                    "excNSA",
+                    "idxNSS",
+                    "idxNSA",
+                    "pfxSep",
+                    "chrSep",
+                    "lvlSep",
+                    "tgtNSS"),
+                columns=list(
+                    list(
+                        `name`="fstCol", 
+                        `title`=""))))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="addInf",
+                clearWith=list(
+                    "mdeW2L"),
+                content=""))}))
 
 jtWide2LongBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtWide2LongBase",
@@ -142,52 +315,102 @@ jtWide2LongBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
 #' @param data .
-#' @param varID .
-#' @param varLst .
-#' @param varExc .
-#' @param varTme .
-#' @param varSep .
-#' @param excLvl .
-#' @param btnOut .
+#' @param mdeW2L .
+#' @param id_Sep .
+#' @param xfmSep .
+#' @param excSep .
+#' @param pfxSep .
+#' @param chrSep .
+#' @param lvlSep .
+#' @param id_NSS .
+#' @param xfmNSS .
+#' @param excNSS .
+#' @param idxNSS .
+#' @param tgtNSS .
+#' @param id_NSA .
+#' @param xfmNSA .
+#' @param excNSA .
+#' @param idxNSA .
+#' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$pvwLvl} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$pvwDta$asDF}
+#'
+#' \code{as.data.frame(results$pvwDta)}
 #'
 #' @export
 jtWide2Long <- function(
     data,
-    varID,
-    varLst,
-    varExc,
-    varTme = "cond",
-    varSep = "_",
-    excLvl = "",
-    btnOut) {
+    mdeW2L = "Sep",
+    id_Sep,
+    xfmSep,
+    excSep,
+    pfxSep = "cond",
+    chrSep = "_",
+    lvlSep = "",
+    id_NSS,
+    xfmNSS,
+    excNSS,
+    idxNSS = "index",
+    tgtNSS = "var",
+    id_NSA,
+    xfmNSA = list(
+                list(label="long_y", vars=list())),
+    excNSA,
+    idxNSA = list(
+                list(var="index1", levels=0)),
+    btnCrt) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtWide2Long requires jmvcore to be installed (restart may be required)")
 
-    if ( ! missing(varID)) varID <- jmvcore::resolveQuo(jmvcore::enquo(varID))
-    if ( ! missing(varLst)) varLst <- jmvcore::resolveQuo(jmvcore::enquo(varLst))
-    if ( ! missing(varExc)) varExc <- jmvcore::resolveQuo(jmvcore::enquo(varExc))
+    if ( ! missing(id_Sep)) id_Sep <- jmvcore::resolveQuo(jmvcore::enquo(id_Sep))
+    if ( ! missing(xfmSep)) xfmSep <- jmvcore::resolveQuo(jmvcore::enquo(xfmSep))
+    if ( ! missing(excSep)) excSep <- jmvcore::resolveQuo(jmvcore::enquo(excSep))
+    if ( ! missing(id_NSS)) id_NSS <- jmvcore::resolveQuo(jmvcore::enquo(id_NSS))
+    if ( ! missing(xfmNSS)) xfmNSS <- jmvcore::resolveQuo(jmvcore::enquo(xfmNSS))
+    if ( ! missing(excNSS)) excNSS <- jmvcore::resolveQuo(jmvcore::enquo(excNSS))
+    if ( ! missing(id_NSA)) id_NSA <- jmvcore::resolveQuo(jmvcore::enquo(id_NSA))
+    if ( ! missing(excNSA)) excNSA <- jmvcore::resolveQuo(jmvcore::enquo(excNSA))
     if (missing(data))
         data <- jmvcore::marshalData(
             parent.frame(),
-            `if`( ! missing(varID), varID, NULL),
-            `if`( ! missing(varLst), varLst, NULL),
-            `if`( ! missing(varExc), varExc, NULL))
+            `if`( ! missing(id_Sep), id_Sep, NULL),
+            `if`( ! missing(xfmSep), xfmSep, NULL),
+            `if`( ! missing(excSep), excSep, NULL),
+            `if`( ! missing(id_NSS), id_NSS, NULL),
+            `if`( ! missing(xfmNSS), xfmNSS, NULL),
+            `if`( ! missing(excNSS), excNSS, NULL),
+            `if`( ! missing(id_NSA), id_NSA, NULL),
+            `if`( ! missing(excNSA), excNSA, NULL))
 
 
     options <- jtWide2LongOptions$new(
-        varID = varID,
-        varLst = varLst,
-        varExc = varExc,
-        varTme = varTme,
-        varSep = varSep,
-        excLvl = excLvl,
-        btnOut = btnOut)
+        mdeW2L = mdeW2L,
+        id_Sep = id_Sep,
+        xfmSep = xfmSep,
+        excSep = excSep,
+        pfxSep = pfxSep,
+        chrSep = chrSep,
+        lvlSep = lvlSep,
+        id_NSS = id_NSS,
+        xfmNSS = xfmNSS,
+        excNSS = excNSS,
+        idxNSS = idxNSS,
+        tgtNSS = tgtNSS,
+        id_NSA = id_NSA,
+        xfmNSA = xfmNSA,
+        excNSA = excNSA,
+        idxNSA = idxNSA,
+        btnCrt = btnCrt)
 
     analysis <- jtWide2LongClass$new(
         options = options,

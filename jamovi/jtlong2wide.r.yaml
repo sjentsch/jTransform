@@ -4,89 +4,109 @@ title: Transform dataset from long to wide
 jrs:   '1.1'
 
 items:
-    - name:  txtPvw
-      type:  Preformatted
-      title: 'Output Preview'
-      clearWith: []
+  - name:  genInf
+    type:  Html
+    clearWith: []
 
-    - name:  txtInf
-      type:  Html
-      refs:  [ jTransform, jmvReadWrite ]
-      clearWith: []
-      content: >
-        <h2>Details</h2>
-        <p><strong>This function transforms a dataset from long to wide format.
-        </strong></p>
-        <p>“Variables that identify the same unit” is an ID variable (e.g., a
-        participant code). This code needs to be unique (i.e., there can't be
-        two participants, or other units, with the same ID).</p>
-        <p>
-        “Variables that differentiate within an unit” are the so-called
-        time-varying variables, i.e., variables that are originally are
-        arranged in rows and whose steps shall be transformed into columns
-        (a new column created for the each combination of a target variable,
-        e.g., reaction time [RT], with each experimental condition [cond…]
-        leading RT_cond1, RT_cond2, …). There can be several time-varying
-        variables (e.g., several facors in an experiment, each represented
-        by a different column in the input data set).</p>
-        <p>“Variables to be transformed” are the so-called target variables,
-        i.e., variables that exist as one column in the input data set and are
-        going to be transformed / combined with each step of a time-varying
-        variable resulting in as many columns as there are steps (e.g., would
-        reaction time be one column in the input data set, resulting in as
-        many columns as there are different combinations of time-varying
-        variables in the output data set; if there are 3 steps on the first
-        time-varying variable and 4 steps on the second, this would result in
-        12 columns in the output data set).</p>
-        <p>“Variables NOT to be transformed” are variables that “characterize”
-        a participant (or another unit), often also called between-subjects
-        variables, e.g., age or sex. However, they are not unique (and thus
-        no ID variables; there may be several participant with the same age or
-        sex).</p>
-        <p>“Variable organization in the output” determines how the variables
-        are to be arranged in the output data set. This is only relevant if
-        there is more than one target variable (e.g., if you want to transform
-        both correct responses and reaction times). “Variables are adjacent”
-        keeps the target variables in adjacent columns (for the example above,
-        correct responses and reaction time would be adjacent, and on the
-        higher levels, the steps of the time-varying variable / conditions
-        would vary). “Time steps are adjacent” would produce a block where all
-        steps of the time-varying variable / conditions for the first target
-        variable are adjacent, followed by a block of all conditions of the
-        second variable and so on.</p>
-        <p>“How to accumulate?” determines how different rows may be
-        accumulated. The setting does not apply if there is only one occurence
-        / row for each possible combination of conditions. Let's assume that
-        you ran an experiment with two factors: the experimental condition and
-        which repetition of that condition an entry represents. For evaluation,
-        you want to drop the repetition (you thus only assign the variable
-        representing the condition to “Variables that differentiate within an
-        unit”. The setting determines whether the mean of the repetitions
-        shall be taken or the first occurence of each condition.</p>
-        <p>“Separator” defines which character(s) should be placed between the
-        target variable and the steps of the time-varying variable /
-        conditions when assembling the variable names (e.g., VAR_COND).</p>
-        <p></p>
-        <p>The principle of the transformation from long to wide can perhaps
-        easiest be understood by looking at example4jtLong2Wide from the Data
-        Library of this module. It contains results from a Stroop experiment
-        (in long format) with seven variables: ID (identifies the participant),
-        sex (of the participant), cond (of the Stroop experiment; congruent,
-        neutral, and incongruent), colour (in which the target word was
-        written), rep (which repetition of a particular cond-colour-combination
-        this entry is), rspCrr (whether the participant named the correct
-        colour), and rspTme (the reaction time for that response). These
-        variables have to be assigned to the following fields: ID to “Variables
-        that identify the same unit” (it is an unique identifier of each
-        participant); cond, colour and rep to “Variables that differentiate
-        within an unit” (representing all possible combinations of experimental
-        conditions); rspCrr and rspTme to “Variables to be transformed” (these
-        measurements are repeated for each combination of conditions, and in a
-        result we want a column each for all possible combinations of those
-        variables and the experimental conditions, i.e., within-subject
-        variables); and finally sex to “Variables NOT to be transformed” (since
-        sex is a between-subjects variable that doesn't change between
-        experimental condition, we thus only need one column in the output;
-        however, it is not unique and thus not suited as ID variable).</p>
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: []
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+  - name: pvwLvl
+    type: Table
+    title: "Repeated-Measures Levels"
+    clearWith: []
+    columns:
+      - name: fstCol
+        title: ""
+
+  - name:  addInf
+    type:  Html
+    clearWith: []
+    content: >
+      <h2>Details</h2>
+      <p>“Variables that identify the same unit” is an ID variable (e.g., a
+      participant code). This code needs to be unique (i.e., there can't be
+      two participants, or other units, with the same ID).</p>
+      <p>
+      “Variables that differentiate within an unit” are the so-called
+      time-varying variables, i.e., variables that are originally are
+      arranged in rows and whose steps shall be transformed into columns
+      (a new column created for the each combination of a target variable,
+      e.g., reaction time [RT], with each experimental condition [cond…]
+      leading RT_cond1, RT_cond2, …). There can be several time-varying
+      variables (e.g., several facors in an experiment, each represented
+      by a different column in the input data set).</p>
+      <p>“Variables to be transformed” are the so-called target variables,
+      i.e., variables that exist as one column in the input data set and are
+      going to be transformed / combined with each step of a time-varying
+      variable resulting in as many columns as there are steps (e.g., would
+      reaction time be one column in the input data set, resulting in as
+      many columns as there are different combinations of time-varying
+      variables in the output data set; if there are 3 steps on the first
+      time-varying variable and 4 steps on the second, this would result in
+      12 columns in the output data set).</p>
+      <p>“Variables NOT to be transformed” are variables that “characterize”
+      a participant (or another unit), often also called between-subjects
+      variables, e.g., age or sex. However, they are not unique (and thus
+      no ID variables; there may be several participant with the same age or
+      sex).</p>
+      <p>“Variable organization in the output” determines how the variables
+      are to be arranged in the output data set. This is only relevant if
+      there is more than one target variable (e.g., if you want to transform
+      both correct responses and reaction times). “Variables are adjacent”
+      keeps the target variables in adjacent columns (for the example above,
+      correct responses and reaction time would be adjacent, and on the
+      higher levels, the steps of the time-varying variable / conditions
+      would vary). “Time steps are adjacent” would produce a block where all
+      steps of the time-varying variable / conditions for the first target
+      variable are adjacent, followed by a block of all conditions of the
+      second variable and so on.</p>
+      <p>“How to accumulate?” determines how different rows may be
+      accumulated. The setting does not apply if there is only one occurence
+      / row for each possible combination of conditions. Let's assume that
+      you ran an experiment with two factors: the experimental condition and
+      which repetition of that condition an entry represents. For evaluation,
+      you want to drop the repetition (you thus only assign the variable
+      representing the condition to “Variables that differentiate within an
+      unit”. The setting determines whether the mean of the repetitions
+      shall be taken or the first occurence of each condition.</p>
+      <p>“Separator” defines which character(s) should be placed between the
+      target variable and the steps of the time-varying variable /
+      conditions when assembling the variable names (e.g., VAR_COND).</p>
+      <p></p>
+      <p>The principle of the transformation from long to wide can perhaps
+      easiest be understood by looking at example4jtLong2Wide from the Data
+      Library of this module. It contains results from a Stroop experiment
+      (in long format) with seven variables: ID (identifies the participant),
+      sex (of the participant), cond (of the Stroop experiment; congruent,
+      neutral, and incongruent), colour (in which the target word was
+      written), rep (which repetition of a particular cond-colour-combination
+      this entry is), rspCrr (whether the participant named the correct
+      colour), and rspTme (the reaction time for that response). These
+      variables have to be assigned to the following fields: ID to “Variables
+      that identify the same unit” (it is an unique identifier of each
+      participant); cond, colour and rep to “Variables that differentiate
+      within an unit” (representing all possible combinations of experimental
+      conditions); rspCrr and rspTme to “Variables to be transformed” (these
+      measurements are repeated for each combination of conditions, and in a
+      result we want a column each for all possible combinations of those
+      variables and the experimental conditions, i.e., within-subject
+      variables); and finally sex to “Variables NOT to be transformed” (since
+      sex is a between-subjects variable that doesn't change between
+      experimental condition, we thus only need one column in the output;
+      however, it is not unique and thus not suited as ID variable).</p>
+
+# take away btnCrt from genInf once Actions is working
+#  - name:  opnDta
+#    type:  Actions
+# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
+#    clearWith: [ btnCrt ]
 
 ...

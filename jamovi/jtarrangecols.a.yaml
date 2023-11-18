@@ -44,11 +44,11 @@ options:
 #           the output data set
 
     - name: blnAll
-      title: Include all variables
+      title: Add remaining variables at the end
       type: Bool
       default: false
 
-    - name: btnOut
+    - name: btnCrt
       type: Action
       title: CREATE
 

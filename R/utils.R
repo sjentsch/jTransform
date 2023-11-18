@@ -2,60 +2,91 @@ hmeDir <- function() {
     Sys.getenv(ifelse(jmvReadWrite:::getOS() == "windows", "USERPROFILE", "HOME"))
 }
 
-splStr <- function(strVec = NULL, strClp = ", ", maxLng = 80, lstInd = 2) {
-    blnLst <- is.list(strVec)
-    maxLng <- maxLng + nchar(trimws(strClp))
-    if (blnLst) strVec <- c(names(strVec), unlist(strVec, use.names = FALSE))
-    strLng <- c(unname(sapply(strVec, nchar)) + nchar(strClp))
-    strPos <- 0
-    strOut <- c()
-    while (max(strPos) < length(strVec)) {
-        strPos <- c(max(strPos), max(which(cumsum(strLng[(max(strPos) + 1):length(strVec)]) <= maxLng - ifelse(blnLst && strPos[1] > 0, lstInd, 0))) + max(strPos))
-        strOut <- c(strOut, paste0(ifelse(blnLst && strPos[1] > 0, rep(" ", lstInd), ""), trimws(paste0(strVec[seq(strPos[1] + 1, min(strPos[2], length(strVec)))], collapse = strClp))))
+prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
+    # maxRow, maxCol and useIdx are defined in globals.R
+    seqRow <- seq(crrTbl$rowCount + 1,  min(dim(dtaFrm)[1], ifelse(nonLtd, Inf, maxRow)))
+    seqCol <- seq(ifelse(useIdx, 1, 2), min(dim(dtaFrm)[2], ifelse(nonLtd, Inf, maxCol)))
+    # determine column names, and if required, put the columns in colFst at the beginning
+    colNme <- names(dtaFrm)
+    if (length(colFst) > 0) {
+        if (!all(colFst == colNme[seq_along(colFst)])) nteFsC(crrTbl = crrTbl, colFst = colFst)
+        colNme <- unique(c(colFst, colNme))
     }
-    if (blnLst) strOut <- paste(c(sub(strClp, ": ", strOut[1]), strOut[-1]), collapse = "\n")
-    strOut
+    # create a list vector with empty entries (to be assigned when adding a new row), change title for
+    # the first column (if useIdx is FALSE) and add further columns and rows to the current table
+    valRow <- setNames(as.list(rep("", length(seqCol) + 1)), c("fstCol", colNme[seqCol]))
+    if (!useIdx) crrTbl$getColumn(1)$setTitle(colNme[1])
+ 	for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
+    for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
 }
 
-oldPvw <- function(dtaFrm = NULL, varFst = c(), varMax = 8) {
-    if (length(varFst) > 0) {
-        varOrd <- c(varFst, setdiff(names(dtaFrm), varFst))[seq(min(dim(dtaFrm)[2], varMax))]
-        varTxt <- sprintf("Variable%s %s %s", ifelse(length(varFst) > 1, "s", ""), paste0(varOrd, collapse = ", "), ifelse(length(varFst) > 1, "are", "is"))
+rstPvw <- function(crrTbl = NULL) {
+    numRow <- crrTbl$rowCount
+    colNme <- names(crrTbl$columns)
+    crrTbl$deleteRows()
+    for (i in seq(numRow)) crrTbl$addRow(rowKey = i, setNames(as.list(rep("", length(colNme))), colNme))
+}
+
+fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
+    # useIdx is defined in globals.R
+    dtaRow <- dim(dtaFrm)[1]
+    dtaCol <- dim(dtaFrm)[2] + ifelse(useIdx, 1, 0)
+    pvwRow <- crrTbl$rowCount
+    pvwCol <- length(crrTbl$columns)
+    pvwClN <- unname(sapply(crrTbl$columns, "[[", "title"))
+    # add first column with row number (if useIdx), and restrict the data frame to the maximal
+    # number of rows and columns (pwvClN[-1] because the row numbers are just added by cbind)
+    if (useIdx) {
+        dtaFrm <- cbind(data.frame(fstCol = seq(pvwRow)), dtaFrm[seq(pvwRow), pvwClN[-1]])
     } else {
-        varOrd <- names(dtaFrm)[seq(min(dim(dtaFrm)[2], varMax))]
+        dtaFrm <-                                         dtaFrm[seq(pvwRow), pvwClN]
     }
-    sprintf("\nVariables in the output:\n%s\n\n\n%s\n\n(%smax. 10 rows and %s variables are shown)\n",
-      paste(splStr(names(dtaFrm)), collapse = ",\n"),
-      paste(capture.output(print(dtaFrm[seq(min(10, dim(dtaFrm)[1])), varOrd], row.names = FALSE)), collapse="\n"),
-      ifelse(length(varFst) > 0, sprintf("%s shown first in this preview,\n in the created data set the order is as in the variable list above,\n ", varTxt), ""),
-      ifelse(length(varOrd) < dim(dtaFrm)[2], sprintf("max. %d", length(varOrd)), "all"))
-}
-
-crtPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
-    dtaTbl <- crrTbl$state
-print(str(dtaTbl))
-print(str(dtaFrm))
-    if (is.null(dtaTbl)) {
-        attr(dtaFrm, "notes") <- c()
-        crrRow <- dim(dtaFrm)[1]
-        maxRow <- min(crrRow, 20)
-        dtaFrm <- cbind(data.frame(rowNme = seq(crrRow)), dtaFrm)
-        crrCol <- dim(dtaFrm)[2]
-        maxCol <- min(crrCol, 10)
-        dtaFrm <- dtaFrm[seq(maxRow), seq(maxCol)]
-print(str(dtaFrm))
-        if (crrRow > maxRow) {
-            attr(dtaFrm, "notes") <- c(attr(dtaFrm, "notes"), sprintf("There are %d more rows in the dataset not shown here.",   crrRow - maxRow))
-            dtaFrm[maxRow, ] <- "..."
+    # convert columns for display (factor -> character)
+    cnvCol <- sapply(dtaFrm, is.factor)
+    dtaFrm[, cnvCol] <- sapply(dtaFrm[, cnvCol], as.character)
+    if (pvwCol < dtaCol) dtaFrm[, pvwCol] <- "..."
+    for (i in seq(pvwRow)) {
+        # if useIdx, just use the data frame as it is, for not useIdx, the name of the first
+        # column has to be set to fstCol (original name from the table definition in r.yaml)
+        if (useIdx) {
+            crrRow <- as.list(dtaFrm[i, ])
+        } else {
+            crrRow <- setNames(as.list(dtaFrm[i, ]), c("fstCol", names(dtaFrm)[-1]))
         }
-        if (crrCol > maxCol) {
-            attr(dtaFrm, "notes") <- c(attr(dtaFrm, "notes"), sprintf("There are %d more colums in the dataset not shown here.", crrCol - maxCol))
-            dtaFrm[, maxCol] <- "..."
-        }
-        crrTbl$setState(dtaFrm)
+        crrRow[sapply(crrRow, is.na)] <- ""
+        if (i == pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
+        crrTbl$setRow(rowNo = i, crrRow)
+        # fmtAdC and fmtAdR are defined in globals.R
+        if (i == 1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(fmtAdC, dtaCol - pvwCol), rowNo = i)
+        if (i == pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(fmtAdR, dtaRow - pvwRow), rowNo = i)
     }
 }
 
-rszTbl <- function(crrTbl = NULL, tgtRow = NA, tgtCol = NA) {
-    
+crtInf <- function(crrInf = NULL, dtaFrm = NULL, hlpMsg = c()) {
+    if (!is.null(dtaFrm) > 0) {
+        outInf <- c(sprintf(fmtVrI, dim(dtaFrm)[2], dim(dtaFrm)[1], paste0(names(dtaFrm), collapse = ", ")), hlpMsg)
+    } else {
+        outInf <- hlpMsg
+    }
+    if (length(outInf) > 0 && all(nchar(outInf) > 0)) {
+        crrInf$setContent(paste0("<p>", paste0(outInf, collapse = "</p><p>"), "</p>"))
+    }
+}
+
+nteFsC <- function(crrTbl = NULL, colFst = c()) {
+    # fmtFsC is defined in globals.R
+    crrTbl$setNote("Note", sprintf(fmtFsC, ifelse(length(colFst) > 1, "s", ""),
+                                           paste0(colFst, collapse = ", "),
+                                           ifelse(length(colFst) > 1, "are", "is")))
+}
+
+optSnR <- function(crrOpt = NULL) {
+    lstSnR <- list(whlTrm = crrOpt$whlTrm,
+                   incCmp = crrOpt$incCmp, incRcd = crrOpt$incRcd, incID  = crrOpt$incID,
+                   incNom = crrOpt$incNom, incOrd = crrOpt$incOrd, incNum = crrOpt$incNum)
+    if (hasName(crrOpt, "ignCse")) lstSnR["ignCse"] <- crrOpt$ignCse
+    if (hasName(crrOpt, "varSel") && !is.null(crrOpt$varSel) && length(crrOpt$varSel) > 0) {
+       lstSnR[ifelse(crrOpt$incExc == "include", "varInc", "varExc")] <- crrOpt$varSel
+    }
+    return(lstSnR)
 }

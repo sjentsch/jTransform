@@ -2,41 +2,39 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
     "jtArrangeColsClass",
     inherit = jtArrangeColsBase,
     private = list(
-        .varLst = NULL,
-        .notRun = TRUE,
+        .arrDta = NULL,
         
         .init = function() {
-print(rep(names(self$data), self$options$blnAll))
-            private$.varLst <- unique(c(self$options$varOrd, rep(names(self$data), self$options$blnAll)))
-print(private$.varLst)
-            # initialize the variable information and the data preview
-            self$results$varInf$setContent(paste0("<p><strong>Variables in the Output Dataset:</strong></p><p>",
-                                                  paste(private$.varLst, collapse = ", "), "</p>"))
-#           rszTbl()
-            private$.notRun <- FALSE
+            if (length(self$options$varOrd) >= 2) {
+                private$.arrDta <- do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg())
+                # resize / prepare the output table (prpPvw in utils.R)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.arrDta)
+            } else {
+                # reset the output table (rstPvw in utils.R)
+                rstPvw(crrTbl = self$results$pvwDta)
+            }
         },
 
         .run = function() {
-            if (private$.notRun) return()
-
-            # check whether all required variables are present
-            if (length(self$options$varOrd) > 1 && dim(self$data)[1] > 0) {
-                # assemble the arguments for arrange_cols_omv
-                crrArg <- list(dtaInp = self$data, fleOut = NULL, varOrd = private$.varLst)
-
-                # if CREATE was pressed (btnOut == TRUE), open a new jamovi session with the data
-                if (self$options$btnOut) {
-                    do.call(jmvReadWrite::arrange_cols_omv, crrArg[-2])
-# perhaps: setState
-#                   self$results$txtPvw$setContent(self$results$txtPvw)
-                # if not, create a preview of the data (crtPvw in utils.R)
+            # check whether there are at least two variables in varOrd and that the data set has at least one row
+            if (length(self$options$varOrd) >= 2 && dim(self$data)[1] >= 1) {
+                # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                if (self$options$btnCrt) {
+                    do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg()[-2])
+                # if not, show the variable list and how to use CREATE as general information
+                # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    dtaFrm <- do.call(jmvReadWrite::arrange_cols_omv, crrArg)
-                    crtPvw(self$results$pvwDta, dtaFrm[, private$.varLst])
-                    # self$results$txtPvw$setContent(oldPvw())
+                    crtInf(crrInf = self$results$genInf, dtaFrm = private$.arrDta, hlpMsg = hlpCrt)
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.arrDta)
                 }
+            } else {
+                # show getting started as general information (crtInf in utils.R)
+                crtInf(crrInf = self$results$genInf, hlpMsg = hlpArC)
             }
-
+        },
+         
+        .crrArg = function() {
+            list(dtaInp = self$readDataset(), fleOut = NULL, varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll))))
         }
 
     )

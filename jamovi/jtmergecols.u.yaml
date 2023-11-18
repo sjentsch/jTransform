@@ -3,9 +3,9 @@ name: jtMergeCols
 jus: '3.0'
 stage: 0
 compilerMode: tame
-
 events:
   loaded:            './varAll::loaded'
+  update:            './varAll::update'
   remoteDataChanged: './varAll::dataChanged'
 
 children:
@@ -53,4 +53,4 @@ children:
     horizontalAlignment: right
     children:
       - type: ActionButton
-        name: btnOut
+        name: btnCrt

@@ -63,7 +63,7 @@ options:
           name:  right
       default: outer
 
-    - name: btnOut
+    - name: btnCrt
       type: Action
       title: CREATE
 

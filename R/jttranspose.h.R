@@ -8,7 +8,7 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varNme = NULL,
             varOth = NULL,
-            btnOut = NULL, ...) {
+            btnCrt = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -32,30 +32,30 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "factor",
                     "id"),
                 required=TRUE)
-            private$..btnOut <- jmvcore::OptionAction$new(
-                "btnOut",
-                btnOut)
+            private$..btnCrt <- jmvcore::OptionAction$new(
+                "btnCrt",
+                btnCrt)
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
-            self$.addOption(private$..btnOut)
+            self$.addOption(private$..btnCrt)
         }),
     active = list(
         varNme = function() private$..varNme$value,
         varOth = function() private$..varOth$value,
-        btnOut = function() private$..btnOut$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varNme = NA,
         ..varOth = NA,
-        ..btnOut = NA)
+        ..btnCrt = NA)
 )
 
 jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtTransposeResults",
     inherit = jmvcore::Group,
     active = list(
-        txtPvw = function() private$.items[["txtPvw"]],
-        txtInf = function() private$.items[["txtInf"]]),
+        genInf = function() private$.items[["genInf"]],
+        pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -63,19 +63,28 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="",
                 title="Transpose the dataset")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="txtPvw",
-                title="Output Preview",
-                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
+                name="genInf",
+                clearWith=list(
+                    "varNme",
+                    "varOth",
+                    "btnCrt")))
+            self$add(jmvcore::Table$new(
+                options=options,
+                name="pvwDta",
+                title="Data Preview",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
-                clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function transposes a dataset (i.e., rows are made into columns and columns into rows).</strong></p> <p>Please assign maximally one variable to the variable box \u201CVariable with column names for the output\u201D (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\u201CV_...\u201D).</p> <p>The variables to be transposed (i.e., those to become rows in your output data set) have to be assigned to \u201CVariables to be transposed\u201D.</p>\n"))}))
+                clearWith=list(
+                    "varNme",
+                    "varOth"),
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="fstCol", 
+                        `title`=""))))}))
 
 jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtTransposeBase",
@@ -111,19 +120,25 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data the data as a data frame
 #' @param varNme .
 #' @param varOth .
-#' @param btnOut .
+#' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$txtPvw} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
+#'
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#'
+#' \code{results$pvwDta$asDF}
+#'
+#' \code{as.data.frame(results$pvwDta)}
 #'
 #' @export
 jtTranspose <- function(
     data,
     varNme,
     varOth,
-    btnOut) {
+    btnCrt) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtTranspose requires jmvcore to be installed (restart may be required)")
@@ -140,7 +155,7 @@ jtTranspose <- function(
     options <- jtTransposeOptions$new(
         varNme = varNme,
         varOth = varOth,
-        btnOut = btnOut)
+        btnCrt = btnCrt)
 
     analysis <- jtTransposeClass$new(
         options = options,

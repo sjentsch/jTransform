@@ -4,34 +4,24 @@ title: Change the order of variables
 jrs:   '1.1'
 
 items:
-    - name:  varInf
-      type:  Html
-      clearWith: []
+  - name:  genInf
+    type:  Html
+    clearWith: [ varOrd, blnAll, btnCrt ]
 
-    - name:  pvwDta
-      type:  Table
-      title: " "
-#     title: 'Preview of the Output Dataset'
-      rows:  20
-      clearWith: []
-      columns:
-        - name: rowNme
-          title: "Rows"
-          type: integer
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ varOrd, blnAll ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
 
-    - name:  genInf
-      type:  Html
-      refs:  [ jTransform, jmvReadWrite ]
-      clearWith: []
-      content: >
-        <h2>Details</h2>
-        <p><strong>This function re-arranges the order of columns in a jamovi
-        data file.</strong></p>
-        <p>Please assign the variables in their desired order to “Desired order
-        of variables”. By setting “Include all variables”, variables from the
-        original dataset that are not contained in “Desired order of variables”
-        are appended after the variables in that list.</p>
-        <p>Once you are satisfied with with the preview, click on “CREATE” to
-        open the modified dataset in a new jamovi window.</p>
+# take away btnCrt from genInf once Actions is working
+#  - name:  opnDta
+#    type:  Actions
+# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
+#    clearWith: [ btnCrt ]
 
 ...

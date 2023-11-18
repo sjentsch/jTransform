@@ -21,9 +21,23 @@ options:
     - name: data
       type: Data
 
-    - name: varID
+    - name:  mdeW2L
+      title: "Mode"
+      type:  List
+      options:
+        - name: Sep
+          title: Separated
+        - name: NSS
+          title: Non-sep. (simple)
+        - name: NSA
+          title: Non-sep. (advanced)
+      default: Sep
+
+# =============================================================================
+
+    - name:  id_Sep
       title: Variables that identify the same unit
-      type: Variables
+      type:  Variables
       permitted:
         - numeric
         - factor
@@ -33,9 +47,9 @@ options:
 #            variables that identify the same unit (e.g., an individual, a group,
 #            an organization, etc.)
 
-    - name: varLst
+    - name:  xfmSep
       title: Variables to be transformed
-      type: Variables
+      type:  Variables
       permitted:
         - numeric
         - factor
@@ -43,9 +57,9 @@ options:
 #      description:
 #          R: >
 
-    - name: varExc
+    - name:  excSep
       title: Variables NOT to be transformed
-      type: Variables
+      type:  Variables
       permitted:
         - numeric
         - factor
@@ -53,9 +67,9 @@ options:
 #      description:
 #          R: >
 
-    - name: varTme
+    - name:  pfxSep
       title: Prefix
-      type: String
+      type:  String
       default: "cond"
 #      description:
 #          R: >
@@ -64,24 +78,114 @@ options:
 #            containing a counter for each time-varying event / record (e.g., cond
 #            = 1)
 
-    - name: varSep
+    - name:  chrSep
       title: "Separator"
-      type: String
+      type:  String
       default: "_"
 #      description:
 #          R: >
 #            character that separates the fixed and the time-varying part of each
 #            variable name ("VAR1_1", "VAR1_2")
 
-    - name: excLvl
+    - name:  lvlSep
       title: "Exclude level"
-      type: String
+      type:  String
       default: ""
 #      description:
 #          R: >
 
-    - name: btnOut
-      type: Action
+# =============================================================================
+
+    - name:  id_NSS
+      title: Variables that identify the same unit
+      type:  Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#      description:
+#          R: >
+#            variables that identify the same unit (e.g., an individual, a group,
+#            an organization, etc.)
+
+    - name:  xfmNSS
+      title: Variables to be transformed
+      type:  Variables
+
+    - name:  excNSS
+      title: Variables NOT to be transformed
+      type:  Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#      description:
+#          R: >
+
+    - name:  idxNSS
+      title: Index for repeated measures levels
+      type:  String
+      default: "index"
+      
+    - name:  tgtNSS
+      title: Name of the target variable
+      type:  String
+      default: "var"
+
+# =============================================================================
+
+    - name:  id_NSA
+      title: Variables that identify the same unit
+      type:  Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#      description:
+#          R: >
+#            variables that identify the same unit (e.g., an individual, a group,
+#            an organization, etc.)
+
+    - name:  xfmNSA
+      type:  Array
+      default:
+        - label: long_y
+          vars: []
+      template:
+          type: Group
+          elements:
+            - name: label
+              type: String
+            - name: vars
+              type: Variables
+
+    - name:  excNSA
+      title: Variables NOT to be transformed
+      type:  Variables
+      permitted:
+        - numeric
+        - factor
+        - id
+#      description:
+#          R: >
+
+    - name:  idxNSA
+      type:  Array
+      default:
+        - var: index1
+          levels: 0
+      template:
+          type: Group
+          elements:
+            - name: var
+              type: String
+            - name: levels
+              type: Integer
+
+# =============================================================================
+
+    - name:  btnCrt
+      type:  Action
       title: CREATE
 
 ...

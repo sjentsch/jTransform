@@ -29,22 +29,35 @@ options:
       - factor
       - id
 
-  - name: rplCst
-    type: String
-    default: ""
-    hidden: true
+  - name:  rplOnN
+    type:  Array
+    template:
+      type: Group
+      elements:
+        - name: rplOld
+          type: String
+        - name: rplNew
+          type: String
+    default:
+      - rplOld: ""
+        rplNew: ""
 
-  - name: rplTrm
-    type: String
-    default: ""
-    hidden: true
+#  - name: rplCst
+#    type: String
+#    default: ""
+#    hidden: true
+
+#  - name: rplTrm
+#    type: String
+#    default: ""
+#    hidden: true
 
   - name: whlTrm
     title: "Whole word"
     type: Bool
     default: true
 
-  - name: btnOut
+  - name: btnCrt
     type: Action
     title: CREATE
 

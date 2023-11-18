@@ -117,8 +117,7 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSearchResults",
     inherit = jmvcore::Group,
     active = list(
-        srcRes = function() private$.items[["srcRes"]],
-        txtInf = function() private$.items[["txtInf"]]),
+        srcRes = function() private$.items[["srcRes"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -126,18 +125,23 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Search within the current data set")
-            self$add(jmvcore::Preformatted$new(
-                options=options,
-                name="srcRes",
-                clearWith=list()))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="txtInf",
+                name="srcRes",
+                clearWith=list(
+                    "varAll",
+                    "srcTrm",
+                    "ignCse",
+                    "whlTrm",
+                    "incCmp",
+                    "incRcd",
+                    "incID",
+                    "incNom",
+                    "incOrd",
+                    "incNum"),
                 refs=list(
                     "jTransform",
-                    "jmvReadWrite"),
-                clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function searches values in a jamovi data set.</strong> </p> <p>Please type the term to be search for into the text box. If you want that partial matches (i.e., the search term appears within values) are found, leave the tick box \u201Cwhole word\u201D unset.</p> <p>The \u201CInclude / exclude\u201D collapse box permits to specifically select in which column types and for which measurement type the search shall be conducted.</p>\n"))}))
+                    "jmvReadWrite")))}))
 
 jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSearchBase",
@@ -184,8 +188,7 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param incNum .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$srcRes} \tab \tab \tab \tab \tab a preformatted \cr
-#'   \code{results$txtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$srcRes} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
 #' @export

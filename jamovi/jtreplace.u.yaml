@@ -20,8 +20,25 @@ children:
         stretchFactor: 4
         margin: large
         children:
-          - type: CustomControl
-            name: rplCst
+          - type: ListBox
+            name: rplOnN
+            fullRowSelect: true
+            addButton: Add further original and replacement values... 
+            height: large
+            showColumnHeaders: true
+            columns:
+              - name: rplOld
+                label: Original
+                template:
+                  type: TextBox
+                stretchFactor: 1
+              - name: rplNew
+                label: Replacement
+                template:
+                  type: TextBox
+                stretchFactor: 1
+#          - type: CustomControl
+#            name: rplCst
       - type: LayoutBox
         style: list
         margin: large
@@ -33,7 +50,7 @@ children:
             name: whlTrm
             margin: large
           - type: ActionButton
-            name: btnOut
+            name: btnCrt
             margin: large
 
   - type: CollapseBox

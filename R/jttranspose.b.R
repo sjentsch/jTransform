@@ -2,27 +2,41 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     "jtTransposeClass",
     inherit = jtTransposeBase,
     private = list(
+        .xpsDta = NULL,
+
+        .init = function() {
+            if (length(self$options$varOth) > 1) {
+                private$.xpsDta <- do.call(jmvReadWrite::transpose_omv, private$.crrArg())
+                # resize / prepare the output table (prpPvw in utils.R)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xpsDta)
+            } else {
+                # reset the output table (rstPvw in utils.R)
+                rstPvw(crrTbl = self$results$pvwDta)
+            }
+        },
 
         .run = function() {
-
-            # check whether all required variables are present
-            if (length(self$options$varOth) > 1) {
-                # assemble the arguments for transpose_omv
-                crrArg <- list(dtaInp = self$data, fleOut = NULL, varOth = self$options$varOth,
-                               varNme = ifelse(is.null(self$options$varNme), "", self$options$varNme))
-
-                # if CREATE was pressed (btnOut == TRUE), open a new jamovi session with the data
-                if (self$options$btnOut) {
-                    do.call(jmvReadWrite::transpose_omv, crrArg[-2])
-                    self$results$txtPvw$setContent(self$results$txtPvw)
-                # if not, create a preview of the data (crtPvw in utils.R)
+            # check whether there are at least two variables in varOrd and that the data set has at least one row
+            if (length(self$options$varOth) > 1 && dim(self$data)[1] >= 1) {
+                # NB: transpose_omv is called by both .init() and .run(), hence crrArg had to be a function
+                # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                if (self$options$btnCrt) {
+                    do.call(jmvReadWrite::transpose_omv, private$.crrArg()[-2])
+                # if not, show the variable list and how to use CREATE as general information
+                # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    self$results$txtPvw$setContent(oldPvw(do.call(jmvReadWrite::transpose_omv, crrArg)))
+                    crtInf(crrInf = self$results$genInf, dtaFrm = private$.xpsDta, hlpMsg = hlpCrt)
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xpsDta)
                 }
             } else {
-                self$results$txtPvw$setContent("")
+                # show getting started as general information (crtInf in utils.R)
+                crtInf(crrInf = self$results$genInf, hlpMsg = hlpXps)
             }
+        },
 
+        .crrArg = function() {
+            list(dtaInp = self$readDataset()[, c(self$options$varNme, self$options$varOth)], fleOut = NULL,
+                 varNme = ifelse(is.null(self$options$varNme), "", self$options$varNme))
         }
 
     )

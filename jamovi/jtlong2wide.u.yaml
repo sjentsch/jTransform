@@ -74,4 +74,4 @@ children:
     horizontalAlignment: right
     children:
       - type: ActionButton
-        name: btnOut
+        name: btnCrt

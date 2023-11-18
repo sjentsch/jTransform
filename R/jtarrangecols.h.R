@@ -9,7 +9,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varAll = NULL,
             varOrd = NULL,
             blnAll = FALSE,
-            btnOut = NULL, ...) {
+            btnCrt = NULL, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -36,34 +36,33 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 "blnAll",
                 blnAll,
                 default=FALSE)
-            private$..btnOut <- jmvcore::OptionAction$new(
-                "btnOut",
-                btnOut)
+            private$..btnCrt <- jmvcore::OptionAction$new(
+                "btnCrt",
+                btnCrt)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..varOrd)
             self$.addOption(private$..blnAll)
-            self$.addOption(private$..btnOut)
+            self$.addOption(private$..btnCrt)
         }),
     active = list(
         varAll = function() private$..varAll$value,
         varOrd = function() private$..varOrd$value,
         blnAll = function() private$..blnAll$value,
-        btnOut = function() private$..btnOut$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varAll = NA,
         ..varOrd = NA,
         ..blnAll = NA,
-        ..btnOut = NA)
+        ..btnCrt = NA)
 )
 
 jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtArrangeColsResults",
     inherit = jmvcore::Group,
     active = list(
-        varInf = function() private$.items[["varInf"]],
-        pvwDta = function() private$.items[["pvwDta"]],
-        genInf = function() private$.items[["genInf"]]),
+        genInf = function() private$.items[["genInf"]],
+        pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -73,27 +72,26 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 title="Change the order of variables")
             self$add(jmvcore::Html$new(
                 options=options,
-                name="varInf",
-                clearWith=list()))
+                name="genInf",
+                clearWith=list(
+                    "varOrd",
+                    "blnAll",
+                    "btnCrt")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
-                title="<strong>Trial</strong>",
-                rows=20,
-                clearWith=list(),
-                columns=list(
-                    list(
-                        `name`="rowNme", 
-                        `title`="Rows", 
-                        `type`="integer"))))
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="genInf",
+                title="Data Preview",
                 refs=list(
                     "jTransform",
                     "jmvReadWrite"),
-                clearWith=list(),
-                content="<h2>Details</h2> <p><strong>This function re-arranges the order of columns in a jamovi data file.</strong></p> <p>Please assign the variables in their desired order to \u201CDesired order of variables\u201D. By setting \u201CInclude all variables\u201D, variables from the original dataset that are not contained in \u201CDesired order of variables\u201D are appended after the variables in that list.</p> <p>Once you are satisfied with with the preview, click on \u201CCREATE\u201D to open the modified dataset in a new jamovi window.</p>\n"))}))
+                clearWith=list(
+                    "varOrd",
+                    "blnAll"),
+                rows=1,
+                columns=list(
+                    list(
+                        `name`="fstCol", 
+                        `title`=""))))}))
 
 jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtArrangeColsBase",
@@ -130,12 +128,11 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varAll .
 #' @param varOrd .
 #' @param blnAll .
-#' @param btnOut .
+#' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$varInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -150,7 +147,7 @@ jtArrangeCols <- function(
     varAll,
     varOrd,
     blnAll = FALSE,
-    btnOut) {
+    btnCrt) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtArrangeCols requires jmvcore to be installed (restart may be required)")
@@ -168,7 +165,7 @@ jtArrangeCols <- function(
         varAll = varAll,
         varOrd = varOrd,
         blnAll = blnAll,
-        btnOut = btnOut)
+        btnCrt = btnCrt)
 
     analysis <- jtArrangeColsClass$new(
         options = options,

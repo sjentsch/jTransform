@@ -4,23 +4,10 @@ title: Search within the current data set
 jrs:   '1.1'
 
 items:
-    - name:  srcRes
-      type:  Preformatted
-      clearWith: []
-
-    - name:  txtInf
-      type:  Html
-      refs:  [ jTransform, jmvReadWrite ]
-      clearWith: []
-      content: >
-        <h2>Details</h2>
-        <p><strong>This function searches values in a jamovi data set.</strong>
-        </p>
-        <p>Please type the term to be search for into the text box. If you want
-        that partial matches (i.e., the search term appears within values) are
-        found, leave the tick box “whole word” unset.</p>
-        <p>The “Include / exclude” collapse box permits to specifically select
-        in which column types and for which measurement type the search shall
-        be conducted.</p>
+  - name:  srcRes
+    type:  Html
+#   clearWith: [] # should clear with all UI elements
+    clearWith: [ varAll, srcTrm, ignCse, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum ]
+    refs:  [ jTransform, jmvReadWrite ]
 
 ...

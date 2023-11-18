@@ -7,7 +7,7 @@ authors:
   - Sebastian Jentschke
   - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2023-08-06'
+date: '2023-10-26'
 type: R
 description: >-
   jTransform carries out common data management tasks and transformations of
