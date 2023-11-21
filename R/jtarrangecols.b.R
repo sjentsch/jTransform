@@ -5,7 +5,7 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         .arrDta = NULL,
         
         .init = function() {
-            if (length(self$options$varOrd) >= 2) {
+            if (private$.chkVar()) {
                 private$.arrDta <- do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.arrDta)
@@ -17,7 +17,7 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
 
         .run = function() {
             # check whether there are at least two variables in varOrd and that the data set has at least one row
-            if (length(self$options$varOrd) >= 2 && dim(self$data)[1] >= 1) {
+            if (private$.chkVar() && dim(self$data)[1] >= 1) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg()[-2])
@@ -32,9 +32,21 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
                 crtInf(crrInf = self$results$genInf, hlpMsg = hlpArC)
             }
         },
-         
+
+        .chkVar = function() {
+            (length(self$options$varOrd) >= 2)
+        },
+
         .crrArg = function() {
             list(dtaInp = self$readDataset(), fleOut = NULL, varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll))))
+        }
+
+    ),
+
+    public = list(
+
+        asSource = function() {
+            if (private$.chkVar()) fmtSrc("jmvReadWrite::arrange_cols_omv", private$.crrArg()[c(-1, -2)])
         }
 
     )

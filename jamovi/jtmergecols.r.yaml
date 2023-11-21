@@ -31,6 +31,12 @@ items:
       set are kept (whereas cases that are only contained in input data set
       two or higher are dropped), for “right” all cases from the second (or
       any higher) data set are kept.</p>
+      <p>If there are variables with the same name in several of the input data
+      sets, it will checked whether they contain the same content. If they are
+      the same, only the first of these identical variables is kept (and the
+      others are removed). If they are different, the name of the first of
+      these variables is kept, and a suffix with their position (_2, _3, etc.)
+      will be added to the name of all other variables.</p>
 
 # take away btnCrt from genInf once Actions is working
 #  - name:  opnDta

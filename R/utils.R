@@ -90,3 +90,12 @@ optSnR <- function(crrOpt = NULL) {
     }
     return(lstSnR)
 }
+
+fmtSrc <- function(fcnNme = "", crrArg = NULL) {
+    dflArg <- eval(parse(text = paste0("formals(", fcnNme, ")")))
+    for (nmeArg in names(crrArg)) {
+        if (identical(crrArg[[nmeArg]], dflArg[[nmeArg]])) crrArg[nmeArg] <- NULL
+    }
+
+    gsub("^list\\(", paste0(fcnNme, "(\n    dtaInp = data,"), gsub("=", " = ", jmvcore::sourcify(crrArg)))
+}

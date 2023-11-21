@@ -21,7 +21,7 @@ children:
         margin: large
         children:
           - type: ListBox
-            name: rplOnN
+            name: rplTrm
             fullRowSelect: true
             addButton: Add further original and replacement values... 
             height: large
@@ -37,8 +37,6 @@ children:
                 template:
                   type: TextBox
                 stretchFactor: 1
-#          - type: CustomControl
-#            name: rplCst
       - type: LayoutBox
         style: list
         margin: large

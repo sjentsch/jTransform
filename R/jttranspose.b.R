@@ -5,7 +5,7 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .xpsDta = NULL,
 
         .init = function() {
-            if (length(self$options$varOth) > 1) {
+            if (private$.chkVar()) {
                 private$.xpsDta <- do.call(jmvReadWrite::transpose_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xpsDta)
@@ -17,8 +17,7 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         .run = function() {
             # check whether there are at least two variables in varOrd and that the data set has at least one row
-            if (length(self$options$varOth) > 1 && dim(self$data)[1] >= 1) {
-                # NB: transpose_omv is called by both .init() and .run(), hence crrArg had to be a function
+            if (private$.chkVar() && dim(self$data)[1] >= 1) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::transpose_omv, private$.crrArg()[-2])
@@ -34,9 +33,21 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
 
+        .chkVar = function() {
+            (length(self$options$varOth) > 1)
+        },
+
         .crrArg = function() {
             list(dtaInp = self$readDataset()[, c(self$options$varNme, self$options$varOth)], fleOut = NULL,
                  varNme = ifelse(is.null(self$options$varNme), "", self$options$varNme))
+        }
+
+    ),
+
+    public = list(
+
+        asSource = function() {
+            if (private$.chkVar()) fmtSrc("jmvReadWrite::transpose_omv", private$.crrArg()[c(-1, -2)])
         }
 
     )

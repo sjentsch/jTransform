@@ -7,7 +7,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     public = list(
         initialize = function(
             varAll = NULL,
-            rplOnN = list(
+            rplTrm = list(
                 list(rplOld="", rplNew="")),
             whlTrm = TRUE,
             btnCrt = NULL,
@@ -34,11 +34,11 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "numeric",
                     "factor",
                     "id"))
-            private$..rplOnN <- jmvcore::OptionArray$new(
-                "rplOnN",
-                rplOnN,
+            private$..rplTrm <- jmvcore::OptionArray$new(
+                "rplTrm",
+                rplTrm,
                 template=jmvcore::OptionGroup$new(
-                    "rplOnN",
+                    "rplTrm",
                     NULL,
                     elements=list(
                         jmvcore::OptionString$new(
@@ -96,7 +96,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "id"))
 
             self$.addOption(private$..varAll)
-            self$.addOption(private$..rplOnN)
+            self$.addOption(private$..rplTrm)
             self$.addOption(private$..whlTrm)
             self$.addOption(private$..btnCrt)
             self$.addOption(private$..incCmp)
@@ -110,7 +110,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         }),
     active = list(
         varAll = function() private$..varAll$value,
-        rplOnN = function() private$..rplOnN$value,
+        rplTrm = function() private$..rplTrm$value,
         whlTrm = function() private$..whlTrm$value,
         btnCrt = function() private$..btnCrt$value,
         incCmp = function() private$..incCmp$value,
@@ -123,7 +123,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         varSel = function() private$..varSel$value),
     private = list(
         ..varAll = NA,
-        ..rplOnN = NA,
+        ..rplTrm = NA,
         ..whlTrm = NA,
         ..btnCrt = NA,
         ..incCmp = NA,
@@ -153,7 +153,7 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="genInf",
                 clearWith=list(
-                    "rplOnN",
+                    "rplTrm",
                     "whlTrm",
                     "incCmp",
                     "incRcd",
@@ -172,7 +172,7 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "jTransform",
                     "jmvReadWrite"),
                 clearWith=list(
-                    "rplOnN",
+                    "rplTrm",
                     "whlTrm",
                     "incCmp",
                     "incRcd",
@@ -221,7 +221,7 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #'}
 #' @param data .
 #' @param varAll .
-#' @param rplOnN .
+#' @param rplTrm .
 #' @param whlTrm .
 #' @param btnCrt .
 #' @param incCmp .
@@ -248,7 +248,7 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtReplace <- function(
     data,
     varAll,
-    rplOnN = list(
+    rplTrm = list(
                 list(rplOld="", rplNew="")),
     whlTrm = TRUE,
     btnCrt,
@@ -275,7 +275,7 @@ jtReplace <- function(
 
     options <- jtReplaceOptions$new(
         varAll = varAll,
-        rplOnN = rplOnN,
+        rplTrm = rplTrm,
         whlTrm = whlTrm,
         btnCrt = btnCrt,
         incCmp = incCmp,

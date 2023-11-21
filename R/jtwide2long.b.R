@@ -20,8 +20,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         .run = function() {
             # check whether the required variables are present and that the data set has at least one row
-            if (private$.chkVar() && dim(self$data)[2] >= 1) {
-                # NB: merge_cols_omv is called by both .init() and .run(), hence crrArg had to be a function
+            if (private$.chkVar() && dim(self$data)[1] >= 1) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::wide2long_omv, private$.crrArg()[-2])
@@ -139,6 +138,55 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         
         .spfNum = function(crrNum = NA) {
              sprintf(paste0("_%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))
+        }
+
+    ),
+
+    public = list(
+
+        asSource = function() {
+            if (private$.chkVar()) {
+                if (self$options$mdeW2L == "Sep") {
+                    fmtSrc("jmvReadWrite::wide2long_omv", private$.crrArg()[c(-1, -2)])
+                } else {
+                    crrSrc <- '\n    data = data'
+                    nmeOpt <- names(private$.options$options)
+                    nmeOpt <- grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), nmeOpt)
+                    for (crrOpt in private$.options$options[nmeOpt]) {
+                         srcOpt <- private$.sourcifyOption(crrOpt)
+                         if (!base::identical(srcOpt, '')) {
+                             crrSrc <- paste0(crrSrc, ',\n    ', srcOpt)
+                         }
+                    }
+cat(crrSrc)
+#jTransform::jtWide2Long(
+#    data = data,
+#    mdeW2L = "NSS",
+#    id_Sep = vars(),
+#    xfmSep = vars(),
+#    excSep = vars(),
+#    id_NSS = ID,
+#    xfmNSS = vars(rspCrr_cong_GREEN_1, rspCrr_incong_GREEN_1, rspCrr_neutral_GREEN_1, rspCrr_cong_YELLOW_1, rspCrr_incong_YELLOW_1, rspCrr_neutral_YELLOW_1, rspCrr_cong_RED_1, rspCrr_incong_RED_1, rspCrr_neutral_RED_1, rspCrr_cong_BLUE_1, rspCrr_incong_BLUE_1, rspCrr_neutral_BLUE_1, rspCrr_cong_GREEN_2, rspCrr_incong_GREEN_2, rspCrr_neutral_GREEN_2, rspCrr_cong_YELLOW_2, rspCrr_incong_YELLOW_2, rspCrr_neutral_YELLOW_2, rspCrr_cong_RED_2, rspCrr_incong_RED_2, rspCrr_neutral_RED_2, rspCrr_cong_BLUE_2, rspCrr_incong_BLUE_2, rspCrr_neutral_BLUE_2),
+#    excNSS = sex,
+#    id_NSA = vars(),
+#    xfmNSA = list(
+#        list(
+#            label="long_y",
+#            vars=NULL)),
+#    excNSA = vars(),
+#    idxNSA = list(
+#        list(
+#            var="index1",
+#            levels=0)),
+#    btnCrt = FALSE)
+#print(names(private$.options$options))
+#print(paste0(private$.options$options$mdeW2L, "$|^mdeW2L$"))
+#print(names(private$.options$options)[grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), names(private$.options$options))])
+#print(private$.options$options[names(private$.options$options)[grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), names(private$.options$options))]])
+#jmvcore::sourcify(self$options)
+                    paste0(private$.package, '::', private$.name, '(', crrSrc, ')')
+                }
+            }
         }
 
     )

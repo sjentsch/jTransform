@@ -29,7 +29,7 @@ options:
       - factor
       - id
 
-  - name:  rplOnN
+  - name:  rplTrm
     type:  Array
     template:
       type: Group
@@ -41,16 +41,6 @@ options:
     default:
       - rplOld: ""
         rplNew: ""
-
-#  - name: rplCst
-#    type: String
-#    default: ""
-#    hidden: true
-
-#  - name: rplTrm
-#    type: String
-#    default: ""
-#    hidden: true
 
   - name: whlTrm
     title: "Whole word"

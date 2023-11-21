@@ -6,15 +6,13 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
-    clearWith: [ rplOnN, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum, incExc, varSel, btnCrt ]
-#   clearWith: [ rplCst, rplTrm, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum, incExc, varSel, btnCrt ]
+    clearWith: [ rplTrm, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum, incExc, varSel, btnCrt ]
 
   - name:  pvwDta
     type:  Table
     title: "Data Preview"
     refs:  [ jTransform, jmvReadWrite ]
-    clearWith: [ rplOnN, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum, incExc, varSel ]
-#   clearWith: [ rplCst, rplTrm, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum, incExc, varSel ]
+    clearWith: [ rplTrm, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum, incExc, varSel ]
     rows: 1
     columns:
       - name: fstCol

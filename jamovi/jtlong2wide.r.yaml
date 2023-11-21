@@ -75,8 +75,9 @@ items:
       which repetition of that condition an entry represents. For evaluation,
       you want to drop the repetition (you thus only assign the variable
       representing the condition to “Variables that differentiate within an
-      unit”. The setting determines whether the mean of the repetitions
-      shall be taken or the first occurence of each condition.</p>
+      unit”. The setting determines if the mean of these occurrences shall
+      be calculated (“Calculate mean”) or if all occurences after the first
+      should be dropped (“First occurence”).</p>
       <p>“Separator” defines which character(s) should be placed between the
       target variable and the steps of the time-varying variable /
       conditions when assembling the variable names (e.g., VAR_COND).</p>

@@ -7,7 +7,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .mrgDta = NULL,
 
         .init = function() {
-            if (length(self$options$varBy) > 0 && private$.chkFlI()) {
+            if (private$.chkVar()) {
                 private$.mrgDta <- do.call(jmvReadWrite::merge_cols_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.mrgDta, colFst = private$.colFst())
@@ -20,8 +20,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
             # check whether there are at least one variable in varBy, that fleInp isn't empty,
             # and that the data set has at least one row
-            if (length(self$options$varBy) > 0 && private$.chkFlI() && dim(self$data)[2] >= 1) {
-                # NB: merge_cols_omv is called by both .init() and .run(), hence crrArg had to be a function
+            if (private$.chkVar() && dim(self$data)[1] >= 1) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::merge_cols_omv, private$.crrArg()[-2])
@@ -37,9 +36,9 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
         },
         
-		.chkFlI = function() {
+		.chkVar = function() {
             if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(sapply(private$.fleInp, grepl, self$options$fleInp, USE.NAMES=FALSE))) {
-                return(TRUE)
+                return(length(self$options$varBy) > 0 && TRUE)
 			} else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
 			    fleInp <- trimws(strsplit(self$options$fleInp, ";")[[1]])
 			    for (i in seq_along(fleInp)) {
@@ -47,7 +46,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 			        fleInp[i] <- jmvReadWrite:::nrmFle(fleInp[i]);
 			    }
 			    private$.fleInp <- fleInp
-			    return(TRUE)
+			    return(length(self$options$varBy) > 0 && TRUE)
 			} else {
 			    private$.fleInp <- NULL
 			    return(FALSE)
@@ -83,5 +82,16 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             list(dtaInp = crrDta, fleOut = NULL, varBy = self$options$varBy, typMrg = self$options$typMrg)
 		}
         
+    ),
+
+    public = list(
+
+        asSource = function() {
+            if (private$.chkVar()) {
+                paste0("attr(data, \"fleInp\") <- c(\n    \"", paste0(private$.fleInp, collapse = "\",\n    \""), "\")\n",
+                       fmtSrc("jmvReadWrite::merge_cols_omv", private$.crrArg()[c(-1, -2)]))
+            }
+        }
+
     )
 )

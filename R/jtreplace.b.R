@@ -18,7 +18,7 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         .run = function() {
             # check whether rplTrm has the correct format and whether the data set has at least one row
-            if (private$.chkVar() && dim(self$data)[2] >= 1) {
+            if (private$.chkVar() && dim(self$data)[1] >= 1) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                       do.call(jmvReadWrite::replace_omv, private$.crrArg()[-2])
@@ -41,11 +41,12 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         
         .chkVar = function() {
-            (length(self$options$rplOnN) > 0 && all(sapply(self$options$rplOnN, function(x) !any(sapply(x, is.null)) && nzchar(x[1]))))
+            (length(self$options$rplTrm) > 0 && all(sapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]))))
         },
 
         .crrArg = function() {
-            c(list(dtaInp = self$data, fleOut = NULL, rplLst = sapply(self$options$rplOnN, unlist, use.names = FALSE, simplify = FALSE)), optSnR(self$options))
+            rplLst <- sapply(self$options$rplTrm, function(x) { x[sapply(x, is.null)] = ""; c(x[[1]], x[[2]]) }, simplify = FALSE)
+            c(list(dtaInp = self$data, fleOut = NULL, rplLst = rplLst), optSnR(self$options))
         },
 
         .mrkDff = function(crrTbl = NULL, dtaOld = NULL, dtaNew = NULL) {
@@ -70,6 +71,14 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             } else {
                 crrTbl$setNote('diff', 'There were no replacements made (in the whole dataset).')
             }
+        }
+
+    ),
+
+    public = list(
+
+        asSource = function() {
+            if (private$.chkVar()) fmtSrc("jmvReadWrite::replace_omv", private$.crrArg()[c(-1, -2)])
         }
 
     )

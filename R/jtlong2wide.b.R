@@ -21,8 +21,7 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
             # check whether there are at least one variable in varBy, that fleInp isn't empty,
             # and that the data set has at least one row
-            if (private$.chkVar() && dim(self$data)[2] >= 1) {
-                # NB: long2wide_omv is called by both .init() and .run(), hence crrArg had to be a function
+            if (private$.chkVar() && dim(self$data)[1] >= 1) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::long2wide_omv, private$.crrArg()[-2])
@@ -78,6 +77,14 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort))
             cbind(tblFrq[-1], nmeTgt, tblFrq[1])
         }        
+
+    ),
+
+    public = list(
+
+        asSource = function() {
+            if (private$.chkVar()) fmtSrc("jmvReadWrite::long2wide_omv", private$.crrArg()[c(-1, -2)])
+        }
 
     )
 )

@@ -19,11 +19,11 @@ hlpL2W = c(paste("Please assign the variables that identify participant (or anot
                  "identify the same unit”, and those that are unique to an unit but not an identifier (e.g., gender, age group) to “Variables NOT",
                  "to be transformed”. “Variables that differentiate within an unit” typically contain different (e.g., experimental) conditions,",
                  "and “Variables to be transformed” are the actual measurements (e.g., responses, reaction times, etc.)."),
-                 "For an example about a typical long-to-wide-transformation, see the last paragraph in “Details” underneath the preview table.")
+                 "For an example about a typical long-to-wide-transformation, see the last paragraph in “Details” underneath the output tables.")
 hlpMrg = c(paste("Please assign one or more variables that appear in all data sets (e.g., a participant code) to “Variable(s) to match the",
                  "data sets by”. Afterwards, either write the name of (one or more) file(s) to be merged under ”Data set(s) to add“ (separate",
                  "mulitiple file names with semicolons), or use “Browse...” to select input file(s)."),
-                 "For a more comprehensive explanation regarding the type of merging operation, see “Details” underneath the preview table.")
+                 "For a more comprehensive explanation regarding the types of merging operations, see “Details” underneath the preview table.")
 hlpRpl = c(paste("Please type the original value and the replacement into the text box. Original and replacement should be separated by",
                  "a comma. If you want to have several pairs of original and to replacment values, use separate lines. If you want to",
                  "replace partial matches, unset the tick box “whole word” (e.g., for orginal: 24 and replacement: 34, 241 willbe changed",
