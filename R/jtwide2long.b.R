@@ -158,32 +158,6 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                              crrSrc <- paste0(crrSrc, ',\n    ', srcOpt)
                          }
                     }
-cat(crrSrc)
-#jTransform::jtWide2Long(
-#    data = data,
-#    mdeW2L = "NSS",
-#    id_Sep = vars(),
-#    xfmSep = vars(),
-#    excSep = vars(),
-#    id_NSS = ID,
-#    xfmNSS = vars(rspCrr_cong_GREEN_1, rspCrr_incong_GREEN_1, rspCrr_neutral_GREEN_1, rspCrr_cong_YELLOW_1, rspCrr_incong_YELLOW_1, rspCrr_neutral_YELLOW_1, rspCrr_cong_RED_1, rspCrr_incong_RED_1, rspCrr_neutral_RED_1, rspCrr_cong_BLUE_1, rspCrr_incong_BLUE_1, rspCrr_neutral_BLUE_1, rspCrr_cong_GREEN_2, rspCrr_incong_GREEN_2, rspCrr_neutral_GREEN_2, rspCrr_cong_YELLOW_2, rspCrr_incong_YELLOW_2, rspCrr_neutral_YELLOW_2, rspCrr_cong_RED_2, rspCrr_incong_RED_2, rspCrr_neutral_RED_2, rspCrr_cong_BLUE_2, rspCrr_incong_BLUE_2, rspCrr_neutral_BLUE_2),
-#    excNSS = sex,
-#    id_NSA = vars(),
-#    xfmNSA = list(
-#        list(
-#            label="long_y",
-#            vars=NULL)),
-#    excNSA = vars(),
-#    idxNSA = list(
-#        list(
-#            var="index1",
-#            levels=0)),
-#    btnCrt = FALSE)
-#print(names(private$.options$options))
-#print(paste0(private$.options$options$mdeW2L, "$|^mdeW2L$"))
-#print(names(private$.options$options)[grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), names(private$.options$options))])
-#print(private$.options$options[names(private$.options$options)[grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), names(private$.options$options))]])
-#jmvcore::sourcify(self$options)
                     paste0(private$.package, '::', private$.name, '(', crrSrc, ')')
                 }
             }
