@@ -69,7 +69,7 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             super$initialize(
                 options=options,
                 name="",
-                title="Change the order of variables")
+                title="Change Variable Order")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -114,9 +114,9 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Change the order of variables
+#' Change Variable Order
 #'
-#' Change the order of variables
+#' Change the Order of Variables in a Data Set
 #'
 #' @examples
 #' \dontrun{

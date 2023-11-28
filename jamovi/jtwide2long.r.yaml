@@ -1,6 +1,6 @@
 ---
 name:  jtWide2Long
-title: Transform dataset from wide to long
+title: Wide to Long
 jrs:   '1.1'
 
 items:
@@ -20,7 +20,7 @@ items:
 
   - name: pvwLvl
     type: Table
-    title: "Repeated-Measures Levels"
+    title: "Repeated Measures Levels"
     clearWith: [ mdeW2L, id_Sep, id_NSS, id_NSA, xfmSep, xfmNSS, xfmNSA, excSep, excNSS, excNSA, idxNSS, idxNSA, pfxSep, chrSep, lvlSep, tgtNSS ]
     columns:
       - name: fstCol

@@ -1,4 +1,4 @@
-title: Search within the current data set
+title: Search
 name: jtSearch
 jus: '3.0'
 stage: 0
@@ -34,13 +34,13 @@ children:
             name: whlTrm
 
   - type: CollapseBox
-    label: Include / exclude
+    label: Include / Exclude (In the Search)
     collapsed: true
     style: inline
     stretchFactor: 1
     children:
       - type: Label
-        label: Column type
+        label: Column Type
         style: list
         margin: large
         stretchFactor: 2
@@ -53,7 +53,7 @@ children:
               - type: CheckBox
                 name: incRcd
       - type: Label
-        label: Measurement type
+        label: Measurement Type
         style: list
         margin: large
         stretchFactor: 3
@@ -69,4 +69,3 @@ children:
                 name: incOrd
               - type: CheckBox
                 name: incNum
-

@@ -1,4 +1,4 @@
-title: Transform dataset from wide to long
+title: Wide to Long
 name: jtWide2Long
 jus: '3.0'
 stage: 0
@@ -120,12 +120,12 @@ children:
                     isTarget: true
                     height: small
               - type: TargetLayoutBox
-                label: Variables to be transformed
+                label: Variables To Be Transformed
                 children:
                   - type: ListBox
                     name: xfmNSA
                     height: large
-                    addButton: Add new long variable
+                    addButton: Add New Long Variable
                     templateName: linreg-block-template
                     template:
                       type: LayoutBox
@@ -145,7 +145,7 @@ children:
                             - vars
                           isTarget: true
                           height: auto
-                          ghostText: drag columns to rows variables here
+                          ghostText: Drag Variables To Be Transformed From Wide to Long Here
               - type: TargetLayoutBox
                 children:
                   - type: VariablesListBox
@@ -153,7 +153,7 @@ children:
                     isTarget: true
                     height: small
           - type: Label
-            label: Index variables (can be nested)
+            label: Index Variables (Can Be Nested)
             margin: large
             style: list
             stretchFactor: 1
@@ -161,7 +161,7 @@ children:
               - type: ListBox
                 name: idxNSA
                 fullRowSelect: true
-                addButton: Add an index variable
+                addButton: Add an Index Variable
                 height: large
                 showColumnHeaders: true
                 columns:
@@ -171,7 +171,7 @@ children:
                       type: TextBox
                     stretchFactor: 1.8
                   - name: levels
-                    label: N levels
+                    label: N Levels
                     template:
                       type: TextBox
                       format: number

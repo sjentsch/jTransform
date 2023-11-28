@@ -84,7 +84,7 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Sort data set")
+                title="Sort")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -130,9 +130,9 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Sort data set
+#' Sort
 #'
-#' Sort data set
+#' Sort Data Set
 #'
 #' @examples
 #' \dontrun{

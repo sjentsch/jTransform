@@ -7,7 +7,7 @@ authors:
   - Sebastian Jentschke
   - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2023-10-26'
+date: '2023-11-27'
 type: R
 description: >-
   jTransform carries out common data management tasks and transformations of
@@ -18,78 +18,78 @@ description: >-
   columns from one or more additional data sets to the currently opened data
   set.
 analyses:
-  - title: Search within the current data set
+  - title: Search
     name: jtSearch
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Search within the current data set
-    description: Search within the current data set
-  - title: Replace values in the current data set
+    menuTitle: Search
+    description: Search Within the Current Data Set
+  - title: Replace
     name: jtReplace
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Replace values in the current data set
-    description: Replace values in the current data set
-  - title: Sort data set
+    menuTitle: Replace
+    description: Replace Values in the Current Data Set
+  - title: Sort
     name: jtSort
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Sort data set
-    description: Sort data set
-  - title: Change the order of variables
+    menuTitle: Sort
+    description: Sort Data Set
+  - title: Change Variable Order
     name: jtArrangeCols
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Change the order of variables
-    description: Change the order of variables
-  - title: Transform dataset from long to wide
+    menuTitle: Change Variable Order
+    description: Change the Order of Variables in a Data Set
+  - title: Long to Wide
     name: jtLong2Wide
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Transform dataset from long to wide
-    description: Transform dataset from long to wide
-  - title: Transform dataset from wide to long
+    menuTitle: Long to Wide
+    description: Transform a Data Set From Long to Wide
+  - title: Wide to Long
     name: jtWide2Long
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Transform dataset from wide to long
-    description: Transform dataset from wide to long
-  - title: Transpose the dataset
+    menuTitle: Wide to Long
+    description: Transform a Data Set From Wide to Long
+  - title: Transpose
     name: jtTranspose
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Transpose the dataset
-    description: Transpose the dataset
-  - title: Add columns (from other data sets)
+    menuTitle: Transpose
+    description: Transpose a Data Set
+  - title: Merge (Add Columns)
     name: jtMergeCols
     ns: jTransform
     menuGroup: Data
     menuSubgroup: jTransform
-    menuTitle: Add columns (from other data sets)
-    description: Add columns (from other data sets)
+    menuTitle: Merge (Add Columns)
+    description: Add Columns (From Other Data Sets)
 datasets:
   - name: example4jtTranspose
     path: example4jtTranspose.omv
-    description: A data set to demonstrate jtTranspose
+    description: A Data Set to Demonstrate “Transpose”
   - name: example4jtLong2Wide
     path: example4jtLong2Wide.omv
-    description: A data set to demonstrate jtLong2Wide
+    description: A Data Set to Demonstrate “Long to Wide”
   - name: example4jtWide2Long
     path: example4jtWide2Long.omv
-    description: A data set to demonstrate jtWide2Long
+    description: A Data Set to Demonstrate ”Wide To Long”
   - name: example4jtMergeCols_1
     path: example4jtMergeCols_1.omv
-    description: A data set to demonstrate jtMergeCols (first file)
+    description: A Data Set to Demonstrate “Merge” (first file)
   - name: example4jtMergeCols_2
     path: example4jtMergeCols_2.omv
-    description: A data set to demonstrate jtMergeCols (second file)
+    description: A Data Set to Demonstrate “Merge” (second file)
 usesNative: true
 minApp: 2.4.1
 

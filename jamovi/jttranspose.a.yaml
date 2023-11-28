@@ -1,13 +1,13 @@
 ---
 name:  jtTranspose
-title: Transpose the dataset
+title: Transpose
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Transpose the dataset
+    main: Transpose a Data Set
     R:
         dontrun: true
         usage: |
@@ -20,11 +20,11 @@ completeWhenFilled: true
 options:
     - name: data
       type: Data
-      description:
-          R: the data as a data frame
+#      description:
+#          R: the data as a data frame
 
     - name: varNme
-      title: Variable with column names for the output
+      title: Column Names for the Output
       type: Variable
       permitted:
         - numeric
@@ -37,7 +37,7 @@ options:
 #            for the output data frame
 
     - name: varOth
-      title: Variables to be transposed
+      title: Variables To Be Transposed
       type: Variables
       permitted:
         - numeric

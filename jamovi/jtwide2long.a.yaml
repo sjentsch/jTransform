@@ -1,13 +1,13 @@
 ---
 name:  jtWide2Long
-title: Transform dataset from wide to long
+title: Wide to Long
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Transform dataset from wide to long
+    main: Transform a Data Set From Wide to Long
     R:
         dontrun: true
         usage: |
@@ -28,15 +28,15 @@ options:
         - name: Sep
           title: Separated
         - name: NSS
-          title: Non-sep. (simple)
+          title: Non-Sep. (Simple)
         - name: NSA
-          title: Non-sep. (advanced)
+          title: Non-Sep. (Advanced)
       default: Sep
 
 # =============================================================================
 
     - name:  id_Sep
-      title: Variables that identify the same unit
+      title: Variables That Identify the Same Unit
       type:  Variables
       permitted:
         - numeric
@@ -48,7 +48,7 @@ options:
 #            an organization, etc.)
 
     - name:  xfmSep
-      title: Variables to be transformed
+      title: Variables To Be Transformed
       type:  Variables
       permitted:
         - numeric
@@ -58,7 +58,7 @@ options:
 #          R: >
 
     - name:  excSep
-      title: Variables NOT to be transformed
+      title: Variables NOT To Be Transformed
       type:  Variables
       permitted:
         - numeric
@@ -79,7 +79,7 @@ options:
 #            = 1)
 
     - name:  chrSep
-      title: "Separator"
+      title: Separator
       type:  String
       default: "_"
 #      description:
@@ -88,7 +88,7 @@ options:
 #            variable name ("VAR1_1", "VAR1_2")
 
     - name:  lvlSep
-      title: "Exclude level"
+      title: Exclude Level
       type:  String
       default: ""
 #      description:
@@ -97,7 +97,7 @@ options:
 # =============================================================================
 
     - name:  id_NSS
-      title: Variables that identify the same unit
+      title: Variables That Identify the Same Unit
       type:  Variables
       permitted:
         - numeric
@@ -109,11 +109,11 @@ options:
 #            an organization, etc.)
 
     - name:  xfmNSS
-      title: Variables to be transformed
+      title: Variables To Be Transformed
       type:  Variables
 
     - name:  excNSS
-      title: Variables NOT to be transformed
+      title: Variables NOT To Be Transformed
       type:  Variables
       permitted:
         - numeric
@@ -123,19 +123,19 @@ options:
 #          R: >
 
     - name:  idxNSS
-      title: Index for repeated measures levels
+      title: Index for Repeated Measures Levels
       type:  String
       default: "index"
       
     - name:  tgtNSS
-      title: Name of the target variable
+      title: Name of the Target Variable
       type:  String
       default: "var"
 
 # =============================================================================
 
     - name:  id_NSA
-      title: Variables that identify the same unit
+      title: Variables That Identify the Same Unit
       type:  Variables
       permitted:
         - numeric
@@ -160,7 +160,7 @@ options:
               type: Variables
 
     - name:  excNSA
-      title: Variables NOT to be transformed
+      title: Variables NOT To Be Transformed
       type:  Variables
       permitted:
         - numeric

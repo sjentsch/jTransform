@@ -1,6 +1,6 @@
 ---
 name:  jtLong2Wide
-title: Transform dataset from long to wide
+title: Long to Wide
 jrs:   '1.1'
 
 items:
@@ -20,7 +20,7 @@ items:
 
   - name: pvwLvl
     type: Table
-    title: "Repeated-Measures Levels"
+    title: "Repeated Measures Levels"
     clearWith: []
     columns:
       - name: fstCol

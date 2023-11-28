@@ -114,7 +114,7 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             super$initialize(
                 options=options,
                 name="",
-                title="Transform dataset from long to wide")
+                title="Long to Wide")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -135,7 +135,7 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwLvl",
-                title="Repeated-Measures Levels",
+                title="Repeated Measures Levels",
                 clearWith=list(),
                 columns=list(
                     list(
@@ -168,9 +168,9 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Transform dataset from long to wide
+#' Long to Wide
 #'
-#' Transform dataset from long to wide
+#' Transform a Data Set From Long to Wide
 #'
 #' @examples
 #' \dontrun{

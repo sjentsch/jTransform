@@ -91,7 +91,7 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             super$initialize(
                 options=options,
                 name="",
-                title="Add columns (from other data sets)")
+                title="Merge (Add Columns)")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -119,7 +119,7 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="addInf",
                 clearWith=list(),
-                content="<h2>Details</h2> <p>There are four different types of merging operations: The first option keeps all cases (but columns in the resulting data set may be empty if they did not contain values in same input data sets), the second option keeps only those cases where all datasets contain the same value in the matching variable, for \u201Cleft\u201D all cases from the first data set are kept (whereas cases that are only contained in input data set two or higher are dropped), for \u201Cright\u201D all cases from the second (or any higher) data set are kept.</p> <p>If there are variables with the same name in several of the input data sets, it will checked whether they contain the same content. If they are the same, only the first of these identical variables is kept (and the others are removed). If they are different, the name of the first of these variables is kept, and a suffix with their position (_2, _3, etc.) will be added to the name of all other variables.</p>\n"))}))
+                content="<h2>Details</h2> <p>There are four different types of merging operations: The option \u201CKeeps All Cases (Rows)\u201D keeps all cases (but if some input data sets did not contain that value of the matching variable, there might be missing values for variable from that data set). The second option \u201CKeeps Only Cases Contained in All Merged Data Sets\u201D keeps only those cases where a particular value of the matching variable was contained in all datasets. The option \u201CKeeps All Cases From the Currently Opened Data Set\u201D keeps all rows / cases from the active data set (whereas cases that are only contained in the data sets defined under \u201CData Set(s) to Add\u201D are dropped). The option \u201CKeeps All Cases From the Data Sets To Be Added\u201D keeps all cases from the data sets defined under \u201CData Set(s) to Add\u201D (whereas cases that are only contained in the active data set are dropped).</p> <p>If there are variables with the same name in several of the input data sets, it will checked whether they contain the same content. If they are the same, only the first of these identical variables is kept (and the others are removed). If they are different, the name of the first of these variables is kept, and a suffix with their position (_2, _3, etc.) will be added to the name of all other variables.</p>\n"))}))
 
 jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtMergeColsBase",
@@ -142,9 +142,9 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Add columns (from other data sets)
+#' Merge (Add Columns)
 #'
-#' Add columns (from other data sets)
+#' Add Columns (From Other Data Sets)
 #'
 #' @examples
 #' \dontrun{

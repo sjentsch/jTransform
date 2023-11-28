@@ -1,13 +1,13 @@
 ---
 name:  jtSort
-title: Sort data set
+title: Sort
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Sort data set
+    main: Sort Data Set
     R:
         dontrun: true
         usage: |
@@ -24,7 +24,7 @@ options:
 #          R: the data as a data frame
 
     - name: varSrt
-      title: Variable(s) to sort after
+      title: Variable(s) to Sort After
       type: Variables
       permitted:
         - numeric
@@ -56,9 +56,9 @@ options:
             type: List
             options:
               - name: ascend
-                title: ascending
+                title: Ascending
               - name: descend
-                title: descending
+                title: Descending
 #      description:
 #          ui: >
 #            the order with which variables are sorted

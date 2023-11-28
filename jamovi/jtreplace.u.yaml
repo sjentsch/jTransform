@@ -1,13 +1,11 @@
-title: Replace values in the current data set
+title: Replace
 name: jtReplace
 jus: '3.0'
 stage: 0
 compilerMode: tame
-
 events:
-  loaded:            './varAll::loaded'
+  loaded: './varAll::loaded'
   remoteDataChanged: './varAll::dataChanged'
-
 children:
   - type: LayoutBox
     style: inline
@@ -15,7 +13,7 @@ children:
     stretchFactor: 1
     children:
       - type: Label
-        label: 'Original and replacement values:'
+        label: 'Original and Replacement Values:'
         style: list
         stretchFactor: 4
         margin: large
@@ -23,7 +21,7 @@ children:
           - type: ListBox
             name: rplTrm
             fullRowSelect: true
-            addButton: Add further original and replacement values... 
+            addButton: Add Further Original and Replacement Values...
             height: large
             showColumnHeaders: true
             columns:
@@ -50,9 +48,8 @@ children:
           - type: ActionButton
             name: btnCrt
             margin: large
-
   - type: CollapseBox
-    label: Include / exclude
+    label: Include / Exclude (in the Replacement)
     collapsed: true
     style: list
     stretchFactor: 1
@@ -63,7 +60,7 @@ children:
         stretchFactor: 1
         children:
           - type: Label
-            label: Column type
+            label: Column Type
             style: list
             margin: large
             stretchFactor: 2
@@ -76,7 +73,7 @@ children:
                   - type: CheckBox
                     name: incRcd
           - type: Label
-            label: Measurement type
+            label: Measurement Type
             style: list
             margin: large
             stretchFactor: 3
@@ -93,7 +90,9 @@ children:
                   - type: CheckBox
                     name: incNum
       - type: Label
-        label: Select variables... (include or exclude those variables from replacing values)
+        label: >-
+          Select Variables... (Include or Exclude Those Variables From
+          Replacement)
         style: list
         margin: large
         stretchFactor: 1

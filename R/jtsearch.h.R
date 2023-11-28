@@ -124,7 +124,7 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Search within the current data set")
+                title="Search")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="srcRes",
@@ -164,9 +164,9 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Search within the current data set
+#' Search
 #'
-#' Search within the current data set
+#' Search Within the Current Data Set
 #'
 #' @examples
 #' \dontrun{

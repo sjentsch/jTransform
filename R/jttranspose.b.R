@@ -10,14 +10,16 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xpsDta)
             } else {
-                # reset the output table (rstPvw in utils.R)
+                # reset the output table (rstPvw in utils.R) and show getting started
+                # as general information (crtInf in utils.R) 
                 rstPvw(crrTbl = self$results$pvwDta)
+                crtInf(crrInf = self$results$genInf, hlpMsg = hlpXps)
             }
         },
 
         .run = function() {
             # check whether there are at least two variables in varOrd and that the data set has at least one row
-            if (private$.chkVar() && dim(self$data)[1] >= 1) {
+            if (private$.chkVar()) {
                 # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::transpose_omv, private$.crrArg()[-2])
@@ -27,9 +29,6 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     crtInf(crrInf = self$results$genInf, dtaFrm = private$.xpsDta, hlpMsg = hlpCrt)
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xpsDta)
                 }
-            } else {
-                # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, hlpMsg = hlpXps)
             }
         },
 

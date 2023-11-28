@@ -1,13 +1,13 @@
 ---
 name:  jtSearch
-title: Search within the current data set
+title: Search
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Search within the current data set
+    main: Search Within the Current Data Set
     R:
         dontrun: true
         usage: |
@@ -40,12 +40,12 @@ options:
       hidden: true
 
     - name: ignCse
-      title: "Ignore case"
+      title: "Ignore Case"
       type: Bool
       default: false
 
     - name: whlTrm
-      title: "Whole word"
+      title: "Whole Word"
       type: Bool
       default: false
 

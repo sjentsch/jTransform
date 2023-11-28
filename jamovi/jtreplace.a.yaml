@@ -1,13 +1,13 @@
 ---
 name:  jtReplace
-title: Replace values in the current data set
+title: Replace
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Replace values in the current data set
+    main: Replace Values in the Current Data Set
     R:
         dontrun: true
         usage: |
@@ -43,7 +43,7 @@ options:
         rplNew: ""
 
   - name: whlTrm
-    title: "Whole word"
+    title: "Whole Word"
     type: Bool
     default: true
 
@@ -85,9 +85,9 @@ options:
     type: List
     options:
       - name: include
-        title: include
+        title: Include
       - name: exclude
-        title: exclude
+        title: Exclude
     default: include
 
   - name: varSel

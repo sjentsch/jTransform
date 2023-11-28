@@ -1,13 +1,13 @@
 ---
 name:  jtMergeCols
-title: Add columns (from other data sets)
+title: Merge (Add Columns)
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Add columns (from other data sets)
+    main: Add Columns (From Other Data Sets)
     R:
         dontrun: true
         usage: |
@@ -24,7 +24,7 @@ options:
           R: the data as a data frame
 
     - name: varBy
-      title: Variable(s) to match the data sets by
+      title: Variable(s) to Match the Data Sets By
       type: Variables
       permitted:
         - numeric
@@ -32,7 +32,7 @@ options:
         - id
 
     - name: varAll
-      title: Further variables in the output
+      title: Further Variables in the Output
       type: Variables
       hidden: true
       permitted:
@@ -42,7 +42,7 @@ options:
 
     - name: fleInp
       type: String
-      title: "Data set(s) to add:"
+      title: "Data Set(s) to Add:"
       default: ""
 
     - name: fleChs
@@ -50,16 +50,16 @@ options:
       hidden: true
 
     - name: typMrg
-      title: Type of merging operation
+      title: Type of Merging Operation
       type: List
       options:
-        - title: Keeps all cases (rows)
+        - title: Keeps All Cases (Rows)
           name:  outer
-        - title: Keeps only rows contained in all merged data sets
+        - title: Keeps Only Cases Contained in All Merged Data Sets
           name:  inner
-        - title: Keeps all cases from the currently opened data set
+        - title: Keeps All Cases From the Currently Opened Data Set
           name:  left
-        - title: Keeps all cases from the to be added data sets
+        - title: Keeps All Cases From the Data Sets To Be Added
           name:  right
       default: outer
 

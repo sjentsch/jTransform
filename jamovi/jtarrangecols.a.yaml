@@ -1,13 +1,13 @@
 ---
 name:  jtArrangeCols
-title: Change the order of variables
+title: Change Variable Order
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Change the order of variables
+    main: Change the Order of Variables in a Data Set
     R:
         dontrun: true
         usage: |
@@ -32,7 +32,7 @@ options:
         - id
 
     - name: varOrd
-      title: Desired order of variable(s)
+      title: Desired Order of Variable(s)
       type: Variables
       permitted:
         - numeric
@@ -44,7 +44,7 @@ options:
 #           the output data set
 
     - name: blnAll
-      title: Add remaining variables at the end
+      title: Add Remaining Variables at the End
       type: Bool
       default: false
 

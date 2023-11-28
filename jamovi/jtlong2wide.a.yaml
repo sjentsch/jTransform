@@ -1,13 +1,13 @@
 ---
 name:  jtLong2Wide
-title: Transform dataset from long to wide
+title: Long to Wide
 menuGroup: Data
 menuSubgroup: jTransform
 version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Transform dataset from long to wide
+    main: Transform a Data Set From Long to Wide
     R:
         dontrun: true
         usage: |
@@ -24,7 +24,7 @@ options:
 #          R: the data as a data frame
 
     - name: varID
-      title: Variables that identify the same unit
+      title: Variables That Identify the Same Unit
       type: Variables
       permitted:
         - numeric
@@ -37,7 +37,7 @@ options:
 #            organization, etc.)
 
     - name: varTme
-      title: Variables that differentiate within an unit
+      title: Variables That Differentiate Within a Unit
       type: Variables
       permitted:
         - numeric
@@ -50,7 +50,7 @@ options:
 #            individual, a group, an organization, etc.)
 
     - name: varTgt
-      title: Variables to be transformed
+      title: Variables To Be Transformed
       type: Variables
       permitted:
         - numeric
@@ -58,7 +58,7 @@ options:
         - id
 
     - name: varExc
-      title: Variables NOT to be transformed
+      title: Variables NOT To Be Transformed
       type: Variables
       permitted:
         - numeric
@@ -66,12 +66,12 @@ options:
         - id
 
     - name: varOrd
-      title: Variable organization in the output
+      title: Organization of Variables in the Output
       type: List
       options:
-        - title: Time steps are adjacent
+        - title: Time Steps Are Adjacent
           name:  times
-        - title: Variables are adjacent
+        - title: Variables Are Adjacent
           name:  vars
       default: times
 #      description:
@@ -82,17 +82,17 @@ options:
 #            columns in the long dataset
 
     - name: varAgg
-      title: How to accumulate?
+      title: How to Accumulate?
       type: List
       options:
-        - title: Calculate mean
+        - title: Calculate Mean
           name:  mean
-        - title: First occurence
+        - title: First Occurence
           name:  first
       default: mean
 
     - name: varSep
-      title: "Separator"
+      title: Separator
       type: String
       default: "_"
 #      description:

@@ -1,4 +1,4 @@
-title: Add columns (from other data sets)
+title: Merge (Add Columns)
 name: jtMergeCols
 jus: '3.0'
 stage: 0
@@ -18,7 +18,7 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Variable(s) to match the data sets by
+        label: Variable(s) to Match the Data Sets By
         children:
           - type: VariablesListBox
             name: varBy

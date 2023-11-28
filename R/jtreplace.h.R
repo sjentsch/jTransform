@@ -148,7 +148,7 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             super$initialize(
                 options=options,
                 name="",
-                title="Replace values in the current data set")
+                title="Replace")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -209,9 +209,9 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Replace values in the current data set
+#' Replace
 #'
-#' Replace values in the current data set
+#' Replace Values in the Current Data Set
 #'
 #' @examples
 #' \dontrun{

@@ -62,7 +62,7 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             super$initialize(
                 options=options,
                 name="",
-                title="Transpose the dataset")
+                title="Transpose")
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -107,9 +107,9 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 weightsSupport = 'auto')
         }))
 
-#' Transpose the dataset
+#' Transpose
 #'
-#' Transpose the dataset
+#' Transpose a Data Set
 #'
 #' @examples
 #' \dontrun{
@@ -117,7 +117,7 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' # please use that function when in R (or in Rj)
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#' @param data the data as a data frame
+#' @param data .
 #' @param varNme .
 #' @param varOth .
 #' @param btnCrt .

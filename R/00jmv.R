@@ -11,7 +11,7 @@
         `url`="https://cran.r-project.org/package=jmvReadWrite"), 
     `jTransform`=list(
         `type`="software", 
-        `author`="Jentschke, S.", 
+        `author`="Jentschke, S., Gallucci, M.", 
         `year`=2023, 
         `title`="jTransform: Functions for Common Data Set Transformations", 
         `publisher`="[jamovi module]. Available at https://github.com/sjentsch/jTransform", 

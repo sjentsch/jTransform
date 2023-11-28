@@ -1,5 +1,5 @@
 name: jtSort
-title: Sort data set
+title: Sort
 jus: '3.0'
 #stage: 0
 compilerMode: tame
@@ -19,7 +19,7 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Variable(s) to sort after
+        label: Variable(s) to Sort After
         children:
           - type: VariablesListBox
             name: varSrt
