@@ -34,7 +34,7 @@ children:
             name: whlTrm
 
   - type: CollapseBox
-    label: Include / Exclude (In the Search)
+    label: Inclusion (In the Search)
     collapsed: true
     style: inline
     stretchFactor: 1

@@ -12,26 +12,24 @@ children:
     margin: large
     stretchFactor: 1
     children:
-      - type: Label
-        label: 'Original and Replacement Values:'
-        style: list
-        stretchFactor: 4
+      - type: LayoutBox
         margin: large
+        stretchFactor: 4
         children:
           - type: ListBox
             name: rplTrm
             fullRowSelect: true
-            addButton: Add Further Original and Replacement Values...
+            addButton: Add...
             height: large
             showColumnHeaders: true
             columns:
               - name: rplOld
-                label: Original
+                label: Find
                 template:
                   type: TextBox
                 stretchFactor: 1
               - name: rplNew
-                label: Replacement
+                label: Replace
                 template:
                   type: TextBox
                 stretchFactor: 1
@@ -49,7 +47,7 @@ children:
             name: btnCrt
             margin: large
   - type: CollapseBox
-    label: Include / Exclude (in the Replacement)
+    label: Inclusion (In the Replacement)
     collapsed: true
     style: list
     stretchFactor: 1
@@ -90,9 +88,7 @@ children:
                   - type: CheckBox
                     name: incNum
       - type: Label
-        label: >-
-          Select Variables... (Include or Exclude Those Variables From
-          Replacement)
+        label: Select Variables...
         style: list
         margin: large
         stretchFactor: 1
@@ -113,7 +109,6 @@ children:
             stretchFactor: 1
             children:
               - type: TargetLayoutBox
-                label: Variables
                 children:
                   - type: VariablesListBox
                     name: varSel

@@ -49,7 +49,7 @@ options:
 
   - name: btnCrt
     type: Action
-    title: CREATE
+    title: Create
 
   - name: incCmp
     title: "Computed"

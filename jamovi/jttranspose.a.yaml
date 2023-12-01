@@ -24,7 +24,7 @@ options:
 #          R: the data as a data frame
 
     - name: varNme
-      title: Column Names for the Output
+      title: Variable Names for the Output
       type: Variable
       permitted:
         - numeric
@@ -51,6 +51,6 @@ options:
 
     - name: btnCrt
       type: Action
-      title: CREATE
+      title: Create
 
 ...
