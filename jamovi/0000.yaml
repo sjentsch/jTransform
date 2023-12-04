@@ -77,19 +77,19 @@ analyses:
 datasets:
   - name: example4jtTranspose
     path: example4jtTranspose.omv
-    description: A Data Set to Demonstrate “Transpose”
+    description: A Data Set to Demonstrate Transpose
   - name: example4jtLong2Wide
     path: example4jtLong2Wide.omv
-    description: A Data Set to Demonstrate “Long to Wide”
+    description: A Data Set to Demonstrate Long to Wide
   - name: example4jtWide2Long
     path: example4jtWide2Long.omv
-    description: A Data Set to Demonstrate ”Wide To Long”
+    description: A Data Set to Demonstrate Wide To Long
   - name: example4jtMergeCols_1
     path: example4jtMergeCols_1.omv
-    description: A Data Set to Demonstrate “Merge” (first file)
+    description: A Data Set to Demonstrate Merge (first file)
   - name: example4jtMergeCols_2
     path: example4jtMergeCols_2.omv
-    description: A Data Set to Demonstrate “Merge” (second file)
+    description: A Data Set to Demonstrate Merge (second file)
 usesNative: true
 minApp: 2.4.1
 
