@@ -9,7 +9,7 @@ jtSearchClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 # conduct the search and create an output string
                 srcRes <- do.call(jmvReadWrite::search_omv, private$.crrArg())
                 # initial line about whether the search term was found
-                outRes <- sprintf("<p>Value “<strong>%s</strong>” (%s) %s</p>",
+                outRes <- sprintf("<p>Value \"<strong>%s</strong>\" (%s) %s</p>",
                                   trimws(self$options$srcTrm), paste0(rep("partial or ", !self$options$whlTrm), "exact match"),
                                   ifelse(length(srcRes) > 0, "<strong>found</strong> in variable(s): row(s)...", "<strong>not found</strong>"))
                 # if it was found, create an output list with the variables and the rows where the value was found

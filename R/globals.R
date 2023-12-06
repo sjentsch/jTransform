@@ -47,7 +47,7 @@ hlpW2L =   paste("When transforming a data set from wide to long format, you fir
                  "all conditions or no separating character. Depending on the structure of the variable names, choose one of the tabs (\"Non-sep.",
                  "(simple)\" permit only one condition / index variable, \"Non-sep. (advanced)\" several conditions and target variables. More detailed",
                  "instructions are given in the next paragraph and you can check using the two output tables (the first containing a data preview,",
-                 "the second an overview over how the repeated measurement levels – i.e., the original variables – were converted).")
+                 "the second an overview over how the repeated measurement levels - i.e., the original variables - were converted).")
 genSep = c(paste("Please assign the variables that identify participant (or another measurement unit; e.g., a number or an ID) to \"Variables that",
                  "Identify the Same Unit\", and those that are unique to an unit but not an identifier (e.g., gender, age group) to \"Variables NOT",
                  "To Be Transformed\". If no variable that identifies a participant is given, such variable will be created (and named \"ID\"). Then",
@@ -102,7 +102,7 @@ dtlSep = c(paste("\"Variables That Identify the Same Unit\" is an ID variable (e
            paste("The principle of the transformation from long to wide can perhaps easiest be understood by looking at example4jtWide2Long from",
                  "the Data Library of this module. It contains results from a Stroop experiment (in wide format) with fifty variables: ID (identifies",
                  "the participant), sex (of the participant), and afterwards 48 variables that represent a combination of the measurement (first part",
-                 "of the variable name, rspCrr – whether the response was correct – or rspTme – reaction time), the experimental condition / congruency",
+                 "of the variable name, rspCrr - whether the response was correct - or rspTme - reaction time), the experimental condition / congruency",
                  "(second part; either cong[ruent], incong[ruent] or neutral), the colour the word was written with (third part; BLUE, GREEN, RED or",
                  "YELLOW) and which repetition of a particular combination of experimental conditions the variable represents (fourth part, 1 or 2).",
                  "These variables have to be assigned to the following fields: ID to \"Variables That Identify the Same Unit\" (it is an unique identifier",
@@ -138,7 +138,7 @@ dtlNSA = c(paste("\"Variables That Identify the Same Unit\" is an ID variable (e
            paste("The principle of the transformation from long to wide can perhaps easiest be understood by looking at example4jtWide2Long from",
                  "the Data Library of this module. It contains results from a Stroop experiment (in wide format) with fifty variables: ID (identifies",
                  "the participant), sex (of the participant), and afterwards 48 variables that represent a combination of the measurement (first part",
-                 "of the variable name, rspCrr – whether the response was correct – or rspTme – reaction time), the experimental condition / congruency",
+                 "of the variable name, rspCrr - whether the response was correct - or rspTme - reaction time), the experimental condition / congruency",
                  "(second part; either cong[ruent], incong[ruent] or neutral), the colour the word was written with (third part; BLUE, GREEN, RED or",
                  "YELLOW) and which repetition of a particular combination of experimental conditions the variable represents (fourth part, 1 or 2).",
                  "These variables have to be assigned to the following fields: ID to \"Variables That Identify the Same Unit\" (it is an unique identifier",
@@ -155,6 +155,6 @@ dtlNSA = c(paste("\"Variables That Identify the Same Unit\" is an ID variable (e
                  "the colour (rspCrr_neutral_GREEN_1 is followed by rspCrr_cong_YELLOW_1), and you should set the name of the index variable to \"colour\" and",
                  "\"N levels\" to \"4\" (as there are four colours: GREEN, YELLOW, RED, and BLUE). The highest level is repetition (rspCrr_neutral_BLUE_1 is",
                  "followed by rspCrr_cong_GREEN_2), and you should thus set the name of the index variable to \"rep\" and the \"N levels\" to two (1 and 2).",
-                 "Once you did all this, and the number of variables in the variable lists for the long variables under \"Variables To Be Transformed\" – 24 –",
-                 "matches up with the product of \"N levels\" – 3 (cond) · 4 (colour) · 2 = 24 – a \"Data Preview\" and an overview over the \"Repeated-Measures",
+                 "Once you did all this, and the number of variables in the variable lists for the long variables under \"Variables To Be Transformed\" - 24 -",
+                 "matches up with the product of \"N levels\" - 3 (cond) · 4 (colour) · 2 = 24 - a \"Data Preview\" and an overview over the \"Repeated-Measures",
                  "Levels\" is shown, and you can open the transformed data set (after checking those tables) in a new jamovi window by pressing \"CREATE\"."))
