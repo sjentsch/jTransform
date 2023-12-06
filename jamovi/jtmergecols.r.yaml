@@ -24,16 +24,16 @@ items:
     content: >
       <h2>Details</h2>
       <p>There are four different types of merging operations: The option
-      “Keeps All Cases (Rows)” keeps all cases (but if some input data sets did
+      "Keeps All Cases (Rows)" keeps all cases (but if some input data sets did
       not contain that value of the matching variable, there might be missing
-      values for variable from that data set). The second option “Keeps Only
-      Cases Contained in All Merged Data Sets” keeps only those cases where a
+      values for variable from that data set). The second option "Keeps Only
+      Cases Contained in All Merged Data Sets" keeps only those cases where a
       particular value of the matching variable was contained in all datasets.
-      The option “Keeps All Cases From the Currently Opened Data Set” keeps
+      The option "Keeps All Cases From the Currently Opened Data Set" keeps
       all rows / cases from the active data set (whereas cases that are only
-      contained in the data sets defined under “Data Set(s) to Add” are
-      dropped). The option “Keeps All Cases From the Data Sets To Be Added”
-      keeps all cases from the data sets defined under “Data Set(s) to Add”
+      contained in the data sets defined under "Data Set(s) to Add" are
+      dropped). The option "Keeps All Cases From the Data Sets To Be Added"
+      keeps all cases from the data sets defined under "Data Set(s) to Add"
       (whereas cases that are only contained in the active data set are
       dropped).</p>
       <p>If there are variables with the same name in several of the input data
