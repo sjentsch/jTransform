@@ -87,7 +87,7 @@ dtlSep = c(paste("\"Variables That Identify the Same Unit\" is an ID variable (e
                  "as \"Separator\") and how many steps / different values exist within each part. If we had a variable with 4 parts, each with two steps",
                  "per separated part, this would result in four columns (starting with the string defined as \"Prefix\" and ending with 1, 2, 3, and 4).",
                  "The number of rows would be increased by the number of all possible combinations of steps (in the example above 2 * 2 * 2 * 2 = 16,",
-                 "mulitiplied by the number of rows in the input data set, e.g., 50 rows becoming 50 · 16 = 800 rows)."),
+                 "mulitiplied by the number of rows in the input data set, e.g., 50 rows becoming 50 * 16 = 800 rows)."),
            paste("\"Variables NOT To Be Transformed\" are variables that \"characterize\" a participant (or another unit), often also called",
                  "between-subjects variables, e.g., age or sex. However, they are not unique (and thus no ID variables; there may be several",
                  "participants with the same age or sex)."),
@@ -156,5 +156,5 @@ dtlNSA = c(paste("\"Variables That Identify the Same Unit\" is an ID variable (e
                  "\"N levels\" to \"4\" (as there are four colours: GREEN, YELLOW, RED, and BLUE). The highest level is repetition (rspCrr_neutral_BLUE_1 is",
                  "followed by rspCrr_cong_GREEN_2), and you should thus set the name of the index variable to \"rep\" and the \"N levels\" to two (1 and 2).",
                  "Once you did all this, and the number of variables in the variable lists for the long variables under \"Variables To Be Transformed\" - 24 -",
-                 "matches up with the product of \"N levels\" - 3 (cond) · 4 (colour) · 2 = 24 - a \"Data Preview\" and an overview over the \"Repeated-Measures",
+                 "matches up with the product of \"N levels\" - 3 (cond) * 4 (colour) * 2 = 24 - a \"Data Preview\" and an overview over the \"Repeated-Measures",
                  "Levels\" is shown, and you can open the transformed data set (after checking those tables) in a new jamovi window by pressing \"CREATE\"."))
