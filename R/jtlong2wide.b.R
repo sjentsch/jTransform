@@ -45,8 +45,8 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .colFst = function() {
             colNme <- names(private$.l2wDta)
             colOth <- c(self$options$varID, self$options$varExc) 
-            colTgt <- self$options$varTgt
-            numRmg <- (maxCol - length(colOth))
+            colTgt <- self$options$varTgt           
+            numRmg <- (min(c(length(colNme), maxCol)) - length(colOth))
             numTgt <- length(colTgt)
             lngTgt <- floor(rep(numRmg / numTgt, numTgt))
             if (sum(lngTgt) < numRmg) lngTgt[numTgt] <- lngTgt[numTgt] + 1
