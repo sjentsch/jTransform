@@ -6,7 +6,7 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
-    clearWith: [ mdeW2L ]
+    clearWith: [ mdeW2L, id_Sep, id_NSS, id_NSA, xfmSep, xfmNSS, xfmNSA, excSep, excNSS, excNSA, idxNSS, idxNSA, pfxSep, chrSep, lvlSep, tgtNSS, btnCrt ]
 
   - name:  pvwDta
     type:  Table

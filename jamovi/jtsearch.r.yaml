@@ -6,7 +6,6 @@ jrs:   '1.1'
 items:
   - name:  srcRes
     type:  Html
-#   clearWith: [] # should clear with all UI elements
     clearWith: [ varAll, srcTrm, ignCse, whlTrm, incCmp, incRcd, incID, incNom, incOrd, incNum ]
     refs:  [ jTransform, jmvReadWrite ]
 

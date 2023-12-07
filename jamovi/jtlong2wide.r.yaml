@@ -6,13 +6,13 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
-    clearWith: []
+    clearWith: [ varID, varTme, varTgt, varExc, varOrd, varAgg, varSep, btnCrt ]
 
   - name:  pvwDta
     type:  Table
     title: "Data Preview"
     refs:  [ jTransform, jmvReadWrite ]
-    clearWith: []
+    clearWith: [ varID, varTme, varTgt, varExc, varOrd, varAgg, varSep ]
     rows: 1
     columns:
       - name: fstCol
@@ -21,14 +21,14 @@ items:
   - name: pvwLvl
     type: Table
     title: "Repeated Measures Levels"
-    clearWith: []
+    clearWith: [ varID, varTme, varTgt, varExc, varOrd, varAgg, varSep ]
     columns:
       - name: fstCol
         title: ""
 
   - name:  addInf
     type:  Html
-    clearWith: []
+    clearWith: [ varID, varTme, varTgt, varExc, varOrd, varAgg, varSep ]
     content: >
       <h2>Details</h2>
       <p>"Variables that identify the same unit" is an ID variable (e.g., a

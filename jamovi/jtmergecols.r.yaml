@@ -6,13 +6,13 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
-    clearWith: [ varBy, varAll, fleInp ]
+    clearWith: [ varBy, varAll, fleInp, typMrg, btnCrt ]
 
   - name:  pvwDta
     type:  Table
     title: "Data Preview"
     refs:  [ jTransform, jmvReadWrite ]
-    clearWith: [ varBy, varAll, fleInp ]
+    clearWith: [ varBy, varAll, fleInp, typMrg ]
     rows: 1
     columns:
       - name: fstCol
@@ -20,7 +20,7 @@ items:
 
   - name:  addInf
     type:  Html
-    clearWith: []
+    clearWith: NULL
     content: >
       <h2>Details</h2>
       <p>There are four different types of merging operations: The option

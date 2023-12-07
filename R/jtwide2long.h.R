@@ -221,7 +221,23 @@ jtWide2LongResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="genInf",
                 clearWith=list(
-                    "mdeW2L")))
+                    "mdeW2L",
+                    "id_Sep",
+                    "id_NSS",
+                    "id_NSA",
+                    "xfmSep",
+                    "xfmNSS",
+                    "xfmNSA",
+                    "excSep",
+                    "excNSS",
+                    "excNSA",
+                    "idxNSS",
+                    "idxNSA",
+                    "pfxSep",
+                    "chrSep",
+                    "lvlSep",
+                    "tgtNSS",
+                    "btnCrt")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
