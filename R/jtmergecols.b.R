@@ -21,10 +21,10 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # check whether there are at least one variable in varBy, that fleInp isn't empty,
             # and that the data set has at least one row
             if (private$.chkVar() && dim(self$data)[1] >= 1) {
-                # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::merge_cols_omv, private$.crrArg()[-2])
-                # if not, show the variable list and how to use CREATE as general information
+                # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
                     crtInf(crrInf = self$results$genInf, dtaFrm = private$.mrgDta, hlpMsg = hlpCrt)

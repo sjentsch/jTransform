@@ -20,10 +20,10 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
             # check whether there are at least two variables in varOrd and that the data set has at least one row
             if (private$.chkVar()) {
-                # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::transpose_omv, private$.crrArg()[-2])
-                # if not, show the variable list and how to use CREATE as general information
+                # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
                     crtInf(crrInf = self$results$genInf, dtaFrm = private$.xpsDta, hlpMsg = hlpCrt)

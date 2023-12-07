@@ -16,10 +16,10 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run = function() {
             # check whether there are at least two variables in varOrd and that the data set has at least one row
             if (private$.chkVar() && dim(self$data)[1] >= 1) {
-                # if CREATE was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if (self$options$btnCrt) {
                     do.call(jmvReadWrite::sort_omv, private$.crrArg()[-2])
-                # if not, show the variable list and how to use CREATE as general information
+                # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
                     srtDta <- do.call(jmvReadWrite::sort_omv, private$.crrArg())
