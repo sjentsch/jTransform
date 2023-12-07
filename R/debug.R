@@ -1,6 +1,7 @@
 j_DEBUG <- T
 j_INFO  <- T
 t_INFO  <- F
+
 fleWOS  <- ""
 # NB for Windows users: Feel free to change the path and name of the log file as you like.
 if (.Platform$OS.type == "windows") fleWOS <- file.path(base::Sys.getenv("TEMP"), "jTransform.log")
