@@ -2,6 +2,7 @@
 maxRow <- 10
 maxCol <- 10
 useIdx <- FALSE
+vldExt <- c("omv",  "csv", "tsv", "rdata", "rda", "rds", "sav", "zsav", "dta", "sas7bdat", "sd2", "sd7", "xpt", "stx", "stc")
 
 # message formatting for sprintf
 fmtVrI <- "<strong>Variables in the Output Data Set</strong> (%d variables in %d rows): %s"
@@ -21,7 +22,7 @@ hlpL2W = c(paste("Please assign the variables that identify participant (or anot
                  "For an example about a typical long-to-wide-transformation, see the last paragraph in \"Details\" underneath the output tables.")
 hlpMrg = c(paste("Please assign one or more variables that appear in all data sets (e.g., a participant code) to \"Variable(s) to Match the",
                  "Data Sets by\". Afterwards, either write the name of (one or more) file(s) to be merged under \"Data Set(s) to Add\" (separate",
-                 "mulitiple file names with semicolons), or use \"Browse...\" to select input file(s)."),
+                 "mulitiple file names with semicolons), or use \"Browse...\" (NB: not available on Windows) to select input file(s)."),
                  "For a more comprehensive explanation regarding the types of merging operations, see \"Details\" underneath the preview table.")
 hlpRpl = c(paste("Please type the original value and the replacement into the entry fields. If you want to have several pairs of original and",
                  "replacment values, use separate lines. To replace partial matches, unset the tick box \"Whole Word\" (e.g., for orginal: 24 and",

@@ -42,7 +42,10 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 			} else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
 			    fleInp <- trimws(strsplit(self$options$fleInp, ";")[[1]])
 			    for (i in seq_along(fleInp)) {
-			        if (!file.exists(fleInp[i])) jmvcore::reject("'{file}' doesn't exists.", file = fleInp[i])
+                    # vldExt in globals.R (based upon what jmvReadWrite:::read_all supports)
+			        if (!file.exists(fleInp[i]) || !jmvReadWrite:::hasExt(fleInp[i], vldExt)) {
+			            jmvcore::reject("'{file}' doesn't exists or has an unsupported file type.", file = fleInp[i])
+			        }
 			        fleInp[i] <- jmvReadWrite:::nrmFle(fleInp[i]);
 			    }
 			    private$.fleInp <- fleInp
