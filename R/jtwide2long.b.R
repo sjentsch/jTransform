@@ -55,13 +55,19 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             idxNSA <- self$options$idxNSA
             xfmNSA <- self$options$xfmNSA
             resNSA <- sapply(xfmNSA, "[[", "vars")
-            (is.list(xfmNSA) && length(xfmNSA) > 0 && is.matrix(resNSA) && all(dim(resNSA) > c(1, 1)) &&
+            (is.list(xfmNSA) && length(xfmNSA) > 0 && is.matrix(resNSA) && all(dim(resNSA) >= c(1, 1)) &&
              is.list(idxNSA) && length(idxNSA) > 0 && !any(sapply(sapply(idxNSA, "[[", "levels"), is.null)) &&
                all(sapply(idxNSA, "[[", "levels") > 0) && prod(sapply(idxNSA, "[[", "levels")) == dim(resNSA)[1])
         },
         
+        .chkSep = function() {
+            xfmSep <- self$options$xfmSep
+            chrSep <- self$options$chrSep
+            length(xfmSep) > 0 && nzchar(self$options$pfxSep) && nzchar(chrSep) && all(grepl(chrSep, xfmSep))
+        },
+        
         .chkVar = function() {
-            (self$options$mdeW2L == "Sep" && length(self$options$xfmSep) > 0 && nzchar(self$options$pfxSep) && nzchar(self$options$chrSep)) ||
+            (self$options$mdeW2L == "Sep" && private$.chkSep()) ||
             (self$options$mdeW2L == "NSS" && length(self$options$xfmNSS) > 0 && nzchar(self$options$idxNSS) && nzchar(self$options$tgtNSS)) ||
             (self$options$mdeW2L == "NSA" && private$.chkNSA())
         },
@@ -96,9 +102,12 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 selOth <- grepl(paste(paste0("^", c(varID, self$options$excSep), "$"), collapse = "|"), colRes)
                 colTgt <- colRes[!(selCnd | selOth)]
                 tblFrq <- as.data.frame(table(dtaFrm[, sort(which(selCnd), decreasing = TRUE)]))[, sort(seq(sum(selCnd) + 1), decreasing = TRUE)]
-#               tblFrq <- as.data.frame(table(dtaFrm[, which(selCnd)]))[, c(sum(selCnd) + 1, seq(sum(selCnd)))]
                 varFrq <- setNames(as.data.frame(matrix(rep("", length(colOrg)), ncol = length(colTgt))), colTgt)
-                for (i in seq_along(colTgt)) varFrq[, i] <- sort(colOrg[grepl(colTgt[i], colOrg)])
+                if (!nzchar(self$options$lvlSep)) {
+                    varFrq[, 1] <- sort(colOrg)
+                } else {
+                    for (i in seq_along(colTgt)) varFrq[, i] <- sort(colOrg[grepl(colTgt[i], colOrg)])
+                }
                 cbind(tblFrq[-1], varFrq, tblFrq[1])
             } else if (self$options$mdeW2L == "NSS") {
                 tblFrq <- as.data.frame(table(dtaFrm[, self$options$idxNSS]))
