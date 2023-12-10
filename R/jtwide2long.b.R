@@ -162,10 +162,10 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                     nmeOpt <- names(private$.options$options)
                     nmeOpt <- grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), nmeOpt)
                     for (crrOpt in private$.options$options[nmeOpt]) {
-                         srcOpt <- private$.sourcifyOption(crrOpt)
-                         if (!base::identical(srcOpt, '')) {
-                             crrSrc <- paste0(crrSrc, ',\n    ', srcOpt)
-                         }
+                        srcOpt <- private$.sourcifyOption(crrOpt)
+                        if (!base::identical(srcOpt, '')) {
+                            crrSrc <- paste0(crrSrc, ',\n    ', srcOpt)
+                        }
                     }
                     paste0(private$.package, '::', private$.name, '(', crrSrc, ')')
                 }
