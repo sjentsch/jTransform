@@ -7,6 +7,8 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .mrgDta = NULL,
 
         .init = function() {
+print("jtMerge_init")
+print(self$options$blnChs)
             if (private$.chkVar()) {
                 private$.mrgDta <- do.call(jmvReadWrite::merge_cols_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
@@ -18,6 +20,8 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .run = function() {
+print("jtMerge_run")
+print(self$options$blnChs)
             # check whether there are at least one variable in varBy, that fleInp isn't empty,
             # and that the data set has at least one row
             if (private$.chkVar() && dim(self$data)[1] >= 1) {

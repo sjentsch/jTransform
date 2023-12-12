@@ -45,6 +45,11 @@ options:
       title: "Data Set(s) to Add:"
       default: ""
 
+    - name: blnChs
+      type: Bool
+      default: false
+      hidden: true
+
     - name: fleChs
       type: String
       hidden: true

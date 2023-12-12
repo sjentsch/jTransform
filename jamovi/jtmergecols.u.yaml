@@ -34,9 +34,11 @@ children:
         format: string
         stretchFactor: 6
         margin: large
+#      - type: CustomControl
+#        name: blnChs
       - type: CustomControl
-        stretchFactor: 1
         name: fleChs
+        stretchFactor: 1
         horizontalAlignment: right
         verticalAlignment: center
 
