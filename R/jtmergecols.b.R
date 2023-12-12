@@ -40,19 +40,24 @@ print(self$options$blnChs)
             }
         },
         
+        .chkFle = function(crrFle = "") {
+            # vldExt in globals.R (based upon what jmvReadWrite:::read_all supports)
+			if (!file.exists(crrFle) || !jmvReadWrite:::hasExt(crrFle, vldExt)) {
+			    jmvcore::reject("'{file}' doesn't exists or has an unsupported file type.", file = crrFle)
+			}
+
+			jmvReadWrite:::nrmFle(crrFle)
+        },
+        
 		.chkVar = function() {
             if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(sapply(private$.fleInp, grepl, self$options$fleInp, USE.NAMES=FALSE))) {
                 return(length(self$options$varBy) > 0 && TRUE)
+            } else if (self$options$blnChs && .Platform$OS.type == "windows") {
+			    private$.fleInp <- sapply(c(trimws(strsplit(self$options$fleInp, ";")[[1]]), file.choose()), private$.chkFle, USE.NAMES = FALSE)
+print(private$.fleInp)
+			    return(length(self$options$varBy) > 0 && TRUE)
 			} else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
-			    fleInp <- trimws(strsplit(self$options$fleInp, ";")[[1]])
-			    for (i in seq_along(fleInp)) {
-                    # vldExt in globals.R (based upon what jmvReadWrite:::read_all supports)
-			        if (!file.exists(fleInp[i]) || !jmvReadWrite:::hasExt(fleInp[i], vldExt)) {
-			            jmvcore::reject("'{file}' doesn't exists or has an unsupported file type.", file = fleInp[i])
-			        }
-			        fleInp[i] <- jmvReadWrite:::nrmFle(fleInp[i]);
-			    }
-			    private$.fleInp <- fleInp
+			    private$.fleInp <- sapply(  trimws(strsplit(self$options$fleInp, ";")[[1]]),                 private$.chkFle, USE.NAMES = FALSE)
 			    return(length(self$options$varBy) > 0 && TRUE)
 			} else {
 			    private$.fleInp <- NULL
