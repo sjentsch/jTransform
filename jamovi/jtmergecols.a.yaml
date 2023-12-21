@@ -45,7 +45,7 @@ options:
       title: "Data Set(s) to Add:"
       default: ""
 
-    - name: blnChs
+    - name: tglChs
       type: Bool
       default: false
       hidden: true

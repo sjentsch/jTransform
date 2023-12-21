@@ -9,7 +9,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varBy = NULL,
             varAll = NULL,
             fleInp = "",
-            blnChs = FALSE,
+            tglChs = FALSE,
             fleChs = NULL,
             typMrg = "outer",
             btnCrt = NULL, ...) {
@@ -39,9 +39,9 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "fleInp",
                 fleInp,
                 default="")
-            private$..blnChs <- jmvcore::OptionBool$new(
-                "blnChs",
-                blnChs,
+            private$..tglChs <- jmvcore::OptionBool$new(
+                "tglChs",
+                tglChs,
                 default=FALSE,
                 hidden=TRUE)
             private$..fleChs <- jmvcore::OptionString$new(
@@ -64,7 +64,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..varBy)
             self$.addOption(private$..varAll)
             self$.addOption(private$..fleInp)
-            self$.addOption(private$..blnChs)
+            self$.addOption(private$..tglChs)
             self$.addOption(private$..fleChs)
             self$.addOption(private$..typMrg)
             self$.addOption(private$..btnCrt)
@@ -73,7 +73,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         varBy = function() private$..varBy$value,
         varAll = function() private$..varAll$value,
         fleInp = function() private$..fleInp$value,
-        blnChs = function() private$..blnChs$value,
+        tglChs = function() private$..tglChs$value,
         fleChs = function() private$..fleChs$value,
         typMrg = function() private$..typMrg$value,
         btnCrt = function() private$..btnCrt$value),
@@ -81,7 +81,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..varBy = NA,
         ..varAll = NA,
         ..fleInp = NA,
-        ..blnChs = NA,
+        ..tglChs = NA,
         ..fleChs = NA,
         ..typMrg = NA,
         ..btnCrt = NA)
@@ -168,7 +168,7 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varBy .
 #' @param varAll .
 #' @param fleInp .
-#' @param blnChs .
+#' @param tglChs .
 #' @param fleChs .
 #' @param typMrg .
 #' @param btnCrt .
@@ -191,7 +191,7 @@ jtMergeCols <- function(
     varBy,
     varAll,
     fleInp = "",
-    blnChs = FALSE,
+    tglChs = FALSE,
     fleChs,
     typMrg = "outer",
     btnCrt) {
@@ -212,7 +212,7 @@ jtMergeCols <- function(
         varBy = varBy,
         varAll = varAll,
         fleInp = fleInp,
-        blnChs = blnChs,
+        tglChs = tglChs,
         fleChs = fleChs,
         typMrg = typMrg,
         btnCrt = btnCrt)

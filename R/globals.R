@@ -2,7 +2,7 @@
 maxRow <- 10
 maxCol <- 10
 useIdx <- FALSE
-vldExt <- c("omv",  "csv", "tsv", "rdata", "rda", "rds", "sav", "zsav", "dta", "sas7bdat", "sd2", "sd7", "xpt", "stx", "stc")
+vldExt <- c("omv", "csv", "tsv", "rdata", "rda", "rds", "sav", "zsav", "dta", "sas7bdat", "sd2", "sd7", "xpt", "stx", "stc")
 
 # message formatting for sprintf
 fmtVrI <- "<strong>Variables in the Output Data Set</strong> (%d variables in %d rows): %s"
@@ -11,7 +11,7 @@ fmtAdR <- "There are %d more rows in the data set not shown here."
 fmtFsC <- "The column%s %s %s shown first in this preview. In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table."
 
 # help messages
-hlpCrt =   paste("<strong>\"Create\" opens the modified data set</strong> in a new jamovi window.")
+hlpCrt =   paste("<strong>\"CREATE\" opens the modified data set</strong> in a new jamovi window.")
 
 hlpArC =   paste("Please assign the variables in their desired order to \"Desired Order of Variables\". By ticking \"Add Remaining Variables at the",
                  "End\", variables that are not contained in \"Desired order of variables\") are appended.")
@@ -22,7 +22,7 @@ hlpL2W = c(paste("Please assign the variables that identify participant (or anot
                  "For an example about a typical long-to-wide-transformation, see the last paragraph in \"Details\" underneath the output tables.")
 hlpMrg = c(paste("Please assign one or more variables that appear in all data sets (e.g., a participant code) to \"Variable(s) to Match the",
                  "Data Sets by\". Afterwards, either write the name of (one or more) file(s) to be merged under \"Data Set(s) to Add\" (separate",
-                 "mulitiple file names with semicolons), or use \"Browse...\" (NB: not available on Windows) to select input file(s)."),
+                 "mulitiple file names with semicolons), or use \"Browse...\" to select input file(s)."),
                  "For a more comprehensive explanation regarding the types of merging operations, see \"Details\" underneath the preview table.")
 hlpRpl = c(paste("Please type the original value and the replacement into the entry fields. If you want to have several pairs of original and",
                  "replacment values, use separate lines. To replace partial matches, unset the tick box \"Whole Word\" (e.g., for orginal: 24 and",
@@ -74,8 +74,8 @@ genNSA =   paste("Please create a new long variable for each of your target vari
                  "all (original) variable lists assigned to the target variables need to contain the same number of variables. Afterwards, you need",
                  "to define one or more index variables for these variable lists under \"Index Variables (Can Be Nested)\". If you multiply the number",
                  "of levels (\"N levels\") the result needs to be equal to the length of the variable lists under \"Variables To Be transformed\". The",
-                 "first index variable is successive (1, 2, 3, ...), higher index variables go to the next step once all levels on the lower index",
-                 "variables went through a complete sequence (e.g., 1-1, 2-1, 3-1, 1-2, 2-2, 3-2, ...). You can use the second output table to check",
+                 "first index variable is successive (1, 2, 3, …), higher index variables go to the next step once all levels on the lower index",
+                 "variables went through a complete sequence (e.g., 1-1, 2-1, 3-1, 1-2, 2-2, 3-2, …). You can use the second output table to check",
                  "whether the levels of the index variables were assigned correctly. If there exists (one or more) variables that identify a",
                  "participant (or another measurement unit; e.g., a number or an ID) it can be assigned to \"Variables that identify the same unit\",",
                  "otherwise such variable will be created (and named \"ID\"). Variables that are not to be converted (e.g., personal characteristics",
@@ -151,11 +151,11 @@ dtlNSA = c(paste("\"Variables That Identify the Same Unit\" is an ID variable (e
                  "second variable. Afterwards, you need to define the index variables. Check in which order your variables are arranged: The index variable",
                  "that changes from one variable name to the next comes first, and for each of the higher index variables all steps of lower index variables",
                  "have to have been through a complete round, before going up a step on this variable. In the example data set, rspCrr_cong_GREEN_1 is",
-                 "followed by rspCrr_incong_GREEN_1 and rspCrr_neutral_GREEN_1 (don't focus on the rspTme_... variables in between). Therefore, cond is the",
+                 "followed by rspCrr_incong_GREEN_1 and rspCrr_neutral_GREEN_1 (don't focus on the rspTme_… variables in between). Therefore, cond is the",
                  "first index variable with three steps (cong, incong, neutral), and you should change \"index1\" to \"cond\" and \"0\" to \"3\". The next level is",
                  "the colour (rspCrr_neutral_GREEN_1 is followed by rspCrr_cong_YELLOW_1), and you should set the name of the index variable to \"colour\" and",
                  "\"N levels\" to \"4\" (as there are four colours: GREEN, YELLOW, RED, and BLUE). The highest level is repetition (rspCrr_neutral_BLUE_1 is",
                  "followed by rspCrr_cong_GREEN_2), and you should thus set the name of the index variable to \"rep\" and the \"N levels\" to two (1 and 2).",
                  "Once you did all this, and the number of variables in the variable lists for the long variables under \"Variables To Be Transformed\" - 24 -",
                  "matches up with the product of \"N levels\" - 3 (cond) * 4 (colour) * 2 = 24 - a \"Data Preview\" and an overview over the \"Repeated-Measures",
-                 "Levels\" is shown, and you can open the transformed data set (after checking those tables) in a new jamovi window by pressing \"Create\"."))
+                 "Levels\" is shown, and you can open the transformed data set (after checking those tables) in a new jamovi window by pressing \"CREATE\"."))
