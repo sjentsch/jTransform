@@ -4,8 +4,8 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 events:
-  loaded:            './varAll::loaded'
-  update:            './varAll::update'
+  loaded: './varAll::loaded'
+  update: './varAll::update'
   remoteDataChanged: './varAll::dataChanged'
 
 children:
@@ -35,7 +35,6 @@ children:
         stretchFactor: 6
         margin: large
       - type: CustomControl
-#     - type: ActionButton
         name: fleChs
         stretchFactor: 1
         horizontalAlignment: right
