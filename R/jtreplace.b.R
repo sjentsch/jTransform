@@ -41,19 +41,19 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
         
         .chkVar = function() {
-            (length(self$options$rplTrm) > 0 && all(sapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]))))
+            (length(self$options$rplTrm) > 0 && all(vapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]), logical(1))))
         },
 
         .crrArg = function() {
-            rplLst <- sapply(self$options$rplTrm, function(x) { x[sapply(x, is.null)] = ""; c(x[[1]], x[[2]]) }, simplify = FALSE)
+            rplLst <- lapply(self$options$rplTrm, function(x) { x[vapply(x, is.null, logical(1))] = ""; c(x[[1]], x[[2]]) })
             c(list(dtaInp = self$data, fleOut = NULL, rplLst = rplLst), optSnR(self$options))
         },
 
         .mrkDff = function(crrTbl = NULL, dtaOld = NULL, dtaNew = NULL) {
-            selFac <- sapply(dtaOld, is.factor)
+            selFac <- vapply(dtaOld, is.factor, logical(1))
             if (any(selFac)) {
-                dtaOld[, selFac] <- as.data.frame(sapply(dtaOld[, selFac], as.character))
-                dtaNew[, selFac] <- as.data.frame(sapply(dtaNew[, selFac], as.character))
+                dtaOld[, selFac] <- as.data.frame(vapply(dtaOld[, selFac], as.character, character(1)))
+                dtaNew[, selFac] <- as.data.frame(vapply(dtaNew[, selFac], as.character, character(1)))
             }
             selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
             selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))

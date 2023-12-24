@@ -41,23 +41,23 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .adjRes = function(dtaFrm = NULL) {
             if        (self$options$mdeW2L == "NSA") {
                 selClm <- grepl("^cond[0-9]", names(dtaFrm))
-                dtaFrm[selClm] <- sapply(dtaFrm[selClm], function(x) as.integer(as.character(x)), simplify = FALSE)
-                names(dtaFrm)[selClm] <- sapply(self$options$idxNSA, "[[", "var")
+                dtaFrm[, selClm] <- vapply(dtaFrm[, selClm], function(x) as.integer(as.character(x)), integer(dim(dtaFrm)[1]))
+                names(dtaFrm)[selClm] <- vapply(self$options$idxNSA, "[[", character(1), "var")
             } else if (self$options$mdeW2L == "NSS") {
                 selClm <- grepl("^cond$", names(dtaFrm))
-                dtaFrm[selClm] <- sapply(dtaFrm[selClm], function(x) as.integer(as.character(x)), simplify = FALSE)
+                dtaFrm[, selClm] <- vapply(dtaFrm[, selClm], function(x) as.integer(as.character(x)), integer(1))
                 names(dtaFrm)[selClm] <- self$options$idxNSS
             }
             dtaFrm
         },
 
         .chkNSA = function() {
-            idxNSA <- self$options$idxNSA
             xfmNSA <- self$options$xfmNSA
             resNSA <- sapply(xfmNSA, "[[", "vars")
+            idxNSA <- self$options$idxNSA
+            lvlNSA <- vapply(idxNSA, function(x) as.integer(x[["levels"]]), integer(1))
             (is.list(xfmNSA) && length(xfmNSA) > 0 && is.matrix(resNSA) && all(dim(resNSA) >= c(1, 1)) &&
-             is.list(idxNSA) && length(idxNSA) > 0 && !any(sapply(sapply(idxNSA, "[[", "levels"), is.null)) &&
-               all(sapply(idxNSA, "[[", "levels") > 0) && prod(sapply(idxNSA, "[[", "levels")) == dim(resNSA)[1])
+             is.list(idxNSA) && length(idxNSA) > 0 && !any(is.na(lvlNSA)) && all(lvlNSA > 0) && prod(lvlNSA) == dim(resNSA)[1])
         },
         
         .chkSep = function() {
@@ -113,8 +113,8 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 tblFrq <- as.data.frame(table(dtaFrm[, self$options$idxNSS]))
                 cbind(setNames(tblFrq[1], self$options$idxNSS), as.data.frame(self$options$xfmNSS, nm = self$options$tgtNSS), tblFrq[2])
             } else if (self$options$mdeW2L == "NSA") {
-                varTgt <- setNames(as.data.frame(sapply(self$options$xfmNSA, "[[", "vars")), sapply(self$options$xfmNSA, "[[", "label"))
-                tblFrq <- as.data.frame(table(dtaFrm[, sapply(self$options$idxNSA, "[[", "var")]))
+                varTgt <- setNames(as.data.frame(lapply(self$options$xfmNSA, "[[", "vars")), vapply(self$options$xfmNSA, "[[", character(1), "label"))
+                tblFrq <- as.data.frame(table(dtaFrm[, vapply(self$options$idxNSA, "[[", character(1), "var")]))
                 colFrq <- dim(tblFrq)[2]
                 cbind(tblFrq[-colFrq], varTgt, tblFrq[colFrq])
             }
@@ -129,7 +129,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 # remove columns that are not required from dtaFrm and return it together with tgtLst
                 list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSS, self$options$excNSS, tgtLst))], tgtLst = tgtLst)
             } else if (self$options$mdeW2L == "NSA") {
-                tgtLst <- as.list(sapply(self$options$xfmNSA, "[[", "label"))
+                tgtLst <- as.list(vapply(self$options$xfmNSA, "[[", character(1), "label"))
                 idxNSA <- self$options$idxNSA
                 for (i in seq_along(tgtLst)) {
                     for (j in seq_along(idxNSA)) {    

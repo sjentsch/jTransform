@@ -33,7 +33,7 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
     dtaCol <- dim(dtaFrm)[2] + ifelse(useIdx, 1, 0)
     pvwRow <- crrTbl$rowCount
     pvwCol <- length(crrTbl$columns)
-    pvwClN <- unname(sapply(crrTbl$columns, "[[", "title"))
+    pvwClN <- vapply(crrTbl$columns, "[[", character(1), "title", USE.NAMES = FALSE)
     # add first column with row number (if useIdx), and restrict the data frame to the maximal
     # number of rows and columns (pwvClN[-1] because the row numbers are just added by cbind)
     if (useIdx) {
@@ -42,7 +42,7 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
         dtaFrm <-                                         dtaFrm[seq(pvwRow), pvwClN]
     }
     # convert columns for display (factor -> character)
-    cnvCol <- sapply(dtaFrm, is.factor)
+    cnvCol <- vapply(dtaFrm, is.factor, logical(1))
     dtaFrm[, cnvCol] <- sapply(dtaFrm[, cnvCol], as.character)
     if (pvwCol < dtaCol) dtaFrm[, pvwCol] <- "..."
     for (i in seq(pvwRow)) {
@@ -53,7 +53,7 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
         } else {
             crrRow <- setNames(as.list(dtaFrm[i, ]), c("fstCol", names(dtaFrm)[-1]))
         }
-        crrRow[sapply(crrRow, is.na)] <- ""
+        crrRow[vapply(crrRow, is.na, logical(1))] <- ""
         if (i == pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
         crrTbl$setRow(rowNo = i, crrRow)
         # fmtAdC and fmtAdR are defined in globals.R

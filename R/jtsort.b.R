@@ -37,8 +37,8 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .crrArg = function() {
-            list(dtaInp = self$data, fleOut = NULL, varSrt = paste0(gsub("descend", "-", gsub("ascend", "",
-                   sapply(self$options$ordSrt, "[[", "order"))), sapply(self$options$ordSrt, "[[", "var")))
+            list(dtaInp = self$data, fleOut = NULL, varSrt = vapply(self$options$ordSrt, function(x)
+                 paste0(gsub("descend", "-", gsub("ascend", "", x[["order"]])), x[["var"]]), character(1)))
         }
         
     ),

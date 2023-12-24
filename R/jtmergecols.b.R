@@ -64,7 +64,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             # on Linux, MacOS, and the Cloud-version
             } else {
 #               mark("chkVar_Oth1", private$.fleInp)
-                if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp, ))) {
+                if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp))) {
                     return(length(self$options$varBy) > 0)
                 } else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
                     private$.fleInp <- vapply(  trimws(strsplit(self$options$fleInp, ";")[[1]]),                 private$.chkFle, character(1), USE.NAMES = FALSE)

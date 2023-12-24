@@ -15,8 +15,7 @@ jtSearchClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 # if it was found, create an output list with the variables and the rows where the value was found
                 if (length(srcRes) > 0) {
                     outRes <- paste0(c(outRes, "<ul>",
-                                       sapply(seq_along(srcRes), function(i) sprintf("<li><strong>%s</strong>: %s</li>",
-                                                                                     names(srcRes[i]), paste0(srcRes[[i]], collapse = ", "))),
+                                       vapply(names(srcRes), function(x) sprintf("<li><strong>%s</strong>: %s</li>", x, paste0(srcRes[[x]], collapse = ", ")), character(1)),
                                        "</ul>", ""), collapse = "\n")
                 }
                 # assigng the output string
