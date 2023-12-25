@@ -17,7 +17,7 @@ additional data sets to the currently opened data set.
 
 ## Install in jamovi
 
-If you haven't [jamovi](https://www.jamovi.org/download.html) already installed,
+If you haven't already installed [jamovi](https://www.jamovi.org/download.html),
 install it. Open jamovi, and select the jamovi modules library and
 [install](https://jamovi.readthedocs.io/en/latest/howto/howto_Install_modules.html)
 jTransform from there.
