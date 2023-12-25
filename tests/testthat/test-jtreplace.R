@@ -1,6 +1,4 @@
-testthat::context('jtreplace')
-
-testthat::test_that('jtreplace works', {
+testthat::test_that("jtreplace works", {
 
 
 })

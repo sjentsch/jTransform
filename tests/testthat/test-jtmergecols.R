@@ -1,6 +1,4 @@
-testthat::context('jtmergecols')
-
-testthat::test_that('jtmergecols works', {
+testthat::test_that("jtmergecols works", {
 
 
 })

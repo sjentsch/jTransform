@@ -1,6 +1,4 @@
-testthat::context('jttranspose')
-
-testthat::test_that('jttranspose works', {
+testthat::test_that("jttranspose works", {
 
 
 })

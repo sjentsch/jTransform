@@ -1,6 +1,4 @@
-testthat::context('jtsearch')
-
-testthat::test_that('jtsearch works', {
+testthat::test_that("jtsearch works", {
 
 
 })

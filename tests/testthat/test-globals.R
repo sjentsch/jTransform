@@ -1,4 +1,4 @@
-testthat::test_that('globals works', {
+testthat::test_that("globals works", {
 
 
 })

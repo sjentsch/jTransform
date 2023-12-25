@@ -1,6 +1,4 @@
-testthat::context('jtarrangecols')
-
-testthat::test_that('jtarrangecols works', {
-
+testthat::test_that("jtarrangecols works", {
+    nmeInp <- ""
 
 })

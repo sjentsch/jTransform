@@ -1,6 +1,4 @@
-testthat::context('jtsort')
-
-testthat::test_that('jtsort works', {
+testthat::test_that("jtsort works", {
 
 
 })
