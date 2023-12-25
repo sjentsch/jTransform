@@ -1,9 +1,9 @@
-jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtArrangeColsClass",
     inherit = jtArrangeColsBase,
     private = list(
         .arrDta = NULL,
-        
+
         .init = function() {
             if (private$.chkVar()) {
                 private$.arrDta <- do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg())
@@ -38,7 +38,8 @@ jtArrangeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         },
 
         .crrArg = function() {
-            list(dtaInp = self$readDataset(), fleOut = NULL, varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll))))
+            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+            list(dtaInp = dtaFrm, fleOut = NULL, varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll))))
         }
 
     ),

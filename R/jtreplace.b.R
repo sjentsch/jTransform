@@ -1,7 +1,4 @@
-
-# This file is a generated template, your changes will not be overwritten
-
-jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtReplaceClass",
     inherit = jtReplaceBase,
     private = list(
@@ -9,7 +6,8 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .init = function() {
             if (private$.chkVar()) {
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = self$readDataset())
+                if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = dtaFrm)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -39,13 +37,16 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .chkDff = function(dtaOld = NULL, dtaNew = NULL) {
              (any(is.na(dtaOld) != is.na(dtaNew)) || any(dtaOld[!is.na(dtaOld)] != dtaNew[!is.na(dtaNew)]))
         },
-        
+
         .chkVar = function() {
             (length(self$options$rplTrm) > 0 && all(vapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]), logical(1))))
         },
 
         .crrArg = function() {
-            rplLst <- lapply(self$options$rplTrm, function(x) { x[vapply(x, is.null, logical(1))] = ""; c(x[[1]], x[[2]]) })
+            rplLst <- lapply(self$options$rplTrm, function(x) {
+                                                      x[vapply(x, is.null, logical(1))] <- ""
+                                                      c(x[[1]], x[[2]])
+                                                  })
             c(list(dtaInp = self$data, fleOut = NULL, rplLst = rplLst), optSnR(self$options))
         },
 
@@ -58,18 +59,18 @@ jtReplaceClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
             selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))
             if        (private$.chkDff(dtaOld[selRow, selCol], dtaNew[selRow, selCol])) {
-                crrTbl$setNote('diff', '+ Value was replaced / modified.')
+                crrTbl$setNote("diff", "+ Value was replaced / modified.")
                 for (i in selCol) {
                     for (j in selRow) {
                         if (private$.chkDff(dtaOld[j, i], dtaNew[j, i])) {
-                            crrTbl$addSymbol(rowNo = j, ifelse(!useIdx && i == 1, "fstCol", names(dtaOld)[i]), '+')
+                            crrTbl$addSymbol(rowNo = j, ifelse(!useIdx && i == 1, "fstCol", names(dtaOld)[i]), "+")
                         }
                     }
                 }
             } else if (private$.chkDff(dtaOld,                 dtaNew)) {
-                crrTbl$setNote('diff', 'Replacements were made, but they are outside the scope (rows / columns) of this preview.')
+                crrTbl$setNote("diff", "Replacements were made, but they are outside the scope (rows / columns) of this preview.")
             } else {
-                crrTbl$setNote('diff', 'There were no replacements made (in the whole dataset).')
+                crrTbl$setNote("diff", "There were no replacements made (in the whole dataset).")
             }
         }
 

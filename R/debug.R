@@ -1,6 +1,6 @@
-j_DEBUG <- T
-j_INFO  <- T
-t_INFO  <- F
+j_DEBUG <- TRUE
+j_INFO  <- TRUE
+t_INFO  <- FALSE
 
 fleWOS  <- ""
 # NB for Windows users: Feel free to change the path and name of the log file as you like.
@@ -33,14 +33,14 @@ jinfo <- function(...) {
 
 mark <- function(...) {
     if (!j_DEBUG) return(invisible(NULL))
-  
+
     if (nzchar(fleWOS)) base::sink(file = fleWOS, append = TRUE)
 
     if (missing(...)) {
         cat("Mark here\n")
         return(invisible(NULL))
     }
-  
+
     items <- list(...)
     cat("______begin________\n\n")
     for (a in items)

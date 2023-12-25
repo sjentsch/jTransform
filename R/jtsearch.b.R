@@ -1,4 +1,4 @@
-jtSearchClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtSearchClass",
     inherit = jtSearchBase,
     private = list(
@@ -27,7 +27,7 @@ jtSearchClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
 
         },
-         
+
         .chkVar = function() {
             (nzchar(trimws(self$options$srcTrm)))
         },

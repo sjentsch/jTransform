@@ -16,7 +16,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     # the first column (if useIdx is FALSE) and add further columns and rows to the current table
     valRow <- setNames(as.list(rep("", length(seqCol) + 1)), c("fstCol", colNme[seqCol]))
     if (!useIdx) crrTbl$getColumn(1)$setTitle(colNme[1])
- 	for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
+    for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
     for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
 }
 

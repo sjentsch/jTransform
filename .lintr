@@ -5,3 +5,5 @@ linters: lintr::linters_with_defaults(
   line_length_linter = NULL,
   object_name_linter = NULL,
   spaces_inside_linter = NULL)
+exclusions: list("R/00jmv.R", "R/jtarrangecols.h.R", "R/jtlong2wide.h.R", "R/jtmergecols.h.R", "R/jtreplace.h.R",
+                 "R/jtsearch.h.R", "R/jtsort.h.R", "R/jttranspose.h.R", "R/jtwide2long.h.R")

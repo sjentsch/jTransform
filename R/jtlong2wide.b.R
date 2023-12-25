@@ -1,4 +1,4 @@
-jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtLong2WideClass",
     inherit = jtLong2WideBase,
     private = list(
@@ -44,7 +44,7 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
         .colFst = function() {
             colNme <- names(private$.l2wDta)
-            colOth <- c(self$options$varID, self$options$varExc) 
+            colOth <- c(self$options$varID, self$options$varExc)
             colTgt <- self$options$varTgt
             numRmg <- (min(c(length(colNme), maxCol)) - length(colOth))
             numTgt <- length(colTgt)
@@ -58,25 +58,27 @@ jtLong2WideClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             }
             varLst
         },
-         
+
         .crrArg = function() {
-            list(dtaInp = self$readDataset(),  fleOut = NULL, varID  = self$options$varID,  varTme = self$options$varTme,
+            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+            list(dtaInp = dtaFrm,  fleOut = NULL, varID  = self$options$varID, varTme = self$options$varTme,
                  varTgt = self$options$varTgt, varExc = self$options$varExc, varSep = self$options$varSep,
                  varOrd = self$options$varOrd, varAgg = self$options$varAgg)
         },
-        
+
         .prpRpM = function(dtaFrm = NULL) {
             # exclude self$options$varID and self$options$varExc
-            # 
+            #
             # self$options$varTgt -> names / grepl
             varTme <- self$options$varTme
             numTme <- length(varTme)
-            tblFrq <- as.data.frame(table(self$readDataset()[, varTme[seq(numTme, 1)]]))[, seq(numTme + 1, 1)]
+            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+            tblFrq <- as.data.frame(table(dtaFrm[, varTme[seq(numTme, 1)]]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
             nmeTgt <- sort(names(dtaFrm)[grepl(paste0(paste0("^", varTgt), collapse = "|"), names(dtaFrm))])
             nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort))
             cbind(tblFrq[-1], nmeTgt, tblFrq[1])
-        }        
+        }
 
     ),
 

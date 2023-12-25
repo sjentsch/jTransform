@@ -1,4 +1,4 @@
-jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtSortClass",
     inherit = jtSortBase,
     private = list(
@@ -6,7 +6,8 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .init = function() {
             if (private$.chkVar()) {
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = self$readDataset(), colFst = self$options$varSrt)
+                if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = dtaFrm, colFst = self$options$varSrt)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -31,16 +32,18 @@ jtSortClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 crtInf(crrInf = self$results$genInf, hlpMsg = hlpSrt)
             }
         },
-        
+
         .chkVar = function() {
             (length(self$options$varSrt) >= 1)
         },
 
         .crrArg = function() {
-            list(dtaInp = self$data, fleOut = NULL, varSrt = vapply(self$options$ordSrt, function(x)
-                 paste0(gsub("descend", "-", gsub("ascend", "", x[["order"]])), x[["var"]]), character(1)))
+            varSrt <- vapply(self$options$ordSrt, function(x) {
+                                                       paste0(gsub("descend", "-", gsub("ascend", "", x[["order"]])), x[["var"]])
+                                                  }, character(1))
+            list(dtaInp = self$data, fleOut = NULL, varSrt = varSrt)
         }
-        
+
     ),
 
     public = list(

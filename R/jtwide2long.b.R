@@ -1,4 +1,4 @@
-jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtWide2LongClass",
     inherit = jtWide2LongBase,
     private = list(
@@ -59,27 +59,28 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
             (is.list(xfmNSA) && length(xfmNSA) > 0 && is.matrix(resNSA) && all(dim(resNSA) >= c(1, 1)) &&
              is.list(idxNSA) && length(idxNSA) > 0 && !any(is.na(lvlNSA)) && all(lvlNSA > 0) && prod(lvlNSA) == dim(resNSA)[1])
         },
-        
+
         .chkSep = function() {
             xfmSep <- self$options$xfmSep
             chrSep <- self$options$chrSep
             length(xfmSep) > 0 && nzchar(self$options$pfxSep) && nzchar(chrSep) && all(grepl(chrSep, xfmSep))
         },
-        
+
         .chkVar = function() {
             (self$options$mdeW2L == "Sep" && private$.chkSep()) ||
             (self$options$mdeW2L == "NSS" && length(self$options$xfmNSS) > 0 && nzchar(self$options$idxNSS) && nzchar(self$options$tgtNSS)) ||
             (self$options$mdeW2L == "NSA" && private$.chkNSA())
         },
-         
+
         .crrArg = function() {
             if        (self$options$mdeW2L == "Sep") {
-                list(dtaInp = self$readDataset(), fleOut = NULL, varID = self$options$id_Sep, varTme = self$options$pfxSep,
+                if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+                list(dtaInp = dtaFrm, fleOut = NULL, varID = self$options$id_Sep, varTme = self$options$pfxSep,
                      varLst = self$options$xfmSep, varExc = self$options$excSep, varSep = self$options$chrSep,
                      excLvl = private$.lvl2Nm())
             } else if (self$options$mdeW2L == "NSS") {
                 rnmRes <- private$.rnmDta()
-                list(dtaInp = rnmRes$dtaFrm,      fleOut = NULL, varID = self$options$id_NSS, 
+                list(dtaInp = rnmRes$dtaFrm,      fleOut = NULL, varID = self$options$id_NSS,
                      varLst = rnmRes$tgtLst, varExc = self$options$excNSS, varSep = "_", excLvl = 1)
             } else if (self$options$mdeW2L == "NSA") {
                 rnmRes <- private$.rnmDta()
@@ -87,7 +88,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                      varLst = rnmRes$tgtLst, varExc = self$options$excNSA, varSep = "_", excLvl = 1)
             }
         },
-        
+
         .lvl2Nm = function() {
             eval(parse(text = paste0("as.integer(c(", self$options$lvlSep, "))")))
         },
@@ -121,7 +122,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .rnmDta = function() {
-            dtaFrm <- self$readDataset()
+            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
             if        (self$options$mdeW2L == "NSS") {
                 tgtLst <- paste0(self$options$tgtNSS, private$.spfNum(length(self$options$xfmNSS)))
                 selClm <- (names(dtaFrm) %in% self$options$xfmNSS)
@@ -132,7 +133,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 tgtLst <- as.list(vapply(self$options$xfmNSA, "[[", character(1), "label"))
                 idxNSA <- self$options$idxNSA
                 for (i in seq_along(tgtLst)) {
-                    for (j in seq_along(idxNSA)) {    
+                    for (j in seq_along(idxNSA)) {
                         tgtLst[[i]] <- paste0(tgtLst[[i]], rep(private$.spfNum(idxNSA[[j]][["levels"]]), each = length(tgtLst[[i]])))
                     }
                     selClm <- (names(dtaFrm) %in% self$options$xfmNSA[[i]][["vars"]])
@@ -144,7 +145,7 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSA, self$options$excNSA, tgtLst))], tgtLst = tgtLst)
             }
         },
-        
+
         .spfNum = function(crrNum = NA) {
              sprintf(paste0("_%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))
         }
@@ -158,16 +159,16 @@ jtWide2LongClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 if (self$options$mdeW2L == "Sep") {
                     fmtSrc("jmvReadWrite::wide2long_omv", private$.crrArg()[c(-1, -2)])
                 } else {
-                    crrSrc <- '\n    data = data'
+                    crrSrc <- "\n    data = data"
                     nmeOpt <- names(private$.options$options)
                     nmeOpt <- grepl(paste0(self$options$mdeW2L, "$|^mdeW2L$"), nmeOpt)
                     for (crrOpt in private$.options$options[nmeOpt]) {
                         srcOpt <- private$.sourcifyOption(crrOpt)
-                        if (!base::identical(srcOpt, '')) {
-                            crrSrc <- paste0(crrSrc, ',\n    ', srcOpt)
+                        if (!base::identical(srcOpt, "")) {
+                            crrSrc <- paste0(crrSrc, ",\n    ", srcOpt)
                         }
                     }
-                    paste0(private$.package, '::', private$.name, '(', crrSrc, ')')
+                    paste0(private$.package, "::", private$.name, "(", crrSrc, ")")
                 }
             }
         }

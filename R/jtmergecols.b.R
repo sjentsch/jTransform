@@ -1,4 +1,4 @@
-jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtMergeColsClass",
     inherit = jtMergeColsBase,
 
@@ -38,7 +38,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 crtInf(crrInf = self$results$genInf, hlpMsg = hlpMrg)
             }
         },
-        
+
         .chkFle = function(crrFle = "") {
             # vldExt in globals.R (based upon what jmvReadWrite:::read_all supports)
             if (!file.exists(crrFle) || !jmvReadWrite:::hasExt(crrFle, vldExt)) {
@@ -47,7 +47,7 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             jmvReadWrite:::nrmFle(crrFle)
         },
-        
+
         .chkVar = function() {
 #           mark("chkVar_0")
             # on Windows
@@ -97,16 +97,16 @@ jtMergeColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 c(colBy, colDta, colMrg)
             }
         },
-         
+
         .crrArg = function() {
 #           mark("crrArg", private$.fleInp)
             # attach further input files as attribute fleInp to the data frame
             # and assemble the arguments for merge_cols_omv
-            crrDta <- self$readDataset()
-            attr(crrDta, "fleInp") <- private$.fleInp
-            list(dtaInp = crrDta, fleOut = NULL, varBy = self$options$varBy, typMrg = self$options$typMrg)
+            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+            attr(dtaFrm, "fleInp") <- private$.fleInp
+            list(dtaInp = dtaFrm, fleOut = NULL, varBy = self$options$varBy, typMrg = self$options$typMrg)
         }
-        
+
     ),
 
     public = list(

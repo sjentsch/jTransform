@@ -1,4 +1,4 @@
-jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtTransposeClass",
     inherit = jtTransposeBase,
     private = list(
@@ -11,7 +11,7 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xpsDta)
             } else {
                 # reset the output table (rstPvw in utils.R) and show getting started
-                # as general information (crtInf in utils.R) 
+                # as general information (crtInf in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
                 crtInf(crrInf = self$results$genInf, hlpMsg = hlpXps)
             }
@@ -37,7 +37,8 @@ jtTransposeClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .crrArg = function() {
-            list(dtaInp = self$readDataset()[, c(self$options$varNme, self$options$varOth)], fleOut = NULL,
+            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
+            list(dtaInp = dtaFrm[, c(self$options$varNme, self$options$varOth)], fleOut = NULL,
                  varNme = ifelse(is.null(self$options$varNme), "", self$options$varNme))
         }
 
