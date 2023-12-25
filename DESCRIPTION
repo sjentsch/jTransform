@@ -21,7 +21,9 @@ Description:
     (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to
     these functions via a graphical user interface (without the need to use
     a R command line for these transformations).
-License: AGPL-3
+License: AGPL-3 + file LICENSE
+Language: en-GB
 Encoding: UTF-8
 Imports: R6
 Remotes: sjentsch/jmvReadWrite
+RoxygenNote: 7.2.3
