@@ -1,0 +1,7 @@
+linters: lintr::linters_with_defaults(
+  commented_code_linter = NULL,
+  cyclocomp_linter(complexity_limit = 30L),
+  indentation_linter = NULL,
+  line_length_linter = NULL,
+  object_name_linter = NULL,
+  spaces_inside_linter = NULL)
