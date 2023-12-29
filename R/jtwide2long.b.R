@@ -55,7 +55,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             xfmNSA <- self$options$xfmNSA
             resNSA <- sapply(xfmNSA, "[[", "vars")
             idxNSA <- self$options$idxNSA
-            lvlNSA <- vapply(idxNSA, function(x) as.integer(x[["levels"]]), integer(1))
+            lvlNSA <- vapply(idxNSA, function(x) as.integer(c(x[["levels"]], NA))[1], integer(1))
             (is.list(xfmNSA) && length(xfmNSA) > 0 && is.matrix(resNSA) && all(dim(resNSA) >= c(1, 1)) &&
              is.list(idxNSA) && length(idxNSA) > 0 && !any(is.na(lvlNSA)) && all(lvlNSA > 0) && prod(lvlNSA) == dim(resNSA)[1])
         },
