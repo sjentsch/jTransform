@@ -86,7 +86,7 @@ optSnR <- function(crrOpt = NULL) {
                    incNom = crrOpt$incNom, incOrd = crrOpt$incOrd, incNum = crrOpt$incNum)
     if (hasName(crrOpt, "ignCse")) lstSnR["ignCse"] <- crrOpt$ignCse
     if (hasName(crrOpt, "varSel") && !is.null(crrOpt$varSel) && length(crrOpt$varSel) > 0) {
-       lstSnR[ifelse(crrOpt$incExc == "include", "varInc", "varExc")] <- crrOpt$varSel
+       lstSnR[[ifelse(crrOpt$incExc == "include", "varInc", "varExc")]] <- crrOpt$varSel
     }
     return(lstSnR)
 }
