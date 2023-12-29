@@ -8,7 +8,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .init = function() {
             if (private$.chkVar()) {
                 private$.l2wDta <- do.call(jmvReadWrite::long2wide_omv, private$.crrArg())
-                private$.rpmDta <- private$.prpRpM(dtaFrm = private$.l2wDta)
+                private$.rpmDta <- private$.prpRpM(xfmDta = private$.l2wDta)
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.l2wDta, colFst = private$.colFst())
                 prpPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nonLtd = TRUE)
@@ -66,18 +66,18 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                  varOrd = self$options$varOrd, varAgg = self$options$varAgg)
         },
 
-        .prpRpM = function(dtaFrm = NULL) {
+        .prpRpM = function(xfmDta = NULL) {
             # exclude self$options$varID and self$options$varExc
             #
             # self$options$varTgt -> names / grepl
             varTme <- self$options$varTme
             numTme <- length(varTme)
-            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
-            tblFrq <- as.data.frame(table(dtaFrm[, varTme[seq(numTme, 1)]]))[, seq(numTme + 1, 1)]
+            if (!is.null(self$data) && dim(self$data)[1] > 0) orgDta <- self$data else orgDta <- self$readDataset()
+            tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)]]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
-            nmeTgt <- sort(names(dtaFrm)[grepl(paste0(paste0("^", varTgt), collapse = "|"), names(dtaFrm))])
-            nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort))
-            cbind(tblFrq[-1], nmeTgt, tblFrq[1])
+            nmeTgt <- sort(names(xfmDta)[grepl(paste0(paste0("^", varTgt), collapse = "|"), names(xfmDta))])
+            nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort), row.names = NULL)
+            cbind(tblFrq[, -1], nmeTgt, tblFrq[, 1])
         }
 
     ),
