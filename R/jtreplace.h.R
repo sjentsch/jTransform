@@ -10,7 +10,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             rplTrm = list(
                 list(rplOld="", rplNew="")),
             whlTrm = TRUE,
-            btnCrt = NULL,
+            btnCrt = FALSE,
             incCmp = TRUE,
             incRcd = TRUE,
             incID = TRUE,
@@ -33,7 +33,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..rplTrm <- jmvcore::OptionArray$new(
                 "rplTrm",
                 rplTrm,
@@ -55,7 +56,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt)
+                btnCrt,
+                default=FALSE)
             private$..incCmp <- jmvcore::OptionBool$new(
                 "incCmp",
                 incCmp,
@@ -93,7 +95,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..rplTrm)
@@ -247,11 +250,11 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 jtReplace <- function(
     data,
-    varAll,
+    varAll = NULL,
     rplTrm = list(
                 list(rplOld="", rplNew="")),
     whlTrm = TRUE,
-    btnCrt,
+    btnCrt = FALSE,
     incCmp = TRUE,
     incRcd = TRUE,
     incID = TRUE,
@@ -259,7 +262,7 @@ jtReplace <- function(
     incOrd = TRUE,
     incNum = TRUE,
     incExc = "include",
-    varSel) {
+    varSel = NULL) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtReplace requires jmvcore to be installed (restart may be required)")

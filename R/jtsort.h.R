@@ -9,7 +9,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varSrt = NULL,
             varAll = NULL,
             ordSrt = NULL,
-            btnCrt = NULL, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -23,7 +23,8 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..varAll <- jmvcore::OptionVariables$new(
                 "varAll",
                 varAll,
@@ -31,12 +32,12 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..ordSrt <- jmvcore::OptionArray$new(
                 "ordSrt",
                 ordSrt,
                 items="(varSrt)",
-                default=NULL,
                 template=jmvcore::OptionGroup$new(
                     "ordSrt",
                     NULL,
@@ -50,10 +51,12 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                             NULL,
                             options=list(
                                 "ascend",
-                                "descend")))))
+                                "descend")))),
+                default=NULL)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt)
+                btnCrt,
+                default=FALSE)
 
             self$.addOption(private$..varSrt)
             self$.addOption(private$..varAll)
@@ -160,10 +163,10 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 jtSort <- function(
     data,
-    varSrt,
-    varAll,
+    varSrt = NULL,
+    varAll = NULL,
     ordSrt = NULL,
-    btnCrt) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtSort requires jmvcore to be installed (restart may be required)")

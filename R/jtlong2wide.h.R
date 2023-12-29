@@ -13,7 +13,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varOrd = "times",
             varAgg = "mean",
             varSep = "_",
-            btnCrt = NULL, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -27,28 +27,32 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..varTme <- jmvcore::OptionVariables$new(
                 "varTme",
                 varTme,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..varTgt <- jmvcore::OptionVariables$new(
                 "varTgt",
                 varTgt,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..varExc <- jmvcore::OptionVariables$new(
                 "varExc",
                 varExc,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..varOrd <- jmvcore::OptionList$new(
                 "varOrd",
                 varOrd,
@@ -69,7 +73,8 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 default="_")
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt)
+                btnCrt,
+                default=FALSE)
 
             self$.addOption(private$..varID)
             self$.addOption(private$..varTme)
@@ -233,14 +238,14 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 jtLong2Wide <- function(
     data,
-    varID,
-    varTme,
-    varTgt,
-    varExc,
+    varID = NULL,
+    varTme = NULL,
+    varTgt = NULL,
+    varExc = NULL,
     varOrd = "times",
     varAgg = "mean",
     varSep = "_",
-    btnCrt) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtLong2Wide requires jmvcore to be installed (restart may be required)")

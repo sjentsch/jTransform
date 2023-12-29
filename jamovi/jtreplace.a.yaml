@@ -7,13 +7,13 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Replace Values in the Current Data Set
-    R:
-        dontrun: true
-        usage: |
-            # the function is a wrapper for jmvReadWrite::replace_omv
-            # please use that function when in R (or in Rj)
-            # for more information: https://sjentsch.github.io/jmvReadWrite
+  main: Replace Values in the Current Data Set
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::replace_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
 
@@ -28,6 +28,7 @@ options:
       - numeric
       - factor
       - id
+    default:
 
   - name:  rplTrm
     type:  Array
@@ -50,6 +51,7 @@ options:
   - name: btnCrt
     type: Action
     title: Create
+    default: false
 
   - name: incCmp
     title: "Computed"
@@ -96,5 +98,6 @@ options:
       - numeric
       - factor
       - id
+    default:
 
 ...

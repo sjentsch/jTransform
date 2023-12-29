@@ -8,7 +8,7 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varNme = NULL,
             varOth = NULL,
-            btnCrt = NULL, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -23,7 +23,8 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "numeric",
                     "factor",
                     "id"),
-                required=FALSE)
+                required=FALSE,
+                default=NULL)
             private$..varOth <- jmvcore::OptionVariables$new(
                 "varOth",
                 varOth,
@@ -31,10 +32,12 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "numeric",
                     "factor",
                     "id"),
-                required=TRUE)
+                required=TRUE,
+                default=NULL)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt)
+                btnCrt,
+                default=FALSE)
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
@@ -136,9 +139,9 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 jtTranspose <- function(
     data,
-    varNme,
-    varOth,
-    btnCrt) {
+    varNme = NULL,
+    varOth = NULL,
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtTranspose requires jmvcore to be installed (restart may be required)")

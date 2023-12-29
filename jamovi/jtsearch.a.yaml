@@ -28,6 +28,7 @@ options:
         - numeric
         - factor
         - id
+      default:
 
     - name: srcCst
       type: String

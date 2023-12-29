@@ -9,7 +9,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varAll = NULL,
             varOrd = NULL,
             blnAll = FALSE,
-            btnCrt = NULL, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -24,21 +24,24 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..varOrd <- jmvcore::OptionVariables$new(
                 "varOrd",
                 varOrd,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..blnAll <- jmvcore::OptionBool$new(
                 "blnAll",
                 blnAll,
                 default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt)
+                btnCrt,
+                default=FALSE)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..varOrd)
@@ -144,10 +147,10 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 jtArrangeCols <- function(
     data,
-    varAll,
-    varOrd,
+    varAll = NULL,
+    varOrd = NULL,
     blnAll = FALSE,
-    btnCrt) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtArrangeCols requires jmvcore to be installed (restart may be required)")

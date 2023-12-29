@@ -7,67 +7,70 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Sort Data Set
-    R:
-        dontrun: true
-        usage: |
-            # the function is a wrapper for jmvReadWrite::sort_omv
-            # please use that function when in R (or in Rj)
-            # for more information: https://sjentsch.github.io/jmvReadWrite
+  main: Sort Data Set
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::sort_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
-#      description:
-#          R: the data as a data frame
+  - name: data
+    type: Data
+#    description:
+#      R: the data as a data frame
 
-    - name: varSrt
-      title: Variable(s) to Sort After
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          ui: the variables to sort `data` with
-#          R: a vector of strings naming the variables to sort `data` with
+  - name: varSrt
+    title: Variable(s) to Sort After
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      ui: the variables to sort `data` with
+#      R: a vector of strings naming the variables to sort `data` with
 
-    - name: varAll
-      type: Variables
-      hidden: true
-      permitted:
-        - numeric
-        - factor
-        - id
+  - name: varAll
+    type: Variables
+    hidden: true
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
 
-    - name: ordSrt
-      type: Array
-      items: (varSrt)
-      default: null
-      template:
-        type: Group
-        elements:
-          - name: var
-            type: Variable
-            content: $key
-          - name: order
-            type: List
-            options:
-              - name: ascend
-                title: Ascending
-              - name: descend
-                title: Descending
-#      description:
-#          ui: >
-#            the order with which variables are sorted
-#          R: >
-#            a list of lists specifying the order with which variables are
-#            sorted, either `'ascending'`, or `'descending'`
+  - name: ordSrt
+    type: Array
+    items: (varSrt)
+    template:
+      type: Group
+      elements:
+        - name: var
+          type: Variable
+          content: $key
+        - name: order
+          type: List
+          options:
+            - name: ascend
+              title: Ascending
+            - name: descend
+              title: Descending
+    default:
+#    description:
+#      ui: >
+#      the order with which variables are sorted
+#      R: >
+#      a list of lists specifying the order with which variables are
+#      sorted, either `'ascending'`, or `'descending'`
 
-    - name: btnCrt
-      type: Action
-      title: Create
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
 
 ...

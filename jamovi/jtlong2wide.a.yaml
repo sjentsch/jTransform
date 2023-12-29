@@ -7,101 +7,106 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Transform a Data Set From Long to Wide
-    R:
-        dontrun: true
-        usage: |
-            # the function is a wrapper for jmvReadWrite::long2wide_omv
-            # please use that function when in R (or in Rj)
-            # for more information: https://sjentsch.github.io/jmvReadWrite
+  main: Transform a Data Set From Long to Wide
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::long2wide_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
-#      description:
-#          R: the data as a data frame
+  - name: data
+    type: Data
+#    description:
+#      R: the data as a data frame
 
-    - name: varID
-      title: Variables That Identify the Same Unit
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-#            a vector of strings containing the names of the variables that
-#            identify the same unit (e.g., an individual, a group, an
-#            organization, etc.)
+  - name: varID
+    title: Variables That Identify the Same Unit
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+#      a vector of strings containing the names of the variables that
+#      identify the same unit (e.g., an individual, a group, an
+#      organization, etc.)
 
-    - name: varTme
-      title: Variables That Differentiate Within a Unit
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-#            a vector of strings containing the names of the variables that
-#            differentiate multiple records from the same unit (e.g., an
-#            individual, a group, an organization, etc.)
+  - name: varTme
+    title: Variables That Differentiate Within a Unit
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+#      a vector of strings containing the names of the variables that
+#      differentiate multiple records from the same unit (e.g., an
+#      individual, a group, an organization, etc.)
 
-    - name: varTgt
-      title: Variables To Be Transformed
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
+  - name: varTgt
+    title: Variables To Be Transformed
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
 
-    - name: varExc
-      title: Variables NOT To Be Transformed
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
+  - name: varExc
+    title: Variables NOT To Be Transformed
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
 
-    - name: varOrd
-      title: Organization of Variables in the Output
-      type: List
-      options:
-        - title: Time Steps Are Adjacent
-          name:  times
-        - title: Variables Are Adjacent
-          name:  vars
-      default: times
-#      description:
-#          R: >
-#            a string (either "times" or "vars") describing how variables /
-#            columns are organized: for "times" (default) the steps of the time
-#            varying variable are adjacent, for "vars" the steps of the original
-#            columns in the long dataset
+  - name: varOrd
+    title: Organization of Variables in the Output
+    type: List
+    options:
+    - title: Time Steps Are Adjacent
+      name:  times
+    - title: Variables Are Adjacent
+      name:  vars
+    default: times
+#    description:
+#      R: >
+#      a string (either "times" or "vars") describing how variables /
+#      columns are organized: for "times" (default) the steps of the time
+#      varying variable are adjacent, for "vars" the steps of the original
+#      columns in the long dataset
 
-    - name: varAgg
-      title: How to Accumulate?
-      type: List
-      options:
-        - title: Calculate Mean
-          name:  mean
-        - title: First Occurence
-          name:  first
-      default: mean
+  - name: varAgg
+    title: How to Accumulate?
+    type: List
+    options:
+    - title: Calculate Mean
+      name:  mean
+    - title: First Occurence
+      name:  first
+    default: mean
 
-    - name: varSep
-      title: Separator
-      type: String
-      default: "_"
-#      description:
-#          R: >
-#            separator character between the fixed and the time-varying part of
-#            the variable name ("VAR1_1", "VAR1_2"; default: "_")
+  - name: varSep
+    title: Separator
+    type: String
+    default: "_"
+#    description:
+#      R: >
+#      separator character between the fixed and the time-varying part of
+#      the variable name ("VAR1_1", "VAR1_2"; default: "_")
 
-    - name: btnCrt
-      type: Action
-      title: Create
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
 
 ...

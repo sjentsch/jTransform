@@ -7,185 +7,194 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Transform a Data Set From Wide to Long
-    R:
-        dontrun: true
-        usage: |
-            # the function is a wrapper for jmvReadWrite::wide2long_omv
-            # please use that function when in R (or in Rj)
-            # for more information: https://sjentsch.github.io/jmvReadWrite
+  main: Transform a Data Set From Wide to Long
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::wide2long_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
+  - name: data
+    type: Data
 
-    - name:  mdeW2L
-      title: "Mode"
-      type:  List
-      options:
-        - name: Sep
-          title: Separated
-        - name: NSS
-          title: Non-Sep. (Simple)
-        - name: NSA
-          title: Non-Sep. (Advanced)
-      default: Sep
-
-# =============================================================================
-
-    - name:  id_Sep
-      title: Variables That Identify the Same Unit
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-#            variables that identify the same unit (e.g., an individual, a group,
-#            an organization, etc.)
-
-    - name:  xfmSep
-      title: Variables To Be Transformed
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-
-    - name:  excSep
-      title: Variables NOT To Be Transformed
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-
-    - name:  pfxSep
-      title: Prefix
-      type:  String
-      default: "cond"
-#      description:
-#          R: >
-#            variable that (is created to) differentiates multiple records from the
-#            same unit (e.g., an individual, a group, an organization, etc.),
-#            containing a counter for each time-varying event / record (e.g., cond
-#            = 1)
-
-    - name:  chrSep
-      title: Separator
-      type:  String
-      default: "_"
-#      description:
-#          R: >
-#            character that separates the fixed and the time-varying part of each
-#            variable name ("VAR1_1", "VAR1_2")
-
-    - name:  lvlSep
-      title: Exclude Level
-      type:  String
-      default: ""
-#      description:
-#          R: >
+  - name:  mdeW2L
+    title: "Mode"
+    type:  List
+    options:
+    - name: Sep
+      title: Separated
+    - name: NSS
+      title: Non-Sep. (Simple)
+    - name: NSA
+      title: Non-Sep. (Advanced)
+    default: Sep
 
 # =============================================================================
 
-    - name:  id_NSS
-      title: Variables That Identify the Same Unit
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-#            variables that identify the same unit (e.g., an individual, a group,
-#            an organization, etc.)
+  - name:  id_Sep
+    title: Variables That Identify the Same Unit
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+#      variables that identify the same unit (e.g., an individual, a group,
+#      an organization, etc.)
 
-    - name:  xfmNSS
-      title: Variables To Be Transformed
-      type:  Variables
+  - name:  xfmSep
+    title: Variables To Be Transformed
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
 
-    - name:  excNSS
-      title: Variables NOT To Be Transformed
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
+  - name:  excSep
+    title: Variables NOT To Be Transformed
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
 
-    - name:  idxNSS
-      title: Index for Repeated Measures Levels
-      type:  String
-      default: "index"
-      
-    - name:  tgtNSS
-      title: Name of the Target Variable
-      type:  String
-      default: "var"
+  - name:  pfxSep
+    title: Prefix
+    type:  String
+    default: "cond"
+#    description:
+#      R: >
+#      variable that (is created to) differentiates multiple records from the
+#      same unit (e.g., an individual, a group, an organization, etc.),
+#      containing a counter for each time-varying event / record (e.g., cond
+#      = 1)
 
-# =============================================================================
+  - name:  chrSep
+    title: Separator
+    type:  String
+    default: "_"
+#    description:
+#      R: >
+#      character that separates the fixed and the time-varying part of each
+#      variable name ("VAR1_1", "VAR1_2")
 
-    - name:  id_NSA
-      title: Variables That Identify the Same Unit
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-#            variables that identify the same unit (e.g., an individual, a group,
-#            an organization, etc.)
-
-    - name:  xfmNSA
-      type:  Array
-      default:
-        - label: long_y
-          vars: []
-      template:
-          type: Group
-          elements:
-            - name: label
-              type: String
-            - name: vars
-              type: Variables
-
-    - name:  excNSA
-      title: Variables NOT To Be Transformed
-      type:  Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#      description:
-#          R: >
-
-    - name:  idxNSA
-      type:  Array
-      default:
-        - var: index1
-          levels: 0
-      template:
-          type: Group
-          elements:
-            - name: var
-              type: String
-            - name: levels
-              type: Integer
+  - name:  lvlSep
+    title: Exclude Level
+    type:  String
+    default: ""
+#    description:
+#      R: >
 
 # =============================================================================
 
-    - name:  btnCrt
-      type:  Action
-      title: Create
+  - name:  id_NSS
+    title: Variables That Identify the Same Unit
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+#      variables that identify the same unit (e.g., an individual, a group,
+#      an organization, etc.)
+
+  - name:  xfmNSS
+    title: Variables To Be Transformed
+    type:  Variables
+    default:
+
+  - name:  excNSS
+    title: Variables NOT To Be Transformed
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+
+  - name:  idxNSS
+    title: Index for Repeated Measures Levels
+    type:  String
+    default: "index"
+  
+  - name:  tgtNSS
+    title: Name of the Target Variable
+    type:  String
+    default: "var"
+
+# =============================================================================
+
+  - name:  id_NSA
+    title: Variables That Identify the Same Unit
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+#      variables that identify the same unit (e.g., an individual, a group,
+#      an organization, etc.)
+
+  - name:  xfmNSA
+    type:  Array
+    default:
+    - label: long_y
+      vars: []
+    template:
+      type: Group
+      elements:
+      - name: label
+        type: String
+      - name: vars
+        type: Variables
+
+  - name:  excNSA
+    title: Variables NOT To Be Transformed
+    type:  Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#    description:
+#      R: >
+
+  - name:  idxNSA
+    type:  Array
+    default:
+    - var: index1
+      levels: 0
+    template:
+      type: Group
+      elements:
+      - name: var
+        type: String
+      - name: levels
+        type: Integer
+
+# =============================================================================
+
+  - name:  btnCrt
+    type:  Action
+    title: Create
+    default: false
 
 ...

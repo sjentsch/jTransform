@@ -7,50 +7,53 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Transpose a Data Set
-    R:
-        dontrun: true
-        usage: |
-            # the function is a wrapper for jmvReadWrite::transpose_omv
-            # please use that function when in R (or in Rj)
-            # for more information: https://sjentsch.github.io/jmvReadWrite
+  main: Transpose a Data Set
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::transpose_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
-#      description:
-#          R: the data as a data frame
+  - name: data
+    type: Data
+#    description:
+#      R: the data as a data frame
 
-    - name: varNme
-      title: Variable Names for the Output
-      type: Variable
-      permitted:
-        - numeric
-        - factor
-        - id
-      required: false
-#      description:
-#          R: >
-#            a string containing the variable containing the variable names
-#            for the output data frame
+  - name: varNme
+    title: Variable Names for the Output
+    type: Variable
+    permitted:
+    - numeric
+    - factor
+    - id
+    required: false
+    default:
+#    description:
+#      R: >
+#      a string containing the variable containing the variable names
+#      for the output data frame
 
-    - name: varOth
-      title: Variables To Be Transposed
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-      required: true
-#      description:
-#          R: >
-#            a vector of strings containing the names of the variables to be
-#            transposed
+  - name: varOth
+    title: Variables To Be Transposed
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    required: true
+    default:
+#    description:
+#      R: >
+#      a vector of strings containing the names of the variables to be
+#      transposed
 
-    - name: btnCrt
-      type: Action
-      title: Create
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
 
 ...

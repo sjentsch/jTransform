@@ -24,7 +24,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             excNSA = NULL,
             idxNSA = list(
                 list(var="index1", levels=0)),
-            btnCrt = NULL, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -46,21 +46,24 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..xfmSep <- jmvcore::OptionVariables$new(
                 "xfmSep",
                 xfmSep,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..excSep <- jmvcore::OptionVariables$new(
                 "excSep",
                 excSep,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..pfxSep <- jmvcore::OptionString$new(
                 "pfxSep",
                 pfxSep,
@@ -79,17 +82,20 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..xfmNSS <- jmvcore::OptionVariables$new(
                 "xfmNSS",
-                xfmNSS)
+                xfmNSS,
+                default=NULL)
             private$..excNSS <- jmvcore::OptionVariables$new(
                 "excNSS",
                 excNSS,
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..idxNSS <- jmvcore::OptionString$new(
                 "idxNSS",
                 idxNSS,
@@ -104,7 +110,8 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..xfmNSA <- jmvcore::OptionArray$new(
                 "xfmNSA",
                 xfmNSA,
@@ -126,7 +133,8 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..idxNSA <- jmvcore::OptionArray$new(
                 "idxNSA",
                 idxNSA,
@@ -144,7 +152,8 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                             NULL))))
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt)
+                btnCrt,
+                default=FALSE)
 
             self$.addOption(private$..mdeW2L)
             self$.addOption(private$..id_Sep)
@@ -366,24 +375,24 @@ jtWide2LongBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 jtWide2Long <- function(
     data,
     mdeW2L = "Sep",
-    id_Sep,
-    xfmSep,
-    excSep,
+    id_Sep = NULL,
+    xfmSep = NULL,
+    excSep = NULL,
     pfxSep = "cond",
     chrSep = "_",
     lvlSep = "",
-    id_NSS,
-    xfmNSS,
-    excNSS,
+    id_NSS = NULL,
+    xfmNSS = NULL,
+    excNSS = NULL,
     idxNSS = "index",
     tgtNSS = "var",
-    id_NSA,
+    id_NSA = NULL,
     xfmNSA = list(
                 list(label="long_y", vars=list())),
-    excNSA,
+    excNSA = NULL,
     idxNSA = list(
                 list(var="index1", levels=0)),
-    btnCrt) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtWide2Long requires jmvcore to be installed (restart may be required)")

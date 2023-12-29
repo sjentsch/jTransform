@@ -7,49 +7,52 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-    main: Change the Order of Variables in a Data Set
-    R:
-        dontrun: true
-        usage: |
-            # the function is a wrapper for jmvReadWrite::arrange_cols_omv
-            # please use that function when in R (or in Rj)
-            # for more information: https://sjentsch.github.io/jmvReadWrite
+  main: Change the Order of Variables in a Data Set
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::arrange_cols_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
 
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
-#     description:
-#         R: the data as a data frame
+  - name: data
+    type: Data
+#   description:
+#     R: the data as a data frame
 
-    - name: varAll
-      type: Variables
-      hidden: true
-      permitted:
-        - numeric
-        - factor
-        - id
+  - name: varAll
+    type: Variables
+    hidden: true
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
 
-    - name: varOrd
-      title: Desired Order of Variable(s)
-      type: Variables
-      permitted:
-        - numeric
-        - factor
-        - id
-#     description:
-#         R: >
-#           a vector of strings containing the desired order of variables in
-#           the output data set
+  - name: varOrd
+    title: Desired Order of Variable(s)
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+#   description:
+#     R: >
+#       a vector of strings containing the desired order of variables in
+#       the output data set
 
-    - name: blnAll
-      title: Add Remaining Variables at the End
-      type: Bool
-      default: false
+  - name: blnAll
+    title: Add Remaining Variables at the End
+    type: Bool
+    default: false
 
-    - name: btnCrt
-      type: Action
-      title: Create
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
 
 ...
