@@ -39,6 +39,17 @@ testthat::test_that("jtsort works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 79)
 
+    # check instructions when chkVar fails (varSrt is empty)
+    chkRes <- jtSort(data = dtaInp, varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")), btnCrt = FALSE)
+    expect_equal(names(chkRes), c("genInf", "pvwDta"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Please assign one or more variables to the variable box \"Variable(s)\n",
+                                                 "to be Sorted After\". The order in which the variables appear in the\n",
+                                                 "variable box determines after which variable is sorted first (one\n",
+                                                 "could, e.g., first sort after gender and afterwards after age).\n",
+                                                 "Variables are sorted in \"Ascending\" order (as default), but you can\n",
+                                                 "change the order if desired.\n"))
+
+    # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtSort(varSrt = c("age", "gender"), varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")), btnCrt = FALSE),
       regexp = paste("Argument 'varSrt' contains 'age', 'gender' which are not present in the dataset"))
 })

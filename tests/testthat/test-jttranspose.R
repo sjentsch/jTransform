@@ -18,6 +18,16 @@ testthat::test_that("jttranspose works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 103)
 
+    # check instructions when chkVar fails (varOth is empty)
+    chkRes <- jTransform::jtTranspose(data = dtaInp, varNme = "qstItm")
+    expect_equal(names(chkRes), c("genInf", "pvwDta"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Please assign up to one variable to the variable box \"Column Names for\n",
+                                                 "the Output\" (this variable might contain names of trials or\n",
+                                                 "questionnaire items). If you leave the box empty, generic variable\n",
+                                                 "names are generated (\"V_...\"). The variables to become rows in your\n",
+                                                 "output data set have to be assigned to \"Variables To Be Transposed\".\n"))
+
+    # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtTranspose(varNme = "qstItm", varOth = names(dtaInp)[-1]),
       regexp = "Argument 'varNme' contains 'qstItm' which is not present in the dataset")
 })

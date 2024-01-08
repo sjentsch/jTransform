@@ -78,6 +78,23 @@ testthat::test_that("jtreplace works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 101)
 
+    # check instructions when chkVar fails (rplTrm is empty)
+    chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
+                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"), btnCrt = FALSE)
+    expect_equal(names(chkRes), c("genInf", "pvwDta"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Please type the original value and the replacement into the entry\n",
+                                                 "fields. If you want to have several pairs of original and replacment\n",
+                                                 "values, use separate lines. To replace partial matches, unset the tick\n",
+                                                 "box \"Whole Word\" (e.g., for orginal: 24 and replacement: 34, 241 will\n",
+                                                 "be changed into 341).\n\n",
+                                                 "The \"Include / Exclude\" collapse box permits to specifically select in\n",
+                                                 "which column types, for which measurement type, and in which variables\n",
+                                                 "to replace values. Ticking the check boxes includes that variable or\n",
+                                                 "measurement type. When selecting individual variables using the\n",
+                                                 "variable input, set the radio button to either only include the\n",
+                                                 "selected variables or to exclude them.\n"))
+
+    # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtReplace(varAll = names(dtaInp), rplTrm = list(list(rplOld = "4", rplNew = "5")), whlTrm = TRUE, incExc = "exclude", varSel = c(), btnCrt = FALSE),
       regexp = paste("Argument 'varAll' contains 'ID', 'A1', 'A2', 'A3', 'A4', 'A5', 'C1', 'C2', 'C3', 'C4', 'C5', 'E1', 'E2', 'E3', 'E4', 'E5',",
                      "'N1', 'N2', 'N3', 'N4', 'N5', 'O1', 'O2', 'O3', 'O4', 'O5', 'gender', 'age' which are not present in the dataset"))

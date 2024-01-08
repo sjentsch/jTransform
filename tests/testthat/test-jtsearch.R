@@ -138,6 +138,17 @@ testthat::test_that("jtsearch works", {
                                                  "230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243,\n",
                                                  "244, 245, 246, 247, 248, 249, 250\n"))
 
+    # check instructions when chkVar fails (varOrd is empty)
+    chkRes <- jTransform::jtSearch(data = dtaInp, varAll = names(dtaInp), ignCse = FALSE, whlTrm = FALSE)
+    expect_equal(names(chkRes), c("srcRes"))
+    expect_equal(chkRes$srcRes$asString(), paste("\n Please type the term to be search for into the text box. If you want\n",
+                                                 "that partial matches (i.e., the search term appears within values) are\n",
+                                                 "found, leave the tick box \"Whole Word\" unset.\n\n",
+                                                 "The \"Include / Exclude\" collapse box permits to specifically select in\n",
+                                                 "which column and measurement types the search shall be conducted.\n",
+                                                 "Ticking the check boxes includes that variable or measurement type.\n"))
+
+    # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtSearch(varAll = names(dtaInp), srcTrm = "6", ignCse = FALSE, whlTrm = FALSE),
       regexp = paste("Argument 'varAll' contains 'ID', 'A1', 'A2', 'A3', 'A4', 'A5', 'C1', 'C2', 'C3', 'C4', 'C5', 'E1', 'E2',",
                      "'E3', 'E4', 'E5', 'N1', 'N2', 'N3', 'N4', 'N5', 'O1', 'O2', 'O3', 'O4', 'O5', 'gender', 'age' which are",
