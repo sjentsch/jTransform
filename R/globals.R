@@ -31,7 +31,7 @@ hlpMrg <- c(paste("Please assign one or more variables that appear in all data s
                   "For a more comprehensive explanation regarding the types of merging operations, see \"Details\" underneath the preview table.")
 hlpRpl <- c(paste("Please type the original value and the replacement into the entry fields. If you want to have several pairs of original and",
                   "replacment values, use separate lines. To replace partial matches, unset the tick box \"Whole Word\" (e.g., for orginal: 24 and",
-                  "replacement: 34, 241 willbe changed into 341)."),
+                  "replacement: 34, 241 will be changed into 341)."),
             paste("The <strong>\"Include / Exclude\"</strong> collapse box permits to specifically select in which column types, for which measurement",
                   "type, and in which variables <strong>to replace values</strong>. Ticking the check boxes includes that variable or measurement type.",
                   "When selecting individual variables using the variable input, set the radio button to either only include the selected variables or",
