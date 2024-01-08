@@ -2,7 +2,7 @@ testthat::test_that("jtreplace works", {
     dtaInp <- jmvReadWrite::read_omv("../example4jtMergeCols_1.omv")
 
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "1", rplNew = "")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
-                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "exclude", varSel = c(), btnCrt = FALSE)
+                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "exclude", varSel = c())
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
                                                  "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
@@ -21,7 +21,7 @@ testthat::test_that("jtreplace works", {
     expect_equal(chkRes$pvwDta$width, 116)
 
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "1", rplNew = "")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
-                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "exclude", varSel = c("A1", "A2", "A3", "A4", "A5"), btnCrt = FALSE)
+                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "exclude", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
                                                  "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
@@ -40,7 +40,7 @@ testthat::test_that("jtreplace works", {
     expect_equal(chkRes$pvwDta$width, 91)
 
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "1", rplNew = "")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
-                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"), btnCrt = FALSE)
+                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
                                                  "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
@@ -59,7 +59,7 @@ testthat::test_that("jtreplace works", {
     expect_equal(chkRes$pvwDta$width, 101)
 
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "4", rplNew = "5")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
-                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"), btnCrt = FALSE)
+                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
                                                  "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
@@ -80,7 +80,7 @@ testthat::test_that("jtreplace works", {
 
     # check instructions when chkVar fails (rplTrm is empty)
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
-                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"), btnCrt = FALSE)
+                                    incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(names(chkRes), c("genInf", "pvwDta"))
     expect_equal(chkRes$genInf$asString(), paste("\n Please type the original value and the replacement into the entry\n",
                                                  "fields. If you want to have several pairs of original and replacment\n",
@@ -95,7 +95,7 @@ testthat::test_that("jtreplace works", {
                                                  "selected variables or to exclude them.\n"))
 
     # ensure that an error is thrown if no data are submitted
-    expect_error(jTransform::jtReplace(varAll = names(dtaInp), rplTrm = list(list(rplOld = "4", rplNew = "5")), whlTrm = TRUE, incExc = "exclude", varSel = c(), btnCrt = FALSE),
+    expect_error(jTransform::jtReplace(varAll = names(dtaInp), rplTrm = list(list(rplOld = "4", rplNew = "5")), whlTrm = TRUE, incExc = "exclude", varSel = c()),
       regexp = paste("Argument 'varAll' contains 'ID', 'A1', 'A2', 'A3', 'A4', 'A5', 'C1', 'C2', 'C3', 'C4', 'C5', 'E1', 'E2', 'E3', 'E4', 'E5',",
                      "'N1', 'N2', 'N3', 'N4', 'N5', 'O1', 'O2', 'O3', 'O4', 'O5', 'gender', 'age' which are not present in the dataset"))
 })

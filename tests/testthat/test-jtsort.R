@@ -1,8 +1,7 @@
 testthat::test_that("jtsort works", {
     dtaInp <- jmvReadWrite::read_omv("../example4jtMergeCols_1.omv")
 
-    chkRes <- jtSort(data = dtaInp, varSrt = c("age", "gender"), varAll = names(dtaInp),
-                     ordSrt = list(list(var = "age", order = "ascend"), list(var = "gender", order = "ascend")), btnCrt = FALSE)
+    chkRes <- jtSort(data = dtaInp, varSrt = c("age", "gender"), varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "ascend"), list(var = "gender", order = "ascend")))
     expect_equal(class(chkRes), c("jtSortResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): age,\n",
                                                  "gender, ID, A1, A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4,\n",
@@ -21,7 +20,7 @@ testthat::test_that("jtsort works", {
     expect_equal(chkRes$pvwDta$width, 79)
     
     chkRes <- jtSort(data = dtaInp, varSrt = c("age", "gender"), varAll = names(dtaInp),
-                     ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")), btnCrt = FALSE)
+                     ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")))
     expect_equal(class(chkRes), c("jtSortResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): age,\n",
                                                  "gender, ID, A1, A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4,\n",
@@ -40,7 +39,7 @@ testthat::test_that("jtsort works", {
     expect_equal(chkRes$pvwDta$width, 79)
 
     # check instructions when chkVar fails (varSrt is empty)
-    chkRes <- jtSort(data = dtaInp, varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")), btnCrt = FALSE)
+    chkRes <- jtSort(data = dtaInp, varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")))
     expect_equal(names(chkRes), c("genInf", "pvwDta"))
     expect_equal(chkRes$genInf$asString(), paste("\n Please assign one or more variables to the variable box \"Variable(s)\n",
                                                  "to be Sorted After\". The order in which the variables appear in the\n",
@@ -50,6 +49,6 @@ testthat::test_that("jtsort works", {
                                                  "change the order if desired.\n"))
 
     # ensure that an error is thrown if no data are submitted
-    expect_error(jTransform::jtSort(varSrt = c("age", "gender"), varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")), btnCrt = FALSE),
+    expect_error(jTransform::jtSort(varSrt = c("age", "gender"), varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend"))),
       regexp = paste("Argument 'varSrt' contains 'age', 'gender' which are not present in the dataset"))
 })
