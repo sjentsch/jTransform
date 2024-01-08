@@ -14,7 +14,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     }
     # create a list vector with empty entries (to be assigned when adding a new row), change title for
     # the first column (if useIdx is FALSE) and add further columns and rows to the current table
-    valRow <- setNames(as.list(rep("", length(seqCol) + 1)), c("fstCol", colNme[seqCol]))
+    valRow <- stats::setNames(as.list(rep("", length(seqCol) + 1)), c("fstCol", colNme[seqCol]))
     if (!useIdx) crrTbl$getColumn(1)$setTitle(colNme[1])
     for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
     for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
@@ -24,7 +24,7 @@ rstPvw <- function(crrTbl = NULL) {
     numRow <- crrTbl$rowCount
     colNme <- names(crrTbl$columns)
     crrTbl$deleteRows()
-    for (i in seq(numRow)) crrTbl$addRow(rowKey = i, setNames(as.list(rep("", length(colNme))), colNme))
+    for (i in seq(numRow)) crrTbl$addRow(rowKey = i, stats::setNames(as.list(rep("", length(colNme))), colNme))
 }
 
 fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
@@ -51,7 +51,7 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
         if (useIdx) {
             crrRow <- as.list(dtaFrm[i, ])
         } else {
-            crrRow <- setNames(as.list(dtaFrm[i, ]), c("fstCol", names(dtaFrm)[-1]))
+            crrRow <- stats::setNames(as.list(dtaFrm[i, ]), c("fstCol", names(dtaFrm)[-1]))
         }
         crrRow[vapply(crrRow, is.na, logical(1))] <- ""
         if (i == pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
@@ -84,8 +84,8 @@ optSnR <- function(crrOpt = NULL) {
     lstSnR <- list(whlTrm = crrOpt$whlTrm,
                    incCmp = crrOpt$incCmp, incRcd = crrOpt$incRcd, incID  = crrOpt$incID,
                    incNom = crrOpt$incNom, incOrd = crrOpt$incOrd, incNum = crrOpt$incNum)
-    if (hasName(crrOpt, "ignCse")) lstSnR["ignCse"] <- crrOpt$ignCse
-    if (hasName(crrOpt, "varSel") && !is.null(crrOpt$varSel) && length(crrOpt$varSel) > 0) {
+    if (utils::hasName(crrOpt, "ignCse")) lstSnR["ignCse"] <- crrOpt$ignCse
+    if (utils::hasName(crrOpt, "varSel") && !is.null(crrOpt$varSel) && length(crrOpt$varSel) > 0) {
        lstSnR[[ifelse(crrOpt$incExc == "include", "varInc", "varExc")]] <- crrOpt$varSel
     }
     return(lstSnR)
