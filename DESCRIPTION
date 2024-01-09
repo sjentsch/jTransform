@@ -6,8 +6,8 @@ Author:
     - Sebastian Jentschke [aut, cre] (<https://orcid.org/0000-0003-2576-5432>)
     - Marcello Gallucci [aut] (<https://orcid.org/0000-0003-3546-0093>)
 Authors@R:
-    person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432"))
-    person(given = "Marcello",  family = "Gallucci",  role = c("aut"),        email = "mcfanda@gmail.com",          comment = c(ORCID = "0000-0003-3546-0093"))
+    c(person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432")),
+      person(given = "Marcello",  family = "Gallucci",  role = c("aut"),        email = "mcfanda@gmail.com",          comment = c(ORCID = "0000-0003-3546-0093")))
 Maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 Description:
     jTransform carries out common data management tasks and transformations of
@@ -24,7 +24,7 @@ Description:
 License: AGPL-3 + file LICENSE
 Language: en-GB
 Encoding: UTF-8
-Imports: R6
+Depends: R (>= 3.5.0)
 Suggests:
     testthat  (>= 3.1.5),
     jmvReadWrite (>= 0.4.2),

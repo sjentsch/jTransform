@@ -31,7 +31,8 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 permitted=list(
                     "numeric",
                     "factor",
-                    "id"))
+                    "id"),
+                default=NULL)
             private$..srcCst <- jmvcore::OptionString$new(
                 "srcCst",
                 srcCst,
@@ -194,7 +195,7 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @export
 jtSearch <- function(
     data,
-    varAll,
+    varAll = NULL,
     srcCst = "",
     srcTrm = "",
     ignCse = FALSE,

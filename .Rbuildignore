@@ -1,0 +1,12 @@
+^build$
+^docs$
+^jamovi$
+^pkgdown$
+^Meta$
+^README\.Rmd$
+^.*\.jmo$
+^data/.*\.omv$
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.github$
+^\.lintr$
