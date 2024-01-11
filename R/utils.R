@@ -18,6 +18,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     if (!useIdx) crrTbl$getColumn(1)$setTitle(colNme[1])
     for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
     for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
+    return(invisible(NULL))
 }
 
 rstPvw <- function(crrTbl = NULL) {
