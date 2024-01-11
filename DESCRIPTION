@@ -25,10 +25,10 @@ License: AGPL-3 + file LICENSE
 Language: en-GB
 Encoding: UTF-8
 Depends: R (>= 3.5.0)
+Imports: jmvcore
 Suggests:
     testthat  (>= 3.1.5),
     jmvReadWrite (>= 0.4.2),
-    jmvcore,
     knitr
 Remotes: sjentsch/jmvReadWrite
 RoxygenNote: 7.2.3
