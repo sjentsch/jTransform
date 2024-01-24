@@ -1,11 +1,31 @@
 # jTransform
 
-jTransform carries out common data management tasks and transformations of data
-sets. It includes functions to change the order of / re-arrange variables in a
-data set, transforming a data set from long to wide or from wide to long,
-transposing a data set (make rows into columns and columns into rows), sorting
-a data set after one or more variable, and adding columns from one or more
-additional data sets to the currently opened data set.
+<!---
+<br clear="all">
+--->
+
+<!-- badges: start -->
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![License](https://img.shields.io/badge/License-AGPL%20v3-green.svg)](https://www.gnu.org/licenses/agpl-3.0.html)
+[![Last commit](https://img.shields.io/github/last-commit/sjentsch/jTransform?logo=GitHub)](https://github.com/sjentsch/jTransform)
+[![Register an issue](https://img.shields.io/github/issues/sjentsch/jTransform?color=%23fa251e&logo=GitHub)](https://github.com/sjentsch/jTransform/issues)
+[![CI](https://github.com/sjentsch/jTransform/actions/workflows/ci.yml/badge.svg)](https://github.com/sjentsch/jTransform/actions/workflows/ci.yml)
+[![R-CMD-check](https://github.com/sjentsch/jTransform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sjentsch/jTransform/actions/workflows/R-CMD-check.yaml)
+[![Codecov coverage](https://codecov.io/gh/sjentsch/jTransform/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sjentsch/jTransform?branch=main)
+<!-- badges: end -->
+
+<!---
+[![Documentation](https://img.shields.io/badge/documentation-is_here-blue)](https://sjentsch.github.io/jmvReadWrite/)
+--->
+
+The jamovi module jTransform carries out common data management tasks and
+transformations of data sets. It includes functions to change the order of /
+re-arrange variables in a data set, transforming a data set from long to wide
+or from wide to long, transposing a data set (make rows into columns and
+columns into rows), sorting a data set after one or more variable, and adding
+columns from one or more additional data sets to the currently opened data set.
 
 <!---
 <center>
@@ -32,7 +52,7 @@ jTransform from there.
 ## Install the development version (from source)
 
 Assuming that you have [jamovi](https://www.jamovi.org/download.html) and 
-[R](https://cloud.r-project.org/) already installed on your machine, open
+[R](https://cran.r-project.org/) already installed on your machine, open
 `R` and install the R-package `jmvtools` using the following command (this
 is only required once before the first use):
 
