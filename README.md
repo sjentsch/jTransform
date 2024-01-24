@@ -11,8 +11,8 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 [![License](https://img.shields.io/badge/License-AGPL%20v3-green.svg)](https://www.gnu.org/licenses/agpl-3.0.html)
 [![Last commit](https://img.shields.io/github/last-commit/sjentsch/jTransform?logo=GitHub)](https://github.com/sjentsch/jTransform)
 [![Register an issue](https://img.shields.io/github/issues/sjentsch/jTransform?color=%23fa251e&logo=GitHub)](https://github.com/sjentsch/jTransform/issues)
-[![CI](https://github.com/sjentsch/jTransform/actions/workflows/ci.yml/badge.svg)](https://github.com/sjentsch/jTransform/actions/workflows/ci.yml)
 [![R-CMD-check](https://github.com/sjentsch/jTransform/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sjentsch/jTransform/actions/workflows/R-CMD-check.yaml)
+[![code-coverage](https://github.com/sjentsch/jTransform/actions/workflows/codecov.yaml/badge.svg)](https://github.com/sjentsch/jTransform/actions/workflows/codecov.yaml)
 [![Codecov coverage](https://codecov.io/gh/sjentsch/jTransform/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sjentsch/jTransform?branch=main)
 <!-- badges: end -->
 
