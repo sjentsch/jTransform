@@ -18,7 +18,7 @@ testthat::test_that("jtsort works", {
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 79)
-    
+
     chkRes <- jtSort(data = dtaInp, varSrt = c("age", "gender"), varAll = names(dtaInp),
                      ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")))
     expect_equal(class(chkRes), c("jtSortResults", "Group", "ResultsElement", "R6"))

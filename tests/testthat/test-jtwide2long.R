@@ -39,7 +39,7 @@ testthat::test_that("jtwide2long works", {
     expect_equal(chkRes$pvwLvl$asDF[, 1], as.character(seq(24)))
     expect_equal(chkRes$pvwLvl$asDF[, 2], names(dtaInp)[seq(4, 50, 2)])
     expect_equal(chkRes$pvwLvl$asDF[, 3], rep(100, 24))
-    
+
     chkRes <- jTransform::jtWide2Long(data = dtaInp, mdeW2L = "NSA", id_NSA = "ID", excNSA = "sex",
                 xfmNSA = list(list(label = "rspCrr", vars = names(dtaInp)[seq(3, 50, 2)]), list(label = "rspTme", vars = names(dtaInp)[seq(4, 50, 2)])),
                 idxNSA = list(list(var = "cong", levels = 3), list(var = "colour", levels = 4), list(var = "rep", levels = 2)))

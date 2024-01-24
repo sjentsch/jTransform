@@ -1,6 +1,6 @@
 testthat::test_that("jtmergecols works", {
     dtaInp <- jmvReadWrite::read_omv("../example4jtMergeCols_1.omv")
-    
+
     chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "outer")
     expect_equal(class(chkRes), c("jtMergeColsResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (55 variables in 250 rows): ID, A1,\n",
