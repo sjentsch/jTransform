@@ -170,7 +170,7 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Search Within the Current Data Set
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # the function is a wrapper for jmvReadWrite::search_omv
 #' # please use that function when in R (or in Rj)
 #' # for more information: https://sjentsch.github.io/jmvReadWrite

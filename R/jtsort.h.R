@@ -138,7 +138,7 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Sort Data Set
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # the function is a wrapper for jmvReadWrite::sort_omv
 #' # please use that function when in R (or in Rj)
 #' # for more information: https://sjentsch.github.io/jmvReadWrite

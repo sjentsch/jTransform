@@ -122,7 +122,7 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Change the Order of Variables in a Data Set
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # the function is a wrapper for jmvReadWrite::arrange_cols_omv
 #' # please use that function when in R (or in Rj)
 #' # for more information: https://sjentsch.github.io/jmvReadWrite

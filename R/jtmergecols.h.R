@@ -163,7 +163,7 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' Add Columns (From Other Data Sets)
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # the function is a wrapper for jmvReadWrite::merge_cols_omv
 #' # please use that function when in R (or in Rj)
 #' # for more information: https://sjentsch.github.io/jmvReadWrite
