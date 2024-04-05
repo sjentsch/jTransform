@@ -8,7 +8,8 @@ testthat::test_that("jtmergecols works", {
                                                  "N4, N5, O1, O2, O3, O4, O5, gender, age, A1_2, A2_2, A3_2, A4_2, A5_2,\n",
                                                  "C1_2, C2_2, C3_2, C4_2, C5_2, E1_2, E2_2, E3_2, E4_2, E5_2, N1_2,\n",
                                                  "N2_2, N3_2, N4_2, N5_2, O1_2, O2_2, O3_2, O4_2, O5_2, Grp, SES\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A1_2", "A2_2", "A3_2", "A4_2", "A5_2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -30,7 +31,8 @@ testthat::test_that("jtmergecols works", {
                                                  "N4, N5, O1, O2, O3, O4, O5, gender, age, A1_2, A2_2, A3_2, A4_2, A5_2,\n",
                                                  "C1_2, C2_2, C3_2, C4_2, C5_2, E1_2, E2_2, E3_2, E4_2, E5_2, N1_2,\n",
                                                  "N2_2, N3_2, N4_2, N5_2, O1_2, O2_2, O3_2, O4_2, O5_2, Grp, SES\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A1_2", "A2_2", "A3_2", "A4_2", "A5_2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -52,7 +54,8 @@ testthat::test_that("jtmergecols works", {
                                                  "N4, N5, O1, O2, O3, O4, O5, gender, age, A1_2, A2_2, A3_2, A4_2, A5_2,\n",
                                                  "C1_2, C2_2, C3_2, C4_2, C5_2, E1_2, E2_2, E3_2, E4_2, E5_2, N1_2,\n",
                                                  "N2_2, N3_2, N4_2, N5_2, O1_2, O2_2, O3_2, O4_2, O5_2, Grp, SES\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A1_2", "A2_2", "A3_2", "A4_2", "A5_2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -74,7 +77,8 @@ testthat::test_that("jtmergecols works", {
                                                  "N4, N5, O1, O2, O3, O4, O5, gender, age, A1_2, A2_2, A3_2, A4_2, A5_2,\n",
                                                  "C1_2, C2_2, C3_2, C4_2, C5_2, E1_2, E2_2, E3_2, E4_2, E5_2, N1_2,\n",
                                                  "N2_2, N3_2, N4_2, N5_2, O1_2, O2_2, O3_2, O4_2, O5_2, Grp, SES\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A1_2", "A2_2", "A3_2", "A4_2", "A5_2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))

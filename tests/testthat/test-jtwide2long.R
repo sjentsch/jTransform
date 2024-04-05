@@ -5,7 +5,8 @@ testthat::test_that("jtwide2long works", {
     expect_equal(class(chkRes), c("jtWide2LongResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (7 variables in 2400 rows): ID,\n",
                                                  "cond1, cond2, cond3, rspCrr, rspTme, sex\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "cond1", "cond2", "cond3", "rspCrr", "rspTme", "sex"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -26,7 +27,8 @@ testthat::test_that("jtwide2long works", {
     expect_equal(class(chkRes), c("jtWide2LongResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (4 variables in 2400 rows): ID,\n",
                                                  "index, var, sex\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "index", "var", "sex"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -46,7 +48,8 @@ testthat::test_that("jtwide2long works", {
     expect_equal(class(chkRes), c("jtWide2LongResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (7 variables in 2400 rows): ID, cong,\n",
                                                  "colour, rep, rspCrr, rspTme, sex\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "cong", "colour", "rep", "rspCrr", "rspTme", "sex"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -322,7 +325,7 @@ testthat::test_that("jtwide2long works", {
                                                  "levels\" - 3 (cond) * 4 (colour) * 2 = 24 - a \"Data Preview\" and an\n",
                                                  "overview over the \"Repeated-Measures Levels\" is shown, and you can\n",
                                                  "open the transformed data set (after checking those tables) in a new\n",
-                                                 "jamovi window by pressing \"CREATE\".\n"))
+                                                 "jamovi window by pressing the \"Create\"-button.\n"))
 
     # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtWide2Long(mdeW2L = "Sep", id_Sep = "ID", xfmSep = names(dtaInp)[seq(3, 50)], excSep = "sex", pfxSep = "cond", chrSep = "_", lvlSep = "1"),

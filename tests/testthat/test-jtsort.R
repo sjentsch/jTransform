@@ -6,7 +6,8 @@ testthat::test_that("jtsort works", {
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): age,\n",
                                                  "gender, ID, A1, A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4,\n",
                                                  "E5, N1, N2, N3, N4, N5, O1, O2, O3, O4, O5\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "gender", "ID", "A1", "A2", "A3", "A4", "A5", "C1", "C2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -25,7 +26,8 @@ testthat::test_that("jtsort works", {
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): age,\n",
                                                  "gender, ID, A1, A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4,\n",
                                                  "E5, N1, N2, N3, N4, N5, O1, O2, O3, O4, O5\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "gender", "ID", "A1", "A2", "A3", "A4", "A5", "C1", "C2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))

@@ -22,7 +22,8 @@ testthat::test_that("jtlong2wide works", {
                                                  "rspTme_neutral_GREEN_2, rspTme_neutral_YELLOW_1,\n",
                                                  "rspTme_neutral_YELLOW_2, rspTme_neutral_RED_1, rspTme_neutral_RED_2,\n",
                                                  "rspTme_neutral_BLUE_1, rspTme_neutral_BLUE_2\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "sex", "rspCrr_cong_GREEN_1", "rspCrr_cong_GREEN_2", "rspCrr_cong_YELLOW_1", "rspCrr_cong_YELLOW_2",
                                                  "rspTme_cong_GREEN_1", "rspTme_cong_GREEN_2", "rspTme_cong_YELLOW_1", "rspTme_cong_YELLOW_2"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -60,7 +61,8 @@ testthat::test_that("jtlong2wide works", {
                                                  "rspCrr_neutral_RED_2, rspTme_neutral_RED_2, rspCrr_cong_BLUE_2,\n",
                                                  "rspTme_cong_BLUE_2, rspCrr_incong_BLUE_2, rspTme_incong_BLUE_2,\n",
                                                  "rspCrr_neutral_BLUE_2, rspTme_neutral_BLUE_2\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "sex", "rspCrr_cong_GREEN_1", "rspCrr_incong_GREEN_1", "rspCrr_neutral_GREEN_1", "rspCrr_cong_YELLOW_1",
                                                  "rspTme_cong_GREEN_1", "rspTme_incong_GREEN_1", "rspTme_neutral_GREEN_1", "rspTme_cong_YELLOW_1"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -89,7 +91,8 @@ testthat::test_that("jtlong2wide works", {
                                                  "rspTme_cong_YELLOW, rspTme_incong_BLUE, rspTme_incong_GREEN,\n",
                                                  "rspTme_incong_RED, rspTme_incong_YELLOW, rspTme_neutral_BLUE,\n",
                                                  "rspTme_neutral_GREEN, rspTme_neutral_RED, rspTme_neutral_YELLOW\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "sex", "rspCrr_cong_BLUE", "rspCrr_cong_GREEN", "rspCrr_cong_RED", "rspCrr_cong_YELLOW",
                                                  "rspTme_cong_BLUE", "rspTme_cong_GREEN", "rspTme_cong_RED", "rspTme_cong_YELLOW"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -115,7 +118,8 @@ testthat::test_that("jtlong2wide works", {
                                                  "rspTme_cong_YELLOW, rspTme_incong_BLUE, rspTme_incong_GREEN,\n",
                                                  "rspTme_incong_RED, rspTme_incong_YELLOW, rspTme_neutral_BLUE,\n",
                                                  "rspTme_neutral_GREEN, rspTme_neutral_RED, rspTme_neutral_YELLOW\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "sex", "rspCrr_cong_BLUE", "rspCrr_cong_GREEN", "rspCrr_cong_RED", "rspCrr_cong_YELLOW",
                                                  "rspTme_cong_BLUE", "rspTme_cong_GREEN", "rspTme_cong_RED", "rspTme_cong_YELLOW"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))

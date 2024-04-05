@@ -7,7 +7,8 @@ testthat::test_that("jtarrangecols works", {
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, N1,\n",
                                                  "N2, N3, N4, N5, E1, E2, E3, E4, E5, O1, O2, O3, O4, O5, A1, A2, A3,\n",
                                                  "A4, A5, C1, C2, C3, C4, C5, gender, age\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(chkRes$pvwDta$asString(), paste("\n Data Preview                                                                 \n",
                                                  "──────────────────────────────────────────────────────────────────────────── \n",
                                                  "  ID         N1     N2     N3     N4     N5     E1     E2     E3     E4      \n",
@@ -43,7 +44,8 @@ testthat::test_that("jtarrangecols works", {
     expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, N1,\n",
                                                  "N2, N3, N4, N5, E1, E2, E3, E4, E5, O1, O2, O3, O4, O5, A1, A2, A3,\n",
                                                  "A4, A5, C1, C2, C3, C4, C5, gender, age\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(chkRes$pvwDta$asString(), paste("\n Data Preview                                                                 \n",
                                                  "──────────────────────────────────────────────────────────────────────────── \n",
                                                  "  ID         N1     N2     N3     N4     N5     E1     E2     E3     E4      \n",

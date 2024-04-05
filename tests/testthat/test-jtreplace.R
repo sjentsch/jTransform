@@ -4,9 +4,11 @@ testthat::test_that("jtreplace works", {
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "1", rplNew = "")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
                                     incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "exclude", varSel = c())
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
-                                                 "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n",
+                                                 "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
+                                                 "N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A5", "C1", "C2", "C3", "C4"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -23,9 +25,11 @@ testthat::test_that("jtreplace works", {
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "1", rplNew = "")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
                                     incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "exclude", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
-                                                 "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n",
+                                                 "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
+                                                 "N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A5", "C1", "C2", "C3", "C4"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -42,9 +46,11 @@ testthat::test_that("jtreplace works", {
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "1", rplNew = "")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
                                     incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
-                                                 "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n",
+                                                 "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
+                                                 "N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A5", "C1", "C2", "C3", "C4"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
@@ -61,9 +67,11 @@ testthat::test_that("jtreplace works", {
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), rplTrm = list(list(rplOld = "4", rplNew = "5")), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
                                     incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"))
     expect_equal(class(chkRes), c("jtReplaceResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n A2, A3, A4, A5, C1,",
-                                                 "C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
-                                                 "\"CREATE\" opens the modified data set in a new jamovi window.\n"))
+    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, A1,\n",
+                                                 "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
+                                                 "N4, N5, O1, O2, O3, O4, O5, gender, age\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
     expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "A1", "A2", "A3", "A4", "A5", "C1", "C2", "C3", "C4"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
