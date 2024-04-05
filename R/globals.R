@@ -16,7 +16,7 @@ fmtAdR <- "There are %d more rows in the data set not shown here."
 fmtFsC <- "The column%s %s %s shown first in this preview. In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table."
 
 # help messages
-hlpCrt <-   paste("<strong>\"CREATE\" opens the modified data set</strong> in a new jamovi window.")
+hlpCrt <-   paste("Pressing the <strong>\"Create\"-button opens the modified data set</strong> in a new jamovi window.")
 
 hlpArC <-   paste("Please assign the variables in their desired order to \"Desired Order of Variables\". By ticking \"Add Remaining Variables at the",
                   "End\", variables that are not contained in \"Desired order of variables\") are appended.")
@@ -163,4 +163,5 @@ dtlNSA <- c(paste("\"Variables That Identify the Same Unit\" is an ID variable (
                   "followed by rspCrr_cong_GREEN_2), and you should thus set the name of the index variable to \"rep\" and the \"N levels\" to two (1 and 2).",
                   "Once you did all this, and the number of variables in the variable lists for the long variables under \"Variables To Be Transformed\" - 24 -",
                   "matches up with the product of \"N levels\" - 3 (cond) * 4 (colour) * 2 = 24 - a \"Data Preview\" and an overview over the \"Repeated-Measures",
-                  "Levels\" is shown, and you can open the transformed data set (after checking those tables) in a new jamovi window by pressing \"CREATE\"."))
+                  "Levels\" is shown, and you can open the transformed data set (after checking those tables) in a new jamovi window by pressing the",
+                  "\"Create\"-button."))

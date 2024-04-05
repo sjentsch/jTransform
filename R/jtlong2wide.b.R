@@ -73,11 +73,11 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             varTme <- self$options$varTme
             numTme <- length(varTme)
             if (!is.null(self$data) && dim(self$data)[1] > 0) orgDta <- self$data else orgDta <- self$readDataset()
-            tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)]]))[, seq(numTme + 1, 1)]
+            tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)], drop = FALSE]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
             nmeTgt <- sort(names(xfmDta)[grepl(paste0(paste0("^", varTgt), collapse = "|"), names(xfmDta))])
             nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort), row.names = NULL)
-            cbind(tblFrq[, -1], nmeTgt, tblFrq[, 1])
+            cbind(tblFrq[, -1, drop = FALSE], nmeTgt, tblFrq[, 1, drop = FALSE])
         }
 
     ),
