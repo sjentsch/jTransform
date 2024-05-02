@@ -1,11 +1,7 @@
 Package: jTransform
 Title: "jTransform: Functions for Common Data Set Transformations"
 Type: Package
-<<<<<<< Updated upstream
-Version: 0.3.1
-=======
 Version: 0.3.2
->>>>>>> Stashed changes
 Authors@R:
     c(person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432")),
       person(given = "Marcello",  family = "Gallucci",  role = c("aut"),        email = "mcfanda@gmail.com",          comment = c(ORCID = "0000-0003-3546-0093")))
