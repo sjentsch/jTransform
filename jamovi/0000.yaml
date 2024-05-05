@@ -90,7 +90,10 @@ datasets:
   - name: example4jtMergeCols_2
     path: example4jtMergeCols_2.omv
     description: A Data Set to Demonstrate Merge (second file)
+  - name: example4jtMergeCols_3
+    path: example4jtMergeCols_3.omv
+    description: A Data Set to Demonstrate Merge (third file)
 usesNative: true
-minApp: 2.4.1
+minApp: 2.5.0
 
 ...

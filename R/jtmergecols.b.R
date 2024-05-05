@@ -9,7 +9,6 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .init = function() {
             if (private$.chkVar()) {
-#               mark("jtMerge_init", private$.fleInp)
                 private$.mrgDta <- do.call(jmvReadWrite::merge_cols_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.mrgDta, colFst = private$.colFst())
@@ -20,7 +19,6 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .run = function() {
-#           mark("jtMerge_run", private$.fleInp)
             # check whether there are at least one variable in varBy, that fleInp isn't empty,
             # and that the data set has at least one row
             if (private$.chkVar() && dim(self$data)[1] >= 1) {
@@ -49,31 +47,14 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .chkVar = function() {
-#           mark("chkVar_0")
-            # on Windows
-            if (.Platform$OS.type == "windows") {
-#               mark("chkVar_Win1", private$.fleInp)
-#               if (self$options$tglChs != private$.tglChs) {
-#                   private$.tglChs <- self$options$tglChs
-#                   private$.fleInp <- vapply(c(trimws(strsplit(self$options$fleInp, ";")[[1]]), file.choose()), private$.chkFle, character(1), USE.NAMES = FALSE)
-#               }
-                # underneath is the version that uses file names entered into the fleInp text input
-                private$.fleInp     <- vapply(  trimws(strsplit(self$options$fleInp, ";")[[1]]),                 private$.chkFle, character(1), USE.NAMES = FALSE)
-#               mark("chkVar_Win2", private$.fleInp)
-                return(length(self$options$varBy) > 0 && !is.null(private$.fleInp))
-            # on Linux, MacOS, and the Cloud-version
+            if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp))) {
+                return(length(self$options$varBy) > 0)
+            } else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
+                private$.fleInp <- vapply(  trimws(strsplit(self$options$fleInp, ";")[[1]]),                 private$.chkFle, character(1), USE.NAMES = FALSE)
+                return(length(self$options$varBy) > 0)
             } else {
-#               mark("chkVar_Oth1", private$.fleInp)
-                if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp))) {
-                    return(length(self$options$varBy) > 0)
-                } else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
-                    private$.fleInp <- vapply(  trimws(strsplit(self$options$fleInp, ";")[[1]]),                 private$.chkFle, character(1), USE.NAMES = FALSE)
-#                   mark("chkVar_Oth2", private$.fleInp)
-                    return(length(self$options$varBy) > 0)
-                } else {
-                    private$.fleInp <- NULL
-                    return(FALSE)
-                }
+                private$.fleInp <- NULL
+                return(FALSE)
             }
         },
 
@@ -99,7 +80,6 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .crrArg = function() {
-#           mark("crrArg", private$.fleInp)
             # attach further input files as attribute fleInp to the data frame
             # and assemble the arguments for merge_cols_omv
             if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
