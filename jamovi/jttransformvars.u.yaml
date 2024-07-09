@@ -1,0 +1,67 @@
+title: Transform (Reduce Skewness)
+name: jtTransformVars
+jus: '3.0'
+stage: 0
+compilerMode: tame
+
+events:
+  loaded: './varAll::loaded'
+  remoteDataChanged: './varAll::dataChanged'
+
+children:
+  - type: VariableSupplier
+    permitted:
+      - numeric
+    persistentItems: true
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Moderate positive skewness
+        children:
+          - type: VariablesListBox
+            name: posSqr
+            height: smallest
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Moderate negative skewness
+        children:
+          - type: VariablesListBox
+            name: negSqr
+            height: smallest
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Strong positive skewness
+        children:
+          - type: VariablesListBox
+            name: posLog
+            height: smallest
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Strong negative skewness
+        children:
+          - type: VariablesListBox
+            name: negLog
+            height: smallest
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Extreme positive skewness
+        children:
+          - type: VariablesListBox
+            name: posInv
+            height: smallest
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Extreme negative skewness
+        children:
+          - type: VariablesListBox
+            name: negInv
+            height: smallest
+            isTarget: true
+
+  - type: LayoutBox
+    style: inline
+    margin: large
+    horizontalAlignment: right
+    children:
+      - type: ActionButton
+        name: btnCrt

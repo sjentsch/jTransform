@@ -1,6 +1,6 @@
 if (getRversion() >= "2.15.1") {
     utils::globalVariables(c("maxRow", "maxCol", "useIdx", "vldExt", "fmtVrI", "fmtAdC", "fmtAdR", "fmtFsC", "hlpCrt", "hlpArC", "hlpL2W", "hlpMrg",
-                             "hlpRpl", "hlpSrc", "hlpSrt", "hlpXps", "hlpW2L", "genSep", "genNSS", "genNSA", "dtlSep", "dtlNSS", "dtlNSA"))
+                             "hlpRpl", "hlpSrc", "hlpSrt", "hlpW2L", "hlpXfV", "hlpXps", "genSep", "genNSS", "genNSA", "dtlSep", "dtlNSS", "dtlNSA"))
 }
 
 # variable definitions
@@ -44,9 +44,6 @@ hlpSrt <-   paste("Please assign one or more variables to the variable box \"Var
                   "variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort",
                   "after gender and afterwards after age). Variables are sorted in \"Ascending\" order (as default), but you can change",
                   "the order if desired.")
-hlpXps <-   paste("Please assign up to one variable to the variable box \"Column Names for the Output\" (this variable might contain names of trials",
-                  "or questionnaire items). If you leave the box empty, generic variable names are generated (\"V_...\"). The variables to become rows",
-                  "in your output data set have to be assigned to \"Variables To Be Transposed\".")
 hlpW2L <-   paste("When transforming a data set from wide to long format, you first need determine how the name of the variables that you would like",
                   "to transform is build up: It can either contain the different (e.g., experimental) conditions in the name and those conditions",
                   "are separated by a specific character (e.g., \"cond1_condA_conda\" with \"_\" being that character) or the names either don't contain",
@@ -54,6 +51,14 @@ hlpW2L <-   paste("When transforming a data set from wide to long format, you fi
                   "(simple)\" permit only one condition / index variable, \"Non-sep. (advanced)\" several conditions and target variables. More detailed",
                   "instructions are given in the next paragraph and you can check using the two output tables (the first containing a data preview,",
                   "the second an overview over how the repeated measurement levels - i.e., the original variables - were converted).")
+hlpXfV <- c(paste("Please assign at least one variable to at least one of the variable boxes indicating what (approximate) degree (moderate, strong, extreme",
+                  "and kind (postive or negative) of skewness this variable has. For moderately skewed variables, a square-root-transformation is used, for",
+                  "strongly skewed variables, a logarithic transformation, and for severly skewed variables an inversion. If necessary, a constant is added",
+                  "(automatically) in order to avoid the transformation returning NA-values."),
+                  "NB: The transformations work only for numeric variables (integer or decimal); please adjust the measure / data type if necessary.")
+hlpXps <-   paste("Please assign up to one variable to the variable box \"Column Names for the Output\" (this variable might contain names of trials",
+                  "or questionnaire items). If you leave the box empty, generic variable names are generated (\"V_...\"). The variables to become rows",
+                  "in your output data set have to be assigned to \"Variables To Be Transposed\".")
 genSep <- c(paste("Please assign the variables that identify participant (or another measurement unit; e.g., a number or an ID) to \"Variables that",
                   "Identify the Same Unit\", and those that are unique to an unit but not an identifier (e.g., gender, age group) to \"Variables NOT",
                   "To Be Transformed\". If no variable that identifies a participant is given, such variable will be created (and named \"ID\"). Then",

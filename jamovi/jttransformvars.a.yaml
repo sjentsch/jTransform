@@ -1,0 +1,86 @@
+---
+name:  jtTransformVars
+title: Transform (Reduce Skewness)
+menuGroup: Data
+menuSubgroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+description:
+  main: Create New (Computed) Variables, Aiming At Reducing Deviations From A Normal Distribution
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::transform_vars_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
+options:
+  - name: data
+    type: Data
+
+  - name: varAll
+    type: Variables
+    hidden: true
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+
+  - name: posSqr
+    title: Moderate positive skewness
+    type: Variables
+    suggested:
+    - continuous
+    permitted:
+    - numeric
+
+  - name: negSqr
+    title: Moderate negative skewness
+    type: Variables
+    suggested:
+    - continuous
+    permitted:
+    - numeric
+
+  - name: posLog
+    title: Strong positive skewness
+    type: Variables
+    suggested:
+    - continuous
+    permitted:
+    - numeric
+
+  - name: negLog
+    title: Strong negative skewness
+    type: Variables
+    suggested:
+    - continuous
+    permitted:
+    - numeric
+
+  - name: posInv
+    title: Extreme positive skewness
+    type: Variables
+    suggested:
+    - continuous
+    permitted:
+    - numeric
+
+  - name: negInv
+    title: Extreme negative skewness
+    type: Variables
+    suggested:
+    - continuous
+    permitted:
+    - numeric
+
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
+
+...

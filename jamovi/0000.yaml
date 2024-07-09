@@ -1,7 +1,7 @@
 ---
 title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
-version: 0.3.2
+version: 0.3.3
 jms: '1.0'
 authors:
   - Sebastian Jentschke
@@ -74,6 +74,15 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Merge (Add Columns)
     description: Add Columns (From Other Data Sets)
+  - title: Transform (Reduce Skewness)
+    name: jtTransformVars
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Transform (Reduce Skewness)
+    description: >-
+      Create New (Computed) Variables, Aiming At Reducing Deviations From A
+      Normal Distribution
 datasets:
   - name: example4jtTranspose
     path: example4jtTranspose.omv
