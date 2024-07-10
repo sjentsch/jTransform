@@ -31,4 +31,4 @@ Suggests:
     testthat  (>= 3.1.5),
     knitr
 Remotes: sjentsch/jmvReadWrite
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2

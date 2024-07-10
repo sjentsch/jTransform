@@ -69,3 +69,5 @@ tests/testthat/Rplots.pdf
 
 # custom attributes on MacOS 
 .DS_Store
+
+.prepare4CRAN
