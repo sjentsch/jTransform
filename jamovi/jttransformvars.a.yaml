@@ -37,6 +37,7 @@ options:
     - continuous
     permitted:
     - numeric
+    default:
 
   - name: negSqr
     title: Moderate negative skewness
@@ -45,6 +46,7 @@ options:
     - continuous
     permitted:
     - numeric
+    default:
 
   - name: posLog
     title: Strong positive skewness
@@ -53,6 +55,7 @@ options:
     - continuous
     permitted:
     - numeric
+    default:
 
   - name: negLog
     title: Strong negative skewness
@@ -61,6 +64,7 @@ options:
     - continuous
     permitted:
     - numeric
+    default:
 
   - name: posInv
     title: Extreme positive skewness
@@ -69,6 +73,7 @@ options:
     - continuous
     permitted:
     - numeric
+    default:
 
   - name: negInv
     title: Extreme negative skewness
@@ -77,6 +82,7 @@ options:
     - continuous
     permitted:
     - numeric
+    default:
 
   - name: btnCrt
     type: Action

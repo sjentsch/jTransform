@@ -1,7 +1,7 @@
 
 # This file is a generated template, your changes will not be overwritten
 
-jtTransformVarsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtTransformVarsClass",
     inherit = jtTransformVarsBase,
     private = list(
