@@ -88,4 +88,10 @@ testthat::test_that("jtarrangecols works", {
     expect_error(jTransform::jtArrangeCols(varOrd = names(dtaInp)[c(1, 17:21, 12:16, 22:26, 2:11, 27:28)], varAll = names(dtaInp), blnAll = FALSE),
       regexp = paste("Argument 'varAll' contains 'ID', 'A1', 'A2', 'A3', 'A4', 'A5', 'C1', 'C2', 'C3', 'C4', 'C5', 'E1', 'E2', 'E3', 'E4', 'E5', 'N1', 'N2',",
                      "'N3', 'N4', 'N5', 'O1', 'O2', 'O3', 'O4', 'O5', 'gender', 'age' which are not present in the dataset"))
+
+    # additional tests for functions in utils.R
+    expect_true(hmeDir() %in% Sys.getenv(c("USERPROFILE", "HOME")))
+    expect_equal(fmtSrc(fcnNme = "jmvReadWrite::arrange_cols_omv", crrArg = list(varOrd = names(dtaInp)[seq(6)], varAll = names(dtaInp)[seq(6) + 6], blnAll = FALSE)),
+      paste("jmvReadWrite::arrange_cols_omv(\n    dtaInp = data,\n    varOrd = c(\"ID\", \"A1\", \"A2\", \"A3\", \"A4\", \"A5\"),\n", 
+            "   varAll = c(\"C1\", \"C2\", \"C3\", \"C4\", \"C5\", \"E1\"),\n    blnAll = FALSE)"))
 })
