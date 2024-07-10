@@ -26,6 +26,9 @@ re-arrange variables in a data set, transforming a data set from long to wide
 or from wide to long, transposing a data set (make rows into columns and
 columns into rows), sorting a data set after one or more variable, and adding
 columns from one or more additional data sets to the currently opened data set.
+In addition, there are functions to search or replace values. Finally, the is
+a function to apply transformations for skewed variables trying to make them
+better conform to a normal distribution.
 
 <!---
 <center>

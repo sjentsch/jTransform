@@ -11,12 +11,14 @@ date: '2023-11-27'
 type: R
 description: >-
   jTransform carries out common data management tasks and transformations of
-  data sets. It includes functions to search and replace values, to sort a data
-  set after one or more variable, to change the order of variables in a data
-  set, to transform data sets from long to wide or from wide to long, to
-  transpose data sets (make rows into columns and columns into rows), and to add
-  columns from one or more additional data sets to the currently opened data
-  set.
+  data sets. It includes functions to change the order of / re-arrange variables
+  in a data set, transforming a data set from long to wide or from wide to long,
+  transposing a data set (make rows into columns and columns into rows), sorting
+  a data set after one or more variable, and adding columns from one or more
+  additional data sets to the currently opened data set. In addition, there are
+  functions to search or replace values. Finally, the is a function to apply
+  transformations for skewed variables trying to make them better conform to a
+  normal distribution.
 analyses:
   - title: Search
     name: jtSearch
@@ -84,9 +86,6 @@ analyses:
       Create New (Computed) Variables, Aiming At Reducing Deviations From A
       Normal Distribution
 datasets:
-  - name: example4jtTranspose
-    path: example4jtTranspose.omv
-    description: A Data Set to Demonstrate Transpose
   - name: example4jtLong2Wide
     path: example4jtLong2Wide.omv
     description: A Data Set to Demonstrate Long to Wide
@@ -102,6 +101,12 @@ datasets:
   - name: example4jtMergeCols_3
     path: example4jtMergeCols_3.omv
     description: A Data Set to Demonstrate Merge (third file)
+  - name: example4jtTransformVars
+    path: example4jtTransformVars.omv
+    description: A Data Set to Demonstrate Transform (Reduce Skewness)
+  - name: example4jtTranspose
+    path: example4jtTranspose.omv
+    description: A Data Set to Demonstrate Transpose
 usesNative: true
 minApp: 2.5.0
 
