@@ -157,7 +157,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         asSource = function() {
             if (private$.chkVar()) {
                 if (self$options$mdeW2L == "Sep") {
-                    fmtSrc("jmvReadWrite::wide2long_omv", private$.crrArg()[c(-1, -2)])
+                    fmtSrc("jmvReadWrite::wide2long_omv", private$.crrArg()[-seq(2)])
                 } else {
                     crrSrc <- "\n    data = data"
                     nmeOpt <- names(private$.options$options)

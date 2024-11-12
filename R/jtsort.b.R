@@ -49,7 +49,7 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     public = list(
 
         asSource = function() {
-            if (private$.chkVar()) fmtSrc("jmvReadWrite::sort_omv", private$.crrArg()[c(-1, -2)])
+            if (private$.chkVar()) fmtSrc("jmvReadWrite::sort_omv", private$.crrArg()[-seq(2)])
         }
 
     )

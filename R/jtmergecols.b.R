@@ -94,7 +94,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         asSource = function() {
             if (private$.chkVar()) {
                 paste0("attr(data, \"fleInp\") <- c(\n    \"", paste0(private$.fleInp, collapse = "\",\n    \""), "\")\n",
-                       fmtSrc("jmvReadWrite::merge_cols_omv", private$.crrArg()[c(-1, -2)]))
+                       fmtSrc("jmvReadWrite::merge_cols_omv", private$.crrArg()[-seq(2)]))
             }
         }
 
