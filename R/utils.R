@@ -69,7 +69,7 @@ crtInf <- function(crrInf = NULL, dtaFrm = NULL, hlpMsg = c()) {
     } else {
         outInf <- hlpMsg
     }
-    if (length(outInf) > 0 && all(nchar(outInf) > 0)) {
+    if (length(outInf) > 0 && all(nzchar(outInf))) {
         crrInf$setContent(paste0("<p>", paste0(outInf, collapse = "</p><p>"), "</p>"))
     }
 }

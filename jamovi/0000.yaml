@@ -7,7 +7,7 @@ authors:
   - Sebastian Jentschke
   - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2023-11-27'
+date: '2024-11-10'
 type: R
 description: >-
   jTransform carries out common data management tasks and transformations of
@@ -85,6 +85,25 @@ analyses:
     description: >-
       Create New (Computed) Variables, Aiming At Reducing Deviations From A
       Normal Distribution
+  - title: Calculate Distances
+    name: jtDistances
+    ns: jTransform
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Calculate Distances
+    description: >-
+      Creates a symmetric output data frame containing information how closely
+      related (or distant from each other) variables or cases in the current
+      data set are.
+  - title: Distances / Proximities
+    name: descDistances
+    ns: jTransform
+    menuGroup: Exploration
+    menuSubgroup: jTransform
+    menuTitle: Distances / Proximities
+    description: >-
+      Distance measures describe how closely related (or distant from each
+      other) variables or cases are.
 datasets:
   - name: example4jtLong2Wide
     path: example4jtLong2Wide.omv

@@ -1,0 +1,165 @@
+---
+name:  descDistances
+title: Distances / Proximities
+menuGroup: Exploration
+menuSubgroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+completeWhenFilled: true
+
+options:
+  - name: data
+    type: Data
+#    description:
+#      R: the data as a data frame
+
+  - name: varDst
+    title: Variables To Calculate Distances For
+    type: Variables
+    permitted:
+    - numeric
+    - factor
+    required: true
+    default:
+#    description:
+#      R: >
+#      a vector of strings containing the names of the variables for
+#      which distances are to be calculated
+
+  - name: clmDst
+    type: List
+    options:
+      - title: Columns
+        name:  columns
+      - title: Rows
+        name:  rows
+    default: columns
+    
+  - name: stdDst
+    type: List
+    options:
+      - title: Do Not Standardize
+        name:  none
+      - title: z-Standardization
+        name:  z
+      - title: Divide by the Standard Deviation
+        name:  sd
+      - title: Divide by the Range
+        name:  range
+      - title: Divide by the Absolute Maximum
+        name:  max
+      - title: Divide by the Mean
+        name:  mean
+      - title: Rescale (Subtract the Mean and Divide by the Range)
+        name:  rescale
+    default: none
+
+  - name: nmeDst
+    type: List
+    options:
+      - title: CONTINUOUS VARIABLES - Euclidean Distance
+        name:  euclid
+      - title: CONTINUOUS VARIABLES - Squared Euclidean Distance
+        name:  seuclid
+      - title: CONTINUOUS VARIABLES - City Block / Manhattan Distance
+        name:  block
+      - title: CONTINUOUS VARIABLES - Canberra Distance
+        name:  canberra
+      - title: CONTINUOUS VARIABLES - Chebychev / Maximum Distance
+        name:  chebychev
+      - title: CONTINUOUS VARIABLES - Minkowski Distance With Power
+        name:  minkowski
+      - title: CONTINUOUS VARIABLES - Minkowski Distance With Power and Root
+        name:  power
+      - title: CONTINUOUS VARIABLES - Cosine Between Vectors (Similiarity)
+        name:  cosine
+      - title: CONTINUOUS VARIABLES - Correlation (Similiarity)
+        name:  correlation
+      # -----------------------------------------------------------------------
+      - title: FREQUENCY COUNTS - Chi-Square Dissimilarity
+        name:  chisq
+      - title: FREQUENCY COUNTS - Normalized Chi-Square Dissimilarity
+        name:  ph2
+      # -----------------------------------------------------------------------
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Russell and Rao
+        name:  rr
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Simple Matching
+        name:  sm
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Jaccard Similarity (like SPSS)
+        name:  jaccards
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Jaccard Dissimilarity (like R)
+        name:  jaccardd
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Dice / Czekanowski / Sorenson Sim.
+        name:  dice
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Rogers and Tanimoto
+        name:  rt
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Kulczynski Measure 1
+        name:  k1
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Sokal and Sneath Measure 1
+        name:  ss1
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Sokal and Sneath Measure 2
+        name:  ss2
+      - title: BINARY VARS. - MATCHING COEFFICIENTS - Sokal and Sneath Measure 3
+        name:  ss3
+      - title: BINARY VARS. - CONDIT. PROBABILITIES - Kulczynski Measure 2
+        name:  k2
+      - title: BINARY VARS. - CONDIT. PROBABILITIES - Sokal and Sneath Measure 4
+        name:  ss4
+      - title: BINARY VARS. - CONDIT. PROBABILITIES - Hamann
+        name:  hamann
+      - title: BINARY VARS. - PREDICTABILITY MEASURES - Goodman and Kruskal Lambda
+        name:  lambda
+      - title: BINARY VARS. - PREDICTABILITY MEASURES - Anderberg’s D
+        name:  d
+      - title: BINARY VARS. - PREDICTABILITY MEASURES - Yule’s Y
+        name:  y
+      - title: BINARY VARS. - PREDICTABILITY MEASURES - Yule’s Q
+        name:  q
+      - title: BINARY VARS. - OTHER MEASURES - Ochiai
+        name:  ochiai
+      - title: BINARY VARS. - OTHER MEASURES - Sokal and Sneath Measure 5
+        name:  ss5
+      - title: BINARY VARS. - OTHER MEASURES - Fourfold Point Correlation
+        name:  phi
+      - title: BINARY VARS. - OTHER MEASURES - Binary Euclidean Distance
+        name:  beuclid
+      - title: BINARY VARS. - OTHER MEASURES - Binary Squared Euclidean Distance
+        name:  bseuclid
+      - title: BINARY VARS. - OTHER MEASURES - Size Difference
+        name:  size
+      - title: BINARY VARS. - OTHER MEASURES - Pattern Difference
+        name:  pattern
+      - title: BINARY VARS. - OTHER MEASURES - Binary Shape Difference
+        name:  bshape
+      - title: BINARY VARS. - OTHER MEASURES - Dispersion Similarity
+        name:  disper
+      - title: BINARY VARS. - OTHER MEASURES - Variance Dissimilarity
+        name:  variance
+      - title: BINARY VARS. - OTHER MEASURES - Lance and Williams Non-Metric Dissim.
+        name:  blwmn
+      - title: NONE - Do Not Calculate Distances
+        name:  none
+    default: euclid
+    
+  - name: pwrDst
+    type: Integer
+    title: Power
+    default: 2
+
+  - name: rt_Dst
+    type: Integer
+    title: Root
+    default: 2
+
+  - name: p__Dst
+    type: String
+    title: Present
+    default: "1"
+
+  - name: np_Dst
+    type: String
+    title: Not Present
+    default: "0"
+
+...

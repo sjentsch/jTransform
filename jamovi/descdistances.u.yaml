@@ -1,0 +1,110 @@
+title: Distances / Proximities
+name: descDistances
+jus: '3.0'
+stage: 0
+compilerMode: tame
+
+children:
+  - type: VariableSupplier
+    permitted:
+      - numeric
+      - factor
+    persistentItems: false
+    stretchFactor: 1
+    children:
+      - type: TargetLayoutBox
+        label: Variables To Calculate Distances For
+        children:
+          - type: VariablesListBox
+            name: varDst
+            isTarget: true
+
+  - type: Label
+    label: "Calculate Distances Between:"
+    style: inline
+    stretchFactor: 1
+    children:
+      - type: LayoutBox
+        margin: large
+        style: inline
+        stretchFactor: 1
+        children:
+          - type: RadioButton
+            name: clmDst_true
+            optionName: clmDst
+            optionPart: columns
+            label: Columns
+          - type: RadioButton
+            name: clmDst_false
+            optionName: clmDst
+            optionPart: rows
+            label: Rows
+
+  - type: Label
+    label: Standardization
+    stretchFactor: 1
+    children:
+      - type: ComboBox
+        name: stdDst
+        minWidth: 1
+
+  - type: Label
+    label: Distance Measure to Calculate
+    stretchFactor: 1
+    children:
+      - type: LayoutBox
+        margin: large
+        style: list
+        stretchFactor: 1
+        children:
+          - type: ComboBox
+            name: nmeDst
+            minWidth: 1
+          - type: LayoutBox
+            style: inline
+            stretchFactor: 1
+            children:
+              - type: LayoutBox
+                margin: large
+                style: inline
+                stretchFactor: 1
+                children:
+                  - type: TextBox
+                    name: p__Dst
+                    format: string
+                    enable: >-
+                             (nmeDst:rr || nmeDst:sm || nmeDst:jaccards ||
+                             nmeDst:jaccardd || nmeDst:dice || nmeDst:rt ||
+                             nmeDst:k1 || nmeDst:ss1 || nmeDst:ss2 || nmeDst:ss3 ||
+                             nmeDst:k2 || nmeDst:ss4 || nmeDst:hamann ||
+                             nmeDst:lambda || nmeDst:d || nmeDst:y || nmeDst:q ||
+                             nmeDst:ochiai || nmeDst:ss5 || nmeDst:phi ||
+                             nmeDst:beuclid || nmeDst:bseuclid || nmeDst:size ||
+                             nmeDst:pattern || nmeDst:bshape || nmeDst:disper ||
+                             nmeDst:variance || nmeDst:blwmn)
+                  - type: TextBox
+                    name: np_Dst
+                    format: string
+                    enable: >-
+                              (nmeDst:rr || nmeDst:sm || nmeDst:jaccards ||
+                              nmeDst:jaccardd || nmeDst:dice || nmeDst:rt ||
+                              nmeDst:k1 || nmeDst:ss1 || nmeDst:ss2 || nmeDst:ss3 ||
+                              nmeDst:k2 || nmeDst:ss4 || nmeDst:hamann ||
+                              nmeDst:lambda || nmeDst:d || nmeDst:y || nmeDst:q ||
+                              nmeDst:ochiai || nmeDst:ss5 || nmeDst:phi ||
+                              nmeDst:beuclid || nmeDst:bseuclid || nmeDst:size ||
+                              nmeDst:pattern || nmeDst:bshape || nmeDst:disper ||
+                              nmeDst:variance || nmeDst:blwmn)
+              - type: LayoutBox
+                margin: large
+                style: inline
+                stretchFactor: 1
+                children:
+                  - type: TextBox
+                    name: pwrDst
+                    format: number
+                    enable: (nmeDst:minkowski || nmeDst:power)
+                  - type: TextBox
+                    name: rt_Dst
+                    format: number
+                    enable: (nmeDst:power)

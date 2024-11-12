@@ -1,0 +1,21 @@
+---
+name:  descDistances
+title: Distances / Proximities
+jrs:   '1.1'
+
+items:
+  - name:  genInf
+    type:  Html
+    clearWith: [ varDst ]
+
+  - name:  pvwDta
+    type:  Table
+    title: "Distances / Proximities"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ varDst, clmDst, stdDst, nmeDst ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+...

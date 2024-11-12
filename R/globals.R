@@ -20,6 +20,9 @@ hlpCrt <-   paste("Pressing the <strong>\"Create\"-button opens the modified dat
 
 hlpArC <-   paste("Please assign the variables in their desired order to \"Desired Order of Variables\". By ticking \"Add Remaining Variables at the",
                   "End\", variables that are not contained in \"Desired order of variables\") are appended.")
+hlpDst <-   paste("Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate",
+                  "Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". Select then whether",
+                  "the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.")
 hlpL2W <- c(paste("Please assign the variables that identify participant (or another measurement unit; e.g., a number or an ID) to \"Variables that",
                   "identify the same unit\", and those that are unique to an unit but not an identifier (e.g., gender, age group) to \"Variables NOT",
                   "to be Transformed\". \"Variables That Differentiate Within a Unit\" typically contain different (e.g., experimental) conditions,",

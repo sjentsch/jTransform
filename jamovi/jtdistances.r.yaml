@@ -1,0 +1,27 @@
+---
+name:  jtDistances
+title: Calculate Distances
+jrs:   '1.1'
+
+items:
+  - name:  genInf
+    type:  Html
+    clearWith: [ varDst, btnCrt ]
+
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ varDst, clmDst, stdDst, nmeDst ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+# take away btnCrt from genInf once Actions is working
+#  - name:  opnDta
+#    type:  Actions
+# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
+#    clearWith: [ btnCrt ]
+
+...
