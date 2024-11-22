@@ -1,0 +1,50 @@
+diff --git a/R/globals.R b/R/globals.R
+index 99cc3fe..a350e8f 100644
+--- a/R/globals.R
++++ b/R/globals.R
+@@ -1,6 +1,8 @@
++#' @importFrom jmvcore .
+ if (getRversion() >= "2.15.1") {
+ 
+ # variable definitions
+@@ -10,16 +12,17 @@ useIdx <- FALSE
+ vldExt <- c("omv", "csv", "tsv", "rdata", "rda", "rds", "sav", "zsav", "dta", "sas7bdat", "sd2", "sd7", "xpt", "stx", "stc")
+ 
+ # message formatting for sprintf
+-fmtVrI <- "<strong>Variables in the Output Data Set</strong> (%d variables in %d rows): %s"
++fmtVrI <- paste0("<strong>", .("Variables in the Output Data Set"), "</strong> ", .("(%d variables in %d rows: %s"))
+ fmtAdC <- "There are %d more colums in the data set not shown here. A complete list of variables can be found in \"Variables in the Output Data Set\" above this table."
+ fmtAdR <- "There are %d more rows in the data set not shown here."
+ fmtFsC <- "The column%s %s %s shown first in this preview. In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table."
+ 
+ # help messages
+-hlpCrt <-   paste("Pressing the <strong>\"Create\"-button opens the modified data set</strong> in a new jamovi window.")
++hlpCrt <-   paste(.("Pressing the <strong>\"Create\"-button opens the modified data set</strong> in a new jamovi window."))
++hlpDtl <-  paste0("<h2>", .("Details"), "</h2>")
+ 
+-hlpArC <-   paste("Please assign the variables in their desired order to \"Desired Order of Variables\". By ticking \"Add Remaining Variables at the",
+-                  "End\", variables that are not contained in \"Desired order of variables\") are appended.")
++hlpArC <-   paste(.("Please assign the variables in their desired order to \"Desired Order of Variables\". By ticking \"Add Remaining Variables at the"),
++                  .("End\", variables that are not contained in \"Desired order of variables\") are appended."))
+ hlpDst <-   paste("Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate",
+                   "Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". Select then whether",
+                   "the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.")
+
+diff --git a/R/jtmergecols.b.R b/R/jtmergecols.b.R
+index b1a1ec5..fb5d89b 100755
+--- a/R/jtmergecols.b.R
++++ b/R/jtmergecols.b.R
+@@ -1,3 +1,4 @@
++#' @importFrom jmvcore .
+ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
+     "jtMergeColsClass",
+     inherit = jtMergeColsBase,
+@@ -40,7 +41,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
+         .chkFle = function(crrFle = "") {
+             # vldExt in globals.R (based upon what jmvReadWrite:::read_all supports)
+             if (!file.exists(crrFle) || !jmvReadWrite:::hasExt(crrFle, vldExt)) {
+-                jmvcore::reject("'{file}' doesn't exists or has an unsupported file type.", file = crrFle)
++                jmvcore::reject(.("'{file}' doesn't exists or has an unsupported file type."), file = crrFle)
+             }
+ 
+             jmvReadWrite:::nrmFle(crrFle)
