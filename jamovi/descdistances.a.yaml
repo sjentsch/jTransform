@@ -162,4 +162,9 @@ options:
     title: Not Present
     default: "0"
 
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: true
+
 ...

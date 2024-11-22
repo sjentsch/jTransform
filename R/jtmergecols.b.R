@@ -1,3 +1,4 @@
+#' @importFrom jmvcore .
 jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtMergeColsClass",
     inherit = jtMergeColsBase,
@@ -5,13 +6,13 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     private = list(
         .tglChs = FALSE,
         .fleInp = NULL,
-        .mrgDta = NULL,
+        .crrDta = NULL,
 
         .init = function() {
             if (private$.chkVar()) {
-                private$.mrgDta <- do.call(jmvReadWrite::merge_cols_omv, private$.crrArg())
+                private$.crrDta <- do.call(jmvReadWrite::merge_cols_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.mrgDta, colFst = private$.colFst())
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst())
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -28,19 +29,19 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    crtInf(crrInf = self$results$genInf, dtaFrm = private$.mrgDta, hlpMsg = hlpCrt)
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.mrgDta)
+                    crtInf(crrInf = self$results$genInf, infMsg = private$.crtMsg())
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
                 }
             } else {
                 # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, hlpMsg = hlpMrg)
+                crtInf(crrInf = self$results$genInf, infMsg = hlpMrg)
             }
         },
 
         .chkFle = function(crrFle = "") {
             # vldExt in globals.R (based upon what jmvReadWrite:::read_all supports)
             if (!file.exists(crrFle) || !jmvReadWrite:::hasExt(crrFle, vldExt)) {
-                jmvcore::reject("'{file}' doesn't exists or has an unsupported file type.", file = crrFle)
+                jmvcore::reject(.("'{file}' doesn't exists or has an unsupported file type."), file = crrFle)
             }
 
             jmvReadWrite:::nrmFle(crrFle)
@@ -59,7 +60,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .colFst = function() {
-            colNme <- names(private$.mrgDta)
+            colNme <- names(private$.crrDta)
             colBy  <- self$options$varBy
             colDta <- setdiff(names(self$data), colBy)
             colMrg <- setdiff(colNme, c(colBy, colDta))
@@ -85,6 +86,19 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
             attr(dtaFrm, "fleInp") <- private$.fleInp
             list(dtaInp = dtaFrm, fleOut = NULL, varBy = self$options$varBy, typMrg = self$options$typMrg)
+        },
+
+        .crtMsg = function() {
+            crtMsg <- sprintf("%s <strong>%s</strong> %s", .("Pressing the"),
+                              .("\"Create\"-button opens the modified data set"), .(" in a new jamovi window."))
+            if (!is.null(private$.crrDta)) {
+                c(sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
+                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
+                    paste0(names(private$.crrDta), collapse = ", ")),
+                  crtMsg)
+            } else {
+                crtMsg
+            }
         }
 
     ),

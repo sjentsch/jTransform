@@ -1,3 +1,4 @@
+#' @importFrom jmvcore .
 jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtReplaceClass",
     inherit = jtReplaceBase,
@@ -24,13 +25,13 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
                     rplDta <- do.call(jmvReadWrite::replace_omv, private$.crrArg())
-                    crtInf(crrInf = self$results$genInf, dtaFrm = rplDta, hlpMsg = hlpCrt)
+                    crtInf(crrInf = self$results$genInf, infMsg = private$.crtMsg())
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = rplDta)
                     private$.mrkDff(crrTbl = self$results$pvwDta, dtaOld = self$data, dtaNew = rplDta)
                 }
             } else {
                 # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, hlpMsg = hlpRpl)
+                crtInf(crrInf = self$results$genInf, infMsg = hlpRpl)
             }
         },
 
@@ -50,6 +51,19 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             c(list(dtaInp = self$data, fleOut = NULL, rplLst = rplLst), optSnR(self$options))
         },
 
+        .crtMsg = function() {
+            crtMsg <- sprintf("%s <strong>%s</strong> %s", .("Pressing the"),
+                              .("\"Create\"-button opens the modified data set"), .(" in a new jamovi window."))
+            if (!is.null(private$.crrDta)) {
+                c(sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
+                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
+                    paste0(names(private$.crrDta), collapse = ", ")),
+                  crtMsg)
+            } else {
+                crtMsg
+            }
+        },
+
         .mrkDff = function(crrTbl = NULL, dtaOld = NULL, dtaNew = NULL) {
             selFac <- vapply(dtaOld, is.factor, logical(1))
             if (any(selFac)) {
@@ -59,7 +73,7 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
             selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))
             if        (private$.chkDff(dtaOld[selRow, selCol], dtaNew[selRow, selCol])) {
-                crrTbl$setNote("diff", "+ Value was replaced / modified.")
+                crrTbl$setNote("diff", .("+ Value was replaced / modified."))
                 for (i in selCol) {
                     for (j in selRow) {
                         if (private$.chkDff(dtaOld[j, i], dtaNew[j, i])) {
@@ -68,9 +82,9 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                     }
                 }
             } else if (private$.chkDff(dtaOld,                 dtaNew)) {
-                crrTbl$setNote("diff", "Replacements were made, but they are outside the scope (rows / columns) of this preview.")
+                crrTbl$setNote("diff", .("Replacements were made, but they are outside the scope (rows / columns) of this preview."))
             } else {
-                crrTbl$setNote("diff", "There were no replacements made (in the whole dataset).")
+                crrTbl$setNote("diff", .("There were no replacements made (in the whole dataset)."))
             }
         }
 

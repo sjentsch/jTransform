@@ -1,16 +1,17 @@
+#' @importFrom jmvcore .
 jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtLong2WideClass",
     inherit = jtLong2WideBase,
     private = list(
-        .l2wDta = NULL,
+        .crrDta = NULL,
         .rpmDta = NULL,
 
         .init = function() {
             if (private$.chkVar()) {
-                private$.l2wDta <- do.call(jmvReadWrite::long2wide_omv, private$.crrArg())
-                private$.rpmDta <- private$.prpRpM(xfmDta = private$.l2wDta)
+                private$.crrDta <- do.call(jmvReadWrite::long2wide_omv, private$.crrArg())
+                private$.rpmDta <- private$.prpRpM(xfmDta = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.l2wDta, colFst = private$.colFst())
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst())
                 prpPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nonLtd = TRUE)
             } else {
                 # reset the output table (rstPvw in utils.R)
@@ -28,13 +29,13 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    crtInf(crrInf = self$results$genInf, dtaFrm = private$.l2wDta, hlpMsg = hlpCrt)
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.l2wDta)
+                    crtInf(crrInf = self$results$genInf, infMsg = private$.crtMsg())
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
                     fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta)
                 }
             } else {
                 # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, hlpMsg = hlpL2W)
+                crtInf(crrInf = self$results$genInf, infMsg = private$.infMsg())
             }
         },
 
@@ -43,7 +44,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .colFst = function() {
-            colNme <- names(private$.l2wDta)
+            colNme <- names(private$.crrDta)
             colOth <- c(self$options$varID, self$options$varExc)
             colTgt <- self$options$varTgt
             numRmg <- (min(c(length(colNme), maxCol)) - length(colOth))
@@ -64,6 +65,30 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             list(dtaInp = dtaFrm,  fleOut = NULL, varID  = self$options$varID, varTme = self$options$varTme,
                  varTgt = self$options$varTgt, varExc = self$options$varExc, varSep = self$options$varSep,
                  varOrd = self$options$varOrd, varAgg = self$options$varAgg)
+        },
+
+        .crtMsg = function() {
+            crtMsg <- sprintf("%s <strong>%s</strong> %s", .("Pressing the"),
+                              .("\"Create\"-button opens the modified data set"), .(" in a new jamovi window."))
+            if (!is.null(private$.crrDta)) {
+                c(sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
+                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
+                    paste0(names(private$.crrDta), collapse = ", ")),
+                  crtMsg)
+            } else {
+                crtMsg
+            }
+        },
+
+        .infMsg = function() {
+            c(paste(.("Please assign the variables that identify participant (or another measurement unit; e.g., a"),
+                    .("number or an ID) to \"Variables that identify the same unit\", and those that are unique to"),
+                    .("an unit but not an identifier (e.g., gender, age group) to \"Variables NOT to be Transformed\"."),
+                    .("\"Variables That Differentiate Within a Unit\" typically contain different (e.g., experimental)"),
+                    .("conditions, and \"Variables To Be Transformed\" are the actual measurements (e.g., responses,"),
+                    .("reaction times, etc.).")),
+              paste(.("For an example about a typical long-to-wide-transformation, see the last paragraph in"),
+                    .("\"Details\" underneath the output tables.")))
         },
 
         .prpRpM = function(xfmDta = NULL) {

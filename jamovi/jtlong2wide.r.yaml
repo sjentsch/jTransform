@@ -28,7 +28,7 @@ items:
 
   - name:  addInf
     type:  Html
-    clearWith: [ varID, varTme, varTgt, varExc, varOrd, varAgg, varSep ]
+    clearWith: []
     content: >
       <h2>Details</h2>
       <p>"Variables that identify the same unit" is an ID variable (e.g., a

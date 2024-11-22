@@ -1,3 +1,4 @@
+#' @importFrom jmvcore .
 jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtSearchClass",
     inherit = jtSearchBase,
@@ -10,8 +11,8 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 srcRes <- do.call(jmvReadWrite::search_omv, private$.crrArg())
                 # initial line about whether the search term was found
                 outRes <- sprintf("<p>Value \"<strong>%s</strong>\" (%s) %s</p>",
-                                  trimws(self$options$srcTrm), paste0(rep("partial or ", !self$options$whlTrm), "exact match"),
-                                  ifelse(length(srcRes) > 0, "<strong>found</strong> in variable(s): row(s)...", "<strong>not found</strong>"))
+                                  trimws(self$options$srcTrm), paste0(rep(.("partial or "), !self$options$whlTrm), .("exact match")),
+                                  ifelse(length(srcRes) > 0, .("<strong>found</strong> in variable(s): row(s)..."), .("<strong>not found</strong>")))
                 # if it was found, create an output list with the variables and the rows where the value was found
                 if (length(srcRes) > 0) {
                     outRes <- paste0(c(outRes, "<ul>",
@@ -23,7 +24,7 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             } else {
                 # if the search term or the data set is empty, assign
                 # a help message
-                crtInf(crrInf = self$results$srcRes, hlpMsg = hlpSrc)
+                crtInf(crrInf = self$results$srcRes, infMsg = hlpSrc)
             }
 
         },

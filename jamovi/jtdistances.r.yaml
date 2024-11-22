@@ -6,7 +6,21 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
-    clearWith: [ varDst, btnCrt ]
+    visible: (shwHlp)
+    clearWith: [ varDst, shwHlp, btnCrt ]
+    content: >
+      Please assign the variables from the data set that should be included
+      in the calculation of distances to "Variables To Calculate Distances For"
+      and then select whether the distances are to be calculated between
+      "Columns" or "Rows". You need at least two variables and two rows to
+      calculate distances. Select then whether the input data are to be
+      standardized (before calculating the distances) and which distance
+      measure should be calculated.
+
+  - name:  crtInf
+    type:  Html
+    clearWith: [ varDst, clmDst, btnCrt ]
+    content: ""
 
   - name:  pvwDta
     type:  Table
@@ -18,10 +32,8 @@ items:
       - name: fstCol
         title: ""
 
-# take away btnCrt from genInf once Actions is working
-#  - name:  opnDta
-#    type:  Actions
-# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
-#    clearWith: [ btnCrt ]
+  - name:  btnCrt
+    type:  Action
+    operation: btnCrt
 
 ...

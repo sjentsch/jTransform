@@ -63,14 +63,9 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
     }
 }
 
-crtInf <- function(crrInf = NULL, dtaFrm = NULL, hlpMsg = c()) {
-    if (!is.null(dtaFrm) > 0) {
-        outInf <- c(sprintf(fmtVrI, dim(dtaFrm)[2], dim(dtaFrm)[1], paste0(names(dtaFrm), collapse = ", ")), hlpMsg)
-    } else {
-        outInf <- hlpMsg
-    }
-    if (length(outInf) > 0 && all(nzchar(outInf))) {
-        crrInf$setContent(paste0("<p>", paste0(outInf, collapse = "</p><p>"), "</p>"))
+crtInf <- function(crrInf = NULL, infMsg = c()) {
+    if (length(infMsg) > 0 && all(nzchar(infMsg))) {
+        crrInf$setContent(paste0(infMsg, collapse = "</p><p>"))
     }
 }
 

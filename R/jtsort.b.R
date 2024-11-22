@@ -1,7 +1,9 @@
+#' @importFrom jmvcore .
 jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtSortClass",
     inherit = jtSortBase,
     private = list(
+        .crrDta = NULL,
 
         .init = function() {
             if (private$.chkVar()) {
@@ -23,13 +25,13 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    srtDta <- do.call(jmvReadWrite::sort_omv, private$.crrArg())
-                    crtInf(crrInf = self$results$genInf, dtaFrm = srtDta, hlpMsg = hlpCrt)
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = srtDta)
+                    private$.crrDta <- do.call(jmvReadWrite::sort_omv, private$.crrArg())
+                    crtInf(crrInf = self$results$genInf, infMsg = private$.crtMsg())
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
                 }
             } else {
                 # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, hlpMsg = hlpSrt)
+                crtInf(crrInf = self$results$genInf, infMsg = hlpSrt)
             }
         },
 
@@ -42,6 +44,19 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                                                        paste0(gsub("descend", "-", gsub("ascend", "", x[["order"]])), x[["var"]])
                                                   }, character(1))
             list(dtaInp = self$data, fleOut = NULL, varSrt = varSrt)
+        },
+
+        .crtMsg = function() {
+            crtMsg <- sprintf("%s <strong>%s</strong> %s", .("Pressing the"),
+                              .("\"Create\"-button opens the modified data set"), .(" in a new jamovi window."))
+            if (!is.null(private$.crrDta)) {
+                c(sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
+                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
+                    paste0(names(private$.crrDta), collapse = ", ")),
+                  crtMsg)
+            } else {
+                crtMsg
+            }
         }
 
     ),

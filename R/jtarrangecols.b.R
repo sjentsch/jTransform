@@ -1,14 +1,15 @@
+#' @importFrom jmvcore .
 jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtArrangeColsClass",
     inherit = jtArrangeColsBase,
     private = list(
-        .arrDta = NULL,
+        .crrDta = NULL,
 
         .init = function() {
             if (private$.chkVar()) {
-                private$.arrDta <- do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg())
+                private$.crrDta <- do.call(jmvReadWrite::arrange_cols_omv, private$.crrArg())
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.arrDta)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -24,12 +25,12 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
                 # if not, show the variable list and how to use “Create” as general information
                 # and create a preview of the data (crtInf and fllPvw in utils.R)
                 } else {
-                    crtInf(crrInf = self$results$genInf, dtaFrm = private$.arrDta, hlpMsg = hlpCrt)
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.arrDta)
+                    crtInf(crrInf = self$results$genInf, infMsg = private$.crtMsg())
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
                 }
             } else {
                 # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, hlpMsg = hlpArC)
+                crtInf(crrInf = self$results$genInf, infMsg = private$.infMsg())
             }
         },
 
@@ -40,6 +41,25 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
         .crrArg = function() {
             if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
             list(dtaInp = dtaFrm, fleOut = NULL, varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll))))
+        },
+
+        .crtMsg = function() {
+            crtMsg <- sprintf("%s <strong>%s</strong> %s", .("Pressing the"),
+                              .("\"Create\"-button opens the modified data set"), .(" in a new jamovi window."))
+            if (!is.null(private$.crrDta)) {
+                c(sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
+                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
+                    paste0(names(private$.crrDta), collapse = ", ")),
+                  crtMsg)
+            } else {
+                crtMsg
+            }
+        },
+
+        .infMsg = function() {
+            paste(.("Please assign the variables in their desired order to \"Desired Order of Variables\"."),
+                  .("By ticking \"Add Remaining Variables at the End\", variables that are not contained in"),
+                  .("\"Desired order of variables\") are appended."))
         }
 
     ),
