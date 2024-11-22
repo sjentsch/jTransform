@@ -13,7 +13,8 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             pwrDst = 2,
             rt_Dst = 2,
             p__Dst = "1",
-            np_Dst = "0", ...) {
+            np_Dst = "0",
+            shwHlp = TRUE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -109,6 +110,10 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 "np_Dst",
                 np_Dst,
                 default="0")
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
 
             self$.addOption(private$..varDst)
             self$.addOption(private$..clmDst)
@@ -118,6 +123,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$.addOption(private$..rt_Dst)
             self$.addOption(private$..p__Dst)
             self$.addOption(private$..np_Dst)
+            self$.addOption(private$..shwHlp)
         }),
     active = list(
         varDst = function() private$..varDst$value,
@@ -127,7 +133,8 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
         pwrDst = function() private$..pwrDst$value,
         rt_Dst = function() private$..rt_Dst$value,
         p__Dst = function() private$..p__Dst$value,
-        np_Dst = function() private$..np_Dst$value),
+        np_Dst = function() private$..np_Dst$value,
+        shwHlp = function() private$..shwHlp$value),
     private = list(
         ..varDst = NA,
         ..clmDst = NA,
@@ -136,7 +143,8 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
         ..pwrDst = NA,
         ..rt_Dst = NA,
         ..p__Dst = NA,
-        ..np_Dst = NA)
+        ..np_Dst = NA,
+        ..shwHlp = NA)
 )
 
 descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -144,6 +152,7 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        crtInf = function() private$.items[["crtInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
@@ -155,8 +164,17 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
                 clearWith=list(
-                    "varDst")))
+                    "varDst",
+                    "shwHlp"),
+                content="Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". You need at least two variables and two rows to calculate distances. Select then whether the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="crtInf",
+                clearWith=list(
+                    "varDst",
+                    "btnCrt")))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -208,9 +226,11 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param rt_Dst .
 #' @param p__Dst .
 #' @param np_Dst .
+#' @param shwHlp .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$crtInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
@@ -230,7 +250,8 @@ descDistances <- function(
     pwrDst = 2,
     rt_Dst = 2,
     p__Dst = "1",
-    np_Dst = "0") {
+    np_Dst = "0",
+    shwHlp = TRUE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("descDistances requires jmvcore to be installed (restart may be required)")
@@ -250,7 +271,8 @@ descDistances <- function(
         pwrDst = pwrDst,
         rt_Dst = rt_Dst,
         p__Dst = p__Dst,
-        np_Dst = np_Dst)
+        np_Dst = np_Dst,
+        shwHlp = shwHlp)
 
     analysis <- descDistancesClass$new(
         options = options,

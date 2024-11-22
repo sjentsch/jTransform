@@ -14,6 +14,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             rt_Dst = 2,
             p__Dst = "1",
             np_Dst = "0",
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -110,6 +111,10 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "np_Dst",
                 np_Dst,
                 default="0")
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -123,6 +128,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..rt_Dst)
             self$.addOption(private$..p__Dst)
             self$.addOption(private$..np_Dst)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
@@ -134,6 +140,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         rt_Dst = function() private$..rt_Dst$value,
         p__Dst = function() private$..p__Dst$value,
         np_Dst = function() private$..np_Dst$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varDst = NA,
@@ -144,6 +151,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..rt_Dst = NA,
         ..p__Dst = NA,
         ..np_Dst = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -152,7 +160,9 @@ jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
-        pvwDta = function() private$.items[["pvwDta"]]),
+        crtInf = function() private$.items[["crtInf"]],
+        pvwDta = function() private$.items[["pvwDta"]],
+        btnCrt = function() private$.items[["btnCrt"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -163,9 +173,20 @@ jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
                 clearWith=list(
                     "varDst",
-                    "btnCrt")))
+                    "shwHlp",
+                    "btnCrt"),
+                content="Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". You need at least two variables and two rows to calculate distances. Select then whether the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="crtInf",
+                clearWith=list(
+                    "varDst",
+                    "clmDst",
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -182,7 +203,11 @@ jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 columns=list(
                     list(
                         `name`="fstCol", 
-                        `title`=""))))}))
+                        `title`=""))))
+            self$add(jmvcore::Action$new(
+                options=options,
+                name="btnCrt",
+                operation="btnCrt"))}))
 
 jtDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtDistancesBase",
@@ -217,11 +242,14 @@ jtDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param rt_Dst .
 #' @param p__Dst .
 #' @param np_Dst .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$crtInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$btnCrt} \tab \tab \tab \tab \tab an action \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
@@ -241,6 +269,7 @@ jtDistances <- function(
     rt_Dst = 2,
     p__Dst = "1",
     np_Dst = "0",
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -262,6 +291,7 @@ jtDistances <- function(
         rt_Dst = rt_Dst,
         p__Dst = p__Dst,
         np_Dst = np_Dst,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtDistancesClass$new(
