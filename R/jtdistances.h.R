@@ -160,9 +160,8 @@ jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
-        crtInf = function() private$.items[["crtInf"]],
-        pvwDta = function() private$.items[["pvwDta"]],
-        btnCrt = function() private$.items[["btnCrt"]]),
+        dtaInf = function() private$.items[["dtaInf"]],
+        pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
         initialize=function(options) {
@@ -176,12 +175,11 @@ jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 visible="(shwHlp)",
                 clearWith=list(
                     "varDst",
-                    "shwHlp",
-                    "btnCrt"),
+                    "shwHlp"),
                 content="Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". You need at least two variables and two rows to calculate distances. Select then whether the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="crtInf",
+                name="dtaInf",
                 clearWith=list(
                     "varDst",
                     "clmDst",
@@ -203,11 +201,7 @@ jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 columns=list(
                     list(
                         `name`="fstCol", 
-                        `title`=""))))
-            self$add(jmvcore::Action$new(
-                options=options,
-                name="btnCrt",
-                operation="btnCrt"))}))
+                        `title`=""))))}))
 
 jtDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtDistancesBase",
@@ -247,9 +241,8 @@ jtDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$crtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#'   \code{results$btnCrt} \tab \tab \tab \tab \tab an action \cr
 #' }
 #'
 #' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:

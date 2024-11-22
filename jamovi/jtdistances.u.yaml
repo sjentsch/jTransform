@@ -46,7 +46,8 @@ children:
     children:
       - type: ComboBox
         name: stdDst
-        minWidth: 100
+        stretchFactor: 1
+#       minWidth: 200
 
   - type: Label
     label: Distance Measure to Calculate
@@ -59,7 +60,8 @@ children:
         children:
           - type: ComboBox
             name: nmeDst
-            minWidth: 100
+            stretchFactor: 1
+#           minWidth: 200
           - type: LayoutBox
             style: inline
             stretchFactor: 1

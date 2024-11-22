@@ -17,9 +17,10 @@ items:
       standardized (before calculating the distances) and which distance
       measure should be calculated.
 
-  - name:  crtInf
+  - name:  dtaInf
     type:  Html
-    clearWith: [ varDst, btnCrt ]
+    clearWith: [ varDst, clmDst ]
+    content: ""
 
   - name:  pvwDta
     type:  Table

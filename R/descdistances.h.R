@@ -14,7 +14,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             rt_Dst = 2,
             p__Dst = "1",
             np_Dst = "0",
-            shwHlp = TRUE, ...) {
+            shwHlp = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -113,7 +113,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
 
             self$.addOption(private$..varDst)
             self$.addOption(private$..clmDst)
@@ -152,7 +152,7 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
-        crtInf = function() private$.items[["crtInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
@@ -171,10 +171,11 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 content="Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". You need at least two variables and two rows to calculate distances. Select then whether the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
-                name="crtInf",
+                name="dtaInf",
                 clearWith=list(
                     "varDst",
-                    "btnCrt")))
+                    "clmDst"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -230,7 +231,7 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$crtInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
@@ -251,7 +252,7 @@ descDistances <- function(
     rt_Dst = 2,
     p__Dst = "1",
     np_Dst = "0",
-    shwHlp = TRUE) {
+    shwHlp = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("descDistances requires jmvcore to be installed (restart may be required)")
