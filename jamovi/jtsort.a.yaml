@@ -68,6 +68,11 @@ options:
 #      a list of lists specifying the order with which variables are
 #      sorted, either `'ascending'`, or `'descending'`
 
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: true
+
   - name: btnCrt
     type: Action
     title: Create

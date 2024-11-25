@@ -9,6 +9,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varAll = NULL,
             varOrd = NULL,
             blnAll = FALSE,
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -38,6 +39,10 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 "blnAll",
                 blnAll,
                 default=FALSE)
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -46,17 +51,20 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$.addOption(private$..varAll)
             self$.addOption(private$..varOrd)
             self$.addOption(private$..blnAll)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
         varAll = function() private$..varAll$value,
         varOrd = function() private$..varOrd$value,
         blnAll = function() private$..blnAll$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varAll = NA,
         ..varOrd = NA,
         ..blnAll = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -65,6 +73,7 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
@@ -76,10 +85,17 @@ jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please assign the variables in their desired order to \"Desired Order of Variables\". By ticking \"Add Remaining Variables at the End\", variables that are not contained in \"Desired order of variables\" are appended.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="dtaInf",
                 clearWith=list(
                     "varOrd",
                     "blnAll",
-                    "btnCrt")))
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -131,10 +147,12 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varAll .
 #' @param varOrd .
 #' @param blnAll .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
@@ -150,6 +168,7 @@ jtArrangeCols <- function(
     varAll = NULL,
     varOrd = NULL,
     blnAll = FALSE,
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -168,6 +187,7 @@ jtArrangeCols <- function(
         varAll = varAll,
         varOrd = varOrd,
         blnAll = blnAll,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtArrangeColsClass$new(

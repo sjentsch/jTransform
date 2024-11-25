@@ -6,7 +6,20 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign one or more variables to the variable box "Variable(s) to
+      be Sorted After". The order in which the variables appear in the variable
+      box determines after which variable is sorted first (one could, e.g.,
+      first sort after gender and afterwards after age). Variables are sorted
+      in "Ascending" order (as default), but you can change the order if
+      desired.
+
+  - name:  dtaInf
+    type:  Html
     clearWith: [ varSrt, varAll, btnCrt ]
+    content: ""
 
   - name:  pvwDta
     type:  Table
@@ -18,10 +31,9 @@ items:
       - name: fstCol
         title: ""
 
-# take away btnCrt from genInf once Actions is working
-#  - name:  opnDta
-#    type:  Actions
-# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
-#    clearWith: [ btnCrt ]
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
 
 ...

@@ -33,6 +33,14 @@ children:
           - type: CheckBox
             name: whlTrm
 
+  - type: LayoutBox
+    style: inline
+    margin: large
+    horizontalAlignment: left
+    children:
+      - type: CheckBox
+        name: shwHlp
+
   - type: CollapseBox
     label: Inclusion (In the Search)
     collapsed: true

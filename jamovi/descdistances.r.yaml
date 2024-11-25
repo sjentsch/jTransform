@@ -7,7 +7,7 @@ items:
   - name:  genInf
     type:  Html
     visible: (shwHlp)
-    clearWith: [ varDst, shwHlp ]
+    clearWith: [ ]
     content: >
       Please assign the variables from the data set that should be included
       in the calculation of distances to "Variables To Calculate Distances For"

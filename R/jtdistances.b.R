@@ -3,36 +3,33 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     "jtDistancesClass",
     inherit = jtDistancesBase,
     private = list(
+        .crrCmd = "jmvReadWrite::distances_omv",
         .crrDta = NULL,
+        .nonLtd = FALSE,
 
         .init = function() {
+            private$.nonLtd <- (private$.name == "descDistances")
             if (private$.chkVar()) {
-                # hide general information and show create information
-                self$results$genInf$setVisible(FALSE)
-                self$results$dtaInf$setVisible(private$.name != "descDistances")
-                # resize / prepare the output table (prpPvw in utils.R) and
-                # produce create information
-                private$.crrDta <- do.call(jmvReadWrite::distances_omv, private$.crrArg())
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nonLtd = (private$.name == "descDistances"))
+                # calculate the current data
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
+                # resize / prepare the output table (prpPvw in utils.R)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
-                # show getting started as general information and
-                # hide data set / create information
-                self$results$genInf$setVisible(self$options$shwHlp)
-                self$results$dtaInf$setVisible(FALSE)
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
         },
 
         .run = function() {
-            # check whether the required variables are present and that the data set has at least two rows
-            if (private$.chkVar() && dim(self$data)[1] >= 2) {
+            # assemble or reset data set / create information
+            private$.dtaInf()
+            if (private$.chkVar()) {
+                # assemble data set / create information
                 self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
                 # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(jmvReadWrite::distances_omv, private$.crrArg()[-2])
-                # if not, show the variable list and how to use “Create” as general information
-                # and create a preview of the data (fllPvw in utils.R)
+                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                # if not, create a preview of the data (fllPvw in utils.R)
                 } else {
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
                 }
@@ -40,7 +37,7 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .chkVar = function() {
-            (length(self$options$varDst) > 1)
+            (length(self$options$varDst) > 1 && all(dim(self$readDataset()) >= 2))
         },
         
         .cncNme = function() {
@@ -50,10 +47,14 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                             rep(self$options$rt_Dst, grepl("^power$", nmeDst))), collapse = "_")
         },
 
+        .colFst = function() {
+            c()
+        },
+
         .crrArg = function() {
-            if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
-            list(dtaInp = as.data.frame(lapply(dtaFrm, jmvcore::toNumeric)), fleOut = NULL, varDst = self$options$varDst,
-                 clmDst = (self$options$clmDst == "columns"), stdDst = self$options$stdDst, nmeDst = private$.cncNme())
+            list(dtaInp = as.data.frame(lapply(self$readDataset(), jmvcore::toNumeric)),
+                 varDst = self$options$varDst, clmDst = (self$options$clmDst == "columns"),
+                 stdDst = self$options$stdDst, nmeDst = private$.cncNme())
         },
 
         .crtMsg = function() {
@@ -61,6 +62,15 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
 
             sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
                     .(" in a new jamovi window."))
+        },
+
+        .dtaInf = function() {
+            if (private$.chkVar()) {
+                self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
+                self$results$dtaInf$setVisible(TRUE)
+            } else {
+                self$results$dtaInf$setVisible(FALSE)
+            }
         },
 
         .dtaMsg = function() {
@@ -74,7 +84,7 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     public = list(
 
         asSource = function() {
-            if (private$.chkVar()) fmtSrc("jmvReadWrite::distances_omv", private$.crrArg()[-seq(2)])
+            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg()[-1])
         }
 
     )

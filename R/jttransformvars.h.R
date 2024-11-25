@@ -13,6 +13,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             negLog = NULL,
             posInv = NULL,
             negInv = NULL,
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -78,6 +79,10 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
                 permitted=list(
                     "numeric"),
                 default=NULL)
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -90,6 +95,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             self$.addOption(private$..negLog)
             self$.addOption(private$..posInv)
             self$.addOption(private$..negInv)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
@@ -100,6 +106,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
         negLog = function() private$..negLog$value,
         posInv = function() private$..posInv$value,
         negInv = function() private$..negInv$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varAll = NA,
@@ -109,6 +116,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
         ..negLog = NA,
         ..posInv = NA,
         ..negInv = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -117,6 +125,7 @@ jtTransformVarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
@@ -128,10 +137,17 @@ jtTransformVarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please assign at least one variable to at least one of the variable boxes indicating what (approximate) degree (moderate, strong, extreme and kind (postive or negative) of skewness this variable has. For moderately skewed variables, a square-root-transformation is used, for strongly skewed variables, a logarithic transformation, and for severly skewed variables an inversion. If necessary, a constant is added (automatically) in order to avoid the transformation returning NA-values.</p> <p>NB: The transformations work only for numeric variables (integer or decimal); please adjust the measure / data type if necessary.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="dtaInf",
                 clearWith=list(
-                    "varOrd",
-                    "blnAll",
-                    "btnCrt")))
+                    "varDst",
+                    "clmDst",
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -188,10 +204,12 @@ jtTransformVarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
 #' @param negLog .
 #' @param posInv .
 #' @param negInv .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
@@ -211,6 +229,7 @@ jtTransformVars <- function(
     negLog = NULL,
     posInv = NULL,
     negInv = NULL,
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -243,6 +262,7 @@ jtTransformVars <- function(
         negLog = negLog,
         posInv = posInv,
         negInv = negInv,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtTransformVarsClass$new(

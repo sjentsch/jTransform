@@ -14,7 +14,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             rt_Dst = 2,
             p__Dst = "1",
             np_Dst = "0",
-            shwHlp = FALSE, ...) {
+            shwHlp = TRUE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -113,7 +113,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=FALSE)
+                default=TRUE)
 
             self$.addOption(private$..varDst)
             self$.addOption(private$..clmDst)
@@ -165,9 +165,7 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 options=options,
                 name="genInf",
                 visible="(shwHlp)",
-                clearWith=list(
-                    "varDst",
-                    "shwHlp"),
+                clearWith=list(),
                 content="Please assign the variables from the data set that should be included in the calculation of distances to \"Variables To Calculate Distances For\" and then select whether the distances are to be calculated between \"Columns\" or \"Rows\". You need at least two variables and two rows to calculate distances. Select then whether the input data are to be standardized (before calculating the distances) and which distance measure should be calculated.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
@@ -252,7 +250,7 @@ descDistances <- function(
     rt_Dst = 2,
     p__Dst = "1",
     np_Dst = "0",
-    shwHlp = FALSE) {
+    shwHlp = TRUE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("descDistances requires jmvcore to be installed (restart may be required)")

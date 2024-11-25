@@ -51,6 +51,11 @@ options:
 #      a vector of strings containing the names of the variables to be
 #      transposed
 
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: true
+
   - name: btnCrt
     type: Action
     title: Create

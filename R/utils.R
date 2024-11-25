@@ -18,6 +18,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     if (!useIdx) crrTbl$getColumn(1)$setTitle(colNme[1])
     for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
     for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
+
     return(invisible(NULL))
 }
 
@@ -26,6 +27,8 @@ rstPvw <- function(crrTbl = NULL) {
     colNme <- names(crrTbl$columns)
     crrTbl$deleteRows()
     for (i in seq(numRow)) crrTbl$addRow(rowKey = i, stats::setNames(as.list(rep("", length(colNme))), colNme))
+
+    return(invisible(NULL))
 }
 
 fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
@@ -57,20 +60,17 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
         crrRow[vapply(crrRow, is.na, logical(1))] <- ""
         if (i == pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
         crrTbl$setRow(rowNo = i, crrRow)
-        # fmtAdC and fmtAdR are defined in globals.R
+        fmtAdC <- "There are %d more colums in the data set not shown here. A complete list of variables can be found in \"Variables in the Output Data Set\" above this table."
+        fmtAdR <- "There are %d more rows in the data set not shown here."
         if (i == 1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(fmtAdC, dtaCol - pvwCol), rowNo = i)
         if (i == pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(fmtAdR, dtaRow - pvwRow), rowNo = i)
     }
-}
 
-crtInf <- function(crrInf = NULL, infMsg = c()) {
-    if (length(infMsg) > 0 && all(nzchar(infMsg))) {
-        crrInf$setContent(paste0(infMsg, collapse = "</p><p>"))
-    }
+    return(invisible(NULL))
 }
 
 nteFsC <- function(crrTbl = NULL, colFst = c()) {
-    # fmtFsC is defined in globals.R
+    fmtFsC <- "The column%s %s %s shown first in this preview. In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table."
     crrTbl$setNote("Note", sprintf(fmtFsC, ifelse(length(colFst) > 1, "s", ""),
                                            paste0(colFst, collapse = ", "),
                                            ifelse(length(colFst) > 1, "are", "is")))
@@ -84,6 +84,7 @@ optSnR <- function(crrOpt = NULL) {
     if (utils::hasName(crrOpt, "varSel") && !is.null(crrOpt$varSel) && length(crrOpt$varSel) > 0) {
        lstSnR[[ifelse(crrOpt$incExc == "include", "varInc", "varExc")]] <- crrOpt$varSel
     }
+
     return(lstSnR)
 }
 

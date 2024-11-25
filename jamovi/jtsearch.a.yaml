@@ -18,66 +18,71 @@ description:
 completeWhenFilled: true
 
 options:
-    - name: data
-      type: Data
+  - name: data
+    type: Data
 
-    - name: varAll
-      type: Variables
-      hidden: true
-      permitted:
-        - numeric
-        - factor
-        - id
-      default:
+  - name: varAll
+    type: Variables
+    hidden: true
+    permitted:
+      - numeric
+      - factor
+      - id
+    default:
 
-    - name: srcCst
-      type: String
-      default: ""
-      hidden: true
+  - name: srcCst
+    type: String
+    default: ""
+    hidden: true
 
-    - name: srcTrm
-      type: String
-      default: ""
-      hidden: true
+  - name: srcTrm
+    type: String
+    default: ""
+    hidden: true
 
-    - name: ignCse
-      title: "Ignore Case"
-      type: Bool
-      default: false
+  - name: ignCse
+    title: "Ignore Case"
+    type: Bool
+    default: false
 
-    - name: whlTrm
-      title: "Whole Word"
-      type: Bool
-      default: false
+  - name: whlTrm
+    title: "Whole Word"
+    type: Bool
+    default: false
 
-    - name: incCmp
-      title: "Computed"
-      type: Bool
-      default: true
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: false
 
-    - name: incRcd
-      title: "Transformed"
-      type: Bool
-      default: true
+  - name: incCmp
+    title: "Computed"
+    type: Bool
+    default: true
 
-    - name: incID
-      title: "ID"
-      type: Bool
-      default: true
+  - name: incRcd
+    title: "Transformed"
+    type: Bool
+    default: true
 
-    - name: incNom
-      title: "Nominal"
-      type: Bool
-      default: true
+  - name: incID
+    title: "ID"
+    type: Bool
+    default: true
 
-    - name: incOrd
-      title: "Ordinal"
-      type: Bool
-      default: true
+  - name: incNom
+    title: "Nominal"
+    type: Bool
+    default: true
 
-    - name: incNum
-      title: "Continuous"
-      type: Bool
-      default: true
+  - name: incOrd
+    title: "Ordinal"
+    type: Bool
+    default: true
+
+  - name: incNum
+    title: "Continuous"
+    type: Bool
+    default: true
 
 ...

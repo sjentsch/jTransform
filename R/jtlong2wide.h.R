@@ -13,6 +13,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varOrd = "times",
             varAgg = "mean",
             varSep = "_",
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -71,6 +72,10 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "varSep",
                 varSep,
                 default="_")
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -83,6 +88,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..varOrd)
             self$.addOption(private$..varAgg)
             self$.addOption(private$..varSep)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
@@ -93,6 +99,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         varOrd = function() private$..varOrd$value,
         varAgg = function() private$..varAgg$value,
         varSep = function() private$..varSep$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varID = NA,
@@ -102,6 +109,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..varOrd = NA,
         ..varAgg = NA,
         ..varSep = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -110,6 +118,7 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]],
         pvwLvl = function() private$.items[["pvwLvl"]],
         addInf = function() private$.items[["addInf"]]),
@@ -123,6 +132,12 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please assign the variables that identify participant (or another measurement unit; e.g., a number or an ID) to \"Variables that identify the same unit\", and those that are unique to an unit but not an identifier (e.g., gender, age group) to \"Variables NOT to be Transformed\". \"Variables That Differentiate Within a Unit\" typically contain different (e.g., experimental) conditions, and \"Variables To Be Transformed\" are the actual measurements (e.g., responses, reaction times, etc.).</p> <p>For an example about a typical long-to-wide-transformation, see the last paragraph in \"Details\" underneath the output tables.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="dtaInf",
                 clearWith=list(
                     "varID",
                     "varTme",
@@ -131,7 +146,8 @@ jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "varOrd",
                     "varAgg",
                     "varSep",
-                    "btnCrt")))
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -213,10 +229,12 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varOrd .
 #' @param varAgg .
 #' @param varSep .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$pvwLvl} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
@@ -238,6 +256,7 @@ jtLong2Wide <- function(
     varOrd = "times",
     varAgg = "mean",
     varSep = "_",
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -264,6 +283,7 @@ jtLong2Wide <- function(
         varOrd = varOrd,
         varAgg = varAgg,
         varSep = varSep,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtLong2WideClass$new(

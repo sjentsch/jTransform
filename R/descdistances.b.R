@@ -3,16 +3,21 @@ descDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
     "descDistancesClass",
     inherit = jtDistancesClass,
     private = list(
-        .init=function() {
+
+        .init = function() {
             super$.init()
             self$results$setTitle(.('Distances / Proximities'))
             self$results$pvwDta$setTitle(.('Distances / Proximities'))
         }
+
     ),
+
     public = list(
-        initialize=function(...) {
+
+        initialize = function(...) {
             super$initialize(...)
             private$.name <- 'descDistances'
         }
+
     )
 )

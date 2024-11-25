@@ -6,7 +6,24 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign the variables that identify participant (or another
+      measurement unit; e.g., a number or an ID) to "Variables that identify
+      the same unit", and those that are unique to an unit but not an
+      identifier (e.g., gender, age group) to "Variables NOT to be
+      Transformed". "Variables That Differentiate Within a Unit" typically
+      contain different (e.g., experimental) conditions, and "Variables To Be
+      Transformed" are the actual measurements (e.g., responses, reaction
+      times, etc.).</p>
+      <p>For an example about a typical long-to-wide-transformation, see the
+      last paragraph in "Details" underneath the output tables.
+
+  - name:  dtaInf
+    type:  Html
     clearWith: [ varID, varTme, varTgt, varExc, varOrd, varAgg, varSep, btnCrt ]
+    content: ""
 
   - name:  pvwDta
     type:  Table
@@ -104,10 +121,9 @@ items:
       experimental condition, we thus only need one column in the output;
       however, it is not unique and thus not suited as ID variable).</p>
 
-# take away btnCrt from genInf once Actions is working
-#  - name:  opnDta
-#    type:  Actions
-# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
-#    clearWith: [ btnCrt ]
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
 
 ...

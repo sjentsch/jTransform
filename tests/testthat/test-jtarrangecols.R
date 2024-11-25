@@ -4,7 +4,7 @@ testthat::test_that("jtarrangecols works", {
     chkRes <- jTransform::jtArrangeCols(data = dtaInp, varOrd = names(dtaInp)[c(1, 17:21, 12:16, 22:26, 2:11, 27:28)],
                                         varAll = names(dtaInp), blnAll = FALSE)
     expect_equal(class(chkRes), c("jtArrangeColsResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, N1,\n",
+    expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, N1,\n",
                                                  "N2, N3, N4, N5, E1, E2, E3, E4, E5, O1, O2, O3, O4, O5, A1, A2, A3,\n",
                                                  "A4, A5, C1, C2, C3, C4, C5, gender, age\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
@@ -41,7 +41,7 @@ testthat::test_that("jtarrangecols works", {
 
     chkRes <- jTransform::jtArrangeCols(data = dtaInp, varOrd = names(dtaInp)[c(1, 17:21, 12:16, 22:26)], varAll = names(dtaInp), blnAll = TRUE)
     expect_equal(class(chkRes), c("jtArrangeColsResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$genInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, N1,\n",
+    expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (28 variables in 250 rows): ID, N1,\n",
                                                  "N2, N3, N4, N5, E1, E2, E3, E4, E5, O1, O2, O3, O4, O5, A1, A2, A3,\n",
                                                  "A4, A5, C1, C2, C3, C4, C5, gender, age\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
@@ -78,7 +78,7 @@ testthat::test_that("jtarrangecols works", {
 
     # check instructions when chkVar fails (varOrd is empty)
     chkRes <- jTransform::jtArrangeCols(data = dtaInp, varAll = names(dtaInp), blnAll = TRUE)
-    expect_equal(names(chkRes), c("genInf", "pvwDta"))
+    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$genInf$asString(), paste("\n Please assign the variables in their desired order to \"Desired Order\n",
                                                  "of Variables\". By ticking \"Add Remaining Variables at the End\",\n",
                                                  "variables that are not contained in \"Desired order of variables\") are\n",

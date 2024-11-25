@@ -6,7 +6,23 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
-    clearWith: [ varOrd, blnAll, btnCrt ]
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign at least one variable to at least one of the variable boxes
+      indicating what (approximate) degree (moderate, strong, extreme and kind
+      (postive or negative) of skewness this variable has. For moderately
+      skewed variables, a square-root-transformation is used, for strongly
+      skewed variables, a logarithic transformation, and for severly skewed
+      variables an inversion. If necessary, a constant is added (automatically)
+      in order to avoid the transformation returning NA-values.</p>
+      <p>NB: The transformations work only for numeric variables (integer or
+      decimal); please adjust the measure / data type if necessary.
+      
+  - name:  dtaInf
+    type:  Html
+    clearWith: [ varDst, clmDst, btnCrt ]
+    content: ""
 
   - name:  pvwDta
     type:  Table
@@ -18,10 +34,9 @@ items:
       - name: fstCol
         title: ""
 
-# take away btnCrt from genInf once Actions is working
-#  - name:  opnDta
-#    type:  Actions
-# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
-#    clearWith: [ btnCrt ]
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
 
 ...

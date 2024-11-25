@@ -12,6 +12,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             tglChs = FALSE,
             fleChs = "",
             typMrg = "outer",
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -60,6 +61,10 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "left",
                     "right"),
                 default="outer")
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -71,6 +76,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..tglChs)
             self$.addOption(private$..fleChs)
             self$.addOption(private$..typMrg)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
@@ -80,6 +86,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         tglChs = function() private$..tglChs$value,
         fleChs = function() private$..fleChs$value,
         typMrg = function() private$..typMrg$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varBy = NA,
@@ -88,6 +95,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..tglChs = NA,
         ..fleChs = NA,
         ..typMrg = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -96,6 +104,7 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]],
         addInf = function() private$.items[["addInf"]]),
     private = list(),
@@ -108,12 +117,19 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please assign one or more variables that appear in all data sets (e.g., a participant code) to \"Variable(s) to Match the Data Sets by\". Afterwards, either write the name of (one or more) file(s) to be merged under \"Data Set(s) to Add\" (separate mulitiple file names with semicolons), or use \"Browse...\" to select input file(s).</p> <p>For a more comprehensive explanation regarding the types of merging operations, see \"Details\" underneath the preview table.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="dtaInf",
                 clearWith=list(
                     "varBy",
                     "varAll",
                     "fleInp",
                     "typMrg",
-                    "btnCrt")))
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -134,7 +150,8 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Html$new(
                 options=options,
                 name="addInf",
-                clearWith=NULL,
+                visible="(shwHlp)",
+                clearWith=list(),
                 content="<h2>Details</h2> <p>There are four different types of merging operations: The option \"Keeps All Cases (Rows)\" keeps all cases (but if some input data sets did not contain that value of the matching variable, there might be missing values for variable from that data set). The second option \"Keeps Only Cases Contained in All Merged Data Sets\" keeps only those cases where a particular value of the matching variable was contained in all datasets. The option \"Keeps All Cases From the Currently Opened Data Set\" keeps all rows / cases from the active data set (whereas cases that are only contained in the data sets defined under \"Data Set(s) to Add\" are dropped). The option \"Keeps All Cases From the Data Sets To Be Added\" keeps all cases from the data sets defined under \"Data Set(s) to Add\" (whereas cases that are only contained in the active data set are dropped).</p> <p>If there are variables with the same name in several of the input data sets, it will checked whether they contain the same content. If they are the same, only the first of these identical variables is kept (and the others are removed). If they are different, the name of the first of these variables is kept, and a suffix with their position (_2, _3, etc.) will be added to the name of all other variables.</p>\n"))}))
 
 jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -175,10 +192,12 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param tglChs .
 #' @param fleChs .
 #' @param typMrg .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #'   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
 #' }
@@ -198,6 +217,7 @@ jtMergeCols <- function(
     tglChs = FALSE,
     fleChs = "",
     typMrg = "outer",
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -219,6 +239,7 @@ jtMergeCols <- function(
         tglChs = tglChs,
         fleChs = fleChs,
         typMrg = typMrg,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtMergeColsClass$new(

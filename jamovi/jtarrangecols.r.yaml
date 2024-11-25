@@ -6,7 +6,17 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign the variables in their desired order to "Desired Order of
+      Variables". By ticking "Add Remaining Variables at the End", variables
+      that are not contained in "Desired order of variables" are appended.
+
+  - name:  dtaInf
+    type:  Html
     clearWith: [ varOrd, blnAll, btnCrt ]
+    content: ""
 
   - name:  pvwDta
     type:  Table
@@ -18,10 +28,9 @@ items:
       - name: fstCol
         title: ""
 
-# take away btnCrt from genInf once Actions is working
-#  - name:  opnDta
-#    type:  Actions
-# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
-#    clearWith: [ btnCrt ]
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
 
 ...

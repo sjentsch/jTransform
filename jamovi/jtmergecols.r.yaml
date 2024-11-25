@@ -6,7 +6,21 @@ jrs:   '1.1'
 items:
   - name:  genInf
     type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign one or more variables that appear in all data sets (e.g.,
+      a participant code) to "Variable(s) to Match the Data Sets by".
+      Afterwards, either write the name of (one or more) file(s) to be merged
+      under "Data Set(s) to Add" (separate mulitiple file names with
+      semicolons), or use "Browse..." to select input file(s).</p>
+      <p>For a more comprehensive explanation regarding the types of merging
+      operations, see "Details" underneath the preview table.
+
+  - name:  dtaInf
+    type:  Html
     clearWith: [ varBy, varAll, fleInp, typMrg, btnCrt ]
+    content: ""
 
   - name:  pvwDta
     type:  Table
@@ -20,7 +34,8 @@ items:
 
   - name:  addInf
     type:  Html
-    clearWith: NULL
+    visible: (shwHlp)
+    clearWith: [ ]
     content: >
       <h2>Details</h2>
       <p>There are four different types of merging operations: The option
@@ -43,10 +58,9 @@ items:
       these variables is kept, and a suffix with their position (_2, _3, etc.)
       will be added to the name of all other variables.</p>
 
-# take away btnCrt from genInf once Actions is working
-#  - name:  opnDta
-#    type:  Actions
-# Table,Group,Array,Image,Preformatted,Html,State,Property,Output
-#    clearWith: [ btnCrt ]
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
 
 ...

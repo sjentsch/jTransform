@@ -104,6 +104,11 @@ options:
 #      separator character between the fixed and the time-varying part of
 #      the variable name ("VAR1_1", "VAR1_2"; default: "_")
 
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: true
+
   - name: btnCrt
     type: Action
     title: Create

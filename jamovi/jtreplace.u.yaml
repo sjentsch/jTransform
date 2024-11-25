@@ -46,6 +46,15 @@ children:
           - type: ActionButton
             name: btnCrt
             margin: large
+
+  - type: LayoutBox
+    style: inline
+    margin: large
+    horizontalAlignment: left
+    children:
+      - type: CheckBox
+        name: shwHlp
+
   - type: CollapseBox
     label: Inclusion (In the Replacement)
     collapsed: true
@@ -87,6 +96,7 @@ children:
                     name: incOrd
                   - type: CheckBox
                     name: incNum
+
       - type: Label
         label: Select Variables...
         style: list

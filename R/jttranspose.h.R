@@ -8,6 +8,7 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varNme = NULL,
             varOth = NULL,
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -34,6 +35,10 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "id"),
                 required=TRUE,
                 default=NULL)
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -41,15 +46,18 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
         varNme = function() private$..varNme$value,
         varOth = function() private$..varOth$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varNme = NA,
         ..varOth = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -58,6 +66,7 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
@@ -69,10 +78,17 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please assign up to one variable to the variable box \"Column Names for the Output\" (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\"V_...\"). The variables to become rows in your output data set have to be assigned to \"Variables To Be Transposed\".\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="dtaInf",
                 clearWith=list(
-                    "varNme",
-                    "varOth",
-                    "btnCrt")))
+                    "varDst",
+                    "clmDst",
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -123,10 +139,12 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data .
 #' @param varNme .
 #' @param varOth .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
@@ -141,6 +159,7 @@ jtTranspose <- function(
     data,
     varNme = NULL,
     varOth = NULL,
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -158,6 +177,7 @@ jtTranspose <- function(
     options <- jtTransposeOptions$new(
         varNme = varNme,
         varOth = varOth,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtTransposeClass$new(

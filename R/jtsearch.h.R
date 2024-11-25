@@ -11,6 +11,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             srcTrm = "",
             ignCse = FALSE,
             whlTrm = FALSE,
+            shwHlp = FALSE,
             incCmp = TRUE,
             incRcd = TRUE,
             incID = TRUE,
@@ -51,6 +52,10 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "whlTrm",
                 whlTrm,
                 default=FALSE)
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=FALSE)
             private$..incCmp <- jmvcore::OptionBool$new(
                 "incCmp",
                 incCmp,
@@ -81,6 +86,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..srcTrm)
             self$.addOption(private$..ignCse)
             self$.addOption(private$..whlTrm)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..incCmp)
             self$.addOption(private$..incRcd)
             self$.addOption(private$..incID)
@@ -94,6 +100,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         srcTrm = function() private$..srcTrm$value,
         ignCse = function() private$..ignCse$value,
         whlTrm = function() private$..whlTrm$value,
+        shwHlp = function() private$..shwHlp$value,
         incCmp = function() private$..incCmp$value,
         incRcd = function() private$..incRcd$value,
         incID = function() private$..incID$value,
@@ -106,6 +113,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..srcTrm = NA,
         ..ignCse = NA,
         ..whlTrm = NA,
+        ..shwHlp = NA,
         ..incCmp = NA,
         ..incRcd = NA,
         ..incID = NA,
@@ -118,6 +126,7 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     "jtSearchResults",
     inherit = jmvcore::Group,
     active = list(
+        genInf = function() private$.items[["genInf"]],
         srcRes = function() private$.items[["srcRes"]]),
     private = list(),
     public=list(
@@ -126,6 +135,12 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 options=options,
                 name="",
                 title="Search")
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please type the term to be search for into the text box. If you want that partial matches (i.e., the search term appears within values) are found, leave the tick box \"Whole Word\" unset.</p> <p>The <strong>\"Include / Exclude\"</strong> collapse box permits to specifically select in which column and measurement types the <strong> search</strong> shall be conducted. Ticking the check boxes includes that variable or measurement type.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="srcRes",
@@ -181,6 +196,7 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param srcTrm .
 #' @param ignCse .
 #' @param whlTrm .
+#' @param shwHlp .
 #' @param incCmp .
 #' @param incRcd .
 #' @param incID .
@@ -189,6 +205,7 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param incNum .
 #' @return A results object containing:
 #' \tabular{llllll}{
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$srcRes} \tab \tab \tab \tab \tab a html \cr
 #' }
 #'
@@ -200,6 +217,7 @@ jtSearch <- function(
     srcTrm = "",
     ignCse = FALSE,
     whlTrm = FALSE,
+    shwHlp = FALSE,
     incCmp = TRUE,
     incRcd = TRUE,
     incID = TRUE,
@@ -223,6 +241,7 @@ jtSearch <- function(
         srcTrm = srcTrm,
         ignCse = ignCse,
         whlTrm = whlTrm,
+        shwHlp = shwHlp,
         incCmp = incCmp,
         incRcd = incRcd,
         incID = incID,

@@ -3,12 +3,16 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtReplaceClass",
     inherit = jtReplaceBase,
     private = list(
+        .crrCmd = "jmvReadWrite::replace_omv",
+        .crrDta = NULL,
+        .nonLtd = FALSE,
 
         .init = function() {
             if (private$.chkVar()) {
+                # create current data set
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
                 # resize / prepare the output table (prpPvw in utils.R)
-                if (!is.null(self$data) && dim(self$data)[1] > 0) dtaFrm <- self$data else dtaFrm <- self$readDataset()
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = dtaFrm)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -16,22 +20,17 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .run = function() {
-            # check whether rplTrm has the correct format and whether the data set has at least one row
-            if (private$.chkVar() && dim(self$data)[1] >= 1) {
+            # assemble or reset data set / create information
+            private$.dtaInf()
+            if (private$.chkVar()) {
                 # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
-                if (self$options$btnCrt) {
-                      do.call(jmvReadWrite::replace_omv, private$.crrArg()[-2])
-                # if not, show the variable list and how to use “Create” as general information
-                # and create a preview of the data (crtInf and fllPvw in utils.R)
+                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
+                      do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                # if not, create a preview of the data (fllPvw in utils.R) and mark replaced values
                 } else {
-                    rplDta <- do.call(jmvReadWrite::replace_omv, private$.crrArg())
-                    crtInf(crrInf = self$results$genInf, infMsg = private$.crtMsg())
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = rplDta)
-                    private$.mrkDff(crrTbl = self$results$pvwDta, dtaOld = self$data, dtaNew = rplDta)
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
+                    private$.mrkDff(crrTbl = self$results$pvwDta, dtaOld = self$readDataset(), dtaNew = private$.crrDta)
                 }
-            } else {
-                # show getting started as general information (crtInf in utils.R)
-                crtInf(crrInf = self$results$genInf, infMsg = hlpRpl)
             }
         },
 
@@ -40,7 +39,13 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .chkVar = function() {
-            (length(self$options$rplTrm) > 0 && all(vapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]), logical(1))))
+            (length(self$options$rplTrm) > 0 &&
+             all(vapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]), logical(1))) &&
+             dim(self$readDataset())[1] >= 1)
+        },
+
+        .colFst = function() {
+            c()
         },
 
         .crrArg = function() {
@@ -48,27 +53,36 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                                                       x[vapply(x, is.null, logical(1))] <- ""
                                                       c(x[[1]], x[[2]])
                                                   })
-            c(list(dtaInp = self$data, fleOut = NULL, rplLst = rplLst), optSnR(self$options))
+            c(list(dtaInp = self$readDataset(), rplLst = rplLst), optSnR(self$options))
         },
 
         .crtMsg = function() {
-            crtMsg <- sprintf("%s <strong>%s</strong> %s", .("Pressing the"),
-                              .("\"Create\"-button opens the modified data set"), .(" in a new jamovi window."))
-            if (!is.null(private$.crrDta)) {
-                c(sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
-                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
-                    paste0(names(private$.crrDta), collapse = ", ")),
-                  crtMsg)
+            if (self$options$btnCrt) return(NULL)
+
+            sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
+                    .(" in a new jamovi window."))
+        },
+
+        .dtaInf = function() {
+            if (private$.chkVar()) {
+                self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
+                self$results$dtaInf$setVisible(TRUE)
             } else {
-                crtMsg
+                self$results$dtaInf$setVisible(FALSE)
             }
+        },
+
+        .dtaMsg = function() {
+            sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
+                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
+                    paste0(names(private$.crrDta), collapse = ", "))
         },
 
         .mrkDff = function(crrTbl = NULL, dtaOld = NULL, dtaNew = NULL) {
             selFac <- vapply(dtaOld, is.factor, logical(1))
             if (any(selFac)) {
-                dtaOld[, selFac] <- as.data.frame(vapply(dtaOld[, selFac], as.character, character(1)))
-                dtaNew[, selFac] <- as.data.frame(vapply(dtaNew[, selFac], as.character, character(1)))
+                dtaOld[, selFac] <- as.data.frame(vapply(dtaOld[, selFac], as.character, character(dim(dtaOld)[1])))
+                dtaNew[, selFac] <- as.data.frame(vapply(dtaNew[, selFac], as.character, character(dim(dtaNew)[1])))
             }
             selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
             selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))
@@ -93,7 +107,7 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     public = list(
 
         asSource = function() {
-            if (private$.chkVar()) fmtSrc("jmvReadWrite::replace_omv", private$.crrArg()[-seq(2)])
+            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg()[-1])
         }
 
     )

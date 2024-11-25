@@ -9,6 +9,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varSrt = NULL,
             varAll = NULL,
             ordSrt = NULL,
+            shwHlp = TRUE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -53,6 +54,10 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                                 "ascend",
                                 "descend")))),
                 default=NULL)
+            private$..shwHlp <- jmvcore::OptionBool$new(
+                "shwHlp",
+                shwHlp,
+                default=TRUE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -61,17 +66,20 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..varSrt)
             self$.addOption(private$..varAll)
             self$.addOption(private$..ordSrt)
+            self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
         varSrt = function() private$..varSrt$value,
         varAll = function() private$..varAll$value,
         ordSrt = function() private$..ordSrt$value,
+        shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varSrt = NA,
         ..varAll = NA,
         ..ordSrt = NA,
+        ..shwHlp = NA,
         ..btnCrt = NA)
 )
 
@@ -80,6 +88,7 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
     inherit = jmvcore::Group,
     active = list(
         genInf = function() private$.items[["genInf"]],
+        dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
     private = list(),
     public=list(
@@ -91,10 +100,17 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
+                visible="(shwHlp)",
+                clearWith=list(),
+                content="Please assign one or more variables to the variable box \"Variable(s) to be Sorted After\". The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age). Variables are sorted in \"Ascending\" order (as default), but you can change the order if desired.\n"))
+            self$add(jmvcore::Html$new(
+                options=options,
+                name="dtaInf",
                 clearWith=list(
                     "varSrt",
                     "varAll",
-                    "btnCrt")))
+                    "btnCrt"),
+                content=""))
             self$add(jmvcore::Table$new(
                 options=options,
                 name="pvwDta",
@@ -147,10 +163,12 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varSrt .
 #' @param varAll .
 #' @param ordSrt .
+#' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
 #' }
 #'
@@ -166,6 +184,7 @@ jtSort <- function(
     varSrt = NULL,
     varAll = NULL,
     ordSrt = NULL,
+    shwHlp = TRUE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -184,6 +203,7 @@ jtSort <- function(
         varSrt = varSrt,
         varAll = varAll,
         ordSrt = ordSrt,
+        shwHlp = shwHlp,
         btnCrt = btnCrt)
 
     analysis <- jtSortClass$new(

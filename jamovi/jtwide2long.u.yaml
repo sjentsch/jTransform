@@ -9,7 +9,9 @@ children:
     name: mdeW2L
     stretchFactor: 1
     children:
+
 # =============================================================================
+
       - type: Content
         name: Sep
         children:
@@ -57,7 +59,9 @@ children:
                 format: string
                 margin: large
                 horizontalAlignment: right
+
 # =============================================================================
+
       - type: Content
         name: NSS
         children:
@@ -101,7 +105,9 @@ children:
                     name: tgtNSS
                     format: string
                     stretchFactor: 1
+
 # =============================================================================
+
       - type: Content
         name: NSA
         children:
@@ -176,11 +182,27 @@ children:
                       type: TextBox
                       format: number
                     stretchFactor: 1.2
+
 # =============================================================================
+
   - type: LayoutBox
     style: inline
+    stretchFactor: 1
     margin: large
-    horizontalAlignment: right
     children:
-      - type: ActionButton
-        name: btnCrt
+      - type: LayoutBox
+        style: list
+        stretchFactor: 1
+        margin: large
+        horizontalAlignment: left
+        children:
+          - type: CheckBox
+            name: shwHlp
+      - type: LayoutBox
+        style: list
+        stretchFactor: 1
+        margin: none
+        horizontalAlignment: right
+        children:
+          - type: ActionButton
+            name: btnCrt

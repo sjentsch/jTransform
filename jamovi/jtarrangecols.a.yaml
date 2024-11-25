@@ -50,6 +50,11 @@ options:
     type: Bool
     default: false
 
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: true
+
   - name: btnCrt
     type: Action
     title: Create
