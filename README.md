@@ -1,4 +1,4 @@
-# jTransform
+# jTransform: A jamovi Module  for common data management tasks and data set transformations
 
 <!---
 <br clear="all">
