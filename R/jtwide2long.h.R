@@ -24,7 +24,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             excNSA = NULL,
             idxNSA = list(
                 list(var="index1", levels=0)),
-            shwHlp = TRUE,
+            shwHlp = FALSE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -154,7 +154,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -428,7 +428,7 @@ jtWide2Long <- function(
     excNSA = NULL,
     idxNSA = list(
                 list(var="index1", levels=0)),
-    shwHlp = TRUE,
+    shwHlp = FALSE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))

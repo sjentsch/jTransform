@@ -10,7 +10,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             rplTrm = list(
                 list(rplOld="", rplNew="")),
             whlTrm = TRUE,
-            shwHlp = TRUE,
+            shwHlp = FALSE,
             btnCrt = FALSE,
             incCmp = TRUE,
             incRcd = TRUE,
@@ -58,7 +58,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -262,7 +262,7 @@ jtReplace <- function(
     rplTrm = list(
                 list(rplOld="", rplNew="")),
     whlTrm = TRUE,
-    shwHlp = TRUE,
+    shwHlp = FALSE,
     btnCrt = FALSE,
     incCmp = TRUE,
     incRcd = TRUE,

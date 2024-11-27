@@ -9,7 +9,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varSrt = NULL,
             varAll = NULL,
             ordSrt = NULL,
-            shwHlp = TRUE,
+            shwHlp = FALSE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -57,7 +57,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -184,7 +184,7 @@ jtSort <- function(
     varSrt = NULL,
     varAll = NULL,
     ordSrt = NULL,
-    shwHlp = TRUE,
+    shwHlp = FALSE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))

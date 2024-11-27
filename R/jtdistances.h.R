@@ -14,7 +14,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             rt_Dst = 2,
             p__Dst = "1",
             np_Dst = "0",
-            shwHlp = TRUE,
+            shwHlp = FALSE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -114,7 +114,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -260,7 +260,7 @@ jtDistances <- function(
     rt_Dst = 2,
     p__Dst = "1",
     np_Dst = "0",
-    shwHlp = TRUE,
+    shwHlp = FALSE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))

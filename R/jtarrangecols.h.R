@@ -9,7 +9,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varAll = NULL,
             varOrd = NULL,
             blnAll = FALSE,
-            shwHlp = TRUE,
+            shwHlp = FALSE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -42,7 +42,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -168,7 +168,7 @@ jtArrangeCols <- function(
     varAll = NULL,
     varOrd = NULL,
     blnAll = FALSE,
-    shwHlp = TRUE,
+    shwHlp = FALSE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))

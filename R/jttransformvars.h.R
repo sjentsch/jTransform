@@ -13,7 +13,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             negLog = NULL,
             posInv = NULL,
             negInv = NULL,
-            shwHlp = TRUE,
+            shwHlp = FALSE,
             btnCrt = FALSE, ...) {
 
             super$initialize(
@@ -82,7 +82,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
@@ -229,7 +229,7 @@ jtTransformVars <- function(
     negLog = NULL,
     posInv = NULL,
     negInv = NULL,
-    shwHlp = TRUE,
+    shwHlp = FALSE,
     btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))

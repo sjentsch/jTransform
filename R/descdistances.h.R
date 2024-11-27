@@ -14,7 +14,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             rt_Dst = 2,
             p__Dst = "1",
             np_Dst = "0",
-            shwHlp = TRUE, ...) {
+            shwHlp = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -113,7 +113,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
-                default=TRUE)
+                default=FALSE)
 
             self$.addOption(private$..varDst)
             self$.addOption(private$..clmDst)
@@ -250,7 +250,7 @@ descDistances <- function(
     rt_Dst = 2,
     p__Dst = "1",
     np_Dst = "0",
-    shwHlp = TRUE) {
+    shwHlp = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("descDistances requires jmvcore to be installed (restart may be required)")
