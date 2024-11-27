@@ -9,7 +9,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     # determine column names, and if required, put the columns in colFst at the beginning
     colNme <- names(dtaFrm)
     if (length(colFst) > 0) {
-        if (!all(colFst == colNme[seq_along(colFst)])) nteFsC(crrTbl = crrTbl, colFst = colFst)
+        if (!all(colFst == colNme[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
         colNme <- unique(c(colFst, colNme))
     }
     # create a list vector with empty entries (to be assigned when adding a new row), change title for
@@ -31,7 +31,7 @@ rstPvw <- function(crrTbl = NULL) {
     return(invisible(NULL))
 }
 
-fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
+fllPvw <- function(crrTbl = NULL, dtaFrm = NULL, nteRnC = c()) {
     # useIdx is defined in globals.R
     dtaRow <- dim(dtaFrm)[1]
     dtaCol <- dim(dtaFrm)[2] + ifelse(useIdx, 1, 0)
@@ -60,20 +60,11 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL) {
         crrRow[vapply(crrRow, is.na, logical(1))] <- ""
         if (i == pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
         crrTbl$setRow(rowNo = i, crrRow)
-        fmtAdC <- "There are %d more colums in the data set not shown here. A complete list of variables can be found in \"Variables in the Output Data Set\" above this table."
-        fmtAdR <- "There are %d more rows in the data set not shown here."
-        if (i == 1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(fmtAdC, dtaCol - pvwCol), rowNo = i)
-        if (i == pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(fmtAdR, dtaRow - pvwRow), rowNo = i)
+        if (i == 1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(nteRnC[1], dtaCol - pvwCol), rowNo = i)
+        if (i == pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(nteRnC[2], dtaRow - pvwRow), rowNo = i)
     }
 
     return(invisible(NULL))
-}
-
-nteFsC <- function(crrTbl = NULL, colFst = c()) {
-    fmtFsC <- "The column%s %s %s shown first in this preview. In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table."
-    crrTbl$setNote("Note", sprintf(fmtFsC, ifelse(length(colFst) > 1, "s", ""),
-                                           paste0(colFst, collapse = ", "),
-                                           ifelse(length(colFst) > 1, "are", "is")))
 }
 
 optSnR <- function(crrOpt = NULL) {
