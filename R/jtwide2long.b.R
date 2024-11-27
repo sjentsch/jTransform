@@ -23,20 +23,8 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .run = function() {
-            # assemble or reset data set / create information
-            private$.dtaInf()
-            if (private$.chkVar()) {
-                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                # if not, create a preview of the data and of the repeated measurement levels (fllPvw in utils.R)
-                } else {
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
-                    fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta)
-                }
-            }
-        },
+        # common functions are in incFnc.R
+        .run = commonFunc$private_methods$.runRpM,
 
         .adjRes = function(dtaFrm = NULL) {
             if        (self$options$mdeW2L == "NSA") {
@@ -45,12 +33,14 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 names(dtaFrm)[selClm] <- vapply(self$options$idxNSA, "[[", character(1), "var")
             } else if (self$options$mdeW2L == "NSS") {
                 selClm <- grepl(paste0("^cond$"),       names(dtaFrm))
-                dtaFrm[, selClm] <- vapply(dtaFrm[, selClm], function(x) as.integer(as.character(x)), integer(dim(dtaFrm)[1]))
+                dtaFrm[, selClm] <- vapply(dtaFrm[, selClm], function(x) as.integer(as.character(x)), integer(1))
                 names(dtaFrm)[selClm] <- self$options$idxNSS
             }
 
             dtaFrm
         },
+
+        .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkNSA = function() {
             xfmNSA <- self$options$xfmNSA
@@ -68,21 +58,18 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .chkVar = function() {
-            (((self$options$mdeW2L == "Sep" && private$.chkSep()) ||
-              (self$options$mdeW2L == "NSS" && length(self$options$xfmNSS) > 0 && nzchar(self$options$idxNSS) && nzchar(self$options$tgtNSS)) ||
-              (self$options$mdeW2L == "NSA" && private$.chkNSA())) &&
-             dim(self$readDataset())[1] >= 1)
+            ((self$options$mdeW2L == "Sep" && private$.chkSep()) ||
+             (self$options$mdeW2L == "NSS" && length(self$options$xfmNSS) > 0 && nzchar(self$options$idxNSS) && nzchar(self$options$tgtNSS)) ||
+             (self$options$mdeW2L == "NSA" && private$.chkNSA()))
         },
 
-        .colFst = function() {
-            c()
-        },
+        .colFst = commonFunc$private_methods$.colFst,
 
         .crrArg = function() {
             if        (self$options$mdeW2L == "Sep") {
-                list(dtaInp = self$readDataset(),  varID = self$options$id_Sep,  varTme = self$options$pfxSep,
-                     varLst = self$options$xfmSep, varExc = self$options$excSep, varSep = self$options$chrSep,
-                     excLvl = private$.lvl2Nm())
+                list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
+                     varID = self$options$id_Sep,  varTme = self$options$pfxSep, varLst = self$options$xfmSep,
+                     varExc = self$options$excSep, varSep = self$options$chrSep, excLvl = private$.lvl2Nm())
             } else if (self$options$mdeW2L == "NSS") {
                 rnmRes <- private$.rnmDta()
                 list(dtaInp = rnmRes$dtaFrm,       varID = self$options$id_NSS,  varLst = rnmRes$tgtLst,
@@ -94,27 +81,10 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .crtMsg = function() {
-            if (self$options$btnCrt) return(NULL)
-
-            sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
-                    .(" in a new jamovi window."))
-        },
-
-        .dtaInf = function() {
-            if (private$.chkVar()) {
-                self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
-                self$results$dtaInf$setVisible(TRUE)
-            } else {
-                self$results$dtaInf$setVisible(FALSE)
-            }
-        },
-
-        .dtaMsg = function() {
-            sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
-                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
-                    paste0(names(private$.crrDta), collapse = ", "))
-        },
+        .crtMsg = commonFunc$private_methods$.crtMsg,
+        .dtaInf = commonFunc$private_methods$.dtaInf,
+        .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .nteRnC = commonFunc$private_methods$.nteRnC,
 
         .lvl2Nm = function() {
             eval(parse(text = paste0("as.integer(c(", self$options$lvlSep, "))")))
@@ -149,7 +119,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .rnmDta = function() {
-            dtaFrm <- self$readDataset()
+            dtaFrm <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
             if        (self$options$mdeW2L == "NSS") {
                 tgtLst <- paste0(self$options$tgtNSS, private$.spfNum(length(self$options$xfmNSS)))
                 selClm <- (names(dtaFrm) %in% self$options$xfmNSS)

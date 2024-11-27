@@ -22,27 +22,16 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .run = function() {
-            # assemble or reset data set / create information
-            private$.dtaInf()
-            if (private$.chkVar()) {
-                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                # if not, create a preview of the data and of the repeated measurement levels (fllPvw in utils.R)
-                } else {
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
-                    fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta)
-                }
-            }
-        },
+        # common functions are in incFnc.R
+        .run = commonFunc$private_methods$.runRpM,
+
+        .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkVar = function() {
             (length(self$options$varID) > 0 &&
              length(self$options$varTme) > 0 &&
              length(self$options$varTgt) > 0 &&
-             nzchar(self$options$varSep) &&
-             dim(self$readDataset())[1] >= 1)
+             nzchar(self$options$varSep))
         },
 
         .colFst = function() {
@@ -59,36 +48,29 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 crrTgt <- colNme[grepl(paste0("^", colTgt[i]), colNme)]
                 varLst <- c(varLst, crrTgt[seq(lngTgt[i])])
             }
+
+            crrFtN <- sprintf(paste(.("The column%s %s %s shown first in this preview. In the"),
+                                    .("created data set, the variable order is as shown in"),
+                                    .("\"Variables in the Output Data Set\" above this table.")),
+                              ifelse(length(varLst) > 1, "s", ""),
+                              paste0(varLst, collapse = ", "),
+                              ifelse(length(varLst) > 1, "are", "is"))
+            attr(varLst, "note") <- crrFtN
+
             varLst
         },
 
         .crrArg = function() {
-            list(dtaInp = self$readDataset(),  varID  = self$options$varID,  varTme = self$options$varTme,
-                 varTgt = self$options$varTgt, varExc = self$options$varExc, varSep = self$options$varSep,
-                 varOrd = self$options$varOrd, varAgg = self$options$varAgg)
+            list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
+                 varID  = self$options$varID,  varTme = self$options$varTme, varTgt = self$options$varTgt,
+                 varExc = self$options$varExc, varSep = self$options$varSep, varOrd = self$options$varOrd,
+                 varAgg = self$options$varAgg)
         },
 
-        .crtMsg = function() {
-            if (self$options$btnCrt) return(NULL)
-
-            sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
-                    .(" in a new jamovi window."))
-        },
-
-        .dtaInf = function() {
-            if (private$.chkVar()) {
-                self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
-                self$results$dtaInf$setVisible(TRUE)
-            } else {
-                self$results$dtaInf$setVisible(FALSE)
-            }
-        },
-
-        .dtaMsg = function() {
-            sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
-                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
-                    paste0(names(private$.crrDta), collapse = ", "))
-        },
+        .crtMsg = commonFunc$private_methods$.crtMsg,
+        .dtaInf = commonFunc$private_methods$.dtaInf,
+        .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .nteRnC = commonFunc$private_methods$.nteRnC,
 
         .prpRpM = function(xfmDta = NULL) {
             # exclude self$options$varID and self$options$varExc
@@ -96,7 +78,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             # self$options$varTgt -> names / grepl
             varTme <- self$options$varTme
             numTme <- length(varTme)
-            orgDta <- self$readDataset()
+            orgDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
             tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)], drop = FALSE]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
             nmeTgt <- sort(names(xfmDta)[grepl(paste0(paste0("^", varTgt), collapse = "|"), names(xfmDta))])
@@ -108,9 +90,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
     public = list(
 
-        asSource = function() {
-            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg()[-1])
-        }
+        asSource = commonFunc$public_methods$asSource
 
     )
 )

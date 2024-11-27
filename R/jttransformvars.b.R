@@ -7,79 +7,49 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .crrDta = NULL,
         .nonLtd = FALSE,
 
-        .init = function() {
-            if (private$.chkVar()) {
-                # calculate the current data
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
-                # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
-            } else {
-                # reset the output table (rstPvw in utils.R)
-                rstPvw(crrTbl = self$results$pvwDta)
-            }
-        },
+        # common functions are in incFnc.R
+        .init = commonFunc$private_methods$.init,
+        .run  = commonFunc$private_methods$.run,
 
-        .run = function() {
-            # assemble or reset data set / create information
-            private$.dtaInf()
-            if (private$.chkVar()) {
-                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                # if not, create a preview of the data (fllPvw in utils.R)
-                } else {
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta)
-                }
-            }
-        },
+        .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkVar = function() {
-            ((length(self$options$posSqr) >= 1 || length(self$options$negSqr) >= 1  ||
-              length(self$options$posLog) >= 1 || length(self$options$negLog) >= 1  ||
-              length(self$options$posInv) >= 1 || length(self$options$negInv) >= 1) &&
-             dim(self$readDataset())[1] >= 1)
+            (length(self$options$posSqr) >= 1 || length(self$options$negSqr) >= 1 ||
+             length(self$options$posLog) >= 1 || length(self$options$negLog) >= 1 ||
+             length(self$options$posInv) >= 1 || length(self$options$negInv) >= 1)
         },
 
         .colFst = function() {
-            inpDta <- self$readDataset()
-            c(setdiff(names(private$.crrDta), names(inpDta)), names(inpDta))
+            inpDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            varLst <- c(setdiff(names(private$.crrDta), names(inpDta)), names(inpDta))
+
+            crrFtN <- sprintf(paste(.("The column%s %s %s shown first in this preview. In the"),
+                                    .("created data set, the variable order is as shown in"),
+                                    .("\"Variables in the Output Data Set\" above this table.")),
+                              ifelse(length(varLst) > 1, "s", ""),
+                              paste0(varLst, collapse = ", "),
+                              ifelse(length(varLst) > 1, "are", "is"))
+            attr(varLst, "note") <- crrFtN
+
+            varLst
         },
 
         .crrArg = function() {
             nmeXfm <- c("posSqr", "negSqr", "posLog", "negLog", "posInv", "negInv")
-            crrXfm <- setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm)
-            list(dtaInp = self$readDataset(), varXfm = crrXfm)
+            list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
+                 varXfm = setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm))
         },
 
-        .crtMsg = function() {
-            if (self$options$btnCrt) return(NULL)
-
-            sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
-                    .(" in a new jamovi window."))
-        },
-
-        .dtaInf = function() {
-            if (private$.chkVar()) {
-                self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
-                self$results$dtaInf$setVisible(TRUE)
-            } else {
-                self$results$dtaInf$setVisible(FALSE)
-            }
-        },
-
-        .dtaMsg = function() {
-            sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
-                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
-                    paste0(names(private$.crrDta), collapse = ", "))
-        }
+        .crtMsg = commonFunc$private_methods$.crtMsg,
+        .dtaInf = commonFunc$private_methods$.dtaInf,
+        .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .nteRnC = commonFunc$private_methods$.nteRnC
 
     ),
 
     public = list(
 
-        asSource = function() {
-            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg()[-1])
-        }
+        asSource = commonFunc$public_methods$asSource
 
     )
 )

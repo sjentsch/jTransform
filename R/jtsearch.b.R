@@ -7,7 +7,7 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         .run = function() {
             # check whether all required variables are present
-            if (private$.chkVar()) {
+            if (private$.chkVar() && private$.chkDtF()) {
                 # conduct the search and create an output string
                 srcRes <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
                 # initial line about whether the search term was found
@@ -28,21 +28,23 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             }
         },
 
+        # common functions are in incFnc.R
+        .chkDtF = commonFunc$private_methods$.chkDtF,
+
         .chkVar = function() {
-            (nzchar(trimws(self$options$srcTrm)) && dim(self$readDataset())[1] >= 1)
+            (nzchar(trimws(self$options$srcTrm)))
         },
 
         .crrArg = function() {
-            c(list(dtaInp = self$readDataset(), srcTrm = trimws(self$options$srcTrm)), optSnR(self$options))
+            c(list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
+                   srcTrm = trimws(self$options$srcTrm)), optSnR(self$options))
         }
 
     ),
 
     public = list(
 
-        asSource = function() {
-            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg()[-1])
-        }
+        asSource = commonFunc$public_methods$asSource
 
     )
 )

@@ -3,6 +3,7 @@ descDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
     "descDistancesClass",
     inherit = jtDistancesClass,
     private = list(
+        .nonLtd = TRUE,
 
         .init = function() {
             super$.init()
