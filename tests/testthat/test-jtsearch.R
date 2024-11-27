@@ -140,13 +140,8 @@ testthat::test_that("jtsearch works", {
 
     # check instructions when chkVar fails (varOrd is empty)
     chkRes <- jTransform::jtSearch(data = dtaInp, varAll = names(dtaInp), ignCse = FALSE, whlTrm = FALSE)
-    expect_equal(names(chkRes), c("srcRes"))
-    expect_equal(chkRes$srcRes$asString(), paste("\n Please type the term to be search for into the text box. If you want\n",
-                                                 "that partial matches (i.e., the search term appears within values) are\n",
-                                                 "found, leave the tick box \"Whole Word\" unset.\n\n",
-                                                 "The \"Include / Exclude\" collapse box permits to specifically select in\n",
-                                                 "which column and measurement types the search shall be conducted.\n",
-                                                 "Ticking the check boxes includes that variable or measurement type.\n"))
+    expect_equal(names(chkRes), c("genInf", "srcRes"))
+    expect_equal(chkRes$srcRes$asString(), "\n\n")
 
     # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtSearch(varAll = names(dtaInp), srcTrm = "6", ignCse = FALSE, whlTrm = FALSE),
