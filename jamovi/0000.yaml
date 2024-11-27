@@ -1,7 +1,7 @@
 ---
 title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
-version: 0.3.3
+version: 0.4.0
 jms: '1.0'
 authors:
   - Sebastian Jentschke
@@ -10,15 +10,21 @@ maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 date: '2024-11-10'
 type: R
 description: >-
-  jTransform carries out common data management tasks and transformations of
-  data sets. It includes functions to change the order of / re-arrange variables
-  in a data set, transforming a data set from long to wide or from wide to long,
-  transposing a data set (make rows into columns and columns into rows), sorting
-  a data set after one or more variable, and adding columns from one or more
-  additional data sets to the currently opened data set. In addition, there are
-  functions to search or replace values. Finally, the is a function to apply
-  transformations for skewed variables trying to make them better conform to a
-  normal distribution.
+  The jamovi module jTransform carries out common data management tasks and
+  transformations of data sets. It includes functions to change the order of /
+  re-arrange variables in a data set, transforming a data set from long to wide
+  or from wide to long, transposing a data set (make rows into columns and
+  columns into rows), sorting a data set after one or more variable, and adding
+  columns from one or more additional data sets to the currently opened data
+  set. In addition, there are functions to search or replace values.
+  Furthermore, there is a function to apply transformations for skewed
+  variables trying to make them better conform to a normal distribution.
+  Finally, there is a function to calculate distances / proximities. jTransform
+  calls functions from the R-package `jmvReadWrite`,
+  (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to these
+  functions via a graphical user interface (without the need to use a R command
+  line for these transformations).
+
 analyses:
   - title: Search
     name: jtSearch
