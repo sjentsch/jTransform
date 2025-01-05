@@ -19,7 +19,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             incOrd = TRUE,
             incNum = TRUE,
             incExc = "include",
-            varSel = NULL, ...) {
+            varSel = NULL,
+            jxfLog = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -102,6 +103,11 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                     "factor",
                     "id"),
                 default=NULL)
+            private$..jxfLog <- jmvcore::OptionBool$new(
+                "jxfLog",
+                jxfLog,
+                hidden=TRUE,
+                default=FALSE)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..rplTrm)
@@ -116,6 +122,7 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..incNum)
             self$.addOption(private$..incExc)
             self$.addOption(private$..varSel)
+            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varAll = function() private$..varAll$value,
@@ -130,7 +137,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         incOrd = function() private$..incOrd$value,
         incNum = function() private$..incNum$value,
         incExc = function() private$..incExc$value,
-        varSel = function() private$..varSel$value),
+        varSel = function() private$..varSel$value,
+        jxfLog = function() private$..jxfLog$value),
     private = list(
         ..varAll = NA,
         ..rplTrm = NA,
@@ -144,7 +152,8 @@ jtReplaceOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..incOrd = NA,
         ..incNum = NA,
         ..incExc = NA,
-        ..varSel = NA)
+        ..varSel = NA,
+        ..jxfLog = NA)
 )
 
 jtReplaceResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -242,6 +251,7 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param incNum .
 #' @param incExc .
 #' @param varSel .
+#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -271,7 +281,8 @@ jtReplace <- function(
     incOrd = TRUE,
     incNum = TRUE,
     incExc = "include",
-    varSel = NULL) {
+    varSel = NULL,
+    jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtReplace requires jmvcore to be installed (restart may be required)")
@@ -298,7 +309,8 @@ jtReplace <- function(
         incOrd = incOrd,
         incNum = incNum,
         incExc = incExc,
-        varSel = varSel)
+        varSel = varSel,
+        jxfLog = jxfLog)
 
     analysis <- jtReplaceClass$new(
         options = options,

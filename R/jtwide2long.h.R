@@ -25,7 +25,8 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             idxNSA = list(
                 list(var="index1", levels=0)),
             shwHlp = FALSE,
-            btnCrt = FALSE, ...) {
+            btnCrt = FALSE,
+            jxfLog = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -159,6 +160,11 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "btnCrt",
                 btnCrt,
                 default=FALSE)
+            private$..jxfLog <- jmvcore::OptionBool$new(
+                "jxfLog",
+                jxfLog,
+                hidden=TRUE,
+                default=FALSE)
 
             self$.addOption(private$..mdeW2L)
             self$.addOption(private$..id_Sep)
@@ -178,6 +184,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..idxNSA)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
+            self$.addOption(private$..jxfLog)
         }),
     active = list(
         mdeW2L = function() private$..mdeW2L$value,
@@ -197,7 +204,8 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         excNSA = function() private$..excNSA$value,
         idxNSA = function() private$..idxNSA$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value),
+        btnCrt = function() private$..btnCrt$value,
+        jxfLog = function() private$..jxfLog$value),
     private = list(
         ..mdeW2L = NA,
         ..id_Sep = NA,
@@ -216,7 +224,8 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..excNSA = NA,
         ..idxNSA = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA)
+        ..btnCrt = NA,
+        ..jxfLog = NA)
 )
 
 jtWide2LongResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -388,6 +397,7 @@ jtWide2LongBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param idxNSA .
 #' @param shwHlp .
 #' @param btnCrt .
+#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genSep} \tab \tab \tab \tab \tab a html \cr
@@ -429,7 +439,8 @@ jtWide2Long <- function(
     idxNSA = list(
                 list(var="index1", levels=0)),
     shwHlp = FALSE,
-    btnCrt = FALSE) {
+    btnCrt = FALSE,
+    jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtWide2Long requires jmvcore to be installed (restart may be required)")
@@ -473,7 +484,8 @@ jtWide2Long <- function(
         excNSA = excNSA,
         idxNSA = idxNSA,
         shwHlp = shwHlp,
-        btnCrt = btnCrt)
+        btnCrt = btnCrt,
+        jxfLog = jxfLog)
 
     analysis <- jtWide2LongClass$new(
         options = options,

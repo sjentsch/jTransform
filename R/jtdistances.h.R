@@ -15,7 +15,8 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             p__Dst = "1",
             np_Dst = "0",
             shwHlp = FALSE,
-            btnCrt = FALSE, ...) {
+            btnCrt = FALSE,
+            jxfLog = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -119,6 +120,11 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "btnCrt",
                 btnCrt,
                 default=FALSE)
+            private$..jxfLog <- jmvcore::OptionBool$new(
+                "jxfLog",
+                jxfLog,
+                hidden=TRUE,
+                default=FALSE)
 
             self$.addOption(private$..varDst)
             self$.addOption(private$..clmDst)
@@ -130,6 +136,7 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..np_Dst)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
+            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varDst = function() private$..varDst$value,
@@ -141,7 +148,8 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         p__Dst = function() private$..p__Dst$value,
         np_Dst = function() private$..np_Dst$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value),
+        btnCrt = function() private$..btnCrt$value,
+        jxfLog = function() private$..jxfLog$value),
     private = list(
         ..varDst = NA,
         ..clmDst = NA,
@@ -152,7 +160,8 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..p__Dst = NA,
         ..np_Dst = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA)
+        ..btnCrt = NA,
+        ..jxfLog = NA)
 )
 
 jtDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -236,6 +245,7 @@ jtDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param np_Dst .
 #' @param shwHlp .
 #' @param btnCrt .
+#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -261,7 +271,8 @@ jtDistances <- function(
     p__Dst = "1",
     np_Dst = "0",
     shwHlp = FALSE,
-    btnCrt = FALSE) {
+    btnCrt = FALSE,
+    jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtDistances requires jmvcore to be installed (restart may be required)")
@@ -283,7 +294,8 @@ jtDistances <- function(
         p__Dst = p__Dst,
         np_Dst = np_Dst,
         shwHlp = shwHlp,
-        btnCrt = btnCrt)
+        btnCrt = btnCrt,
+        jxfLog = jxfLog)
 
     analysis <- jtDistancesClass$new(
         options = options,

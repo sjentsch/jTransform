@@ -42,7 +42,7 @@ module.exports = {
         // 5. Shortcuts
         KeyboardShortcuts.addShortcut(['ctrl', 'shift', 'l'], () => {
             console.log('Ctrl+Shift+L pressed. Enabling logging.');
-            ui.jlog.setValue(true);
+            ui.jxfLog.setValue(true);
 
             // Show a toast that EXACTLY covers the "LOGGING ACTIVE" label
             // for 2 seconds, then disappears
@@ -54,7 +54,7 @@ module.exports = {
 
         KeyboardShortcuts.addShortcut(['ctrl', 'alt', 'l'], () => {
             console.log('Ctrl+Alt+L pressed. Disabling logging.');
-            ui.jlog.setValue(false);
+            ui.jxfLog.setValue(false);
 
             // Show a toast that covers the label
             ToastManager.showToast('LOGGING DISABLED', 2000, loggingContainer);

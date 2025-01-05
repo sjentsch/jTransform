@@ -14,7 +14,8 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             posInv = NULL,
             negInv = NULL,
             shwHlp = FALSE,
-            btnCrt = FALSE, ...) {
+            btnCrt = FALSE,
+            jxfLog = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -87,6 +88,11 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
                 "btnCrt",
                 btnCrt,
                 default=FALSE)
+            private$..jxfLog <- jmvcore::OptionBool$new(
+                "jxfLog",
+                jxfLog,
+                hidden=TRUE,
+                default=FALSE)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..posSqr)
@@ -97,6 +103,7 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             self$.addOption(private$..negInv)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
+            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varAll = function() private$..varAll$value,
@@ -107,7 +114,8 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
         posInv = function() private$..posInv$value,
         negInv = function() private$..negInv$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value),
+        btnCrt = function() private$..btnCrt$value,
+        jxfLog = function() private$..jxfLog$value),
     private = list(
         ..varAll = NA,
         ..posSqr = NA,
@@ -117,7 +125,8 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
         ..posInv = NA,
         ..negInv = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA)
+        ..btnCrt = NA,
+        ..jxfLog = NA)
 )
 
 jtTransformVarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -206,6 +215,7 @@ jtTransformVarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
 #' @param negInv .
 #' @param shwHlp .
 #' @param btnCrt .
+#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -230,7 +240,8 @@ jtTransformVars <- function(
     posInv = NULL,
     negInv = NULL,
     shwHlp = FALSE,
-    btnCrt = FALSE) {
+    btnCrt = FALSE,
+    jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtTransformVars requires jmvcore to be installed (restart may be required)")
@@ -263,7 +274,8 @@ jtTransformVars <- function(
         posInv = posInv,
         negInv = negInv,
         shwHlp = shwHlp,
-        btnCrt = btnCrt)
+        btnCrt = btnCrt,
+        jxfLog = jxfLog)
 
     analysis <- jtTransformVarsClass$new(
         options = options,

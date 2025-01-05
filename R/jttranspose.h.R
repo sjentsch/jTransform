@@ -9,7 +9,8 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varNme = NULL,
             varOth = NULL,
             shwHlp = FALSE,
-            btnCrt = FALSE, ...) {
+            btnCrt = FALSE,
+            jxfLog = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -43,22 +44,30 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "btnCrt",
                 btnCrt,
                 default=FALSE)
+            private$..jxfLog <- jmvcore::OptionBool$new(
+                "jxfLog",
+                jxfLog,
+                hidden=TRUE,
+                default=FALSE)
 
             self$.addOption(private$..varNme)
             self$.addOption(private$..varOth)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
+            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varNme = function() private$..varNme$value,
         varOth = function() private$..varOth$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value),
+        btnCrt = function() private$..btnCrt$value,
+        jxfLog = function() private$..jxfLog$value),
     private = list(
         ..varNme = NA,
         ..varOth = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA)
+        ..btnCrt = NA,
+        ..jxfLog = NA)
 )
 
 jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -141,6 +150,7 @@ jtTransposeBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varOth .
 #' @param shwHlp .
 #' @param btnCrt .
+#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -160,7 +170,8 @@ jtTranspose <- function(
     varNme = NULL,
     varOth = NULL,
     shwHlp = FALSE,
-    btnCrt = FALSE) {
+    btnCrt = FALSE,
+    jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtTranspose requires jmvcore to be installed (restart may be required)")
@@ -178,7 +189,8 @@ jtTranspose <- function(
         varNme = varNme,
         varOth = varOth,
         shwHlp = shwHlp,
-        btnCrt = btnCrt)
+        btnCrt = btnCrt,
+        jxfLog = jxfLog)
 
     analysis <- jtTransposeClass$new(
         options = options,
