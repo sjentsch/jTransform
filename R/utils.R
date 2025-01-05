@@ -9,7 +9,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     # determine column names, and if required, put the columns in colFst at the beginning
     colNme <- names(dtaFrm)
     if (length(colFst) > 0) {
-        if (!all(colFst ==  colNme[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
+        if (!all(colFst == colNme[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
         colNme <- unique(c(colFst, colNme))
     }
     # create a list vector with empty entries (to be assigned when adding a new row), change title for
@@ -85,5 +85,5 @@ fmtSrc <- function(fcnNme = "", crrArg = NULL) {
         if (identical(crrArg[[nmeArg]], dflArg[[nmeArg]])) crrArg[nmeArg] <- NULL
     }
 
-    gsub("^list\\(", paste0(fcnNme, "(\n    dtaInp = data,"), gsub(" = ", " = ", jmvcore::sourcify(crrArg)))
+    gsub("^list\\(", paste0(fcnNme, "(\n    dtaInp = data,"), gsub("=", " = ", jmvcore::sourcify(crrArg)))
 }

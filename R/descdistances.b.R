@@ -1,5 +1,5 @@
 #' @importFrom jmvcore .
-descDistancesClass <- if (requireNamespace(jmvcore, quietly = TRUE)) R6::R6Class(
+descDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "descDistancesClass",
     inherit = jtDistancesClass,
     private = list(
