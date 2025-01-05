@@ -5,7 +5,7 @@ stage: 0
 compilerMode: tame
 
 events:
-  loaded: './varAll::loaded'
+  loaded: './varAll::view_loaded'
   remoteDataChanged: './varAll::dataChanged'
 
 children:
