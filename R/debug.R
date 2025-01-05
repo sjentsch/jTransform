@@ -7,10 +7,10 @@ logFlags$j_OS       <- .Platform$OS.type
 
 # Determine the appropriate log file path based on the OS
 logFlags$fleWUD <- switch(logFlags$j_OS,
-                          "windows" = file.path(base::Sys.getenv("TEMP"), "mzmodule.log"),
-                          "unix" = file.path(Sys.getenv("HOME"), ".local", "share", "jamovi", "mzmodule.log"),
-                          "darwin" = file.path(Sys.getenv("HOME"), "Library", "Logs", "jamovi", "mzmodule.log"),
-                          file.path(tempdir(), "mzmodule.log")  # Default to tempdir() if OS is unrecognized
+                          "windows" = file.path(Sys.getenv("TEMP"), "jTransform.log"),
+                          "unix" = file.path(Sys.getenv("HOME"), ".local", "share", "jamovi", "jTransform.log"),
+                          "darwin" = file.path(Sys.getenv("HOME"), "Library", "Logs", "jamovi", "jTransform.log"),
+                          file.path(tempdir(), "jTransform.log")  # Default to tempdir() if OS is unrecognized
 )
 
 # Ensure the log directory exists
@@ -98,7 +98,7 @@ mark <- function(...) {
                 if (is.character(a)) {
                     cat(a, "\n", file = logFlags$fleWUD, append = TRUE)
                 } else {
-                    cat(paste(capture.output(print(a)), collapse = "\n"), "\n",
+                    cat(paste(utils::capture.output(print(a)), collapse = "\n"), "\n",
                         file = logFlags$fleWUD, append = TRUE)
                 }
             })
