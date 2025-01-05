@@ -1,13 +1,14 @@
 ---
 title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
-version: 0.4.0
+version: 0.4.1
 jms: '1.0'
 authors:
   - Sebastian Jentschke
+  - Maurizio Agosti
   - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2024-11-10'
+date: '2025-01-06'
 type: R
 description: >-
   The jamovi module jTransform carries out common data management tasks and
