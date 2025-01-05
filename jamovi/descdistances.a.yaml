@@ -167,4 +167,10 @@ options:
     title: Show Help / Information
     default: false
 
+  - name: jxfLog
+    type: Bool
+    title: Create Log File
+    hidden: true    
+    default: false
+
 ...

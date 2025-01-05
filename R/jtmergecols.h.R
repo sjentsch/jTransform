@@ -14,7 +14,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             typMrg = "outer",
             shwHlp = FALSE,
             btnCrt = FALSE,
-            jlog = FALSE, ...) {
+            jxfLog = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -70,9 +70,9 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "btnCrt",
                 btnCrt,
                 default=FALSE)
-            private$..jlog <- jmvcore::OptionBool$new(
-                "jlog",
-                jlog,
+            private$..jxfLog <- jmvcore::OptionBool$new(
+                "jxfLog",
+                jxfLog,
                 hidden=TRUE,
                 default=FALSE)
 
@@ -84,7 +84,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..typMrg)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
-            self$.addOption(private$..jlog)
+            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varBy = function() private$..varBy$value,
@@ -95,7 +95,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         typMrg = function() private$..typMrg$value,
         shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value,
-        jlog = function() private$..jlog$value),
+        jxfLog = function() private$..jxfLog$value),
     private = list(
         ..varBy = NA,
         ..varAll = NA,
@@ -105,7 +105,7 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..typMrg = NA,
         ..shwHlp = NA,
         ..btnCrt = NA,
-        ..jlog = NA)
+        ..jxfLog = NA)
 )
 
 jtMergeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -203,7 +203,7 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param typMrg .
 #' @param shwHlp .
 #' @param btnCrt .
-#' @param jlog .
+#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -229,7 +229,7 @@ jtMergeCols <- function(
     typMrg = "outer",
     shwHlp = FALSE,
     btnCrt = FALSE,
-    jlog = FALSE) {
+    jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtMergeCols requires jmvcore to be installed (restart may be required)")
@@ -252,7 +252,7 @@ jtMergeCols <- function(
         typMrg = typMrg,
         shwHlp = shwHlp,
         btnCrt = btnCrt,
-        jlog = jlog)
+        jxfLog = jxfLog)
 
     analysis <- jtMergeColsClass$new(
         options = options,

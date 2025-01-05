@@ -81,9 +81,9 @@ options:
     title: Create
     default: false
 
-  - name: jlog
-    title: 'j_LOG'
+  - name: jxfLog
     type: Bool
+    title: Create Log File
     hidden: true    
     default: false
 

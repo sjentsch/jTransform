@@ -31,15 +31,15 @@ current_time <- function() {
 }
 
 # Update logging flags dynamically
-set_logflags <- function(jlog) {
-    if (jlog && !logFlags$log_active) {
+set_logflags <- function(jxfLog) {
+    if (jxfLog && !logFlags$log_active) {
         open_log()  # Open the log only if it is not already active
-    } else if (!jlog && logFlags$log_active) {
+    } else if (!jxfLog && logFlags$log_active) {
         close_log()  # Close the log only if it is currently active
     }
     
-    logFlags$j_DEBUG <- jlog
-    logFlags$j_INFO  <- jlog
+    logFlags$j_DEBUG <- jxfLog
+    logFlags$j_INFO  <- jxfLog
 }
 
 # Open the log file if not already open

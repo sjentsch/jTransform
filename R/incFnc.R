@@ -4,7 +4,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         .init = function() {
             # Update logging flags based on current options
-            set_logflags(self$options$jlog)
+            set_logflags(self$options$jxfLog)
             jinfo("MODULE: init phase started")
             
             if (private$.chkVar()) {
@@ -21,7 +21,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         .run = function() {
             # Update logging flags during the run phase
-            set_logflags(self$options$jlog)
+            set_logflags(self$options$jxfLog)
             jinfo("MODULE: run phase started")
             
             # assemble or reset data set / create information

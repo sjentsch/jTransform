@@ -94,4 +94,10 @@ options:
     title: Create
     default: false
 
+  - name: jxfLog
+    type: Bool
+    title: Create Log File
+    hidden: true    
+    default: false
+
 ...
