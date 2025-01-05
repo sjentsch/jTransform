@@ -14,9 +14,9 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkVar = function() {
-            (length(self$options$posSqr) >= 1 || length(self$options$negSqr) >= 1 ||
-             length(self$options$posLog) >= 1 || length(self$options$negLog) >= 1 ||
-             length(self$options$posInv) >= 1 || length(self$options$negInv) >= 1)
+            (length(self$options$posSqr) >=  1 || length(self$options$negSqr) >=  1 ||
+             length(self$options$posLog) >=  1 || length(self$options$negLog) >=  1 ||
+             length(self$options$posInv) >=  1 || length(self$options$negInv) >=  1)
         },
 
         .colFst = function() {

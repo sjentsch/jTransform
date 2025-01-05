@@ -6,7 +6,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             # Update logging flags based on current options
             set_logflags(self$options$jxfLog)
             jinfo("MODULE: init phase started")
-            
+
             if (private$.chkVar()) {
                 # create the current data set
                 private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
@@ -23,11 +23,11 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             # Update logging flags during the run phase
             set_logflags(self$options$jxfLog)
             jinfo("MODULE: run phase started")
-            
+
             # assemble or reset data set / create information
             private$.dtaInf()
             if (private$.chkVar() && private$.chkDtF()) {
-                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
+                # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
                     do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
                 # if not, create a preview of the data (fllPvw in utils.R)
@@ -41,8 +41,8 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .runRpM = function() {
             # assemble or reset data set / create information
             private$.dtaInf()
-            if (private$.chkVar() && dim(self$data)[1] >= 1) {
-                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
+            if (private$.chkVar() && dim(self$data)[1] >=  1) {
+                # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
                     do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
                 # if not, create a preview of the data and of the repeated measurement levels (fllPvw in utils.R)
@@ -55,7 +55,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         # covers the most common case (data frame has at least one row)
         .chkDtF = function() {
-            (dim(self$data)[1] >= 1)
+            (dim(self$data)[1] >=  1)
         },
 
         # covers the most common case (colFst is not used)
@@ -84,7 +84,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                     dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
                     paste0(names(private$.crrDta), collapse = ", "))
         },
-        
+
         .nteRnC = function() {
             c(paste(.("There are %d more columns in the data set not shown here. A complete list of"),
                     .("variables can be found in \"Variables in the Output Data Set\" above this table.")),

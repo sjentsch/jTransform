@@ -1,5 +1,5 @@
 #' @importFrom jmvcore .
-jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtDistancesClass <- if (requireNamespace(jmvcore, quietly = TRUE)) R6::R6Class(
     "jtDistancesClass",
     inherit = jtDistancesBase,
     private = list(
@@ -12,13 +12,13 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         .run  = commonFunc$private_methods$.run,
 
         .chkDtF = function() {
-            (all(dim(self$data) >= 2))
+            (all(dim(self$data) >=  2))
         },
 
         .chkVar = function() {
             (length(self$options$varDst) > 1)
         },
-        
+
         .colFst = commonFunc$private_methods$.colFst,
 
         .crrArg = function() {
@@ -29,7 +29,7 @@ jtDistancesClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
                               rep(self$options$pwrDst, grepl("^minkowski$|^power$", nmeDst)),
                               rep(self$options$rt_Dst, grepl("^power$", nmeDst))), collapse = "_")
             list(dtaInp = as.data.frame(lapply(dtaFrm, jmvcore::toNumeric)),
-                 varDst = self$options$varDst, clmDst = (self$options$clmDst == "columns"),
+                 varDst = self$options$varDst, clmDst = (self$options$clmDst ==  "columns"),
                  stdDst = self$options$stdDst, nmeDst = nmeDst)
         },
 

@@ -83,7 +83,7 @@ testthat::test_that("descdistances works", {
     # check help messages
     chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid", shwHlp = TRUE)
     expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
-    expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE) , c(TRUE, TRUE, TRUE))
+    expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE), c(TRUE, TRUE, TRUE))
     expect_true(is.character(chkRes$genInf$content))
     expect_true(nzchar(chkRes$genInf$content))
 

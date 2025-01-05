@@ -37,7 +37,7 @@ set_logflags <- function(jxfLog) {
     } else if (!jxfLog && logFlags$log_active) {
         close_log()  # Close the log only if it is currently active
     }
-    
+
     logFlags$j_DEBUG <- jxfLog
     logFlags$j_INFO  <- jxfLog
 }

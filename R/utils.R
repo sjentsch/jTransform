@@ -1,5 +1,5 @@
 hmeDir <- function() {
-    Sys.getenv(ifelse(jmvReadWrite:::getOS() == "windows", "USERPROFILE", "HOME"))
+    Sys.getenv(ifelse(jmvReadWrite:::getOS() ==  "windows", "USERPROFILE", "HOME"))
 }
 
 prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
@@ -9,7 +9,7 @@ prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     # determine column names, and if required, put the columns in colFst at the beginning
     colNme <- names(dtaFrm)
     if (length(colFst) > 0) {
-        if (!all(colFst == colNme[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
+        if (!all(colFst ==  colNme[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
         colNme <- unique(c(colFst, colNme))
     }
     # create a list vector with empty entries (to be assigned when adding a new row), change title for
@@ -58,10 +58,10 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL, nteRnC = c()) {
             crrRow <- stats::setNames(as.list(dtaFrm[i, ]), c("fstCol", names(dtaFrm)[-1]))
         }
         crrRow[vapply(crrRow, is.na, logical(1))] <- ""
-        if (i == pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
+        if (i ==  pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
         crrTbl$setRow(rowNo = i, crrRow)
-        if (i == 1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(nteRnC[1], dtaCol - pvwCol), rowNo = i)
-        if (i == pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(nteRnC[2], dtaRow - pvwRow), rowNo = i)
+        if (i ==  1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(nteRnC[1], dtaCol - pvwCol), rowNo = i)
+        if (i ==  pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(nteRnC[2], dtaRow - pvwRow), rowNo = i)
     }
 
     return(invisible(NULL))
@@ -73,7 +73,7 @@ optSnR <- function(crrOpt = NULL) {
                    incNom = crrOpt$incNom, incOrd = crrOpt$incOrd, incNum = crrOpt$incNum)
     if (utils::hasName(crrOpt, "ignCse")) lstSnR["ignCse"] <- crrOpt$ignCse
     if (utils::hasName(crrOpt, "varSel") && !is.null(crrOpt$varSel) && length(crrOpt$varSel) > 0) {
-       lstSnR[[ifelse(crrOpt$incExc == "include", "varInc", "varExc")]] <- crrOpt$varSel
+       lstSnR[[ifelse(crrOpt$incExc ==  "include", "varInc", "varExc")]] <- crrOpt$varSel
     }
 
     return(lstSnR)
@@ -85,5 +85,5 @@ fmtSrc <- function(fcnNme = "", crrArg = NULL) {
         if (identical(crrArg[[nmeArg]], dflArg[[nmeArg]])) crrArg[nmeArg] <- NULL
     }
 
-    gsub("^list\\(", paste0(fcnNme, "(\n    dtaInp = data,"), gsub("=", " = ", jmvcore::sourcify(crrArg)))
+    gsub("^list\\(", paste0(fcnNme, "(\n    dtaInp = data,"), gsub(" = ", " = ", jmvcore::sourcify(crrArg)))
 }

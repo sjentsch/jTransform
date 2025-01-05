@@ -101,6 +101,6 @@ testthat::test_that("jtarrangecols works", {
     # additional tests for functions in utils.R
     expect_true(hmeDir() %in% Sys.getenv(c("USERPROFILE", "HOME")))
     expect_equal(fmtSrc(fcnNme = "jmvReadWrite::arrange_cols_omv", crrArg = list(varOrd = names(dtaInp)[seq(6)], varAll = names(dtaInp)[seq(6) + 6], blnAll = FALSE)),
-      paste("jmvReadWrite::arrange_cols_omv(\n    dtaInp = data,\n    varOrd = c(\"ID\", \"A1\", \"A2\", \"A3\", \"A4\", \"A5\"),\n", 
+      paste("jmvReadWrite::arrange_cols_omv(\n    dtaInp = data,\n    varOrd = c(\"ID\", \"A1\", \"A2\", \"A3\", \"A4\", \"A5\"),\n",
             "   varAll = c(\"C1\", \"C2\", \"C3\", \"C4\", \"C5\", \"E1\"),\n    blnAll = FALSE)"))
 })

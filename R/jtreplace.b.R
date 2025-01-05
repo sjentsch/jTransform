@@ -14,8 +14,8 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .run = function() {
             # assemble or reset data set / create information
             private$.dtaInf()
-            if (private$.chkVar() && dim(self$data)[1] >= 1) {
-                # if “Create” was pressed (btnCrt == TRUE), open a new jamovi session with the data
+            if (private$.chkVar() && dim(self$data)[1] >=  1) {
+                # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
                     do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
                 # if not, create a preview of the data (fllPvw in utils.R) and mark replaced values
@@ -28,7 +28,7 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .chkDff = function(dtaOld = NULL, dtaNew = NULL) {
-             (any(is.na(dtaOld) != is.na(dtaNew)) || any(dtaOld[!is.na(dtaOld)] != dtaNew[!is.na(dtaNew)]))
+             (any(is.na(dtaOld) !=  is.na(dtaNew)) || any(dtaOld[!is.na(dtaOld)] !=  dtaNew[!is.na(dtaNew)]))
         },
 
         .chkDtF = commonFunc$private_methods$.chkDtF,
@@ -67,7 +67,7 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 for (i in selCol) {
                     for (j in selRow) {
                         if (private$.chkDff(dtaOld[j, i], dtaNew[j, i])) {
-                            crrTbl$addSymbol(rowNo = j, ifelse(!useIdx && i == 1, "fstCol", names(dtaOld)[i]), "+")
+                            crrTbl$addSymbol(rowNo = j, ifelse(!useIdx && i ==  1, "fstCol", names(dtaOld)[i]), "+")
                         }
                     }
                 }

@@ -14,7 +14,7 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkVar = function() {
-            (length(self$options$varSrt) >= 1)
+            (length(self$options$varSrt) >=  1)
         },
 
         .colFst = commonFunc$private_methods$.colFst,

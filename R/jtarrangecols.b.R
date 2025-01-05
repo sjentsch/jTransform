@@ -14,7 +14,7 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
         .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkVar = function() {
-            (length(self$options$varOrd) >= 2)
+            (length(self$options$varOrd) >=  2)
         },
 
         .colFst = commonFunc$private_methods$.colFst,

@@ -46,11 +46,11 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             numDta <- length(colDta)
             numMrg <- length(colMrg)
             numOfs <- ifelse(length(colNme) > maxCol, 1, 0)
-            if (all(c(numDta, numMrg) >= numHlO)) {
+            if (all(c(numDta, numMrg) >=  numHlO)) {
                 varLst <- c(colBy, colDta[seq(floor(numHlO))], colMrg[seq(ceiling(numHlO))])
-            } else if (numDta >= numHlO) {
+            } else if (numDta >=  numHlO) {
                 varLst <- c(colBy, colDta[seq(numOth - numMrg - numOfs)], colMrg)
-            } else if (numMrg >= numHlO) {
+            } else if (numMrg >=  numHlO) {
                 varLst <- c(colBy, colDta, colMrg[seq(numOth - numDta - numOfs)])
             } else {
                 varLst <- c(colBy, colDta, colMrg)
