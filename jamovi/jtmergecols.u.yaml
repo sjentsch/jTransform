@@ -3,10 +3,10 @@ name: jtMergeCols
 jus: '3.0'
 stage: 0
 compilerMode: tame
-events:
-  loaded: './varAll::loaded'
-  update: './varAll::update'
-  remoteDataChanged: './varAll::dataChanged'
+# events:
+#   loaded: './varAll::loaded'
+#   update: './varAll::update'
+#   remoteDataChanged: './varAll::dataChanged'
 
 children:
   - type: VariableSupplier

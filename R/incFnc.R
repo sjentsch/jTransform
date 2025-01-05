@@ -3,6 +3,10 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     private = list(
 
         .init = function() {
+            # Update logging flags based on current options
+            set_logflags(self$options$jlog)
+            jinfo("MODULE: init phase started")
+            
             if (private$.chkVar()) {
                 # create the current data set
                 private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
@@ -12,9 +16,14 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
+            jinfo("MODULE: init phase ended")
         },
 
         .run = function() {
+            # Update logging flags during the run phase
+            set_logflags(self$options$jlog)
+            jinfo("MODULE: run phase started")
+            
             # assemble or reset data set / create information
             private$.dtaInf()
             if (private$.chkVar() && private$.chkDtF()) {
@@ -26,6 +35,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
                 }
             }
+            jinfo("MODULE: run phase ended")
         },
 
         .runRpM = function() {

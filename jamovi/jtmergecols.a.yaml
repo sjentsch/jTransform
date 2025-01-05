@@ -81,4 +81,10 @@ options:
     title: Create
     default: false
 
+  - name: jlog
+    title: 'j_LOG'
+    type: Bool
+    hidden: true    
+    default: false
+
 ...
