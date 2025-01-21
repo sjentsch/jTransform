@@ -237,7 +237,7 @@ const ToastManager = {
      * @param {number} duration - Milliseconds to show the toast
      * @param {HTMLElement} container - (Optional) where to place the toast
      */
-    showToast(message, duration = 3000, container) {
+    showToast(message, duration = 2000, container) {
         const toast = document.createElement('div');
         toast.classList.add('logging-toast');
         toast.textContent = message;
@@ -260,10 +260,78 @@ const ToastManager = {
     }
 };
 
-// Export all utilities
+/**
+ * Enables a "LOGGING ACTIVE" indicator with keyboard shortcuts and UI integration.
+ * @param {object} options - Configuration object.
+ * @param {HTMLElement} [options.parentElement] - The parent DOM element where the indicator will be added. Defaults to `.silky-options-header > h1`.
+ * @param {function} [options.onEnable] - Callback function when logging is enabled. Defaults to setting `jxfLog` to true.
+ * @param {function} [options.onDisable] - Callback function when logging is disabled. Defaults to setting `jxfLog` to false.
+ * @param {object} [options.ui] - The Jamovi UI object, required if using the default callbacks.
+ */
+const enableLoggingIndicator = (options = {}) => {
+    const {
+        parentElement = document.querySelector('.silky-options-header h1'),
+        onEnable,
+        onDisable,
+        ui
+    } = options;
+
+    if (!parentElement) {
+        console.error('Parent element not found for LOGGING ACTIVE indicator');
+        return;
+    }
+
+    // Default callbacks for jxfLog
+    const enableCallback = onEnable || (() => ui?.jxfLog?.setValue(true));
+    const disableCallback = onDisable || (() => ui?.jxfLog?.setValue(false));
+
+    // 1. Create the logging container
+    const loggingContainer = DOMUtils.createDivWithClass('logging-container');
+    DOMUtils.insertAfter(parentElement, loggingContainer);
+
+    // 2. Create the "LOGGING ACTIVE" label
+    const loggingMessage = DOMUtils.createDivWithClass('logging-active hidden');
+    loggingMessage.id = 'logging-message';
+    loggingMessage.innerHTML = `<span>LOGGING ACTIVE</span>`;
+    loggingContainer.appendChild(loggingMessage);
+
+    // 3. Show/hide logic
+    const toggleLoggingMessage = (isVisible) => {
+        if (isVisible) {
+            DOMUtils.addClass(loggingMessage, 'visible');
+            DOMUtils.removeClass(loggingMessage, 'hidden');
+        } else {
+            DOMUtils.addClass(loggingMessage, 'hidden');
+            DOMUtils.removeClass(loggingMessage, 'visible');
+        }
+    };
+
+    // 4. Add tooltip for the label
+    TooltipManager.createTooltip(
+        loggingMessage,
+        'Press CTRL+ALT+L to disable logging',
+        'center'
+    );
+
+    // 5. Configure keyboard shortcuts
+    KeyboardShortcuts.addShortcut(['ctrl', 'shift', 'l'], () => {
+        enableCallback();
+        ToastManager.showToast('LOGGING ENABLED', 2000, loggingContainer);
+        toggleLoggingMessage(true);
+    });
+
+    KeyboardShortcuts.addShortcut(['ctrl', 'alt', 'l'], () => {
+        disableCallback();
+        ToastManager.showToast('LOGGING DISABLED', 2000, loggingContainer);
+        toggleLoggingMessage(false);
+    });
+};
+
 module.exports = {
     TooltipManager,
     KeyboardShortcuts,
     DOMUtils,
-    ToastManager
+    ToastManager,
+    enableLoggingIndicator
 };
+

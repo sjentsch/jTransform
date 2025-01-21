@@ -5,7 +5,7 @@ jus: '3.0'
 compilerMode: tame
 
 events:
-  loaded:            './varAll::loaded'
+  loaded:            './varAll::view_loaded'
   update:            './varAll::update'
   remoteDataChanged: './varAll::dataChanged'
 

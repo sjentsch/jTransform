@@ -3,11 +3,8 @@ name: jtTranspose
 jus: '3.0'
 stage: 0
 compilerMode: tame
-
-#events:
-#  creating: ''
-#  loaded: ''
-#  update: ''
+events:
+  loaded: './varAll::view_loaded'
 
 children:
   - type: VariableSupplier
