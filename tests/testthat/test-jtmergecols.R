@@ -105,7 +105,7 @@ testthat::test_that("jtmergecols works", {
 
     # check instructions when chkVar fails (varBy is empty)
     chkRes <- jTransform::jtMergeCols(data = dtaInp, varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "right")
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta", "addInf"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta", "addInf"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
 

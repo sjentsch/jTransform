@@ -87,14 +87,14 @@ testthat::test_that("jtdistances works", {
 
     # check when chkVar fails (varDst has only one variable)
     chkRes <- jTransform::jtDistances(data = dtaInp, varDst = names(dtaInp)[1], stdDst = "none", nmeDst = "euclid")
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 
     # check help messages
     chkRes <- jTransform::jtDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid", shwHlp = TRUE)
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
-    expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE), c(TRUE, TRUE, TRUE))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
+    expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE), c(TRUE, TRUE, TRUE, TRUE))
     expect_true(is.character(chkRes$genInf$content))
     expect_true(nzchar(chkRes$genInf$content))
 

@@ -78,7 +78,7 @@ testthat::test_that("jtarrangecols works", {
 
     # check instructions when chkVar fails (varOrd is empty)
     chkRes <- jTransform::jtArrangeCols(data = dtaInp, varAll = names(dtaInp), blnAll = TRUE)
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 

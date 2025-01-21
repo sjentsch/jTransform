@@ -95,12 +95,12 @@ testthat::test_that("jttransformvars works", {
 
     # check instructions when chkVar fails (transformation variable lists are empty)
     chkRes <- jTransform::jtTransformVars(data = dtaInp, varAll = names(dtaInp))
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
 
     chkRes <- jTransform::jtTransformVars()
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
 })

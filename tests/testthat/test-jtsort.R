@@ -53,7 +53,7 @@ testthat::test_that("jtsort works", {
 
     # check instructions when chkVar fails (varSrt is empty)
     chkRes <- jtSort(data = dtaInp, varAll = names(dtaInp), ordSrt = list(list(var = "age", order = "descend"), list(var = "gender", order = "ascend")))
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
 

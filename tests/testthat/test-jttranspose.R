@@ -29,7 +29,7 @@ testthat::test_that("jttranspose works", {
 
     # check instructions when chkVar fails (varOth is empty)
     chkRes <- jTransform::jtTranspose(data = dtaInp, varNme = "qstItm")
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
 

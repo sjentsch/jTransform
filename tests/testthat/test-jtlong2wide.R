@@ -146,7 +146,7 @@ testthat::test_that("jtlong2wide works", {
 
     # check instructions when chkVar fails (varID is empty)
     chkRes <- jTransform::jtLong2Wide(data = dtaInp, varTme = c("cond", "colour"), varTgt = c("rspCrr", "rspTme"), varExc = "sex", varAgg = "first", varSep = "_")
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta", "pvwLvl", "addInf"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta", "pvwLvl", "addInf"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(dim(chkRes$pvwLvl$asDF), c(0, 1))

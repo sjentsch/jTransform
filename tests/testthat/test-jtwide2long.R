@@ -133,35 +133,35 @@ testthat::test_that("jtwide2long works", {
 
     # check instructions when chkVar fails (xfmSep is empty, mdeW2L = "Sep")
     chkRes <- jTransform::jtWide2Long(data = dtaInp, mdeW2L = "Sep", id_Sep = "ID", excSep = "sex", pfxSep = "cond", chrSep = "_", lvlSep = "1", shwHlp = TRUE)
-    expect_equal(names(chkRes), c("genSep", "genNSS", "genNSA", "dtaInf", "pvwDta", "pvwLvl", "addSep", "addNSS", "addNSA"))
+    expect_equal(names(chkRes), c("fmtHTM", "genSep", "genNSS", "genNSA", "dtaInf", "pvwDta", "pvwLvl", "addSep", "addNSS", "addNSA"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(dim(chkRes$pvwDta$asDF), c(1, 1))
     expect_equal(dim(chkRes$pvwLvl$asDF), c(0, 1))
     expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE),
-                 c(TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE))
+                 c(TRUE, TRUE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE))
 
     # check instructions when chkVar fails (xfmNSS is empty, mdeW2L = "NSS")
     chkRes <- jTransform::jtWide2Long(data = dtaInp, mdeW2L = "NSS", id_NSS = "ID", excNSS = "sex", shwHlp = TRUE)
-    expect_equal(names(chkRes), c("genSep", "genNSS", "genNSA", "dtaInf", "pvwDta", "pvwLvl", "addSep", "addNSS", "addNSA"))
+    expect_equal(names(chkRes), c("fmtHTM", "genSep", "genNSS", "genNSA", "dtaInf", "pvwDta", "pvwLvl", "addSep", "addNSS", "addNSA"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(dim(chkRes$pvwDta$asDF), c(1, 1))
     expect_equal(dim(chkRes$pvwLvl$asDF), c(0, 1))
     expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE),
-                 c(FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE))
+                 c(TRUE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE))
 
     # check instructions when chkVar fails (xfmNSA is empty, mdeW2L = "NSA")
     chkRes <- jTransform::jtWide2Long(data = dtaInp, mdeW2L = "NSA", id_NSA = "ID", excNSA = "sex",
                                       idxNSA = list(list(var = "cong", levels = 3), list(var = "colour", levels = 4), list(var = "rep", levels = 2)),
                                       shwHlp = TRUE)
-    expect_equal(names(chkRes), c("genSep", "genNSS", "genNSA", "dtaInf", "pvwDta", "pvwLvl", "addSep", "addNSS", "addNSA"))
+    expect_equal(names(chkRes), c("fmtHTM", "genSep", "genNSS", "genNSA", "dtaInf", "pvwDta", "pvwLvl", "addSep", "addNSS", "addNSA"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(dim(chkRes$pvwDta$asDF), c(1, 1))
     expect_equal(dim(chkRes$pvwLvl$asDF), c(0, 1))
     expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE),
-                 c(FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
+                 c(TRUE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, FALSE, FALSE, TRUE))
 
     # ensure that an error is thrown if no data are submitted
     expect_error(jTransform::jtWide2Long(mdeW2L = "Sep", id_Sep = "ID", xfmSep = names(dtaInp)[seq(3, 50)], excSep = "sex", pfxSep = "cond", chrSep = "_", lvlSep = "1"),

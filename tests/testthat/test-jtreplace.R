@@ -185,7 +185,7 @@ testthat::test_that("jtreplace works", {
     # check instructions when chkVar fails (rplTrm is empty)
     chkRes <- jTransform::jtReplace(data = dtaInp, varAll = names(dtaInp), whlTrm = TRUE, incCmp = TRUE, incRcd = TRUE,
                                     incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = TRUE, incExc = "include", varSel = c("A1", "A2", "A3", "A4", "A5"))
-    expect_equal(names(chkRes), c("genInf", "dtaInf", "pvwDta"))
+    expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
 
