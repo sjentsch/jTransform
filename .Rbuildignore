@@ -10,3 +10,4 @@
 ^\.Rproj\.user$
 ^\.github$
 ^\.lintr$
+^\.prepare4CRAN$
