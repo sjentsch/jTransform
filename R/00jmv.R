@@ -5,7 +5,7 @@
     `jmvReadWrite`=list(
         `type`="software", 
         `author`="Jentschke, S.", 
-        `year`=2024, 
+        `year`=2025, 
         `title`="jmvReadWrite: Read and Write jamovi Files (.omv)", 
         `publisher`="[R package]. Retrieved from https://cran.r-project.org/package=jmvReadWrite", 
         `url`="https://cran.r-project.org/package=jmvReadWrite"), 
