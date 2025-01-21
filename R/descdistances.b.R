@@ -8,7 +8,9 @@ descDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
         .init = function() {
             super$.init()
             self$results$setTitle(.("Distances / Proximities"))
+            self$results$fmtHTM$setContent(" ")
             self$results$pvwDta$setTitle(.("Distances / Proximities"))
+print(str(self$results$fmtHTM))
         }
 
     ),
