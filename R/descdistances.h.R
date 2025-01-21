@@ -160,7 +160,6 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     "descDistancesResults",
     inherit = jmvcore::Group,
     active = list(
-        fmtHTM = function() private$.items[["fmtHTM"]],
         genInf = function() private$.items[["genInf"]],
         dtaInf = function() private$.items[["dtaInf"]],
         pvwDta = function() private$.items[["pvwDta"]]),
@@ -171,11 +170,6 @@ descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 options=options,
                 name="",
                 title="Distances / Proximities")
-            self$add(jmvcore::Html$new(
-                options=options,
-                name="fmtHTM",
-                clearWith=list(),
-                content="<style> #fmtHTM { display: none; } table { width: 100%; border-collapse: collapse; } th { background-color: #3e6da9; color: white; text-align: left; } tbody > td { border: 1px solid #ddd; padding: 8px; } tbody > tr:nth-child(even) { background-color: #d6eaf8; } tbody > tr:nth-child(odd) { background-color: #ffffff; } tbody > tr:hover { background-color: #aed6f1; } </style>\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -244,7 +238,6 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
-#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
 #'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
