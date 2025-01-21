@@ -3,8 +3,9 @@ Title: "jTransform: Functions for Common Data Set Transformations"
 Type: Package
 Version: 0.4.2
 Authors@R:
-    c(person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432")),
-      person(given = "Marcello",  family = "Gallucci",  role = c("aut"),        email = "mcfanda@gmail.com",          comment = c(ORCID = "0000-0003-3546-0093")))
+    c(person(given = "Sebastian", family = "Jentschke", role = c("aut", "cre", "cph"), email = "sebastian.jentschke@uib.no", comment = c(ORCID = "0000-0003-2576-5432")),
+      person(given = "Maurizio",  family = "Agosti",    role = c("ctb", "cph"),        email = "TBA",                        comment = c(ORCID = "TBA")),
+      person(given = "Marcello",  family = "Gallucci",  role = c("ctb", "cph"),        email = "mcfanda@gmail.com",          comment = c(ORCID = "0000-0003-3546-0093")))
 Maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
 Description:
     The jamovi module jTransform carries out common data management tasks and
