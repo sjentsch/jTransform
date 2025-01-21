@@ -160,7 +160,7 @@ jtMergeColsResults <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
                 rows = 1,
                 columns = list(
                     list(
-                        `name` = "fstCol", 
+                        `name` = "fstCol",
                         `title` = ""))))
             self$add(jmvcore::Html$new(
                 options = options,
@@ -177,7 +177,7 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             super$initialize(
                 package = "jTransform",
                 name = "jtMergeCols",
-                version = c(1,0,0),
+                version = c(1, 0, 0),
                 options = options,
                 results = jtMergeColsResults$new(options = options),
                 data = data,
@@ -187,45 +187,45 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 pause = NULL,
                 completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
-                weightsSupport = 'auto')
+                weightsSupport = "auto")
         }))
 
-#' Merge (Add Columns)
+#" Merge (Add Columns)
 #'
-#' Add Columns (From Other Data Sets)
+#" Add Columns (From Other Data Sets)
 #'
-#' @examples
-#' \donttest{
-#' # the function is a wrapper for jmvReadWrite::merge_cols_omv
-#' # please use that function when in R (or in Rj)
-#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#" @examples
+#" \donttest{
+#" # the function is a wrapper for jmvReadWrite::merge_cols_omv
+#" # please use that function when in R (or in Rj)
+#" # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#' @param data the data as a data frame
-#' @param varBy .
-#' @param varAll .
-#' @param fleInp .
-#' @param tglChs .
-#' @param fleChs .
-#' @param typMrg .
-#' @param shwHlp .
-#' @param btnCrt .
-#' @param jxfLog .
-#' @return A results object containing:
-#' \tabular{llllll}{
-#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#'   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
-#' }
+#" @param data the data as a data frame
+#" @param varBy .
+#" @param varAll .
+#" @param fleInp .
+#" @param tglChs .
+#" @param fleChs .
+#" @param typMrg .
+#" @param shwHlp .
+#" @param btnCrt .
+#" @param jxfLog .
+#" @return A results object containing:
+#" \tabular{llllll}{
+#"   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#"   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
+#" }
 #'
-#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#" Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#' \code{results$pvwDta$asDF}
+#" \code{results$pvwDta$asDF}
 #'
-#' \code{as.data.frame(results$pvwDta)}
+#" \code{as.data.frame(results$pvwDta)}
 #'
-#' @export
+#" @export
 jtMergeCols <- function(
     data,
     varBy = NULL,
@@ -269,4 +269,3 @@ jtMergeCols <- function(
 
     analysis$results
 }
-

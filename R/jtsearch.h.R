@@ -176,7 +176,7 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             super$initialize(
                 package = "jTransform",
                 name = "jtSearch",
-                version = c(1,0,0),
+                version = c(1, 0, 0),
                 options = options,
                 results = jtSearchResults$new(options = options),
                 data = data,
@@ -186,40 +186,40 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 pause = NULL,
                 completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
-                weightsSupport = 'auto')
+                weightsSupport = "auto")
         }))
 
-#' Search
+#" Search
 #'
-#' Search Within the Current Data Set
+#" Search Within the Current Data Set
 #'
-#' @examples
-#' \donttest{
-#' # the function is a wrapper for jmvReadWrite::search_omv
-#' # please use that function when in R (or in Rj)
-#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#" @examples
+#" \donttest{
+#" # the function is a wrapper for jmvReadWrite::search_omv
+#" # please use that function when in R (or in Rj)
+#" # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#' @param data .
-#' @param varAll .
-#' @param srcCst .
-#' @param srcTrm .
-#' @param ignCse .
-#' @param whlTrm .
-#' @param shwHlp .
-#' @param incCmp .
-#' @param incRcd .
-#' @param incID .
-#' @param incNom .
-#' @param incOrd .
-#' @param incNum .
-#' @param jxfLog .
-#' @return A results object containing:
-#' \tabular{llllll}{
-#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$srcRes} \tab \tab \tab \tab \tab a html \cr
-#' }
+#" @param data .
+#" @param varAll .
+#" @param srcCst .
+#" @param srcTrm .
+#" @param ignCse .
+#" @param whlTrm .
+#" @param shwHlp .
+#" @param incCmp .
+#" @param incRcd .
+#" @param incID .
+#" @param incNom .
+#" @param incOrd .
+#" @param incNum .
+#" @param jxfLog .
+#" @return A results object containing:
+#" \tabular{llllll}{
+#"   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$srcRes} \tab \tab \tab \tab \tab a html \cr
+#" }
 #'
-#' @export
+#" @export
 jtSearch <- function(
     data,
     varAll = NULL,
@@ -269,4 +269,3 @@ jtSearch <- function(
 
     analysis$results
 }
-

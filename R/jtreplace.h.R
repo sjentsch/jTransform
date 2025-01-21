@@ -209,7 +209,7 @@ jtReplaceResults <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 rows = 1,
                 columns = list(
                     list(
-                        `name` = "fstCol", 
+                        `name` = "fstCol",
                         `title` = ""))))}))
 
 jtReplaceBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
@@ -220,7 +220,7 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             super$initialize(
                 package = "jTransform",
                 name = "jtReplace",
-                version = c(1,0,0),
+                version = c(1, 0, 0),
                 options = options,
                 results = jtReplaceResults$new(options = options),
                 data = data,
@@ -230,49 +230,49 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 pause = NULL,
                 completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
-                weightsSupport = 'auto')
+                weightsSupport = "auto")
         }))
 
-#' Replace
+#" Replace
 #'
-#' Replace Values in the Current Data Set
+#" Replace Values in the Current Data Set
 #'
-#' @examples
-#' \donttest{
-#' # the function is a wrapper for jmvReadWrite::replace_omv
-#' # please use that function when in R (or in Rj)
-#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#" @examples
+#" \donttest{
+#" # the function is a wrapper for jmvReadWrite::replace_omv
+#" # please use that function when in R (or in Rj)
+#" # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#' @param data .
-#' @param varAll .
-#' @param rplTrm .
-#' @param whlTrm .
-#' @param shwHlp .
-#' @param btnCrt .
-#' @param incCmp .
-#' @param incRcd .
-#' @param incID .
-#' @param incNom .
-#' @param incOrd .
-#' @param incNum .
-#' @param incExc .
-#' @param varSel .
-#' @param jxfLog .
-#' @return A results object containing:
-#' \tabular{llllll}{
-#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
-#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#' }
+#" @param data .
+#" @param varAll .
+#" @param rplTrm .
+#" @param whlTrm .
+#" @param shwHlp .
+#" @param btnCrt .
+#" @param incCmp .
+#" @param incRcd .
+#" @param incID .
+#" @param incNom .
+#" @param incOrd .
+#" @param incNum .
+#" @param incExc .
+#" @param varSel .
+#" @param jxfLog .
+#" @return A results object containing:
+#" \tabular{llllll}{
+#"   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
+#"   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#" }
 #'
-#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#" Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#' \code{results$pvwDta$asDF}
+#" \code{results$pvwDta$asDF}
 #'
-#' \code{as.data.frame(results$pvwDta)}
+#" \code{as.data.frame(results$pvwDta)}
 #'
-#' @export
+#" @export
 jtReplace <- function(
     data,
     varAll = NULL,
@@ -327,4 +327,3 @@ jtReplace <- function(
 
     analysis$results
 }
-
