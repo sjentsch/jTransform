@@ -228,35 +228,35 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Clas
                 weightsSupport = "auto")
         }))
 
-#" Distances / Proximities
+#' Distances / Proximities
 #'
 #'
-#" @param data .
-#" @param varDst .
-#" @param clmDst .
-#" @param stdDst .
-#" @param nmeDst .
-#" @param pwrDst .
-#" @param rt_Dst .
-#" @param p__Dst .
-#" @param np_Dst .
-#" @param shwHlp .
-#" @param jxfLog .
-#" @return A results object containing:
-#" \tabular{llllll}{
-#"   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#" }
+#' @param data .
+#' @param varDst .
+#' @param clmDst .
+#' @param stdDst .
+#' @param nmeDst .
+#' @param pwrDst .
+#' @param rt_Dst .
+#' @param p__Dst .
+#' @param np_Dst .
+#' @param shwHlp .
+#' @param jxfLog .
+#' @return A results object containing:
+#' \tabular{llllll}{
+#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#' }
 #'
-#" Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#" \code{results$pvwDta$asDF}
+#' \code{results$pvwDta$asDF}
 #'
-#" \code{as.data.frame(results$pvwDta)}
+#' \code{as.data.frame(results$pvwDta)}
 #'
-#" @export
+#' @export
 descDistances <- function(
     data,
     varDst = NULL,

@@ -227,44 +227,44 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 weightsSupport = "auto")
         }))
 
-#" Long to Wide
+#' Long to Wide
 #'
-#" Transform a Data Set From Long to Wide
+#' Transform a Data Set From Long to Wide
 #'
-#" @examples
-#" \donttest{
-#" # the function is a wrapper for jmvReadWrite::long2wide_omv
-#" # please use that function when in R (or in Rj)
-#" # for more information: https://sjentsch.github.io/jmvReadWrite
+#' @examples
+#' \donttest{
+#' # the function is a wrapper for jmvReadWrite::long2wide_omv
+#' # please use that function when in R (or in Rj)
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#" @param data .
-#" @param varID .
-#" @param varTme .
-#" @param varTgt .
-#" @param varExc .
-#" @param varOrd .
-#" @param varAgg .
-#" @param varSep .
-#" @param shwHlp .
-#" @param btnCrt .
-#" @param jxfLog .
-#" @return A results object containing:
-#" \tabular{llllll}{
-#"   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#"   \code{results$pvwLvl} \tab \tab \tab \tab \tab a table \cr
-#"   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
-#" }
+#' @param data .
+#' @param varID .
+#' @param varTme .
+#' @param varTgt .
+#' @param varExc .
+#' @param varOrd .
+#' @param varAgg .
+#' @param varSep .
+#' @param shwHlp .
+#' @param btnCrt .
+#' @param jxfLog .
+#' @return A results object containing:
+#' \tabular{llllll}{
+#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$pvwLvl} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$addInf} \tab \tab \tab \tab \tab a html \cr
+#' }
 #'
-#" Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#" \code{results$pvwDta$asDF}
+#' \code{results$pvwDta$asDF}
 #'
-#" \code{as.data.frame(results$pvwDta)}
+#' \code{as.data.frame(results$pvwDta)}
 #'
-#" @export
+#' @export
 jtLong2Wide <- function(
     data,
     varID = NULL,

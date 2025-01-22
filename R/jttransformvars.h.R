@@ -200,43 +200,43 @@ jtTransformVarsBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cl
                 weightsSupport = "auto")
         }))
 
-#" Transform (Reduce Skewness)
+#' Transform (Reduce Skewness)
 #'
-#" Create New (Computed) Variables, Aiming At Reducing Deviations From A
-#" Normal Distribution
+#' Create New (Computed) Variables, Aiming At Reducing Deviations From A
+#' Normal Distribution
 #'
-#" @examples
-#" \donttest{
-#" # the function is a wrapper for jmvReadWrite::transform_vars_omv
-#" # please use that function when in R (or in Rj)
-#" # for more information: https://sjentsch.github.io/jmvReadWrite
+#' @examples
+#' \donttest{
+#' # the function is a wrapper for jmvReadWrite::transform_vars_omv
+#' # please use that function when in R (or in Rj)
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#" @param data .
-#" @param varAll .
-#" @param posSqr .
-#" @param negSqr .
-#" @param posLog .
-#" @param negLog .
-#" @param posInv .
-#" @param negInv .
-#" @param shwHlp .
-#" @param btnCrt .
-#" @param jxfLog .
-#" @return A results object containing:
-#" \tabular{llllll}{
-#"   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#" }
+#' @param data .
+#' @param varAll .
+#' @param posSqr .
+#' @param negSqr .
+#' @param posLog .
+#' @param negLog .
+#' @param posInv .
+#' @param negInv .
+#' @param shwHlp .
+#' @param btnCrt .
+#' @param jxfLog .
+#' @return A results object containing:
+#' \tabular{llllll}{
+#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#' }
 #'
-#" Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#" \code{results$pvwDta$asDF}
+#' \code{results$pvwDta$asDF}
 #'
-#" \code{as.data.frame(results$pvwDta)}
+#' \code{as.data.frame(results$pvwDta)}
 #'
-#" @export
+#' @export
 jtTransformVars <- function(
     data,
     varAll = NULL,

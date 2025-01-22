@@ -374,57 +374,57 @@ jtWide2LongBase <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 weightsSupport = "auto")
         }))
 
-#" Wide to Long
+#' Wide to Long
 #'
-#" Transform a Data Set From Wide to Long
+#' Transform a Data Set From Wide to Long
 #'
-#" @examples
-#" \donttest{
-#" # the function is a wrapper for jmvReadWrite::wide2long_omv
-#" # please use that function when in R (or in Rj)
-#" # for more information: https://sjentsch.github.io/jmvReadWrite
+#' @examples
+#' \donttest{
+#' # the function is a wrapper for jmvReadWrite::wide2long_omv
+#' # please use that function when in R (or in Rj)
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
 #'}
-#" @param data .
-#" @param mdeW2L .
-#" @param id_Sep .
-#" @param xfmSep .
-#" @param excSep .
-#" @param pfxSep .
-#" @param chrSep .
-#" @param lvlSep .
-#" @param id_NSS .
-#" @param xfmNSS .
-#" @param excNSS .
-#" @param idxNSS .
-#" @param tgtNSS .
-#" @param id_NSA .
-#" @param xfmNSA .
-#" @param excNSA .
-#" @param idxNSA .
-#" @param shwHlp .
-#" @param btnCrt .
-#" @param jxfLog .
-#" @return A results object containing:
-#" \tabular{llllll}{
-#"   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$genSep} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$genNSS} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$genNSA} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
-#"   \code{results$pvwLvl} \tab \tab \tab \tab \tab a table \cr
-#"   \code{results$addSep} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$addNSS} \tab \tab \tab \tab \tab a html \cr
-#"   \code{results$addNSA} \tab \tab \tab \tab \tab a html \cr
-#" }
+#' @param data .
+#' @param mdeW2L .
+#' @param id_Sep .
+#' @param xfmSep .
+#' @param excSep .
+#' @param pfxSep .
+#' @param chrSep .
+#' @param lvlSep .
+#' @param id_NSS .
+#' @param xfmNSS .
+#' @param excNSS .
+#' @param idxNSS .
+#' @param tgtNSS .
+#' @param id_NSA .
+#' @param xfmNSA .
+#' @param excNSA .
+#' @param idxNSA .
+#' @param shwHlp .
+#' @param btnCrt .
+#' @param jxfLog .
+#' @return A results object containing:
+#' \tabular{llllll}{
+#'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genSep} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genNSS} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$genNSA} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$dtaInf} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$pvwDta} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$pvwLvl} \tab \tab \tab \tab \tab a table \cr
+#'   \code{results$addSep} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$addNSS} \tab \tab \tab \tab \tab a html \cr
+#'   \code{results$addNSA} \tab \tab \tab \tab \tab a html \cr
+#' }
 #'
-#" Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
+#' Tables can be converted to data frames with \code{asDF} or \code{\link{as.data.frame}}. For example:
 #'
-#" \code{results$pvwDta$asDF}
+#' \code{results$pvwDta$asDF}
 #'
-#" \code{as.data.frame(results$pvwDta)}
+#' \code{as.data.frame(results$pvwDta)}
 #'
-#" @export
+#' @export
 jtWide2Long <- function(
     data,
     mdeW2L = "Sep",
