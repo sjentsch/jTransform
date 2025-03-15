@@ -27,8 +27,10 @@ options:
     title: Variable(s) to Match the Data Sets By
     type: Variables
     permitted:
-    - numeric
+    - id
     - factor
+    - numeric
+    suggested:
     - id
     default:
 
@@ -37,9 +39,9 @@ options:
     type: Variables
     hidden: true
     permitted:
-    - numeric
-    - factor
     - id
+    - factor
+    - numeric
     default:
 
   - name: fleInp
