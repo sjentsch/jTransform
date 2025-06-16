@@ -1,0 +1,57 @@
+---
+name:  jtCombineCols
+title: Combine Columns
+jrs:   '1.1'
+
+items:
+  # this reults element is only used for formatting the output tables
+  - name: fmtHTM
+    type: Html
+    clearWith: [ ]
+    content: >
+      <style>
+      #fmtHTM { display: none; }
+      table { width: 100%; border-collapse: collapse; }
+      th { background-color: #3e6da9; color: white; text-align: left; }
+      tbody > td { border: 1px solid #ddd; padding: 8px; }
+      tbody > tr:nth-child(even) { background-color: #d6eaf8; }
+      tbody > tr:nth-child(odd) { background-color: #ffffff; }
+      tbody > tr:hover { background-color: #aed6f1; }
+      </style>
+
+  - name:  genInf
+    type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign the pairs of variables to be combined to "Variable
+      Pairs to Combine". The two variables in a pair are combined into the
+      first variable whereas the second variable is removed from the data set.
+      "Mode of Combining" determines what the function does if the values in
+      the variable pair are not in accordance (i.e., if they are unequal).
+      "" throws an error and stops, "First Variable takes Precedence" means
+      that the values from the first variable of each pair are taken if the
+      values do not match up, when "Second Variable takes Precedence" is set,
+      the values of the second variable are taken in such cases.
+
+  - name:  dtaInf
+    type:  Html
+    clearWith: [ varPrs, mdeCmb, btnCrt ]
+    content: ""
+
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ varPrs, mdeCmb ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
+
+...

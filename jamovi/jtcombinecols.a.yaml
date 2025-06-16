@@ -1,0 +1,75 @@
+---
+name:  jtCombineCols
+title: Combine Columns
+menuGroup: Data
+menuSubgroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+description:
+  main: Combine Pairs of Variables Into One Variable
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::combine_cols_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
+options:
+  - name: data
+    type: Data
+#   description:
+#     R: the data as a data frame
+
+  - name: varAll
+    type: Variables
+    hidden: true
+    permitted:
+    - numeric
+    - factor
+    - id
+    default:
+
+  - name: varPrs
+    title: Variable Pairs to Combine
+    type: Pairs
+    permitted:
+    - numeric
+    - factor
+    - id
+#   description:
+#     ui: >
+#       the pairs of variables -- combine_cols_omv goes through them and
+#       combines the values of each variable pair into the first variable
+#       whereas the second variable of the pair is deleted
+#     R: >
+#         a list of lists specifying the pairs of variables in `data` to
+#         be combined into the first variable of the pair
+
+  - name: mdeCmb
+    type: List
+    options:
+      - none
+      - first
+      - second
+    default: none
+
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: false
+
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
+
+  - name: jxfLog
+    type: Bool
+    title: Create Log File
+    hidden: true    
+    default: false
+
+...
