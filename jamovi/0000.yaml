@@ -90,6 +90,14 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Merge (Add Columns)
     description: Add Columns (From Other Data Sets)
+  - title: Combine Columns
+    name: jtCombineCols
+    ns: jTransform
+    category: analyses
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Combine Columns
+    description: Combine Pairs of Variables Into One Variable
   - title: Transform (Reduce Skewness)
     name: jtTransformVars
     ns: jTransform
@@ -122,6 +130,9 @@ analyses:
       Distance measures describe how closely related (or distant from each
       other) variables or cases are.
 datasets:
+  - name: example4jtCombineCols
+    path: example4jtCombineCols.omv
+    description: A Data Set to Demonstrate Combine Columns
   - name: example4jtLong2Wide
     path: example4jtLong2Wide.omv
     description: A Data Set to Demonstrate Long to Wide
