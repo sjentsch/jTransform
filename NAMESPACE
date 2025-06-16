@@ -2,6 +2,7 @@
 
 export(descDistances)
 export(jtArrangeCols)
+export(jtCombineCols)
 export(jtDistances)
 export(jtLong2Wide)
 export(jtMergeCols)
