@@ -11,7 +11,11 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .init = function() {
             if (private$.chkVar()) {
                 # calculate the current data
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
+                crrArg <- private$.crrArg()
+                # check whether ID is unique and whether all rows are filled
+                if (!all(nzchar(crrArg$dtaInp[, crrArg$varID])) || any(duplicated(crrArg$dtaInp[, crrArg$varID])))
+                    jmvcore::reject(jmvcore::format(.("The values in {0} can not be empty and they need to be unique."), crrArg$varID))
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(crrArg, list(fleOut = NULL)))
                 private$.crrDta <- private$.adjRes(dtaFrm = private$.crrDta)
                 private$.rpmDta <- private$.prpRpM(dtaFrm = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R) for both data preview and rep. measures overview
@@ -28,8 +32,8 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .adjRes = function(dtaFrm = NULL) {
             if        (self$options$mdeW2L ==  "NSA") {
-                selClm <- grepl(paste0("^cond[0-9]+$"), names(dtaFrm))
-                dtaFrm[, selClm] <- vapply(dtaFrm[, selClm], function(x) as.integer(as.character(x)), integer(dim(dtaFrm)[1]))
+                selClm <- grepl(paste0("^cond[0-9]*$"), names(dtaFrm))
+                dtaFrm[, selClm] <- vapply(dtaFrm[, selClm, drop = FALSE], function(x) as.integer(as.character(x)), integer(dim(dtaFrm)[1]))
                 names(dtaFrm)[selClm] <- vapply(self$options$idxNSA, "[[", character(1), "var")
             } else if (self$options$mdeW2L ==  "NSS") {
                 selClm <- grepl(paste0("^cond$"),       names(dtaFrm))
@@ -77,7 +81,8 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             } else if (self$options$mdeW2L ==  "NSA") {
                 rnmRes <- private$.rnmDta()
                 list(dtaInp = rnmRes$dtaFrm,       varID =  self$options$id_NSA, varLst = rnmRes$tgtLst,
-                     varExc = self$options$excNSA, varSep = "_", excLvl = 1)
+                     varExc = self$options$excNSA, varTme = vapply(self$options$idxNSA, "[[", character(1), "var"),
+                     varSep = "_", excLvl = 1)
             }
         },
 
@@ -112,7 +117,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 cbind(setNames(tblFrq[1], self$options$idxNSS), as.data.frame(self$options$xfmNSS, nm = self$options$tgtNSS), tblFrq[2])
             } else if (self$options$mdeW2L ==  "NSA") {
                 varTgt <- setNames(as.data.frame(lapply(self$options$xfmNSA, "[[", "vars")), vapply(self$options$xfmNSA, "[[", character(1), "label"))
-                tblFrq <- as.data.frame(table(dtaFrm[, vapply(self$options$idxNSA, "[[", character(1), "var")]))
+                tblFrq <- as.data.frame(table(dtaFrm[, vapply(self$options$idxNSA, "[[", character(1), "var"), drop = FALSE]))
                 colFrq <- dim(tblFrq)[2]
                 cbind(tblFrq[-colFrq], varTgt, tblFrq[colFrq])
             }
