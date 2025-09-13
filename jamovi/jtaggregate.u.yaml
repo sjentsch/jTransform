@@ -1,0 +1,122 @@
+title: Aggregate
+name: jtAggregate
+jus: '3.0'
+stage: 0
+compilerMode: tame
+
+children:
+  - type: VariableSupplier
+    persistentItems: false
+    stretchFactor: 1
+    permitted:
+      - numeric
+      - factor
+      - id
+    children:
+      - type: TargetLayoutBox
+        label: Variable(s) to Aggregate
+        children:
+          - type: VariablesListBox
+            name: varAgg
+            isTarget: true
+      - type: TargetLayoutBox
+        label: Split by
+        children:
+          - type: VariablesListBox
+            name: grpAgg
+            height: small
+            isTarget: true
+
+  - type: LayoutBox
+    stretchFactor: 1
+    style: inline
+    children:
+      - type: LayoutBox
+        stretchFactor: 5
+        margin: large
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Sample Size
+            children:
+              - type: LayoutBox
+                stretchFactor: 1
+                style: inline
+                children:
+                  - type: CheckBox
+                    name: clcN
+                  - type: CheckBox
+                    name: clcMss
+          - type: Label
+            label: Dispersion
+            style: list-inline
+            children:
+              - type: LayoutBox
+                margin: normal
+                children:
+                  - type: CheckBox
+                    name: clcSD
+                  - type: CheckBox
+                    name: clcVar
+                  - type: CheckBox
+                    name: clcRng
+              - type: LayoutBox
+                margin: normal
+                children:
+                  - type: CheckBox
+                    name: clcMin
+                  - type: CheckBox
+                    name: clcMax
+                  - type: CheckBox
+                    name: clcIQR
+      - type: LayoutBox
+        stretchFactor: 4
+        margin: large
+        fitToGrid: true
+        children:
+          - type: Label
+            label: Central Tendency
+            children:
+              - type: CheckBox
+                name: clcMn
+              - type: CheckBox
+                name: clcMdn
+              - type: CheckBox
+                name: clcMde
+              - type: CheckBox
+                name: clcSum
+
+  - type: LayoutBox
+    style: inline
+    margin: large
+    children:
+      - type: Label
+        label: Remove / Drop Missing Values
+        style: inline
+        verticalAlignment: center
+        margin: large
+        children:
+          - type: CheckBox
+            name: drpNA
+
+  - type: LayoutBox
+    style: inline
+    stretchFactor: 1
+    margin: large
+    children:
+      - type: LayoutBox
+        style: list
+        stretchFactor: 1
+        margin: large
+        horizontalAlignment: left
+        children:
+          - type: CheckBox
+            name: shwHlp
+      - type: LayoutBox
+        style: list
+        stretchFactor: 1
+        margin: none
+        horizontalAlignment: right
+        children:
+          - type: ActionButton
+            name: btnCrt

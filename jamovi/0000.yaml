@@ -1,14 +1,14 @@
 ---
 title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
-version: 0.4.3
+version: 0.4.4
 jms: '1.0'
 authors:
   - Sebastian Jentschke
   - Maurizio Agosti
   - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2025-06-16'
+date: '2025-09-11'
 type: R
 description: >-
   The jamovi module jTransform carries out common data management tasks and
@@ -98,6 +98,14 @@ analyses:
     menuSubgroup: jTransform
     menuTitle: Combine Columns
     description: Combine Pairs of Variables Into One Variable
+  - title: Aggregate
+    name: jtAggregate
+    ns: jTransform
+    category: analyses
+    menuGroup: Data
+    menuSubgroup: jTransform
+    menuTitle: Aggregate
+    description: Aggregate Data (e.g., Calculate the Mean) From a Data Set in Long Format
   - title: Transform (Reduce Skewness)
     name: jtTransformVars
     ns: jTransform

@@ -21,14 +21,18 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 --->
 
 The jamovi module jTransform carries out common data management tasks and
-transformations of data sets. It includes functions to change the order of /
-re-arrange variables in a data set, transforming a data set from long to wide
-or from wide to long, transposing a data set (make rows into columns and
-columns into rows), sorting a data set after one or more variable, and adding
-columns from one or more additional data sets to the currently opened data set.
-In addition, there are functions to search or replace values. Finally, the is
-a function to apply transformations for skewed variables trying to make them
-better conform to a normal distribution.
+transformations of data sets. It is supposed to be a Swiss-Army-knife for such
+tasks.
+The module includes functions to search or replace values. In addition, it
+contains functions to change the order of / re-arrange variables in a data set,
+transforming a data set from long to wide or from wide to long, transposing a
+data set (make rows into columns and columns into rows), sorting a data set
+after one or more variable, and adding columns from one or more additional data
+sets to the currently opened data set.
+Finally, there are functions to carry out calculations, including a function to
+aggregate data, to apply transformations for skewed variables trying to make
+them better conform to a normal distribution, and for calculating distance
+measures.
 
 <!---
 <center>

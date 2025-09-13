@@ -1,0 +1,111 @@
+---
+name:  jtAggregate
+title: Aggregate
+menuGroup: Data
+menuSubgroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+description:
+  main: Change the Order of Variables in a Data Set
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::aggregate_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
+options:
+  - name: data
+    type: Data
+
+  - name: varAgg
+    type: Variables
+
+  - name: grpAgg
+    type: Variables
+
+  - name: clcN
+    title: N (Valid)
+    type: Bool
+    default: false
+
+  - name: clcMss
+    title: Missing
+    type: Bool
+    default: false
+
+  - name: clcMn
+    title: Mean
+    type: Bool
+    default: false
+
+  - name: clcMdn
+    title: Median
+    type: Bool
+    default: false
+
+  - name: clcMde
+    title: Mode
+    type: Bool
+    default: false
+
+  - name: clcSum
+    title: Sum
+    type: Bool
+    default: false
+
+  - name: clcSD
+    title: Std. Deviation
+    type: Bool
+    default: false
+
+  - name: clcVar
+    title: Variance
+    type: Bool
+    default: false
+
+  - name: clcRng
+    title: Range
+    type: Bool
+    default: false
+
+  - name: clcMin
+    title: Minimum
+    type: Bool
+    default: false
+
+  - name: clcMax
+    title: Maximum
+    type: Bool
+    default: false
+
+  - name: clcIQR
+    title: IQR
+    type: Bool
+    default: false
+
+  - name: drpNA
+    title: ""
+    type: Bool
+    default: true
+
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: false
+
+  - name: btnCrt
+    type: Action
+    title: Create
+    default: false
+
+  - name: jxfLog
+    type: Bool
+    title: Create Log File
+    hidden: true    
+    default: false
+
+...

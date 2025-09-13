@@ -1,0 +1,58 @@
+---
+name:  jtAggregate
+title: Aggregate
+jrs:   '1.1'
+
+items:
+  # this reults element is only used for formatting the output tables
+  - name: fmtHTM
+    type: Html
+    clearWith: [ ]
+    content: >
+      <style>
+      #fmtHTM { display: none; }
+      table { width: 100%; border-collapse: collapse; }
+      th { background-color: #3e6da9; color: white; text-align: left; }
+      tbody > td { border: 1px solid #ddd; padding: 8px; }
+      tbody > tr:nth-child(even) { background-color: #d6eaf8; }
+      tbody > tr:nth-child(odd) { background-color: #ffffff; }
+      tbody > tr:hover { background-color: #aed6f1; }
+      </style>
+
+  - name:  genInf
+    type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Please assign the variables from the data set that should be aggregated
+      to "Variable(s) to Aggregate" and grouping variables to "Split By" (e.g.,
+      if the aggregation were on the level of participants, the variable
+      assigned to "Split By" would need to distinguish participants). The data
+      need to be in long format (i.e., several rows per participant when using
+      the example above). By setting the different check boxes, different
+      aggregations can be requested, each resulting in a new column in the
+      resulting data set.
+
+  - name:  dtaInf
+    type:  Html
+    clearWith: [ varAgg, grpAgg, clcN, clcMss, clcMn, clcMdn, clcMde, clcSum,
+                 clcSD, clcVar, clcRng, clcMin, clcMax, clcIQR, drpNA, btnCrt ]
+    content: ""
+
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ varAgg, grpAgg, clcN, clcMss, clcMn, clcMdn, clcMde, clcSum,
+                 clcSD, clcVar, clcRng, clcMin, clcMax, clcIQR, drpNA ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+# take away btnCrt from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
+
+...
