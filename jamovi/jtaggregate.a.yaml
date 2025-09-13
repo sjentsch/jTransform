@@ -7,7 +7,7 @@ version: '1.0.0'
 jas: '1.2'
 
 description:
-  main: Change the Order of Variables in a Data Set
+  main: Aggregate Data (e.g., Calculate the Mean) From a Data Set in Long Format
   R:
     dontrun: true
     usage: |

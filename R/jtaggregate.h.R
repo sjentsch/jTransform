@@ -254,14 +254,21 @@ jtAggregateBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 analysisId = analysisId,
                 revision = revision,
                 pause = NULL,
-                completeWhenFilled = FALSE,
+                completeWhenFilled = TRUE,
                 requiresMissings = FALSE,
                 weightsSupport = 'auto')
         }))
 
 #' Aggregate
 #'
-#' 
+#' Aggregate Data (e.g., Calculate the Mean) From a Data Set in Long Format
+#'
+#' @examples
+#' \donttest{
+#' # the function is a wrapper for jmvReadWrite::aggregate_omv
+#' # please use that function when in R (or in Rj)
+#' # for more information: https://sjentsch.github.io/jmvReadWrite
+#'}
 #' @param data .
 #' @param varAgg .
 #' @param grpAgg .
