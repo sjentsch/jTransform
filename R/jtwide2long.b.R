@@ -13,7 +13,9 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # calculate the current data
                 crrArg <- private$.crrArg()
                 # check whether ID is unique and whether all rows are filled
-                if (!all(nzchar(crrArg$dtaInp[, crrArg$varID])) || any(duplicated(crrArg$dtaInp[, crrArg$varID])))
+                if (any(duplicated(crrArg$dtaInp[, crrArg$varID])) ||
+                    (is.character(crrArg$dtaInp[, crrArg$varID]) && !all(nzchar(crrArg$dtaInp[, crrArg$varID]))) ||
+                    any(is.na(crrArg$dtaInp[, crrArg$varID])))
                     jmvcore::reject(jmvcore::format(.("The values in {0} can not be empty and they need to be unique."), crrArg$varID))
                 private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(crrArg, list(fleOut = NULL)))
                 private$.crrDta <- private$.adjRes(dtaFrm = private$.crrDta)

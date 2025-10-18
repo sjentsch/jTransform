@@ -42,7 +42,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "NSS",
                     "NSA"),
                 default="Sep")
-            private$..id_Sep <- jmvcore::OptionVariables$new(
+            private$..id_Sep <- jmvcore::OptionVariable$new(
                 "id_Sep",
                 id_Sep,
                 permitted=list(
@@ -78,7 +78,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "lvlSep",
                 lvlSep,
                 default="")
-            private$..id_NSS <- jmvcore::OptionVariables$new(
+            private$..id_NSS <- jmvcore::OptionVariable$new(
                 "id_NSS",
                 id_NSS,
                 permitted=list(
@@ -106,7 +106,7 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "tgtNSS",
                 tgtNSS,
                 default="var")
-            private$..id_NSA <- jmvcore::OptionVariables$new(
+            private$..id_NSA <- jmvcore::OptionVariable$new(
                 "id_NSA",
                 id_NSA,
                 permitted=list(

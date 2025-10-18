@@ -36,8 +36,8 @@ options:
 # =============================================================================
 
   - name:  id_Sep
-    title: Variables That Identify the Same Unit
-    type:  Variables
+    title: Variable That Identifies the Same Unit
+    type:  Variable
     permitted:
     - numeric
     - factor
@@ -45,7 +45,7 @@ options:
     default:
 #    description:
 #      R: >
-#      variables that identify the same unit (e.g., an individual, a group,
+#      variable that identifies the same unit (e.g., an individual, a group,
 #      an organization, etc.)
 
   - name:  xfmSep
@@ -100,8 +100,8 @@ options:
 # =============================================================================
 
   - name:  id_NSS
-    title: Variables That Identify the Same Unit
-    type:  Variables
+    title: Variable That Identifies the Same Unit
+    type:  Variable
     permitted:
     - numeric
     - factor
@@ -109,7 +109,7 @@ options:
     default:
 #    description:
 #      R: >
-#      variables that identify the same unit (e.g., an individual, a group,
+#      variable that identifies the same unit (e.g., an individual, a group,
 #      an organization, etc.)
 
   - name:  xfmNSS
@@ -141,8 +141,8 @@ options:
 # =============================================================================
 
   - name:  id_NSA
-    title: Variables That Identify the Same Unit
-    type:  Variables
+    title: Variable That Identifies the Same Unit
+    type:  Variable
     permitted:
     - numeric
     - factor
@@ -150,7 +150,7 @@ options:
     default:
 #    description:
 #      R: >
-#      variables that identify the same unit (e.g., an individual, a group,
+#      variable that identifies the same unit (e.g., an individual, a group,
 #      an organization, etc.)
 
   - name:  xfmNSA

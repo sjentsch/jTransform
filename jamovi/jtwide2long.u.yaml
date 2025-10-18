@@ -30,8 +30,8 @@ children:
                 children:
                   - type: VariablesListBox
                     name: id_Sep
+                    maxItemCount: 1
                     isTarget: true
-                    height: small
               - type: TargetLayoutBox
                 children:
                   - type: VariablesListBox
@@ -80,8 +80,8 @@ children:
                 children:
                   - type: VariablesListBox
                     name: id_NSS
+                    maxItemCount: 1
                     isTarget: true
-                    height: small
               - type: TargetLayoutBox
                 children:
                   - type: VariablesListBox
@@ -126,8 +126,8 @@ children:
                 children:
                   - type: VariablesListBox
                     name: id_NSA
+                    maxItemCount: 1
                     isTarget: true
-                    height: small
               - type: TargetLayoutBox
                 label: Variables To Be Transformed
                 children:
