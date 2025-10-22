@@ -237,9 +237,11 @@ testthat::test_that("jtaggregate works", {
 
     # check asSource
     expect_equal(jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
-                                         clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)$parent$asSource(),
-      paste0("jTransform::jtAggregate(\n    data = data,\n    varAgg = vars(V1, V2),\n    grpAgg = ID,\n    clcN = TRUE,\n",
-             "    clcMn = TRUE,\n    clcMdn = TRUE,\n    clcMde = TRUE,\n    clcSum = TRUE,\n    drpNA = FALSE)"))
+                                         clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE,
+                                         clcSum = TRUE)$parent$asSource(),
+      paste0("jTransform::jtAggregate(\n    data = data,\n    varAgg = vars(V1, V2),\n    grpAgg = ID,\n",
+             "    clcN = TRUE,\n    clcMn = TRUE,\n    clcMdn = TRUE,\n    clcMde = TRUE,\n    clcSum = TRUE,\n",
+             "    drpNA = FALSE,\n    btnCrt = FALSE)"))
 
     # check when chkVar fails (varAgg is empty)
     chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c(), grpAgg = c("ID"), clcN = TRUE)
