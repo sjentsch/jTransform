@@ -6,6 +6,7 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .crrCmd = "jmvReadWrite::sort_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "Sort",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

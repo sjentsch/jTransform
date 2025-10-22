@@ -7,6 +7,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrDta = NULL,
         .nonLtd = FALSE,
         .rpmDta = NULL,
+        .sfxTtl = "Wide2Long",
 
         .init = function() {
             if (private$.chkVar()) {
@@ -30,7 +31,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         # common functions are in incFnc.R
-        .run = commonFunc$private_methods$.runRpM,
+        .run = commonFunc$private_methods$.run,
 
         .adjRes = function(dtaFrm = NULL) {
             if        (self$options$mdeW2L ==  "NSA") {

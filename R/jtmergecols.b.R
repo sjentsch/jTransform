@@ -8,6 +8,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrDta = NULL,
         .fleInp = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "MergeCols",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

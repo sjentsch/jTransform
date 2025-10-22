@@ -56,7 +56,8 @@ options:
   - name: btnCrt
     type: Action
     title: Create
-    default: false
+#   default: false
+    action: open
 
   - name: incCmp
     title: "Computed"

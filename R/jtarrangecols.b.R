@@ -6,6 +6,7 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
         .crrCmd = "jmvReadWrite::arrange_cols_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "ArrangeCols",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

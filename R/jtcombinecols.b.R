@@ -6,6 +6,7 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         .crrCmd = "jmvReadWrite::combine_cols_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "CombineCols",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

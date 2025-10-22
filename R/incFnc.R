@@ -20,42 +20,38 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .run = function() {
-            # Update logging flags during the run phase
+            # update logging flags during the run phase
             set_logflags(self$options$jxfLog)
             jinfo("jTransform: run phase started")
 
             # assemble or reset data set / create information
             private$.dtaInf()
             if (private$.chkVar() && private$.chkDtF()) {
-                # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                # if “Create” was pressed, open a new jamovi session with the data
+                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {                   
+#                   do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                    prmCrt <- self$results$get('btnCrt')$params
+                    jmvReadWrite::write_omv(dtaFrm = private$.crrDta, fleOut = prmCrt$fullPath,
+                                            frcWrt = TRUE, vldExt = FALSE)
+                    self$results$get('btnCrt')$setResult(list(path = prmCrt$path, ext = 'omv',
+                                                              title = sprintf('jTransform - %s', private$.sfxTtl)))
                 # if not, create a preview of the data (fllPvw in utils.R)
                 } else {
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
+                    fllPvw(crrTbl     = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
+                    if (".rpmDta" %in% names(private)) {
+                        fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
+                    }
+                    if (".mrkDff" %in% names(private)) {
+                        private$.mrkDff(crrTbl = self$results$pvwDta, dtaNew = private$.crrDta, dtaOld = self$data)
+                    }
                 }
             }
             jinfo("jTransform: run phase ended")
         },
 
-        .runRpM = function() {
-            # assemble or reset data set / create information
-            private$.dtaInf()
-            if (private$.chkVar() && dim(self$data)[1] >=  1) {
-                # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                # if not, create a preview of the data and of the repeated measurement levels (fllPvw in utils.R)
-                } else {
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
-                    fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
-                }
-            }
-        },
-
         # covers the most common case (data frame has at least one row)
         .chkDtF = function() {
-            (dim(self$data)[1] >=  1)
+            (!is.null(self$data) && dim(self$data)[1] >= 1)
         },
 
         # covers the most common case (colFst is not used)

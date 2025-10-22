@@ -70,8 +70,8 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 default=FALSE)
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
-                btnCrt,
-                default=FALSE)
+                FALSE,
+                action="open")
             private$..jxfLog <- jmvcore::OptionBool$new(
                 "jxfLog",
                 jxfLog,

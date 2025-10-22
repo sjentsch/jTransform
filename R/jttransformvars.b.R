@@ -6,6 +6,7 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .crrCmd = "jmvReadWrite::transform_vars_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "TransfVars",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
