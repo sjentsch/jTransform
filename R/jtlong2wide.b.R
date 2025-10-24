@@ -23,7 +23,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         # common functions are in incFnc.R
-        .run = commonFunc$private_methods$.runRpM,
+        .run = commonFunc$private_methods$.run,
 
         .chkDtF = commonFunc$private_methods$.chkDtF,
 

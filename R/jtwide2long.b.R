@@ -10,19 +10,16 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .init = function() {
             if (private$.chkVar()) {
-                # calculate the current data
-                crrArg <- private$.crrArg()
-                # check whether ID is unique and whether all rows are filled
-                if (any(duplicated(crrArg$dtaInp[, crrArg$varID])) ||
-                    (is.character(crrArg$dtaInp[, crrArg$varID]) && !all(nzchar(crrArg$dtaInp[, crrArg$varID]))) ||
-                    any(is.na(crrArg$dtaInp[, crrArg$varID])))
-                    jmvcore::reject(jmvcore::format(.("The values in {0} can not be empty and they need to be unique."), crrArg$varID))
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(crrArg, list(fleOut = NULL)))
+                # check whether the ID variable is unique, if so calculate the current data
+                private$.unq_ID(private$.crrArg())
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)),
+                                           c(private$.crrArg(), list(fleOut = NULL)))
                 private$.crrDta <- private$.adjRes(dtaFrm = private$.crrDta)
                 private$.rpmDta <- private$.prpRpM(dtaFrm = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R) for both data preview and rep. measures overview
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
-                prpPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta,                             nonLtd = TRUE)
+                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(),
+                       nonLtd = private$.nonLtd)
+                prpPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nonLtd = TRUE)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -30,7 +27,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         # common functions are in incFnc.R
-        .run = commonFunc$private_methods$.runRpM,
+        .run = commonFunc$private_methods$.run,
 
         .adjRes = function(dtaFrm = NULL) {
             if        (self$options$mdeW2L ==  "NSA") {
@@ -152,6 +149,15 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .spfNum = function(crrNum = NA) {
              sprintf(paste0("_%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))
+        },
+
+        .unq_ID = function(crrArg = NULL) {
+            # check whether ID is unique and whether all rows are filled
+            if (any(duplicated(crrArg$dtaInp[, crrArg$varID])) ||
+                (is.character(crrArg$dtaInp[, crrArg$varID]) && !all(nzchar(crrArg$dtaInp[, crrArg$varID]))) ||
+                any(is.na(crrArg$dtaInp[, crrArg$varID])))
+                jmvcore::reject(jmvcore::format(.("The values in {0} can not be empty and they need to be unique."),
+                crrArg$varID))
         }
 
     ),

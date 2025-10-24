@@ -30,27 +30,20 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
                     do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                # if not, create a preview of the data (fllPvw in utils.R)
                 } else {
+                    # if not, create a preview of the data (used by all functions except jtSearch; fllPvw in utils.R)
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
+                    # ... fill table that shows the repeated measurement factors (used by jtLong2Wide, jtWide2Long)
+                    if (hasName(private, ".rpmDta")) {
+                        fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
+                    }
+                    # ... mark occurences in the preview where the values were changed / replaced (used by jtReplace)
+                    if (hasName(private, ".mrkDff")) {
+                        private$.mrkDff(crrTbl = self$results$pvwDta, dtaNew = private$.crrDta, dtaOld = self$data)
+                    }
                 }
             }
             jinfo("jTransform: run phase ended")
-        },
-
-        .runRpM = function() {
-            # assemble or reset data set / create information
-            private$.dtaInf()
-            if (private$.chkVar() && dim(self$data)[1] >=  1) {
-                # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                # if not, create a preview of the data and of the repeated measurement levels (fllPvw in utils.R)
-                } else {
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
-                    fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
-                }
-            }
         },
 
         # covers the most common case (data frame has at least one row)
