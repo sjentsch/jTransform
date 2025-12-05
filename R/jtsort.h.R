@@ -178,7 +178,6 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varAll .
 #' @param ordSrt .
 #' @param shwHlp .
-#' @param btnCrt .
 #' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{

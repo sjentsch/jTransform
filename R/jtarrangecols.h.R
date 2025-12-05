@@ -162,7 +162,6 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varOrd .
 #' @param blnAll .
 #' @param shwHlp .
-#' @param btnCrt .
 #' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{

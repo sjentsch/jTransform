@@ -245,7 +245,6 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varAgg .
 #' @param varSep .
 #' @param shwHlp .
-#' @param btnCrt .
 #' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{

@@ -219,7 +219,6 @@ jtTransformVarsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Clas
 #' @param posInv .
 #' @param negInv .
 #' @param shwHlp .
-#' @param btnCrt .
 #' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{

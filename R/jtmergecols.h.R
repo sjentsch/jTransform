@@ -209,7 +209,6 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param fleChs .
 #' @param typMrg .
 #' @param shwHlp .
-#' @param btnCrt .
 #' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{

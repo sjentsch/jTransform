@@ -247,7 +247,6 @@ jtReplaceBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param rplTrm .
 #' @param whlTrm .
 #' @param shwHlp .
-#' @param btnCrt .
 #' @param incCmp .
 #' @param incRcd .
 #' @param incID .
