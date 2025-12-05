@@ -60,7 +60,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             if (!hasName(self$options, "btnCrt") || self$options$btnCrt) return(NULL)
 
             sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
-                    .(" in a new jamovi window."))
+                    .("in a new jamovi window."))
         },
 
         .dtaInf = function() {

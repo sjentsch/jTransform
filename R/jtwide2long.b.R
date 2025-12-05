@@ -76,16 +76,26 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             } else if (self$options$mdeW2L ==  "NSS") {
                 rnmRes <- private$.rnmDta()
                 list(dtaInp = rnmRes$dtaFrm,       varID = self$options$id_NSS,  varLst = rnmRes$tgtLst,
-                     varExc = self$options$excNSS, varSep = "_", excLvl = 1)
+                     varExc = self$options$excNSS, varSep = rnmRes$varSep, excLvl = 1)
             } else if (self$options$mdeW2L ==  "NSA") {
                 rnmRes <- private$.rnmDta()
                 list(dtaInp = rnmRes$dtaFrm,       varID =  self$options$id_NSA, varLst = rnmRes$tgtLst,
                      varExc = self$options$excNSA, varTme = vapply(self$options$idxNSA, "[[", character(1), "var"),
-                     varSep = "_", excLvl = 1)
+                     varSep = rnmRes$varSep, excLvl = 1)
             }
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
+        
+        .detSep = function(varLst = c()) {
+            for (varSep in c("_", ".", "-", "!", "#", "%")) {
+                if (!any(vapply(varLst, function(n) grepl(varSep, n, fixed = TRUE), logical(1)))) {
+                    return(varSep)
+                }
+            }
+            jmvcore::reject(.("The Long Variables in \"Variables To Be Transformed\" are invalid, remove _, . and - from the names."))
+        },
+
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
         .nteRnC = commonFunc$private_methods$.nteRnC,
@@ -125,17 +135,22 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .rnmDta = function() {
             dtaFrm <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
             if        (self$options$mdeW2L ==  "NSS") {
-                tgtLst <- paste0(self$options$tgtNSS, private$.spfNum(length(self$options$xfmNSS)))
+                varSep <- private$.detSep(self$options$tgtNSS)
+                tgtLst <- paste0(self$options$tgtNSS, private$.spfNum(length(self$options$xfmNSS), varSep))
                 selClm <- (names(dtaFrm) %in% self$options$xfmNSS)
                 names(dtaFrm)[selClm] <- tgtLst
                 # remove columns that are not required from dtaFrm and return it together with tgtLst
-                list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSS, self$options$excNSS, tgtLst))], tgtLst = tgtLst)
+                list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSS, self$options$excNSS, tgtLst))], tgtLst = tgtLst, varSep = varSep)
             } else if (self$options$mdeW2L ==  "NSA") {
+                if (any(vapply(self$options$xfmNSA, function(l) is.null(l[["label"]]) || !nzchar(l[["label"]]), logical(1)))) {
+                    jmvcore::reject(.("No target Long Variables in \"Variables To Be Transformed\" can be empty."))
+                }
                 tgtLst <- as.list(vapply(self$options$xfmNSA, "[[", character(1), "label"))
+                varSep <- private$.detSep(unlist(tgtLst))
                 idxNSA <- self$options$idxNSA
                 for (i in seq_along(tgtLst)) {
                     for (j in seq_along(idxNSA)) {
-                        tgtLst[[i]] <- paste0(tgtLst[[i]], rep(private$.spfNum(idxNSA[[j]][["levels"]]), each = length(tgtLst[[i]])))
+                        tgtLst[[i]] <- paste0(tgtLst[[i]], rep(private$.spfNum(idxNSA[[j]][["levels"]], varSep), each = length(tgtLst[[i]])))
                     }
                     selClm <- (names(dtaFrm) %in% self$options$xfmNSA[[i]][["vars"]])
                     names(dtaFrm)[selClm] <- tgtLst[[i]]
@@ -143,21 +158,23 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # convert tgtLst (list) into a (character) vector
                 tgtLst <- unlist(tgtLst)
                 # remove columns that are not required from dtaFrm and return it together with tgtLst
-                list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSA, self$options$excNSA, tgtLst))], tgtLst = tgtLst)
+                list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSA, self$options$excNSA, tgtLst))], tgtLst = tgtLst, varSep = varSep)
             }
         },
 
-        .spfNum = function(crrNum = NA) {
-             sprintf(paste0("_%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))
+        .spfNum = function(crrNum = NA, crrSep = "_") {
+             sprintf(paste0(crrSep, "%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))
         },
 
         .unq_ID = function(crrArg = NULL) {
             # check whether ID is unique and whether all rows are filled
-            if (any(duplicated(crrArg$dtaInp[, crrArg$varID])) ||
-                (is.character(crrArg$dtaInp[, crrArg$varID]) && !all(nzchar(crrArg$dtaInp[, crrArg$varID]))) ||
-                any(is.na(crrArg$dtaInp[, crrArg$varID])))
+            if (!is.null(crrArg$varID) &&
+                (any(duplicated(crrArg$dtaInp[, crrArg$varID])) ||
+                 (is.character(crrArg$dtaInp[, crrArg$varID]) && !all(nzchar(crrArg$dtaInp[, crrArg$varID]))) ||
+                 any(is.na(crrArg$dtaInp[, crrArg$varID])))) {
                 jmvcore::reject(jmvcore::format(.("The values in {0} can not be empty and they need to be unique."),
                 crrArg$varID))
+            }
         }
 
     ),
