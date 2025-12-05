@@ -25,7 +25,6 @@ jtWide2LongOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             idxNSA = list(
                 list(var="index1", levels=0)),
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -446,7 +445,6 @@ jtWide2Long <- function(
     idxNSA = list(
                 list(var="index1", levels=0)),
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -491,7 +489,6 @@ jtWide2Long <- function(
         excNSA = excNSA,
         idxNSA = idxNSA,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtWide2LongClass$new(

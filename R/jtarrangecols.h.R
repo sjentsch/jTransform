@@ -10,7 +10,6 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varOrd = NULL,
             blnAll = FALSE,
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -186,7 +185,6 @@ jtArrangeCols <- function(
     varOrd = NULL,
     blnAll = FALSE,
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -206,7 +204,6 @@ jtArrangeCols <- function(
         varOrd = varOrd,
         blnAll = blnAll,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtArrangeColsClass$new(

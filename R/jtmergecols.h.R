@@ -13,7 +13,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             fleChs = "",
             typMrg = "outer",
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -237,7 +236,6 @@ jtMergeCols <- function(
     fleChs = "",
     typMrg = "outer",
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -260,7 +258,6 @@ jtMergeCols <- function(
         fleChs = fleChs,
         typMrg = typMrg,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtMergeColsClass$new(

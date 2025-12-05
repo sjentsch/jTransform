@@ -28,20 +28,29 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             private$.dtaInf()
             if (private$.chkVar() && private$.chkDtF()) {
                 # if “Create” was pressed, open a new jamovi session with the data
-                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {                   
-#                   do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
-                    prmCrt <- self$results$get('btnCrt')$params
-                    jmvReadWrite::write_omv(dtaFrm = private$.crrDta, fleOut = prmCrt$fullPath,
+                if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
+                    optCrt <- self$options$option("btnCrt")
+                    if (hasName(optCrt, "perform")) {
+                        optCrt$perform(function(actCrt) {
+                            # write the file to actCrt$params$fullPath
+                            jmvReadWrite::write_omv(dtaFrm = private$.crrDta, fleOut = actCrt$params$fullPath,
                                             frcWrt = TRUE, vldExt = FALSE)
-                    self$results$get('btnCrt')$setResult(list(path = prmCrt$path, ext = 'omv',
-                                                              title = sprintf('jTransform - %s', private$.sfxTtl)))
-                # if not, create a preview of the data (fllPvw in utils.R)
+                            # return a result object using actCrt$params$path
+                            list(path = actCrt$params$path, ext = 'omv',
+                                 title = sprintf('jTransform - %s', private$.sfxTtl))
+                        })
                 } else {
+                        do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                    }
+                } else {
+                    # if not, create a preview of the data (used by all functions except jtSearch; fllPvw in utils.R)
                     fllPvw(crrTbl     = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
-                    if (".rpmDta" %in% names(private)) {
+                    # ... fill table that shows the repeated measurement factors (used by jtLong2Wide, jtWide2Long)
+                    if (hasName(private, ".rpmDta")) {
                         fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
                     }
-                    if (".mrkDff" %in% names(private)) {
+                    # ... mark occurences in the preview where the values were changed / replaced (used by jtReplace)
+                    if (hasName(private, ".mrkDff")) {
                         private$.mrkDff(crrTbl = self$results$pvwDta, dtaNew = private$.crrDta, dtaOld = self$data)
                     }
                 }

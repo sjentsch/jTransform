@@ -14,7 +14,6 @@ jtTransformVarsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
             posInv = NULL,
             negInv = NULL,
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -247,7 +246,6 @@ jtTransformVars <- function(
     posInv = NULL,
     negInv = NULL,
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -281,7 +279,6 @@ jtTransformVars <- function(
         posInv = posInv,
         negInv = negInv,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtTransformVarsClass$new(

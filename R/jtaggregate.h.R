@@ -22,7 +22,6 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             clcIQR = FALSE,
             drpNA = TRUE,
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -321,7 +320,6 @@ jtAggregate <- function(
     clcIQR = FALSE,
     drpNA = TRUE,
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -353,7 +351,6 @@ jtAggregate <- function(
         clcIQR = clcIQR,
         drpNA = drpNA,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtAggregateClass$new(

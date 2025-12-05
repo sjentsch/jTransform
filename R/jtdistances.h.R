@@ -15,7 +15,6 @@ jtDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             p__Dst = "1",
             np_Dst = "0",
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -278,7 +277,6 @@ jtDistances <- function(
     p__Dst = "1",
     np_Dst = "0",
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -301,7 +299,6 @@ jtDistances <- function(
         p__Dst = p__Dst,
         np_Dst = np_Dst,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtDistancesClass$new(

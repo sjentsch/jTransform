@@ -10,7 +10,6 @@ jtCombineColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varPrs = NULL,
             mdeCmb = "none",
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -189,7 +188,6 @@ jtCombineCols <- function(
     varPrs,
     mdeCmb = "none",
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -207,7 +205,6 @@ jtCombineCols <- function(
         varPrs = varPrs,
         mdeCmb = mdeCmb,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtCombineColsClass$new(

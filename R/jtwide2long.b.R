@@ -87,7 +87,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
-        
+
         .detSep = function(varLst = c()) {
             for (varSep in c("_", ".", "-", "!", "#", "%")) {
                 if (!any(vapply(varLst, function(n) grepl(varSep, n, fixed = TRUE), logical(1)))) {

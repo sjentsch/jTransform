@@ -10,7 +10,6 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varAll = NULL,
             ordSrt = NULL,
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -202,7 +201,6 @@ jtSort <- function(
     varAll = NULL,
     ordSrt = NULL,
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -222,7 +220,6 @@ jtSort <- function(
         varAll = varAll,
         ordSrt = ordSrt,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtSortClass$new(

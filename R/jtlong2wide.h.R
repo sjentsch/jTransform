@@ -14,7 +14,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varAgg = "mean",
             varSep = "_",
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -275,7 +274,6 @@ jtLong2Wide <- function(
     varAgg = "mean",
     varSep = "_",
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -303,7 +301,6 @@ jtLong2Wide <- function(
         varAgg = varAgg,
         varSep = varSep,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtLong2WideClass$new(

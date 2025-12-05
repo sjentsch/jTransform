@@ -6,13 +6,13 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .crrCmd = "jmvReadWrite::replace_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
-        .sfxTtl = "Replace",        
+        .sfxTtl = "Replace",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
         .run  = commonFunc$private_methods$.run,
 
-        # marking differences is not included in the common function
+        # marking differences is not included in the common functions
         .chkDff = function(dtaOld = NULL, dtaNew = NULL) {
              (any(is.na(dtaOld) !=  is.na(dtaNew)) || any(dtaOld[!is.na(dtaOld)] !=  dtaNew[!is.na(dtaNew)]))
         },

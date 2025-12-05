@@ -9,7 +9,6 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varNme = NULL,
             varOth = NULL,
             shwHlp = FALSE,
-            btnCrt = FALSE,
             jxfLog = FALSE, ...) {
 
             super$initialize(
@@ -177,7 +176,6 @@ jtTranspose <- function(
     varNme = NULL,
     varOth = NULL,
     shwHlp = FALSE,
-    btnCrt = FALSE,
     jxfLog = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
@@ -196,7 +194,6 @@ jtTranspose <- function(
         varNme = varNme,
         varOth = varOth,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
         jxfLog = jxfLog)
 
     analysis <- jtTransposeClass$new(
