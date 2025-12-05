@@ -19,8 +19,7 @@ jtAggregateClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         },
 
         .chkVar = function() {
-            (length(self$options$varAgg) >= 1 &&
-             length(self$options$grpAgg) >= 1 &&
+            (length(self$options$varAgg) >= 1 && length(self$options$grpAgg) &&
              any(c(self$options$clcN,   self$options$clcMss, self$options$clcMn,
                    self$options$clcMdn, self$options$clcMde, self$options$clcSum,
                    self$options$clcSD,  self$options$clcVar, self$options$clcRng,
