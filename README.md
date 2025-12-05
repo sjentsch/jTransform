@@ -46,7 +46,7 @@ measures.
 
 If you haven't already installed [jamovi](https://www.jamovi.org/download.html),
 install it. Open jamovi, and select the jamovi modules library and
-[install](https://jamovi.readthedocs.io/en/latest/howto/howto_Install_modules.html)
+[install](https://jamovi.readthedocs.io/en/latest/howto/howto_Install_modules/)
 jTransform from there.
 
 <!---

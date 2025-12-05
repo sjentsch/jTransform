@@ -1,7 +1,7 @@
 testthat::test_that("jtaggregate works", {
     set.seed(1234)
     dtaInp <- data.frame(ID = rep(as.character(seq(1, 100)), each = 10), Measure = rep(seq(10), times = 100),
-                         V1 = runif(n = 100 * 10, 0, 100), V2 = as.factor(round(rnorm(n = 100 * 10, 3, 2/3))))
+                         V1 = runif(n = 100 * 10, 0, 100), V2 = as.factor(round(rnorm(n = 100 * 10, 3, 2 / 3))))
     attr(dtaInp[, "V1"], "jmv-desc") <- "Variable V1"
     attr(dtaInp[, "V2"], "jmv-desc") <- "Variable V2"
     dtaInp[sample(91:160, 10), "V1"] <- NA
