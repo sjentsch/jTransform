@@ -1,5 +1,5 @@
 hmeDir <- function() {
-    Sys.getenv(ifelse(jmvReadWrite:::getOS() ==  "windows", "USERPROFILE", "HOME"))
+    Sys.getenv(ifelse(jmvReadWrite:::getOS() == "windows", "USERPROFILE", "HOME"))
 }
 
 prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {

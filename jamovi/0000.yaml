@@ -137,6 +137,14 @@ analyses:
     description: >-
       Distance measures describe how closely related (or distant from each
       other) variables or cases are.
+  - title: Convert Multiple Data Files
+    name: jtBatchConvert
+    ns: jTransform
+    category: analyses
+    menuGroup: Data
+    menuTitle: Convert Multiple Data Files
+    menuSubgroup: jTransform
+    description: Convert Multiple Data Files
 datasets:
   - name: example4jtCombineCols
     path: example4jtCombineCols.omv

@@ -35,7 +35,7 @@ module.exports = {
                 ui.fleInp.setValue(filePaths);
             });
         });
-    
+
         this.getColumnNames = () => {
             return this.requestData('columns', {})
                 .then((data) => {
