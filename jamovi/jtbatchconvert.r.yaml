@@ -1,0 +1,51 @@
+---
+name:  jtBatchConvert
+title: Convert Multiple Data Files
+jrs:   '1.1'
+
+items:
+  # this reults element is only used for formatting the output tables
+  - name: fmtHTM
+    type: Html
+    clearWith: [ ]
+    content: >
+      <style>
+      #fmtHTM { display: none; }
+      table { width: 100%; border-collapse: collapse; }
+      th { background-color: #3e6da9; color: white; text-align: left; }
+      tbody > td { border: 1px solid #ddd; padding: 8px; }
+      tbody > tr:nth-child(even) { background-color: #d6eaf8; }
+      tbody > tr:nth-child(odd) { background-color: #ffffff; }
+      tbody > tr:hover { background-color: #aed6f1; }
+      </style>
+
+  - name:  genInf
+    type:  Html
+    visible: (shwHlp)
+    clearWith: [ ]
+    content: >
+      Either enter the name of (one or more) file(s) to be converted under
+      "Data Set(s) to Convert" (separate mulitiple file names with semicolons),
+      or use "Browse..." to select input file(s).</p>
+
+  - name:  dtaInf
+    type:  Html
+    clearWith: [ fleInp, btnCnv ]
+    content: ""
+
+  - name:  pvwDta
+    type:  Table
+    title: "Data Preview"
+    refs:  [ jTransform, jmvReadWrite ]
+    clearWith: [ fleInp ]
+    rows: 1
+    columns:
+      - name: fstCol
+        title: ""
+
+# take away btnCnv from dtaInf once Actions is working
+# - name:  opnDta
+#   type:  Action
+#   operation: ...
+
+...

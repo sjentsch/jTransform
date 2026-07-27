@@ -1,0 +1,52 @@
+---
+name:  jtBatchConvert
+title: Convert Multiple Data Files
+menuGroup: Data
+menuSubgroup: jTransform
+version: '1.0.0'
+jas: '1.2'
+
+description:
+  main: Convert Multiple Data Files
+  R:
+    dontrun: true
+    usage: |
+      # the function is a wrapper for jmvReadWrite::convert_omv
+      # please use that function when in R (or in Rj)
+      # for more information: https://sjentsch.github.io/jmvReadWrite
+
+completeWhenFilled: true
+
+options:
+  - name: fleInp
+    type: String
+    title: "Data Set(s) to Convert:"
+    default: ""
+
+  - name: tglChs
+    type: Bool
+    hidden: true
+    default: false
+
+  - name: fleChs
+    type: String
+    hidden: true
+    default: ""
+
+  - name: shwHlp
+    type: Bool
+    title: Show Help / Information
+    default: false
+
+  - name: btnCnv
+    type: Action
+    title: Convert
+    default: false
+
+  - name: jxfLog
+    type: Bool
+    title: Create Log File
+    hidden: true    
+    default: false
+
+...
