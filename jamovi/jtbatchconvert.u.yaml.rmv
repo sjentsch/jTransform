@@ -3,6 +3,7 @@ name: jtBatchConvert
 jus: '3.0'
 stage: 0
 compilerMode: tame
+
 events:
    loaded: './jtbatchconvert::view_loaded'
 

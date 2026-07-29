@@ -1,7 +1,7 @@
 ---
 title: 'jTransform: Functions for Common Data Set Transformations'
 name: jTransform
-version: 0.4.4
+version: 0.4.5
 jms: '1.0'
 authors:
   - Sebastian Jentschke
@@ -19,12 +19,13 @@ description: >-
   columns from one or more additional data sets to the currently opened data
   set. In addition, there are functions to search or replace values.
   Furthermore, there is a function to apply transformations for skewed variables
-  trying to make them better conform to a normal distribution. Finally, there is
-  a function to calculate distances / proximities. jTransform calls functions
-  from the R-package `jmvReadWrite`,
-  (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to these
-  functions via a graphical user interface (without the need to use a R command
-  line for these transformations).
+  trying to make them better conform to a normal distribution. Finally, there
+  are functions to calculate distances / proximities and to aggregate data
+  (e.g., to calculate means for each factor step). jTransform calls functions
+  from the R-package <a href = "https://cran.r-project.org/package=jmvReadWrite"
+  target = "_blank">jmvReadWrite</a>, enabling access to these functions via a
+  graphical user interface (without the need to use a R command line for these
+  transformations).
 analyses:
   - title: Search
     name: jtSearch
@@ -137,14 +138,6 @@ analyses:
     description: >-
       Distance measures describe how closely related (or distant from each
       other) variables or cases are.
-  - title: Convert Multiple Data Files
-    name: jtBatchConvert
-    ns: jTransform
-    category: analyses
-    menuGroup: Data
-    menuTitle: Convert Multiple Data Files
-    menuSubgroup: jTransform
-    description: Convert Multiple Data Files
 datasets:
   - name: example4jtCombineCols
     path: example4jtCombineCols.omv
