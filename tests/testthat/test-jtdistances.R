@@ -75,6 +75,11 @@ testthat::test_that("jtdistances works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 119)
 
+    # ensure that a completely empty data column is raising an error message
+    expect_error(jTransform::jtDistances(data = cbind(dtaInp, data.frame(V12 = rep(NA, 1000))), varDst = c("V1", "V12"),
+                                         stdDst = "none", nmeDst = "euclid"),
+                 "The variable 'V12' contains only missing / invalid values.")
+
     # ensure that help is shown
     chkRes <- jTransform::jtDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid", shwHlp = TRUE)
     expect_true(chkRes$genInf$visible)

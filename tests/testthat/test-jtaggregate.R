@@ -1,9 +1,11 @@
 testthat::test_that("jtaggregate works", {
     set.seed(1234)
     dtaInp <- data.frame(ID = rep(as.character(seq(1, 100)), each = 10), Measure = rep(seq(10), times = 100),
-                         V1 = runif(n = 100 * 10, 0, 100), V2 = as.factor(round(rnorm(n = 100 * 10, 3, 2 / 3))))
+                         V1 = runif(n = 100 * 10, 0, 100), V2 = as.factor(round(rnorm(n = 100 * 10, 3, 2 / 3))),
+                         V3 = rep(NA, 1000))
     attr(dtaInp[, "V1"], "jmv-desc") <- "Variable V1"
     attr(dtaInp[, "V2"], "jmv-desc") <- "Variable V2"
+    attr(dtaInp[, "V3"], "jmv-desc") <- "Variable V3"
     dtaInp[sample(91:160, 10), "V1"] <- NA
     dtaInp[sample(91:160, 10), "V2"] <- NA
 
@@ -231,6 +233,11 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 84)
 
+    # ensure that a completely empty data column is raising an error message
+    expect_error(jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2", "V3"), grpAgg = c("ID"), drpNA = TRUE,
+                                         clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE),
+                 "The variable 'V3' contains only missing / invalid values.")
+
     # ensure that help is shown
     chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), clcMin = TRUE, shwHlp = TRUE)
     expect_true(chkRes$genInf$visible)
@@ -238,8 +245,9 @@ testthat::test_that("jtaggregate works", {
     # check asSource
     expect_equal(jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
                                          clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)$parent$asSource(),
-      paste0("jTransform::jtAggregate(\n    data = data,\n    varAgg = vars(V1, V2),\n    grpAgg = ID,\n    clcN = TRUE,\n",
-             "    clcMn = TRUE,\n    clcMdn = TRUE,\n    clcMde = TRUE,\n    clcSum = TRUE,\n    drpNA = FALSE)"))
+      paste0("jmvReadWrite::aggregate_omv(\n    dtaInp = data,\n    varAgg = c(\"V1\", \"V2\"),\n    grpAgg = \"ID\",\n",
+             "    clcN = TRUE,\n    clcMn = TRUE,\n    clcMdn = TRUE,\n    clcMde = TRUE,\n    clcSum = TRUE,\n",
+             "    drpNA = FALSE)"))
 
     # check when chkVar fails (varAgg is empty)
     chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c(), grpAgg = c("ID"), clcN = TRUE)

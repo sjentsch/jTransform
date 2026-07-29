@@ -6,6 +6,7 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .crrCmd = "jmvReadWrite::transform_vars_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "transform_vars",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -34,16 +35,17 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
             varLst
         },
 
-        .crrArg = function() {
+        .crrArg = function(getDta = TRUE) {
             nmeXfm <- c("posSqr", "negSqr", "posLog", "negLog", "posInv", "negInv")
-            list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
-                 varXfm = setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm))
+            varXfm <- setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm)
+            c(if (getDta) private$.getDta(unique(unlist(varXfm))), list(varXfm = varXfm))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
-        .nteRnC = commonFunc$private_methods$.nteRnC
+         .getDta = commonFunc$private_methods$.getDta,
+       .nteRnC = commonFunc$private_methods$.nteRnC
 
     ),
 

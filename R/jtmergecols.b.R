@@ -8,6 +8,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrDta = NULL,
         .fleInp = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "mrg_cols",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -67,17 +68,19 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             varLst
         },
 
-        .crrArg = function() {
+        .crrArg = function(getDta = TRUE) {
             # attach further input files as attribute fleInp to the data frame
             # and assemble the arguments for merge_cols_omv
-            dtaFrm <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            dtaFrm <- private$.getDta(self$options$varBy)$dtaInp
             attr(dtaFrm, "fleInp") <- private$.fleInp
-            list(dtaInp = dtaFrm, varBy = self$options$varBy, typMrg = self$options$typMrg)
+            c(if (getDta) list(dtaInp = dtaFrm), 
+              list(varBy = self$options$varBy, typMrg = self$options$typMrg))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC
 
     ),
@@ -87,7 +90,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         asSource = function() {
             if (private$.chkVar()) {
                 paste0("attr(data, \"fleInp\") <- c(\n    \"", paste0(private$.fleInp, collapse = "\",\n    \""), "\")\n",
-                       fmtSrc(private$.crrCmd, private$.crrArg()[-1]))
+                       fmtSrc(private$.crrCmd, private$.crrArg(FALSE)))
             }
         }
 

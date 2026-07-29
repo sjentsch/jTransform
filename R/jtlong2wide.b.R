@@ -7,11 +7,12 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrDta = NULL,
         .nonLtd = FALSE,
         .rpmDta = NULL,
+        .sfxTtl = "wide",
 
         .init = function() {
             if (private$.chkVar()) {
                 # calculate the current data
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg(TRUE))
                 private$.rpmDta <- private$.prpRpM(xfmDta = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
@@ -60,16 +61,17 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             varLst
         },
 
-        .crrArg = function() {
-            list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
-                 varID  = self$options$varID,  varTme = self$options$varTme, varTgt = self$options$varTgt,
-                 varExc = self$options$varExc, varSep = self$options$varSep, varOrd = self$options$varOrd,
-                 varAgg = self$options$varAgg)
+        .crrArg = function(getDta = TRUE) {
+            c(if (getDta) private$.getDta(c(self$options$varID, self$options$varTme, self$options$varTgt, self$options$varExc)),
+              list(varID  = self$options$varID,  varTme = self$options$varTme, varTgt = self$options$varTgt,
+                   varExc = self$options$varExc, varSep = self$options$varSep, varOrd = self$options$varOrd,
+                   varAgg = self$options$varAgg))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC,
 
         .prpRpM = function(xfmDta = NULL) {

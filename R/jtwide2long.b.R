@@ -7,13 +7,14 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrDta = NULL,
         .nonLtd = FALSE,
         .rpmDta = NULL,
+        .sfxTtl = "long",
 
         .init = function() {
             if (private$.chkVar()) {
                 # check whether the ID variable is unique, if so calculate the current data
-                private$.unq_ID(private$.crrArg())
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)),
-                                           c(private$.crrArg(), list(fleOut = NULL)))
+                crrArg <- private$.crrArg(TRUE)
+                private$.unq_ID(crrArg)
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), crrArg)
                 private$.crrDta <- private$.adjRes(dtaFrm = private$.crrDta)
                 private$.rpmDta <- private$.prpRpM(dtaFrm = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R) for both data preview and rep. measures overview
@@ -62,23 +63,23 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .chkVar = function() {
             ((self$options$mdeW2L ==  "Sep" && private$.chkSep()) ||
-             (self$options$mdeW2L ==  "NSS" && length(self$options$xfmNSS) > 0 && nzchar(self$options$idxNSS) && nzchar(self$options$tgtNSS)) ||
+             (self$options$mdeW2L ==  "NSS" && length(self$options$xfmNSS) > 1 && nzchar(self$options$idxNSS) && nzchar(self$options$tgtNSS)) ||
              (self$options$mdeW2L ==  "NSA" && private$.chkNSA()))
         },
 
         .colFst = commonFunc$private_methods$.colFst,
 
-        .crrArg = function() {
+        .crrArg = function(getDta = TRUE) {
             if        (self$options$mdeW2L ==  "Sep") {
-                list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
-                     varID = self$options$id_Sep,  varTme = self$options$pfxSep, varLst = self$options$xfmSep,
-                     varExc = self$options$excSep, varSep = self$options$chrSep, excLvl = private$.lvl2Nm())
+                c(if (getDta) private$.getDta(c(self$options$id_Sep, self$options$xfmSep, self$options$excSep)),
+                  list(varID = self$options$id_Sep,  varTme = self$options$pfxSep, varLst = self$options$xfmSep,
+                       varExc = self$options$excSep, varSep = self$options$chrSep, excLvl = private$.lvl2Nm()))
             } else if (self$options$mdeW2L ==  "NSS") {
-                rnmRes <- private$.rnmDta()
+                rnmRes <- private$.rnmDta(getDta)
                 list(dtaInp = rnmRes$dtaFrm,       varID = self$options$id_NSS,  varLst = rnmRes$tgtLst,
                      varExc = self$options$excNSS, varSep = rnmRes$varSep, excLvl = 1)
             } else if (self$options$mdeW2L ==  "NSA") {
-                rnmRes <- private$.rnmDta()
+                rnmRes <- private$.rnmDta(getDta)
                 list(dtaInp = rnmRes$dtaFrm,       varID =  self$options$id_NSA, varLst = rnmRes$tgtLst,
                      varExc = self$options$excNSA, varTme = vapply(self$options$idxNSA, "[[", character(1), "var"),
                      varSep = rnmRes$varSep, excLvl = 1)
@@ -93,11 +94,12 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                     return(varSep)
                 }
             }
-            jmvcore::reject(.("The Long Variables in \"Variables To Be Transformed\" are invalid, remove _, . and - from the names."))
+            jmvcore::reject(.("The Long Variables in 'Variables To Be Transformed' are invalid, remove _, . and - from the names."))
         },
 
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC,
 
         .lvl2Nm = function() {
@@ -132,18 +134,22 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .rnmDta = function() {
-            dtaFrm <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+        .rnmDta = function(getDta = TRUE) {
             if        (self$options$mdeW2L ==  "NSS") {
+                if (getDta)
+                    dtaFrm <- private$.getDta(c(self$options$id_NSS, self$options$xfmNSS, self$options$excNSS))$dtaInp
                 varSep <- private$.detSep(self$options$tgtNSS)
                 tgtLst <- paste0(self$options$tgtNSS, private$.spfNum(length(self$options$xfmNSS), varSep))
                 selClm <- (names(dtaFrm) %in% self$options$xfmNSS)
                 names(dtaFrm)[selClm] <- tgtLst
                 # remove columns that are not required from dtaFrm and return it together with tgtLst
-                list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSS, self$options$excNSS, tgtLst))], tgtLst = tgtLst, varSep = varSep)
+                c(if (getDta) list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSS, self$options$excNSS, tgtLst))]),
+                  list(tgtLst = tgtLst, varSep = varSep))
             } else if (self$options$mdeW2L ==  "NSA") {
+                if (getDta)
+                    dtaFrm <- private$.getDta(c(self$options$id_NSA, unlist(lapply(self$options$xfmNSA, "[[", "vars")), self$options$excNSA))$dtaInp
                 if (any(vapply(self$options$xfmNSA, function(l) is.null(l[["label"]]) || !nzchar(l[["label"]]), logical(1)))) {
-                    jmvcore::reject(.("No target Long Variables in \"Variables To Be Transformed\" can be empty."))
+                    jmvcore::reject(.("No target Long Variables in 'Variables To Be Transformed' can be empty."))
                 }
                 tgtLst <- as.list(vapply(self$options$xfmNSA, "[[", character(1), "label"))
                 varSep <- private$.detSep(unlist(tgtLst))
@@ -158,7 +164,8 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # convert tgtLst (list) into a (character) vector
                 tgtLst <- unlist(tgtLst)
                 # remove columns that are not required from dtaFrm and return it together with tgtLst
-                list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSA, self$options$excNSA, tgtLst))], tgtLst = tgtLst, varSep = varSep)
+                c(if (getDta) list(dtaFrm = dtaFrm[(names(dtaFrm) %in% c(self$options$id_NSA, self$options$excNSA, tgtLst))]),
+                  list(tgtLst = tgtLst, varSep = varSep))
             }
         },
 
@@ -172,8 +179,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 (any(duplicated(crrArg$dtaInp[, crrArg$varID])) ||
                  (is.character(crrArg$dtaInp[, crrArg$varID]) && !all(nzchar(crrArg$dtaInp[, crrArg$varID]))) ||
                  any(is.na(crrArg$dtaInp[, crrArg$varID])))) {
-                jmvcore::reject(jmvcore::format(.("The values in {0} can not be empty and they need to be unique."),
-                crrArg$varID))
+                jmvcore::reject(.("The values in '{varID}' can not be empty and they need to be unique."), varID = crrArg$varID)
             }
         }
 
@@ -184,7 +190,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         asSource = function() {
             if (private$.chkVar()) {
                 if (self$options$mdeW2L ==  "Sep") {
-                    fmtSrc(private$.crrCmd, private$.crrArg()[-1])
+                    fmtSrc(private$.crrCmd, private$.crrArg(FALSE))
                 } else {
                     crrSrc <- "\n    data = data"
                     nmeOpt <- names(private$.options$options)

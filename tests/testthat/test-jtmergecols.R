@@ -93,6 +93,10 @@ testthat::test_that("jtmergecols works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 80)
 
+    # ensure that a completely empty data column is raising an error message
+    expect_error(jTransform::jtMergeCols(data = cbind(dtaInp, data.frame(V1 = NA)), varBy = "V1", fleInp = "../example4jtMergeCols_2.omv"),
+                 "The variable 'V1' contains only missing / invalid values.")
+
     # ensure that help is shown
     chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv", shwHlp = TRUE)
     expect_equal(vapply(c("genInf", "addInf"), function(n) chkRes[[n]]$visible, logical(1), USE.NAMES = FALSE), c(TRUE, TRUE))

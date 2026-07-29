@@ -145,6 +145,11 @@ testthat::test_that("jtcombinecols works", {
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 
+    # ensure that a completely empty data column is raising an error message
+    expect_error(jTransform::jtCombineCols(data = data.frame(E1_1 = rep(NA, 100), E1_2 = rnorm(100)),
+                                           varAll = c("E1_1", "E1_2"), varPrs = list(list(i1 = "E1_1", i2 = "E1_2"))),
+                 "The variable 'E1_1' contains only missing / invalid values.")
+
     # ensure that help is shown
     chkRes <- jTransform::jtCombineCols(data = dtaInp, varAll = names(dtaInp), varPrs = varPrs[1:2], shwHlp = TRUE)
     expect_true(chkRes$genInf$visible)

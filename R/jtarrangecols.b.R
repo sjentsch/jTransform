@@ -6,6 +6,7 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
         .crrCmd = "jmvReadWrite::arrange_cols_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "arr_cols",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -19,14 +20,15 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
 
         .colFst = commonFunc$private_methods$.colFst,
 
-        .crrArg = function() {
-            list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
-                 varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll))))
+        .crrArg = function(getDta = TRUE) {
+            c(if (getDta) private$.getDta(),
+              list(varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll)))))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC
 
     ),

@@ -6,6 +6,7 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrCmd = "jmvReadWrite::transpose_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "xpsd",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -19,15 +20,15 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .colFst = commonFunc$private_methods$.colFst,
 
-        .crrArg = function() {
-            dtaFrm <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
-            list(dtaInp = dtaFrm[, c(self$options$varNme, self$options$varOth)],
-                 varNme = ifelse(is.null(self$options$varNme), "", self$options$varNme))
+        .crrArg = function(getDta = TRUE) {
+            c(if (getDta) private$.getDta(c(self$options$varNme, self$options$varOth)),
+              list(varNme = ifelse(is.null(self$options$varNme), "", self$options$varNme)))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC
 
     ),

@@ -72,7 +72,8 @@ testthat::test_that("jttransformvars works", {
             "  ᵃ There are 2 more columns in the data set not shown here. A complete list of variables can be found in \"Variables in the Output\n",
             "  Data Set\" above this table.\n",
             "  ᵇ There are 990 more rows in the data set not shown here.\n\n"))
-    expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "strPos_INV", "extPos_INV", "mdrNeg_INV", "strNeg_INV", "extNeg_INV", "mdrPos", "strPos", "extPos", "mdrNeg"))
+    expect_equal(names(chkRes$pvwDta$columns),
+                 c("fstCol", "strPos_INV", "extPos_INV", "mdrNeg_INV", "strNeg_INV", "extNeg_INV", "mdrPos", "strPos", "extPos", "mdrNeg"))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
     expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
     expect_equal(chkRes$pvwDta$footnotes, c(paste("There are 2 more columns in the data set not shown here. A complete list of variables can be found in",
@@ -82,6 +83,12 @@ testthat::test_that("jttransformvars works", {
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 138)
+
+    # ensure that a completely empty data column is raising an error message
+    expect_error(jTransform::jtTransformVars(data = cbind(dtaInp, data.frame(V1 = NA)), posInv = c("V1")),
+                 "The variable 'V1' contains only missing / invalid values.")
+    expect_error(jTransform::jtTransformVars(data = cbind(dtaInp, data.frame(V1 = NA)), negSqr = c("V1")),
+                 "The variable 'V1' contains only missing / invalid values.")
 
     # ensure that help is shown
     chkRes <- jTransform::jtTransformVars(data = dtaInp, posInv = c("mdrPos"), negInv = c("mdrNeg"), shwHlp = TRUE)

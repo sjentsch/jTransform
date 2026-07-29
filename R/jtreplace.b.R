@@ -6,6 +6,7 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .crrCmd = "jmvReadWrite::replace_omv",
         .crrDta = NULL,
         .nonLtd = FALSE,
+        .sfxTtl = "rplc",
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -24,18 +25,20 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         .colFst = commonFunc$private_methods$.colFst,
 
-        .crrArg = function() {
+        .crrArg = function(getDta = TRUE) {
             rplLst <- lapply(self$options$rplTrm, function(x) {
                                                       x[vapply(x, is.null, logical(1))] <- ""
                                                       c(x[[1]], x[[2]])
                                                   })
-            c(list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
-                   rplLst = rplLst), optSnR(self$options))
+            c(if (getDta) private$.getDta(),
+              list(rplLst = rplLst),
+              optSnR(self$options))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
+        .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC,
 
         .mrkDff = function(crrTbl = NULL, dtaNew = NULL, dtaOld = NULL) {

@@ -19,6 +19,12 @@ testthat::test_that("jttranspose works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 103)
 
+    # ensure that a completely empty data column is raising an error message
+    expect_error(jTransform::jtTranspose(data = cbind(dtaInp, data.frame(V1 = NA)), varNme = "V1", varOth = names(dtaInp)[-1]),
+                 "The variable 'V1' contains only missing / invalid values.")
+    expect_error(jTransform::jtTranspose(data = cbind(dtaInp, data.frame(V1 = NA)), varOth = c("sbj_075", "V1")),
+                 "The variable 'V1' contains only missing / invalid values.")
+
     # ensure that help is shown
     chkRes <- jTransform::jtTranspose(data = dtaInp, varNme = "qstItm", varOth = names(dtaInp)[-1], shwHlp = TRUE)
     expect_true(chkRes$genInf$visible)

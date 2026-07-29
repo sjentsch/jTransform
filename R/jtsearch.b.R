@@ -9,7 +9,7 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             # check whether all required variables are present
             if (private$.chkVar() && private$.chkDtF()) {
                 # conduct the search and create an output string
-                srcRes <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                srcRes <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg(TRUE))
                 # initial line about whether the search term was found
                 outRes <- sprintf(paste0("<p>", .("Value"), " \"<strong>%s</strong>\" (%s) %s</p>"),
                                   trimws(self$options$srcTrm), paste0(rep(.("partial or "), !self$options$whlTrm), .("exact match")),
@@ -17,7 +17,9 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                 # if it was found, create an output list with the variables and the rows where the value was found
                 if (length(srcRes) > 0) {
                     outRes <- paste0(c(outRes, "<ul>",
-                                       vapply(names(srcRes), function(x) sprintf("<li><strong>%s</strong>: %s</li>", x, paste0(srcRes[[x]], collapse = ", ")), character(1)),
+                                       vapply(names(srcRes),
+                                              function(x) sprintf("<li><strong>%s</strong>: %s</li>", x, paste0(srcRes[[x]], collapse = ", ")),
+                                              character(1)),
                                        "</ul>", ""), collapse = "\n")
                 }
                 # assigng the output string
@@ -35,10 +37,13 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             (nzchar(trimws(self$options$srcTrm)))
         },
 
-        .crrArg = function() {
-            c(list(dtaInp = if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset(),
-                   srcTrm = trimws(self$options$srcTrm)), optSnR(self$options))
-        }
+        .crrArg = function(getDta = TRUE) {
+            c(if (getDta) private$.getDta(),
+              list(srcTrm = trimws(self$options$srcTrm)),
+              optSnR(self$options))
+        },
+
+        .getDta = commonFunc$private_methods$.getDta
 
     ),
 

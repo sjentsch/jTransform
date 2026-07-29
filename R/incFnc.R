@@ -9,7 +9,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
             if (private$.chkVar()) {
                 # create the current data set
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), c(private$.crrArg(), list(fleOut = NULL)))
+                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg(TRUE))
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
@@ -29,7 +29,14 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             if (private$.chkVar() && private$.chkDtF()) {
                 # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
-                    do.call(eval(parse(text = private$.crrCmd)), private$.crrArg())
+                    btnCrt <- self$options$option("btnCrt")
+                    # TO-DO: replace Dataset with the name of the current data set (once this is implemented)
+                    crrTtl <- paste("Dataset", private$.sfxTtl, collapse = "_")
+                    if (is.null(btnCrt$perform)) {
+                        jmvReadWrite:::jmvOpn(dtaFrm = private$.crrDta, dtaTtl = crrTtl)
+                    } else {
+                        btnCrt$perform(function(action) list(data = private$.crrDta, title = crrTtl))
+                    }
                 } else {
                     # if not, create a preview of the data (used by all functions except jtSearch; fllPvw in utils.R)
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
@@ -48,7 +55,20 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         # covers the most common case (data frame has at least one row)
         .chkDtF = function() {
-            (dim(self$data)[1] >=  1)
+            (dim(self$data)[1] >= 1)
+        },
+
+        # get the data set and check that all variables in the options in optLst are not empty (contain only NAs)
+        .getDta = function(varLst = c()) {
+            dtaInp <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            for (crrVar in varLst) {
+                if (all(is.na(dtaInp[, crrVar])))
+                    jmvcore::reject(.("The variable '{crrVar}' contains only missing / invalid values."), crrVar = crrVar)
+            }
+
+            # return a list with the target data set as entry, the data set either contains all variables
+            # (if varAll is defined) or is restricted to varLst
+            list(dtaInp = dtaInp[, if (utils::hasName(self$options, "varAll")) names(dtaInp) else varLst])
         },
 
         # covers the most common case (colFst is not used)
@@ -89,7 +109,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     public = list(
 
         asSource = function() {
-            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg()[-1])
+            if (private$.chkVar()) fmtSrc(private$.crrCmd, private$.crrArg(FALSE))
         }
 
     )
