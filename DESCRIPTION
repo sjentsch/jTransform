@@ -20,11 +20,12 @@ Description:
     opened data set. In addition, there are functions to search or replace
     values. Furthermore, there is a function to apply transformations for
     skewed variables trying to make them better conform to a normal
-    distribution. Finally, there is a function to calculate distances /
-    proximities. jTransform calls functions from the R-package `jmvReadWrite`,
-    (<https://cran.r-project.org/package=jmvReadWrite>) enabling access to
-    these functions via a graphical user interface (without the need to use
-    a R command line for these transformations).
+    distribution. Finally, there are functions to calculate distances /
+    proximities and to aggregate data (e.g., to calculate means for each factor
+    step). jTransform calls functions from the R-package `jmvReadWrite`
+    (<https://cran.r-project.org/package=jmvReadWrite>), enabling access to
+    these functions via a graphical user interface (without the need to use a
+    R command line for these transformations).
 License: AGPL-3 + file LICENSE
 Language: en-GB
 Encoding: UTF-8
