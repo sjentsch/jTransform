@@ -20,7 +20,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .run = function() {
-            # Update logging flags during the run phase
+            # update logging flags during the run phase
             set_logflags(self$options$jxfLog)
             jinfo("jTransform: run phase started")
 

@@ -44,8 +44,8 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .crtMsg = commonFunc$private_methods$.crtMsg,
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
-         .getDta = commonFunc$private_methods$.getDta,
-       .nteRnC = commonFunc$private_methods$.nteRnC
+        .getDta = commonFunc$private_methods$.getDta,
+        .nteRnC = commonFunc$private_methods$.nteRnC
 
     ),
 

@@ -24,8 +24,8 @@ Description:
     proximities and to aggregate data (e.g., to calculate means for each factor
     step). jTransform calls functions from the R-package `jmvReadWrite`
     (<https://cran.r-project.org/package=jmvReadWrite>), enabling access to
-    these functions via a graphical user interface (without the need to use a
-    R command line for these transformations).
+    these functions via a graphical user interface (without the need to use
+    the R command line for these transformations).
 License: AGPL-3 + file LICENSE
 Language: en-GB
 Encoding: UTF-8
