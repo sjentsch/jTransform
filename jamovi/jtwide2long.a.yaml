@@ -197,10 +197,10 @@ options:
     title: Show Help / Information
     default: false
 
-  - name:  btnCrt
-    type:  Action
+  - name: btnCrt
+    type: Action
     title: Create
-    default: false
+    action: open
 
   - name: jxfLog
     type: Bool

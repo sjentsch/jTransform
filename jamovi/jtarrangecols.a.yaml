@@ -58,7 +58,7 @@ options:
   - name: btnCrt
     type: Action
     title: Create
-    default: false
+    action: open
 
   - name: jxfLog
     type: Bool
