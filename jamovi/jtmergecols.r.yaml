@@ -5,12 +5,12 @@ jrs:   '1.1'
 
 items:
   # this reults element is only used for formatting the output tables
+  # it was checked that it does not affect the styling of later analyses 
   - name: fmtHTM
     type: Html
     clearWith: [ ]
     content: >
       <style>
-      #fmtHTM { display: none; }
       table { width: 100%; border-collapse: collapse; }
       th { background-color: #3e6da9; color: white; text-align: left; }
       tbody > td { border: 1px solid #ddd; padding: 8px; }
@@ -72,10 +72,5 @@ items:
       others are removed). If they are different, the name of the first of
       these variables is kept, and a suffix with their position (_2, _3, etc.)
       will be added to the name of all other variables.</p>
-
-# take away btnCrt from dtaInf once Actions is working
-# - name:  opnDta
-#   type:  Action
-#   operation: ...
 
 ...

@@ -4,11 +4,6 @@ title: Distances / Proximities
 jrs:   '1.1'
 
 items:
-  - name: fmtHTM
-    type: Html
-    clearWith: [ ]
-    content: ""
-
   - name:  genInf
     type:  Html
     visible: (shwHlp)

@@ -1,19 +1,18 @@
-# Define global environment for log flags
+# define global environment for log flags
 logFlags            <- new.env(parent = emptyenv())
 logFlags$j_DEBUG    <- FALSE
 logFlags$j_INFO     <- FALSE
 logFlags$log_active <- FALSE  # Tracks if the log file is currently open
-logFlags$j_OS       <- .Platform$OS.type
 
-# Determine the appropriate log file path based on the OS
-logFlags$fleWUD <- switch(logFlags$j_OS,
+# determine the appropriate log file path based on the OS
+logFlags$fleWUD <- switch(jmvReadWrite:::getOS(),
                           "windows" = file.path(Sys.getenv("TEMP"), "jTransform.log"),
-                          "unix" = file.path(Sys.getenv("HOME"), ".local", "share", "jamovi", "jTransform.log"),
-                          "darwin" = file.path(Sys.getenv("HOME"), "Library", "Logs", "jamovi", "jTransform.log"),
+                          "unix"    = file.path(Sys.getenv("HOME"), ".local", "share", "jamovi", "jTransform.log"),
+                          "macos"   = file.path(Sys.getenv("HOME"), "Library", "Logs", "jamovi", "jTransform.log"),
                           file.path(tempdir(), "jTransform.log")  # Default to tempdir() if OS is unrecognized
 )
 
-# Ensure the log directory exists
+# ensure the log directory exists
 ensure_log_dir <- function(log_path) {
     log_dir <- dirname(log_path)
     if (!dir.exists(log_dir)) {
@@ -25,12 +24,12 @@ ensure_log_dir <- function(log_path) {
     }
 }
 
-# Helper function to get current timestamp
+# helper function to get current timestamp
 current_time <- function() {
     format(Sys.time(), "%Y-%m-%d %H:%M:%S")
 }
 
-# Update logging flags dynamically
+# update logging flags dynamically
 set_logflags <- function(jxfLog) {
     if (jxfLog && !logFlags$log_active) {
         open_log()  # Open the log only if it is not already active
@@ -42,7 +41,7 @@ set_logflags <- function(jxfLog) {
     logFlags$j_INFO  <- jxfLog
 }
 
-# Open the log file if not already open
+# if not already open, open the log file
 open_log <- function() {
     ensure_log_dir(logFlags$fleWUD)
     if (nzchar(logFlags$fleWUD) && !logFlags$log_active) {
@@ -59,7 +58,7 @@ open_log <- function() {
     }
 }
 
-# Close the log file
+# close the log file
 close_log <- function() {
     if (nzchar(logFlags$fleWUD) && logFlags$log_active) {
         tryCatch({
@@ -73,7 +72,7 @@ close_log <- function() {
     }
 }
 
-# Write info messages to the log
+# write info messages to the log
 jinfo <- function(...) {
     if (!logFlags$j_INFO || !logFlags$log_active) return(invisible(NULL))
     tryCatch({
@@ -87,7 +86,8 @@ jinfo <- function(...) {
     })
 }
 
-# Write debug marks to the log
+# write debug marks to the log
+# to be used in interactive debugging - DO NOT REMOVE
 mark <- function(...) {
     if (!logFlags$j_DEBUG || !logFlags$log_active) return(invisible(NULL))
     tryCatch({

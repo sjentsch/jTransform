@@ -5,28 +5,24 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .init = function() {
             # Update logging flags based on current options
             set_logflags(self$options$jxfLog)
-            jinfo("jTransform: init phase started")
+            jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
 
             if (private$.chkVar()) {
                 # create the current data set
-                private$.crrDta <- tryCatch(do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE)),
-                                            error = function(e) {
-                                                jmvcore::reject(.("The transformation could not be completed: {msg}"),
-                                                                msg = conditionMessage(e))
-                                            })
+                private$.crrDta <- private$.runXfm()
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
-            jinfo("jTransform: init phase ended")
+            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         .run = function() {
             # update logging flags during the run phase
             set_logflags(self$options$jxfLog)
-            jinfo("jTransform: run phase started")
+            jinfo(sprintf("[%s]: jTransform: run phase started", private$.name))
 
             # assemble or reset data set / create information
             private$.dtaInf()
@@ -54,7 +50,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                     }
                 }
             }
-            jinfo("jTransform: run phase ended")
+            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         # covers the most common case (data frame has at least one row)
@@ -106,6 +102,12 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             c(paste(.("There are {} more columns in the data set not shown here."),
                     .("A complete list of variables can be found in \"Variables in the Output Data Set\" above this table.")),
               .("There are {} more rows in the data set not shown here."))
+        },
+
+        .runXfm = function() {
+            tryCatch(do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE)),
+                     error = function(e) jmvcore::reject(.("The transformation could not be completed: {msg}"),
+                                                         msg = conditionMessage(e)))
         }
 
     ),

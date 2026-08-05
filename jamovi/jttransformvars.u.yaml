@@ -16,21 +16,21 @@ children:
     stretchFactor: 1
     children:
       - type: TargetLayoutBox
-        label: Moderate positive skewness
+        label: Moderate Positive Skewness
         children:
           - type: VariablesListBox
             name: posSqr
             height: smallest
             isTarget: true
       - type: TargetLayoutBox
-        label: Moderate negative skewness
+        label: Moderate Negative Skewness
         children:
           - type: VariablesListBox
             name: negSqr
             height: smallest
             isTarget: true
       - type: TargetLayoutBox
-        label: Strong positive skewness
+        label: Strong Positive Skewness
         children:
           - type: VariablesListBox
             name: posLog
@@ -44,14 +44,14 @@ children:
             height: smallest
             isTarget: true
       - type: TargetLayoutBox
-        label: Extreme positive skewness
+        label: Extreme Positive Skewness
         children:
           - type: VariablesListBox
             name: posInv
             height: smallest
             isTarget: true
       - type: TargetLayoutBox
-        label: Extreme negative skewness
+        label: Extreme Negative Skewness
         children:
           - type: VariablesListBox
             name: negInv

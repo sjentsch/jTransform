@@ -3,14 +3,14 @@ hmeDir <- function() {
     Sys.getenv(ifelse(jmvReadWrite:::getOS() == "windows", "USERPROFILE", "HOME"))
 }
 
-nteRnC <- function(what = c()) {
-
-}
-
 prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
     # maxRow, maxCol and useIdx are defined in globals.R
-    seqRow <- seq(crrTbl$rowCount + 1,  min(dim(dtaFrm)[1], ifelse(nonLtd, Inf, maxRow)))
-    seqCol <- seq(ifelse(useIdx, 1, 2), min(dim(dtaFrm)[2], ifelse(nonLtd, Inf, maxCol)))
+    lstRow <- min(dim(dtaFrm)[1], ifelse(nonLtd, Inf, maxRow))
+    lstCol <- min(dim(dtaFrm)[2], ifelse(nonLtd, Inf, maxCol))
+    fstRow <- crrTbl$rowCount + 1
+    fstCol <- ifelse(useIdx, 1, 2)
+    seqRow <- if (lstRow >= fstRow) seq(fstRow, lstRow) else integer(0)
+    seqCol <- if (lstCol >= fstCol) seq(fstCol, lstCol) else integer(0)
     # determine column names, and if required, put the columns in colFst at the beginning
     colNme <- names(dtaFrm)
     if (length(colFst) > 0) {
@@ -31,7 +31,7 @@ rstPvw <- function(crrTbl = NULL) {
     numRow <- crrTbl$rowCount
     colNme <- names(crrTbl$columns)
     crrTbl$deleteRows()
-    for (i in seq(numRow)) crrTbl$addRow(rowKey = i, stats::setNames(as.list(rep("", length(colNme))), colNme))
+    for (i in seq_len(numRow)) crrTbl$addRow(rowKey = i, stats::setNames(as.list(rep("", length(colNme))), colNme))
 
     return(invisible(NULL))
 }

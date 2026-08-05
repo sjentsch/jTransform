@@ -4,9 +4,6 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 
-events:
-  loaded: './varAll::view_loaded'
-
 children:
   - type: ModeSelector
     name: mdeW2L

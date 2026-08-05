@@ -29,7 +29,8 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
         .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC
+        .nteRnC = commonFunc$private_methods$.nteRnC,
+        .runXfm = commonFunc$private_methods$.runXfm
 
     ),
 

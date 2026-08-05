@@ -9,14 +9,14 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             # check whether all required variables are present
             if (private$.chkVar() && private$.chkDtF()) {
                 # conduct the search and create an output string
-                srcRes <- do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE))
+                srcRes <- private$.runXfm()
                 # initial line about whether the search term was found
-                outRes <- jmvcore::format(.("<p>Value \"<strong>{}</strong>\" ({}) {}</p>"),
-                                          trimws(self$options$srcTrm),
-                                          ifelse(self$options$whlTrm, .("exact match"), .("partial or exact match")),
-                                          ifelse(length(srcRes) > 0,
-                                                 .("<strong>found</strong> in variable(s): row(s)..."),
-                                                 .("<strong>not found</strong>")))
+                outRes <- jmvcore::format(.("<p>Value \"<strong>{term}</strong>\" ({match}) {found}</p>"),
+                                          term = trimws(self$options$srcTrm),
+                                          match = ifelse(self$options$whlTrm, .("exact match"), .("partial or exact match")),
+                                          found = ifelse(length(srcRes) > 0,
+                                                         .("<strong>found</strong> in variable(s): row(s)..."),
+                                                         .("<strong>not found</strong>")))
                 # if it was found, create an output list with the variables and the rows where the value was found
                 if (length(srcRes) > 0) {
                     outRes <- paste0(c(outRes, "<ul>",
@@ -46,7 +46,8 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
               optSnR(self$options))
         },
 
-        .getDta = commonFunc$private_methods$.getDta
+        .getDta = commonFunc$private_methods$.getDta,
+        .runXfm = commonFunc$private_methods$.runXfm
 
     ),
 

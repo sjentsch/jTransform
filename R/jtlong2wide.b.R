@@ -10,10 +10,14 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .sfxTtl = "wide",
 
         .init = function() {
+            # update logging flags during the init phase
+            set_logflags(self$options$jxfLog)
+            jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
+
             if (private$.chkVar()) {
                 # calculate the current data
-                private$.crrDta <- do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE))
-                private$.rpmDta <- private$.prpRpM(xfmDta = private$.crrDta)
+                private$.crrDta <- private$.runXfm()
+                private$.rpmDta <- private$.prpRpM(runXfm = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
                 prpPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta,                             nonLtd = TRUE)
@@ -21,6 +25,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
+            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         # common functions are in incFnc.R
@@ -50,13 +55,11 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 varLst <- c(varLst, crrTgt[seq(lngTgt[i])])
             }
 
-            crrFtN <- sprintf(paste(.("The column%s %s %s shown first in this preview. In the"),
-                                    .("created data set, the variable order is as shown in"),
-                                    .("\"Variables in the Output Data Set\" above this table.")),
-                              ifelse(length(varLst) > 1, "s", ""),
-                              paste0(varLst, collapse = ", "),
-                              ifelse(length(varLst) > 1, "are", "is"))
-            attr(varLst, "note") <- crrFtN
+            ln1FtN <- ifelse(length(varLst) > 1,
+                             jmvcore::format(.("The columns {} are shown first in this preview."), paste0(varLst, collapse = ", ")),
+                             jmvcore::format(.("The column {} is shown first in this preview."), varLst))
+            ln2FtN <- .("In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table.")
+            attr(varLst, "note") <- paste(ln1FtN, ln2FtN)
 
             varLst
         },
@@ -74,7 +77,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .getDta = commonFunc$private_methods$.getDta,
         .nteRnC = commonFunc$private_methods$.nteRnC,
 
-        .prpRpM = function(xfmDta = NULL) {
+        .prpRpM = function(runXfm = NULL) {
             # exclude self$options$varID and self$options$varExc
             #
             # self$options$varTgt -> names / grepl
@@ -83,10 +86,13 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             orgDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
             tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)], drop = FALSE]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
-            nmeTgt <- sort(names(xfmDta)[startsWith(names(xfmDta), varTgt)])
+            selTgt <- Reduce(`|`, lapply(varTgt, function(p) startsWith(names(runXfm), p)))
+            nmeTgt <- sort(names(runXfm)[selTgt])
             nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort), row.names = NULL)
             cbind(tblFrq[, -1, drop = FALSE], nmeTgt, tblFrq[, 1, drop = FALSE])
-        }
+        },
+        
+        .runXfm = commonFunc$private_methods$.runXfm
 
     ),
 

@@ -35,43 +35,13 @@ testthat::test_that("jtcombinecols works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 48)
 
-    chkRes <- jTransform::jtCombineCols(data = dtaInp, varAll = names(dtaInp), varPrs = varPrs)
-    expect_equal(class(chkRes), c("jtCombineColsResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$dtaInf$asString(), paste("\n At least some values in the variables of the pair(s) U1_1 - U1_2, U2_1\n",
-                                                 "- U2_2 are not equal.\n"))
-    expect_equal(chkRes$pvwDta$asString(), paste("\n Data Preview \n",
-                                                 "──────────── \n",
-                                                 "      \n",
-                                                 "──────────── \n",
-                                                 "      \n",
-                                                 "──────────── \n\n"))
-    expect_equal(names(chkRes$pvwDta$columns), "fstCol")
-    expect_equal(chkRes$pvwDta$names, "1")
-    expect_equal(chkRes$pvwDta$rowKeys, list(1))
-    expect_equal(chkRes$pvwDta$footnotes, character(0))
-    expect_equal(chkRes$pvwDta$options$varsRequired, as.list(names(dtaInp)))
-    expect_equal(chkRes$pvwDta$rowCount, 1)
-    expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 12)
+    expect_error(jTransform::jtCombineCols(data = dtaInp, varAll = names(dtaInp), varPrs = varPrs),
+                 paste("At least some values in the variables of the pair\\(s\\) U1_1 - U1_2, U2_1 - U2_2 are not equal.",
+                       "Choose a mode of combining to resolve them."))
 
-    chkRes <- jTransform::jtCombineCols(data = dtaInp, varAll = names(dtaInp), varPrs = varPrs, mdeCmb = "none")
-    expect_equal(class(chkRes), c("jtCombineColsResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$dtaInf$asString(), paste("\n At least some values in the variables of the pair(s) U1_1 - U1_2, U2_1\n",
-                                                 "- U2_2 are not equal.\n"))
-    expect_equal(chkRes$pvwDta$asString(), paste("\n Data Preview \n",
-                                                 "──────────── \n",
-                                                 "      \n",
-                                                 "──────────── \n",
-                                                 "      \n",
-                                                 "──────────── \n\n"))
-    expect_equal(names(chkRes$pvwDta$columns), "fstCol")
-    expect_equal(chkRes$pvwDta$names, "1")
-    expect_equal(chkRes$pvwDta$rowKeys, list(1))
-    expect_equal(chkRes$pvwDta$footnotes, character(0))
-    expect_equal(chkRes$pvwDta$options$varsRequired, as.list(names(dtaInp)))
-    expect_equal(chkRes$pvwDta$rowCount, 1)
-    expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 12)
+    expect_error(jTransform::jtCombineCols(data = dtaInp, varAll = names(dtaInp), varPrs = varPrs, mdeCmb = "none"),
+                 paste("At least some values in the variables of the pair\\(s\\) U1_1 - U1_2, U2_1 - U2_2 are not equal.",
+                       "Choose a mode of combining to resolve them."))
 
     chkRes <- jTransform::jtCombineCols(data = dtaInp, varAll = names(dtaInp), varPrs = varPrs, mdeCmb = "first")
     expect_equal(class(chkRes), c("jtCombineColsResults", "Group", "ResultsElement", "R6"))

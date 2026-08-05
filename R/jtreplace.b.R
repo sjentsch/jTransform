@@ -45,11 +45,11 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .mrkDff = function(crrTbl = NULL, dtaNew = NULL, dtaOld = NULL) {
             selFac <- vapply(dtaOld, is.factor, logical(1))
             if (any(selFac)) {
-                dtaOld[, selFac] <- as.data.frame(vapply(dtaOld[, selFac], as.character, character(1)))
-                dtaNew[, selFac] <- as.data.frame(vapply(dtaNew[, selFac], as.character, character(1)))
+                dtaOld[, selFac] <- as.data.frame(vapply(dtaOld[, selFac, drop = FALSE], as.character, character(nrow(dtaOld))))
+                dtaNew[, selFac] <- as.data.frame(vapply(dtaNew[, selFac, drop = FALSE], as.character, character(nrow(dtaNew))))
             }
-            selRow <- seq(ifelse(dim(dtaOld)[1] > maxRow, maxRow - 1, dim(dtaOld)[1]))
-            selCol <- seq(ifelse(dim(dtaOld)[2] > maxCol, maxCol - 1, dim(dtaOld)[2]))
+            selRow <- seq(ifelse(nrow(dtaOld) > maxRow, maxRow - 1, nrow(dtaOld)))
+            selCol <- seq(ifelse(ncol(dtaOld) > maxCol, maxCol - 1, ncol(dtaOld)))
             if        (private$.chkDff(dtaOld[selRow, selCol], dtaNew[selRow, selCol])) {
                 crrTbl$setNote("diff", .("+ Value was replaced / modified."))
                 for (i in selCol) {
@@ -64,7 +64,9 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             } else {
                 crrTbl$setNote("diff", .("There were no replacements made (in the whole dataset)."))
             }
-        }
+        },
+
+        .runXfm = commonFunc$private_methods$.runXfm
 
     ),
 

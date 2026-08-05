@@ -96,7 +96,7 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
-                default=FALSE)
+                action="open")
             private$..jxfLog <- jmvcore::OptionBool$new(
                 "jxfLog",
                 jxfLog,

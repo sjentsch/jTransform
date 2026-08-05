@@ -5,12 +5,12 @@ jrs:   '1.1'
 
 items:
   # this reults element is only used for formatting the output tables
+  # it was checked that it does not affect the styling of later analyses 
   - name: fmtHTM
     type: Html
     clearWith: [ ]
     content: >
       <style>
-      #fmtHTM { display: none; }
       table { width: 100%; border-collapse: collapse; }
       th { background-color: #3e6da9; color: white; text-align: left; }
       tbody > td { border: 1px solid #ddd; padding: 8px; }
@@ -25,18 +25,18 @@ items:
     clearWith: [ ]
     content: >
       <p>When transforming a data set from wide to long format, you first need
-      determine how the name of the variables that you would like to transform
-      is build up: It can either contain the different (e.g., experimental)
-      conditions in the name and those conditions are separated by a specific
-      character (e.g., "cond1_condA_conda" with "_" being that character) or
-      the names either don't contain all conditions or no separating character.
-      Depending on the structure of the variable names, choose one of the tabs
-      "Non-sep. (simple)" permit only one condition / index variable, "Non-sep.
-      (advanced)" several conditions and target variables. More detailed
-      instructions are given in the next paragraph and you can check using the
-      two output tables (the first containing a data preview, the second an
-      overview over how the repeated measurement levels - i.e., the original
-      variables - were converted).</p>
+      to determine how the name of the variables that you would like to
+      transform is built up: It can either contain the different (e.g.,
+      experimental) conditions in the name and those conditions are separated
+      by a specific character (e.g., "cond1_condA_conda" with "_" being that
+      character) or the names either don't contain all conditions or no
+      separating character. Depending on the structure of the variable names,
+      choose one of the tabs "Non-sep. (simple)" permits only one condition /
+      index variable, while "Non-sep. (advanced)" allows several conditions
+      and target variables. More detailed instructions are given in the next
+      paragraph and you can check using the two output tables (the first
+      containing a data preview, the second an overview over how the repeated
+      measurement levels - i.e., the original variables - were converted).</p>
       <p>Please assign the variables that identify participant (or another
       measurement unit; e.g., a number or an ID) to "Variables that Identify
       the Same Unit", and those that are unique to an unit but not an
@@ -63,34 +63,33 @@ items:
     clearWith: [ ]
     content: >
       <p>When transforming a data set from wide to long format, you first need
-      determine how the name of the variables that you would like to transform
-      is build up: It can either contain the different (e.g., experimental)
-      conditions in the name and those conditions are separated by a specific
-      character (e.g., "cond1_condA_conda" with "_" being that character) or
-      the names either don't contain all conditions or no separating character.
-      Depending on the structure of the variable names, choose one of the tabs
-      "Non-sep. (simple)" permit only one condition / index variable, "Non-sep.
-      (advanced)" several conditions and target variables. More detailed
-      instructions are given in the next paragraph and you can check using the
-      two output tables (the first containing a data preview, the second an
-      overview over how the repeated measurement levels - i.e., the original
-      variables - were converted).</p>
+      to determine how the name of the variables that you would like to
+      transform is built up: It can either contain the different (e.g.,
+      experimental) conditions in the name and those conditions are separated
+      by a specific character (e.g., "cond1_condA_conda" with "_" being that
+      character) or the names either don't contain all conditions or no
+      separating character. Depending on the structure of the variable names,
+      choose one of the tabs "Non-sep. (simple)" permits only one condition /
+      index variable, while "Non-sep. (advanced)" allows several conditions
+      and target variables. More detailed instructions are given in the next
+      paragraph and you can check using the two output tables (the first
+      containing a data preview, the second an overview over how the repeated
+      measurement levels - i.e., the original variables - were converted).</p>
       <p>Please assign the variables (columns) of the original data set that
       you would like to convert from long (rows) to wide (columns) and assign
-      them
-      to "Variables To Be Transformed". If there exists (one or more) variables
-      that identify a participant (or another measurement unit; e.g., a number
-      or an ID) it can be assigned to "Variables that Identify the same Unit",
-      otherwise such variable will be created (and named "ID"). Variables that
-      are not to be converted (e.g., personal characteristics such as gender,
-      or age group) should be assigned to "Variables NOT To Be Transformed".
-      The text field "Name of the Target Variable" defines the name of the
-      variable (in long format) that is created; the text field "Index for
-      Repeated Measures Levels" defines an index that contains the number of
-      the original columns / variables after the transformation. That is, for
-      each of the variables assigned to "Variables To Be Transformed"
+      them to "Variables To Be Transformed". If there exists (one or more)
+      variables that identify a participant (or another measurement unit; e.g.,
+      a number or an ID) it can be assigned to "Variables that Identify the
+      same Unit", otherwise such variable will be created (and named "ID").
+      Variables that are not to be converted (e.g., personal characteristics
+      such as gender, or age group) should be assigned to "Variables NOT To Be
+      Transformed". The text field "Name of the Target Variable" defines the
+      name of the variable (in long format) that is created; the text field
+      "Index for Repeated Measures Levels" defines an index that contains the
+      number of the original columns / variables after the transformation. That
+      is, for each of the variables assigned to "Variables To Be Transformed"
       (originally columns) the index indicates which column the value in the
-      target variable is coming from.
+      target variable is coming from.</p>
 
   - name:  genNSA
     type:  Html
@@ -98,22 +97,21 @@ items:
     clearWith: [ ]
     content: >
       <p>When transforming a data set from wide to long format, you first need
-      determine how the name of the variables that you would like to transform
-      is build up: It can either contain the different (e.g., experimental)
-      conditions in the name and those conditions are separated by a specific
-      character (e.g., "cond1_condA_conda" with "_" being that character) or
-      the names either don't contain all conditions or no separating character.
-      Depending on the structure of the variable names, choose one of the tabs
-      "Non-sep. (simple)" permit only one condition / index variable, "Non-sep.
-      (advanced)" several conditions and target variables. More detailed
-      instructions are given in the next paragraph and you can check using the
-      two output tables (the first containing a data preview, the second an
-      overview over how the repeated measurement levels - i.e., the original
-      variables - were converted).</p>
+      to determine how the name of the variables that you would like to
+      transform is built up: It can either contain the different (e.g.,
+      experimental) conditions in the name and those conditions are separated
+      by a specific character (e.g., "cond1_condA_conda" with "_" being that
+      character) or the names either don't contain all conditions or no
+      separating character. Depending on the structure of the variable names,
+      choose one of the tabs "Non-sep. (simple)" permits only one condition /
+      index variable, while "Non-sep. (advanced)" allows several conditions
+      and target variables. More detailed instructions are given in the next
+      paragraph and you can check using the two output tables (the first
+      containing a data preview, the second an overview over how the repeated
+      measurement levels - i.e., the original variables - were converted).</p>
       <p>Please create a new long variable for each of your target variables,
-      and
-      assign the respective selection of original variables (columns) from the
-      original data set that you want to convert into different long format
+      and assign the respective selection of original variables (columns) from
+      the original data set that you want to convert into different long format
       variables under "Variables To Be Transformed": For each long format
       variable that you want to create, there is is a text field for the name
       of that variable and a field where you can drag or assign the original
@@ -133,7 +131,8 @@ items:
       ID) it can be assigned to "Variables that identify the same unit",
       otherwise such variable will be created (and named "ID"). Variables that
       are not to be converted (e.g., personal characteristics such as gender,
-      or age group) should be assigned to "Variables NOT To Be Transformed".
+      or age group) should be assigned to "Variables NOT To Be
+      Transformed".</p>
 
   - name:  dtaInf
     type:  Html

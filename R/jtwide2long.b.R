@@ -10,11 +10,15 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .sfxTtl = "long",
 
         .init = function() {
+            # update logging flags during the init phase
+            set_logflags(self$options$jxfLog)
+            jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
+
             if (private$.chkVar()) {
                 # check whether the ID variable is unique, if so calculate the current data
                 crrArg <- private$.crrArg(TRUE)
                 private$.unq_ID(crrArg)
-                private$.crrDta <- do.call(str2Fn(private$.crrCmd), crrArg)
+                private$.crrDta <- private$.runXfm()
                 private$.crrDta <- private$.adjRes(dtaFrm = private$.crrDta)
                 private$.rpmDta <- private$.prpRpM(dtaFrm = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R) for both data preview and rep. measures overview
@@ -25,6 +29,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
+            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         # common functions are in incFnc.R
@@ -174,6 +179,8 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                   list(tgtLst = tgtLst, varSep = varSep))
             }
         },
+
+        .runXfm = commonFunc$private_methods$.runXfm,
 
         .spfNum = function(crrNum = NA, crrSep = "_") {
              sprintf(paste0(crrSep, "%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))

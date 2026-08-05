@@ -20,11 +20,10 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
             varPrs <- self$options$varPrs
             notEql <- vapply(varPrs, function(l) any(dtaFrm[, l[[1]]] != dtaFrm[, l[[2]]], na.rm = TRUE), logical(1))
             if (any(notEql)) {
-                self$results$dtaInf$setContent(jmvcore::format(
-                  .("At least <strong>some values</strong> in the variables of the pair(s) {pairs} are <strong>not equal</strong>."),
-                  pairs = paste(vapply(varPrs[notEql], function(l) paste(l, collapse = " - "), character(1)), collapse = ", ")))
-                self$results$dtaInf$setVisible(TRUE)
-                FALSE
+                jmvcore::reject(paste(.("At least some values in the variables of the pair(s) {pairs} are not equal."),
+                                      .("Choose a mode of combining to resolve them.")),
+                                pairs = paste(vapply(varPrs[notEql], function(l) paste(l, collapse = " - "), character(1)),
+                                              collapse = ", "))
             } else {
                 TRUE
             }
@@ -47,7 +46,8 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
         .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC
+        .nteRnC = commonFunc$private_methods$.nteRnC,
+        .runXfm = commonFunc$private_methods$.runXfm
 
     ),
 

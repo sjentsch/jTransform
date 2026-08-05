@@ -24,13 +24,11 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
             inpDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
             varLst <- c(setdiff(names(private$.crrDta), names(inpDta)), names(inpDta))
 
-            crrFtN <- sprintf(paste(.("The column%s %s %s shown first in this preview. In the"),
-                                    .("created data set, the variable order is as shown in"),
-                                    .("\"Variables in the Output Data Set\" above this table.")),
-                              ifelse(length(varLst) > 1, "s", ""),
-                              paste0(varLst, collapse = ", "),
-                              ifelse(length(varLst) > 1, "are", "is"))
-            attr(varLst, "note") <- crrFtN
+            ln1FtN <- ifelse(length(varLst) > 1,
+                             jmvcore::format(.("The columns {} are shown first in this preview."), paste0(varLst, collapse = ", ")),
+                             jmvcore::format(.("The column {} is shown first in this preview."), varLst))
+            ln2FtN <- .("In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table.")
+            attr(varLst, "note") <- paste(ln1FtN, ln2FtN)
 
             varLst
         },
@@ -45,7 +43,8 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .dtaInf = commonFunc$private_methods$.dtaInf,
         .dtaMsg = commonFunc$private_methods$.dtaMsg,
         .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC
+        .nteRnC = commonFunc$private_methods$.nteRnC,
+        .runXfm = commonFunc$private_methods$.runXfm
 
     ),
 

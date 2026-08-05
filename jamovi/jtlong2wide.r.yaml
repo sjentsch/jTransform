@@ -5,12 +5,12 @@ jrs:   '1.1'
 
 items:
   # this reults element is only used for formatting the output tables
+  # it was checked that it does not affect the styling of later analyses 
   - name: fmtHTM
     type: Html
     clearWith: [ ]
     content: >
       <style>
-      #fmtHTM { display: none; }
       table { width: 100%; border-collapse: collapse; }
       th { background-color: #3e6da9; color: white; text-align: left; }
       tbody > td { border: 1px solid #ddd; padding: 8px; }
@@ -136,10 +136,5 @@ items:
       sex is a between-subjects variable that doesn't change between
       experimental condition, we thus only need one column in the output;
       however, it is not unique and thus not suited as ID variable).</p>
-
-# take away btnCrt from dtaInf once Actions is working
-# - name:  opnDta
-#   type:  Action
-#   operation: ...
 
 ...

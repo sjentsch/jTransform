@@ -43,7 +43,7 @@ jtTransposeOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             private$..btnCrt <- jmvcore::OptionAction$new(
                 "btnCrt",
                 btnCrt,
-                default=FALSE)
+                action="open")
             private$..jxfLog <- jmvcore::OptionBool$new(
                 "jxfLog",
                 jxfLog,
@@ -89,7 +89,7 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="fmtHTM",
                 clearWith=list(),
-                content="<style> #fmtHTM { display: none; } table { width: 100%; border-collapse: collapse; } th { background-color: #3e6da9; color: white; text-align: left; } tbody > td { border: 1px solid #ddd; padding: 8px; } tbody > tr:nth-child(even) { background-color: #d6eaf8; } tbody > tr:nth-child(odd) { background-color: #ffffff; } tbody > tr:hover { background-color: #aed6f1; } </style>\n"))
+                content="<style> table { width: 100%; border-collapse: collapse; } th { background-color: #3e6da9; color: white; text-align: left; } tbody > td { border: 1px solid #ddd; padding: 8px; } tbody > tr:nth-child(even) { background-color: #d6eaf8; } tbody > tr:nth-child(odd) { background-color: #ffffff; } tbody > tr:hover { background-color: #aed6f1; } </style>\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="genInf",
@@ -100,8 +100,8 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 options=options,
                 name="dtaInf",
                 clearWith=list(
-                    "varDst",
-                    "clmDst",
+                    "varNme",
+                    "varOth",
                     "btnCrt"),
                 content=""))
             self$add(jmvcore::Table$new(
