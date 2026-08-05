@@ -1,0 +1,26 @@
+### Description
+(Provide a clear and concise description of the problem.)
+
+### Type
+Error
+Feature Request
+Security Vulnarability
+(delete as appropriate)
+
+### Steps to Reproduce
+1. [Step 1]
+2. [Step 2]
+
+### Expected Behavior  
+(Explain what you expected to happen.)
+
+### Actual Behavior  
+(Explain what actually happened. Close with a concise ask: “Expected: X. Actual: Y. Can you suggest a fix or cause?”)
+
+### Environment
+- jamovi version (include whether desktop or cloud):
+- OS (incl. version): 
+- R version (in Rj [available as module], type "version", run it and report / paste `version.string` from the output):
+
+### Additional Information
+(Add screenshots, data files with which the error occurs [only if the don't contain sensitive information], or other helpful details.)
