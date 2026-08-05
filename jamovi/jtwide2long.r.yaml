@@ -137,7 +137,7 @@ items:
 
   - name:  dtaInf
     type:  Html
-    clearWith: [ varDst, clmDst, btnCrt ]
+    clearWith: [ mdeW2L, id_Sep, id_NSS, id_NSA, xfmSep, xfmNSS, xfmNSA, excSep, excNSS, excNSA, idxNSS, idxNSA, pfxSep, chrSep, lvlSep, tgtNSS, btnCrt ]
     content: ""
 
   - name:  pvwDta
@@ -321,10 +321,5 @@ items:
       overview over the "Repeated-Measures Levels" is shown, and you can open
       the transformed data set (after checking those tables) in a new jamovi
       window by pressing the "Create"-button.</p>
-
-# take away btnCrt from dtaInf once Actions is working
-# - name:  opnDta
-#   type:  Action
-#   operation: ...
 
 ...

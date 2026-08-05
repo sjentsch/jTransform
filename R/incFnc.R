@@ -9,7 +9,11 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
             if (private$.chkVar()) {
                 # create the current data set
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg(TRUE))
+                private$.crrDta <- tryCatch(do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE)),
+                                            error = function(e) {
+                                                jmvcore::reject(.("The transformation could not be completed: {msg}"),
+                                                                msg = conditionMessage(e))
+                                            })
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
@@ -41,11 +45,11 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                     # if not, create a preview of the data (used by all functions except jtSearch; fllPvw in utils.R)
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
                     # ... fill table that shows the repeated measurement factors (used by jtLong2Wide, jtWide2Long)
-                    if (hasName(private, ".rpmDta")) {
+                    if (utils::hasName(private, ".rpmDta")) {
                         fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
                     }
                     # ... mark occurences in the preview where the values were changed / replaced (used by jtReplace)
-                    if (hasName(private, ".mrkDff")) {
+                    if (utils::hasName(private, ".mrkDff")) {
                         private$.mrkDff(crrTbl = self$results$pvwDta, dtaNew = private$.crrDta, dtaOld = self$data)
                     }
                 }
@@ -77,10 +81,10 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .crtMsg = function() {
-            if (!hasName(self$options, "btnCrt") || self$options$btnCrt) return(NULL)
+            if (!utils::hasName(self$options, "btnCrt") || self$options$btnCrt) return(NULL)
 
-            sprintf("%s <strong>%s</strong> %s", .("Pressing the"), .("\"Create\"-button opens the modified data set"),
-                    .("in a new jamovi window."))
+            jmvcore::format(.("Pressing the <strong>{}-button opens the modified data set</strong> in a new jamovi window."),
+                            .("\"Create\""))
         },
 
         .dtaInf = function() {
@@ -93,15 +97,15 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         .dtaMsg = function() {
-            sprintf("<strong>%s</strong> (%d %s in %d %s): %s", .("Variables in the Output Data Set"),
-                    dim(private$.crrDta)[2], .("variables"), dim(private$.crrDta)[1], .("rows"),
-                    paste0(names(private$.crrDta), collapse = ", "))
+            jmvcore::format(.("<strong>Variables in the Output Data Set</strong> ({} variables in {} rows): {}"),
+                            dim(private$.crrDta)[2], dim(private$.crrDta)[1],
+                            paste(names(private$.crrDta), collapse = ", "))
         },
 
         .nteRnC = function() {
-            c(paste(.("There are %d more columns in the data set not shown here. A complete list of"),
-                    .("variables can be found in \"Variables in the Output Data Set\" above this table.")),
-                    .("There are %d more rows in the data set not shown here."))
+            c(paste(.("There are {} more columns in the data set not shown here."),
+                    .("A complete list of variables can be found in \"Variables in the Output Data Set\" above this table.")),
+              .("There are {} more rows in the data set not shown here."))
         }
 
     ),

@@ -75,7 +75,7 @@ options:
 
   - name: shwHlp
     type: Bool
-    title: Show Help / Information
+    title: Help / Information
     default: false
 
   - name: btnCrt

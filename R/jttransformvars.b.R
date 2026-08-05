@@ -37,7 +37,7 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
 
         .crrArg = function(getDta = TRUE) {
             nmeXfm <- c("posSqr", "negSqr", "posLog", "negLog", "posInv", "negInv")
-            varXfm <- setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm)
+            varXfm <- stats::setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm)
             c(if (getDta) private$.getDta(unique(unlist(varXfm))), list(varXfm = varXfm))
         },
 

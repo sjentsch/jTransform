@@ -125,7 +125,7 @@ const DOMUtils = {
 
         const title = DOMUtils.createDivWithClass('file-dialog-title');
         const iconContainer = DOMUtils.createDivWithClass('file-dialog-title-icon');
-        iconContainer.innerHTML = '&#x1F4C2'; // folder icon
+        iconContainer.textContent = '📂';
 
         const titleText = DOMUtils.createDivWithClass('file-dialog-title-text');
         titleText.innerHTML = 'Select Files';

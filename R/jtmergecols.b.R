@@ -25,7 +25,8 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .chkVar = function() {
-            if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) && all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp))) {
+            if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) &&
+                all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp, fixed = TRUE))) {
                 return(length(self$options$varBy) > 0)
             } else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
                 private$.fleInp <- vapply(trimws(strsplit(self$options$fleInp, ";")[[1]]), private$.chkFle, character(1), USE.NAMES = FALSE)
@@ -57,13 +58,13 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 varLst <- c(colBy, colDta, colMrg)
             }
 
-            crrFtN <- sprintf(paste(.("The column%s %s %s shown first in this preview. In the"),
-                                    .("created data set, the variable order is as shown in"),
-                                    .("\"Variables in the Output Data Set\" above this table.")),
-                              ifelse(length(varLst) > 1, "s", ""),
-                              paste0(varLst, collapse = ", "),
-                              ifelse(length(varLst) > 1, "are", "is"))
-            attr(varLst, "note") <- crrFtN
+            if (length(varLst) > 1) {
+                ln1FtN <- .("The columns {} are shown first in this preview.")
+            } else {
+                ln1FtN <- .("The column {} is shown first in this preview.")
+            }
+            ln2FtN <- .("In the created data set, the variable order is as shown in \"Variables in the Output Data Set\" above this table.")
+            attr(varLst, "note") <- paste(jmvcore::format(ln1FtN, paste0(varLst, collapse = ", ")), ln2FtN)
 
             varLst
         },

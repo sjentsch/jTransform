@@ -43,9 +43,4 @@ items:
       - name: fstCol
         title: ""
 
-# take away btnCrt from dtaInf once Actions is working
-# - name:  opnDta
-#   type:  Action
-#   operation: ...
-
 ...

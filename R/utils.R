@@ -1,5 +1,10 @@
+# used in unit tests - DO NOT REMOVE
 hmeDir <- function() {
     Sys.getenv(ifelse(jmvReadWrite:::getOS() == "windows", "USERPROFILE", "HOME"))
+}
+
+nteRnC <- function(what = c()) {
+
 }
 
 prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
@@ -60,11 +65,21 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL, nteRnC = c()) {
         crrRow[vapply(crrRow, is.na, logical(1))] <- ""
         if (i ==  pvwRow && pvwRow < dtaRow) crrRow[-1] <- "..."
         crrTbl$setRow(rowNo = i, crrRow)
-        if (i ==  1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, sprintf(nteRnC[1], dtaCol - pvwCol), rowNo = i)
-        if (i ==  pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      sprintf(nteRnC[2], dtaRow - pvwRow), rowNo = i)
+        if (i ==  1      && pvwCol < dtaCol) crrTbl$addFootnote(pvwCol, jmvcore::format(nteRnC[1], dtaCol - pvwCol), rowNo = i)
+        if (i ==  pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      jmvcore::format(nteRnC[2], dtaRow - pvwRow), rowNo = i)
     }
 
     return(invisible(NULL))
+}
+
+str2Fn <- function(strFnc) {
+    splFnc <- strsplit(strFnc, "::")[[1]]
+
+    if (length(splFnc) == 2) {
+        getExportedValue(splFnc[1], splFnc[2])
+    } else {
+        get(splFnc[1])
+    }
 }
 
 optSnR <- function(crrOpt = NULL) {
@@ -80,7 +95,7 @@ optSnR <- function(crrOpt = NULL) {
 }
 
 fmtSrc <- function(fcnNme = "", crrArg = NULL) {
-    dflArg <- eval(parse(text = paste0("formals(", fcnNme, ")")))
+    dflArg <- formals(str2Fn(fcnNme))
     for (nmeArg in names(crrArg)) {
         if (identical(crrArg[[nmeArg]], dflArg[[nmeArg]])) crrArg[nmeArg] <- NULL
     }

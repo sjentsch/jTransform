@@ -1,5 +1,5 @@
 Package: jTransform
-Title: "jTransform: Functions for Common Data Set Transformations"
+Title: Functions for Common Data Set Transformations
 Type: Package
 Version: 0.4.5
 Authors@R:
@@ -26,13 +26,16 @@ Description:
     (<https://cran.r-project.org/package=jmvReadWrite>), enabling access to
     these functions via a graphical user interface (without the need to use
     the R command line for these transformations).
-License: AGPL-3 + file LICENSE
+License: GPL (>= 2) + file LICENSE
 Language: en-GB
 Encoding: UTF-8
 Depends: R (>= 3.5.0)
 Imports:
     jmvcore,
-    jmvReadWrite
+    jmvReadWrite,
+    R6,
+    stats,
+    utils
 Suggests:
     testthat  (>= 3.1.5),
     knitr

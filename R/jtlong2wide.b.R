@@ -12,7 +12,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .init = function() {
             if (private$.chkVar()) {
                 # calculate the current data
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), private$.crrArg(TRUE))
+                private$.crrDta <- do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE))
                 private$.rpmDta <- private$.prpRpM(xfmDta = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R)
                 prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
@@ -46,7 +46,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             varLst <- colOth
             for (i in seq(numTgt)) {
                 if (sum(lngTgt) < numRmg) lngTgt[i] <- lngTgt[i] + 1
-                crrTgt <- colNme[grepl(paste0("^", colTgt[i]), colNme)]
+                crrTgt <- colNme[startsWith(colNme, colTgt[i])]
                 varLst <- c(varLst, crrTgt[seq(lngTgt[i])])
             }
 
@@ -83,7 +83,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             orgDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
             tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)], drop = FALSE]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
-            nmeTgt <- sort(names(xfmDta)[grepl(paste0(paste0("^", varTgt), collapse = "|"), names(xfmDta))])
+            nmeTgt <- sort(names(xfmDta)[startsWith(names(xfmDta), varTgt)])
             nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort), row.names = NULL)
             cbind(tblFrq[, -1, drop = FALSE], nmeTgt, tblFrq[, 1, drop = FALSE])
         }

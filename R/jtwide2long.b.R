@@ -14,7 +14,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # check whether the ID variable is unique, if so calculate the current data
                 crrArg <- private$.crrArg(TRUE)
                 private$.unq_ID(crrArg)
-                private$.crrDta <- do.call(eval(parse(text = private$.crrCmd)), crrArg)
+                private$.crrDta <- do.call(str2Fn(private$.crrCmd), crrArg)
                 private$.crrDta <- private$.adjRes(dtaFrm = private$.crrDta)
                 private$.rpmDta <- private$.prpRpM(dtaFrm = private$.crrDta)
                 # resize / prepare the output table (prpPvw in utils.R) for both data preview and rep. measures overview
@@ -58,7 +58,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .chkSep = function() {
             xfmSep <- self$options$xfmSep
             chrSep <- self$options$chrSep
-            length(xfmSep) > 0 && nzchar(self$options$pfxSep) && nzchar(chrSep) && all(grepl(chrSep, xfmSep))
+            length(xfmSep) > 0 && nzchar(self$options$pfxSep) && nzchar(chrSep) && all(grepl(chrSep, xfmSep, fixed = TRUE))
         },
 
         .chkVar = function() {
@@ -103,7 +103,12 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .nteRnC = commonFunc$private_methods$.nteRnC,
 
         .lvl2Nm = function() {
-            eval(parse(text = paste0("as.integer(c(", self$options$lvlSep, "))")))
+            lvlSep <- trimws(self$options$lvlSep)
+            if (!nzchar(lvlSep)) return(integer(0))
+            lvlNum <- suppressWarnings(as.integer(trimws(strsplit(lvlSep, ",")[[1]])))
+            if (anyNA(lvlNum))
+                jmvcore::reject(.("'Exclude Level' must be a comma-separated list of whole numbers."))
+            lvlNum
         },
 
         # create data frame with index variable / conditions, target variables and frequency
@@ -112,22 +117,23 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 varID  <- ifelse(is.null(self$options$id_Sep), "ID", self$options$id_Sep)
                 colOrg <- self$options$xfmSep
                 colRes <- names(dtaFrm)
-                selCnd <- grepl(paste0("^", self$options$pfxSep), colRes)
-                selOth <- grepl(paste(paste0("^", c(varID, self$options$excSep), "$"), collapse = "|"), colRes)
-                colTgt <- colRes[!(selCnd | selOth)]
+                selCnd <- startsWith(colRes, self$options$pfxSep)
+                colTgt <- colRes[!selCnd & !(colRes %in% c(varID, self$options$excSep))]
                 tblFrq <- as.data.frame(table(dtaFrm[, sort(which(selCnd), decreasing = TRUE)]))[, sort(seq(sum(selCnd) + 1), decreasing = TRUE)]
-                varFrq <- setNames(as.data.frame(matrix(rep("", length(colOrg)), ncol = length(colTgt))), colTgt)
+                varFrq <- stats::setNames(as.data.frame(matrix(rep("", length(colOrg)), ncol = length(colTgt))), colTgt)
                 if (!nzchar(self$options$lvlSep)) {
                     varFrq[, 1] <- sort(colOrg)
                 } else {
-                    for (i in seq_along(colTgt)) varFrq[, i] <- sort(colOrg[grepl(colTgt[i], colOrg)])
+                    for (i in seq_along(colTgt)) varFrq[, i] <- sort(colOrg[startsWith(colOrg, colTgt[i])])
                 }
                 cbind(tblFrq[-1], varFrq, tblFrq[1])
             } else if (self$options$mdeW2L ==  "NSS") {
                 tblFrq <- as.data.frame(table(dtaFrm[, self$options$idxNSS]))
-                cbind(setNames(tblFrq[1], self$options$idxNSS), as.data.frame(self$options$xfmNSS, nm = self$options$tgtNSS), tblFrq[2])
+                cbind(stats::setNames(tblFrq[1], self$options$idxNSS),
+                      as.data.frame(self$options$xfmNSS, nm = self$options$tgtNSS), tblFrq[2])
             } else if (self$options$mdeW2L ==  "NSA") {
-                varTgt <- setNames(as.data.frame(lapply(self$options$xfmNSA, "[[", "vars")), vapply(self$options$xfmNSA, "[[", character(1), "label"))
+                varTgt <- stats::setNames(as.data.frame(lapply(self$options$xfmNSA, "[[", "vars")),
+                                          vapply(self$options$xfmNSA, "[[", character(1), "label"))
                 tblFrq <- as.data.frame(table(dtaFrm[, vapply(self$options$idxNSA, "[[", character(1), "var"), drop = FALSE]))
                 colFrq <- dim(tblFrq)[2]
                 cbind(tblFrq[-colFrq], varTgt, tblFrq[colFrq])

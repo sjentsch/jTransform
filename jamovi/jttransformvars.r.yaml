@@ -36,14 +36,14 @@ items:
       
   - name:  dtaInf
     type:  Html
-    clearWith: [ varDst, clmDst, btnCrt ]
+    clearWith: [ posSqr, negSqr, posLog, negLog, posInv, negInv, btnCrt ]
     content: ""
 
   - name:  pvwDta
     type:  Table
     title: "Data Preview"
     refs:  [ jTransform, jmvReadWrite ]
-    clearWith: [ varOrd, blnAll ]
+    clearWith: [ posSqr, negSqr, posLog, negLog, posInv, negInv ]
     rows: 1
     columns:
       - name: fstCol

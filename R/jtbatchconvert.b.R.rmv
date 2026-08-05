@@ -32,13 +32,14 @@ jtBatchConvertClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Clas
                 # if “Convert” was pressed (btnCnv ==  TRUE), start converting the files (one-by-one)
                 if ("btnCnv" %in% names(self$options) && self$options$btnCnv) {
                     for (i in seq_len(nrow(private$.cnvDtF))) {
-                        crrMsg <- sprintf("%s <strong>%s</strong> \u2192 <strong>%s</strong>", .("Converting"),
-                                          private$.cnvDtF[i, "Original"], private$.cnvDtF[i, "Converted"])
+                        crrMsg <- jmvcore::format(.("Converting <strong>{}</strong> \u2192 <strong>{}</strong>",
+                                                  private$.cnvDtF[i, "Original"], private$.cnvDtF[i, "Converted"])
                         self$results$dtaInf$setContent(crrMsg)
-                        do.call(eval(parse(text = private$.crrCmd)), list(fleInp = private$.cnvDtF[i, "fllNme"]))
+                        do.call(str2Fn(private$.crrCmd), list(fleInp = private$.cnvDtF[i, "fllNme"]))
                     }
                 } else {
-                    crrMsg <- sprintf("%s <strong>%s</strong>.", .("Pressing the"), .("\"Convert\"-button converts all data sets"))
+                    crrMsg <- jmvcore::format(.("Pressing the <strong>{}-button</strong> converts all data sets.",
+                                              .("\"Convert\""))
                     self$results$dtaInf$setContent(crrMsg)
                     # if not, create a preview of the files to be converted; fllPvw in utils.R)
                     fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.cnvDtF[, -1])

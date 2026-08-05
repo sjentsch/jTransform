@@ -32,7 +32,7 @@ items:
 
   - name:  dtaInf
     type:  Html
-    clearWith: [ varDst, clmDst, btnCrt ]
+    clearWith: [ varNme, varOth, btnCrt ]
     content: ""
 
   - name:  pvwDta

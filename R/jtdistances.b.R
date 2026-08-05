@@ -27,8 +27,8 @@ jtDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             nmeDst <- self$options$nmeDst
             nmeDst <- paste(c(nmeDst,
                               rep(c(self$options$p__Dst, self$options$np_Dst), jmvReadWrite:::binDst(nmeDst)),
-                              rep(self$options$pwrDst, grepl("^minkowski$|^power$", nmeDst)),
-                              rep(self$options$rt_Dst, grepl("^power$", nmeDst))), collapse = "_")
+                              rep(self$options$pwrDst, nmeDst %in% c("minkowski", "power")),
+                              rep(self$options$rt_Dst, nmeDst %in% "power")), collapse = "_")
             c(if (getDta) list(dtaInp = as.data.frame(lapply(dtaFrm, jmvcore::toNumeric))),
               list(varDst = self$options$varDst, clmDst = (self$options$clmDst ==  "columns"),
                    stdDst = self$options$stdDst, nmeDst = nmeDst))
