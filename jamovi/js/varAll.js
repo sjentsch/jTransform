@@ -2,6 +2,7 @@
 'use strict';
 require('./css');
 const { enableLoggingIndicator, TooltipManager, DOMUtils } = require('./ModuleUtils');
+const same = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 
 module.exports = {
     /**
@@ -42,8 +43,8 @@ module.exports = {
      */
     update: function(ui) {
         this.getColumnNames().then((columns) => {
-            if (!_.isEqual(ui.varAll.value(), columns)) {
-                ui.varAll.setValue(columns);
+            if (!same(ui.varAll.value(), columns)) {
+                ui.varAll.setValue();
             }
         });
     },
@@ -55,7 +56,7 @@ module.exports = {
         if (event.dataType !== 'columns') return;
 
         this.getColumnNames().then((columns) => {
-            if (!_.isEqual(ui.varAll.value(), columns)) {
+            if (!same(ui.varAll.value(), columns)) {
                 ui.varAll.setValue(columns);
             }
         });

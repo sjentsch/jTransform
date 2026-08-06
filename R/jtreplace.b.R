@@ -5,8 +5,11 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     private = list(
         .crrCmd = "jmvReadWrite::replace_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "rplc",
+        .xfmFst = TRUE,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -31,9 +34,7 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                                                       x[vapply(x, is.null, logical(1))] <- ""
                                                       c(x[[1]], x[[2]])
                                                   })
-            c(if (getDta) private$.getDta(),
-              list(rplLst = rplLst),
-              optSnR(self$options))
+            c(if (getDta) private$.getDta(), list(rplLst = rplLst), optSnR(self$options))
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,

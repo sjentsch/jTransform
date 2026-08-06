@@ -5,15 +5,18 @@ jtDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     private = list(
         .crrCmd = "jmvReadWrite::distances_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "dist",
+        .xfmFst = TRUE,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
         .run  = commonFunc$private_methods$.run,
 
         .chkDtF = function() {
-            (all(dim(self$data) >=  2))
+            (all(dim(private$.crrArg(TRUE)$dtaInp) >= 2))
         },
 
         .chkVar = function() {
@@ -23,14 +26,21 @@ jtDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .colFst = commonFunc$private_methods$.colFst,
 
         .crrArg = function(getDta = TRUE) {
-            dtaFrm <- private$.getDta(self$options$varDst)$dtaInp
+            varDst <- self$options$varDst
+            if (getDta) {
+                dtaFrm <- private$.getDta(varDst)$dtaInp
+                # update .dtaRow to the value after the transformation
+                private$.dtaRow <- length(varDst)
+            }
             nmeDst <- self$options$nmeDst
             nmeDst <- paste(c(nmeDst,
+                              # checking the distribution name occurs in jmvReadWrite::distances_omv (called with this parameters)
+                              # p__Dst and np_Dst can be also TRUE / FALSE, etc., hence they are defined as strings in .a.yaml
                               rep(c(self$options$p__Dst, self$options$np_Dst), jmvReadWrite:::binDst(nmeDst)),
                               rep(self$options$pwrDst, nmeDst %in% c("minkowski", "power")),
                               rep(self$options$rt_Dst, nmeDst %in% "power")), collapse = "_")
             c(if (getDta) list(dtaInp = as.data.frame(lapply(dtaFrm, jmvcore::toNumeric))),
-              list(varDst = self$options$varDst, clmDst = (self$options$clmDst ==  "columns"),
+              list(varDst = varDst, clmDst = (self$options$clmDst ==  "columns"),
                    stdDst = self$options$stdDst, nmeDst = nmeDst))
         },
 

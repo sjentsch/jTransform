@@ -3,7 +3,7 @@ testthat::test_that("jtsearch works", {
 
     chkRes <- jTransform::jtSearch(data = dtaInp, varAll = names(dtaInp), srcTrm = "6", ignCse = FALSE, whlTrm = FALSE)
     expect_equal(class(chkRes), c("jtSearchResults", "Group", "ResultsElement", "R6"))
-    expect_equal(chkRes$srcRes$asString(), paste("\n Value \"6\" (partial or exact match) found in variable(s): row(s)...\n\n",
+    expect_equal(chkRes$srcRes$asString(), paste("\n Value \"6\" (partial or exact match) was found in variable(s): row(s)...\n\n",
                                                  "ID: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,\n",
                                                  "20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,\n",
                                                  "37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,\n",
@@ -115,11 +115,11 @@ testthat::test_that("jtsearch works", {
 
     chkRes <- jTransform::jtSearch(data = dtaInp, varAll = names(dtaInp), srcTrm = "6", ignCse = FALSE, whlTrm = TRUE,
                                    incCmp = TRUE, incRcd = TRUE, incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = FALSE)
-    expect_equal(chkRes$srcRes$asString(), "\n Value \"6\" (exact match) not found\n")
+    expect_equal(chkRes$srcRes$asString(), "\n Value \"6\" (exact match) was not found\n")
 
     chkRes <- jTransform::jtSearch(data = dtaInp, varAll = names(dtaInp), srcTrm = "6", ignCse = FALSE, whlTrm = FALSE,
                                    incCmp = TRUE, incRcd = TRUE, incID = TRUE, incNom = TRUE, incOrd = TRUE, incNum = FALSE)
-    expect_equal(chkRes$srcRes$asString(), paste("\n Value \"6\" (partial or exact match) found in variable(s): row(s)...\n\n",
+    expect_equal(chkRes$srcRes$asString(), paste("\n Value \"6\" (partial or exact match) was found in variable(s): row(s)...\n\n",
                                                  "ID: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,\n",
                                                  "20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36,\n",
                                                  "37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53,\n",

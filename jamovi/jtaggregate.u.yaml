@@ -20,7 +20,7 @@ children:
             name: varAgg
             isTarget: true
       - type: TargetLayoutBox
-        label: Split by
+        label: Split By
         children:
           - type: VariablesListBox
             name: grpAgg

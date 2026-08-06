@@ -5,8 +5,11 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
     private = list(
         .crrCmd = "jmvReadWrite::arrange_cols_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "arr_cols",
+        .xfmFst = TRUE,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

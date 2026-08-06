@@ -5,9 +5,12 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     private = list(
         .crrCmd = "jmvReadWrite::long2wide_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
         .rpmDta = NULL,
         .sfxTtl = "wide",
+        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
 
         .init = function() {
             # update logging flags during the init phase
@@ -15,12 +18,16 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
 
             if (private$.chkVar()) {
-                # calculate the current data
-                private$.crrDta <- private$.runXfm()
-                private$.rpmDta <- private$.prpRpM(runXfm = private$.crrDta)
+                # calculate the transformed data (if requested by .xfmFst and if crrDta is NULL)
+                if (private$.xfmFst && is.null(private$.crrDta)) {
+                    private$.crrDta <- private$.runXfm()
+                    private$.rpmDta <- private$.prpRpM(runXfm = private$.crrDta)
+                }
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
-                prpPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta,                             nonLtd = TRUE)
+                prpPvw(crrTbl = self$results$pvwDta, numRow = nrow(private$.crrDta),
+                       colAll = names(private$.crrDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
+                prpPvw(crrTbl = self$results$pvwLvl, numRow = nrow(private$.rpmDta),
+                       colAll = names(private$.rpmDta),                             nonLtd = TRUE)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -46,13 +53,13 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             colTgt <- self$options$varTgt
             numRmg <- (min(c(length(colNme), maxCol)) - length(colOth))
             numTgt <- length(colTgt)
-            lngTgt <- floor(rep(numRmg / numTgt, numTgt))
+            lngTgt <- pmax(0L, floor(rep(numRmg / numTgt, numTgt)))
             if (sum(lngTgt) < numRmg) lngTgt[numTgt] <- lngTgt[numTgt] + 1
             varLst <- colOth
-            for (i in seq(numTgt)) {
+            for (i in seq_len(numTgt)) {
                 if (sum(lngTgt) < numRmg) lngTgt[i] <- lngTgt[i] + 1
                 crrTgt <- colNme[startsWith(colNme, colTgt[i])]
-                varLst <- c(varLst, crrTgt[seq(lngTgt[i])])
+                varLst <- c(varLst, crrTgt[seq_len(lngTgt[i])])
             }
 
             ln1FtN <- ifelse(length(varLst) > 1,
@@ -83,7 +90,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             # self$options$varTgt -> names / grepl
             varTme <- self$options$varTme
             numTme <- length(varTme)
-            orgDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            orgDta <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
             tblFrq <- as.data.frame(table(orgDta[, varTme[seq(numTme, 1)], drop = FALSE]))[, seq(numTme + 1, 1)]
             varTgt <- sort(self$options$varTgt)
             selTgt <- Reduce(`|`, lapply(varTgt, function(p) startsWith(names(runXfm), p)))

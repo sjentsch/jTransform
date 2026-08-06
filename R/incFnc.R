@@ -8,10 +8,17 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
 
             if (private$.chkVar()) {
-                # create the current data set
-                private$.crrDta <- private$.runXfm()
+                # calculate the transformed data (if requested by .xfmFst and if crrDta is NULL)
+                # .xfmFst marks analyses where there is no (or at least no easy) way to calculate
+                # the size of the transformed data set
+                if (private$.xfmFst && is.null(private$.crrDta)) {
+                    private$.crrDta <- private$.runXfm()
+                    private$.dtaCol <- names(private$.crrDta)
+                    private$.dtaRow <- nrow(private$.crrDta)
+                }
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, colFst = private$.colFst(), nonLtd = private$.nonLtd)
+                prpPvw(crrTbl = self$results$pvwDta, numRow = private$.dtaRow,
+                       colAll = names(private$.crrDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -26,7 +33,14 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
             # assemble or reset data set / create information
             private$.dtaInf()
-            if (private$.chkVar() && private$.chkDtF()) {
+            if (private$.chkVar()) {
+                # calculate the transformed data (if not already done - crrDta were not NULL in such case;
+                # .xfmFst request to calculate in .init())
+                if (!private$.xfmFst && is.null(private$.crrDta)) {
+                    private$.crrDta <- private$.runXfm()
+                    private$.dtaCol <- names(private$.crrDta)
+                    private$.dtaRow <- nrow(private$.crrDta)
+                }
                 # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
                     btnCrt <- self$options$option("btnCrt")
@@ -53,14 +67,14 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
-        # covers the most common case (data frame has at least one row)
+        # covers the most common case (the input data frame has at least one row)
         .chkDtF = function() {
-            (dim(self$data)[1] >= 1)
+            (nrow(private$.crrArg(TRUE)$dtaInp) >= 1)
         },
 
-        # get the data set and check that all variables in the options in optLst are not empty (contain only NAs)
+        # get the data set and check that all variables in the options in varLst are not empty (contain only NAs)
         .getDta = function(varLst = c()) {
-            dtaInp <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            dtaInp <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
             for (crrVar in varLst) {
                 if (all(is.na(dtaInp[, crrVar])))
                     jmvcore::reject(.("The variable '{crrVar}' contains only missing / invalid values."), crrVar = crrVar)
@@ -68,7 +82,10 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
             # return a list with the target data set as entry, the data set either contains all variables
             # (if varAll is defined) or is restricted to varLst
-            list(dtaInp = dtaInp[, if (utils::hasName(self$options, "varAll")) names(dtaInp) else varLst])
+            private$.dtaCol <- if (utils::hasName(self$options, "varAll")) names(dtaInp) else varLst
+            if (utils::hasName(private, ".dtaRow")) private$.dtaRow <- nrow(dtaInp)
+
+            list(dtaInp = dtaInp[, private$.dtaCol])
         },
 
         # covers the most common case (colFst is not used)
@@ -94,8 +111,7 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
 
         .dtaMsg = function() {
             jmvcore::format(.("<strong>Variables in the Output Data Set</strong> ({} variables in {} rows): {}"),
-                            dim(private$.crrDta)[2], dim(private$.crrDta)[1],
-                            paste(names(private$.crrDta), collapse = ", "))
+                            ncol(private$.crrDta), nrow(private$.crrDta), paste(names(private$.crrDta), collapse = ", "))
         },
 
         .nteRnC = function() {
@@ -103,8 +119,16 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                     .("A complete list of variables can be found in \"Variables in the Output Data Set\" above this table.")),
               .("There are {} more rows in the data set not shown here."))
         },
+        
+        # covers the most common case (number of rows is the same as in the original data set)
+        .numRow = function() {
+        
+        },
 
         .runXfm = function() {
+            if (!private$.chkDtF()) {
+                jmvcore::reject(.("It is not possible to carry out this transformation with an empty or otherwise invalid dataset."))
+            }
             tryCatch(do.call(str2Fn(private$.crrCmd), private$.crrArg(TRUE)),
                      error = function(e) jmvcore::reject(.("The transformation could not be completed: {msg}"),
                                                          msg = conditionMessage(e)))

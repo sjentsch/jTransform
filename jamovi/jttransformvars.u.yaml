@@ -37,7 +37,7 @@ children:
             height: smallest
             isTarget: true
       - type: TargetLayoutBox
-        label: Strong negative skewness
+        label: Strong Negative Skewness
         children:
           - type: VariablesListBox
             name: negLog

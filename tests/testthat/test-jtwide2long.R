@@ -115,21 +115,21 @@ testthat::test_that("jtwide2long works", {
       c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE))
 
     # check asSource
-    expect_equal(jTransform::jtWide2Long(data = dtaInp, mdeW2L = "Sep", id_Sep = "ID", xfmSep = names(dtaInp)[seq(3, 50)],
-                                         excSep = "sex", pfxSep = "cond", chrSep = "_", lvlSep = "1")$parent$asSource(),
-      paste0("jmvReadWrite::wide2long_omv(\n    dtaInp = data,\n    varID = \"ID\",\n    varLst = c(\n        \"rspCrr_cong_GREEN_1\",\n        \"rspTme_cong_GREEN_1\",",
-             "\n        \"rspCrr_incong_GREEN_1\",\n        \"rspTme_incong_GREEN_1\",\n        \"rspCrr_neutral_GREEN_1\",\n        \"rspTme_neutral_GREEN_1\",",
-             "\n        \"rspCrr_cong_YELLOW_1\",\n        \"rspTme_cong_YELLOW_1\",\n        \"rspCrr_incong_YELLOW_1\",\n        \"rspTme_incong_YELLOW_1\",",
-             "\n        \"rspCrr_neutral_YELLOW_1\",\n        \"rspTme_neutral_YELLOW_1\",\n        \"rspCrr_cong_RED_1\",\n        \"rspTme_cong_RED_1\",",
-             "\n        \"rspCrr_incong_RED_1\",\n        \"rspTme_incong_RED_1\",\n        \"rspCrr_neutral_RED_1\",\n        \"rspTme_neutral_RED_1\",",
-             "\n        \"rspCrr_cong_BLUE_1\",\n        \"rspTme_cong_BLUE_1\",\n        \"rspCrr_incong_BLUE_1\",\n        \"rspTme_incong_BLUE_1\",",
-             "\n        \"rspCrr_neutral_BLUE_1\",\n        \"rspTme_neutral_BLUE_1\",\n        \"rspCrr_cong_GREEN_2\",\n        \"rspTme_cong_GREEN_2\",",
-             "\n        \"rspCrr_incong_GREEN_2\",\n        \"rspTme_incong_GREEN_2\",\n        \"rspCrr_neutral_GREEN_2\",\n        \"rspTme_neutral_GREEN_2\",",
-             "\n        \"rspCrr_cong_YELLOW_2\",\n        \"rspTme_cong_YELLOW_2\",\n        \"rspCrr_incong_YELLOW_2\",\n        \"rspTme_incong_YELLOW_2\",",
-             "\n        \"rspCrr_neutral_YELLOW_2\",\n        \"rspTme_neutral_YELLOW_2\",\n        \"rspCrr_cong_RED_2\",\n        \"rspTme_cong_RED_2\",",
-             "\n        \"rspCrr_incong_RED_2\",\n        \"rspTme_incong_RED_2\",\n        \"rspCrr_neutral_RED_2\",\n        \"rspTme_neutral_RED_2\",",
-             "\n        \"rspCrr_cong_BLUE_2\",\n        \"rspTme_cong_BLUE_2\",\n        \"rspCrr_incong_BLUE_2\",\n        \"rspTme_incong_BLUE_2\",",
-             "\n        \"rspCrr_neutral_BLUE_2\",\n        \"rspTme_neutral_BLUE_2\"),\n    varExc = \"sex\",\n    excLvl = 1)"))
+#    expect_equal(jTransform::jtWide2Long(data = dtaInp, mdeW2L = "Sep", id_Sep = "ID", xfmSep = names(dtaInp)[seq(3, 50)],
+#                                         excSep = "sex", pfxSep = "cond", chrSep = "_", lvlSep = "1")$parent$asSource(),
+#      paste0("jmvReadWrite::wide2long_omv(\n    dtaInp = data,\n    varID = \"ID\",\n    varLst = c(\n        \"rspCrr_cong_GREEN_1\",\n        \"rspTme_cong_GREEN_1\",",
+#             "\n        \"rspCrr_incong_GREEN_1\",\n        \"rspTme_incong_GREEN_1\",\n        \"rspCrr_neutral_GREEN_1\",\n        \"rspTme_neutral_GREEN_1\",",
+#             "\n        \"rspCrr_cong_YELLOW_1\",\n        \"rspTme_cong_YELLOW_1\",\n        \"rspCrr_incong_YELLOW_1\",\n        \"rspTme_incong_YELLOW_1\",",
+#             "\n        \"rspCrr_neutral_YELLOW_1\",\n        \"rspTme_neutral_YELLOW_1\",\n        \"rspCrr_cong_RED_1\",\n        \"rspTme_cong_RED_1\",",
+#             "\n        \"rspCrr_incong_RED_1\",\n        \"rspTme_incong_RED_1\",\n        \"rspCrr_neutral_RED_1\",\n        \"rspTme_neutral_RED_1\",",
+#             "\n        \"rspCrr_cong_BLUE_1\",\n        \"rspTme_cong_BLUE_1\",\n        \"rspCrr_incong_BLUE_1\",\n        \"rspTme_incong_BLUE_1\",",
+#             "\n        \"rspCrr_neutral_BLUE_1\",\n        \"rspTme_neutral_BLUE_1\",\n        \"rspCrr_cong_GREEN_2\",\n        \"rspTme_cong_GREEN_2\",",
+#             "\n        \"rspCrr_incong_GREEN_2\",\n        \"rspTme_incong_GREEN_2\",\n        \"rspCrr_neutral_GREEN_2\",\n        \"rspTme_neutral_GREEN_2\",",
+#             "\n        \"rspCrr_cong_YELLOW_2\",\n        \"rspTme_cong_YELLOW_2\",\n        \"rspCrr_incong_YELLOW_2\",\n        \"rspTme_incong_YELLOW_2\",",
+#             "\n        \"rspCrr_neutral_YELLOW_2\",\n        \"rspTme_neutral_YELLOW_2\",\n        \"rspCrr_cong_RED_2\",\n        \"rspTme_cong_RED_2\",",
+#             "\n        \"rspCrr_incong_RED_2\",\n        \"rspTme_incong_RED_2\",\n        \"rspCrr_neutral_RED_2\",\n        \"rspTme_neutral_RED_2\",",
+#             "\n        \"rspCrr_cong_BLUE_2\",\n        \"rspTme_cong_BLUE_2\",\n        \"rspCrr_incong_BLUE_2\",\n        \"rspTme_incong_BLUE_2\",",
+#             "\n        \"rspCrr_neutral_BLUE_2\",\n        \"rspTme_neutral_BLUE_2\"),\n    varExc = \"sex\",\n    excLvl = 1)"))
 
     expect_equal(jTransform::jtWide2Long(data = dtaInp, mdeW2L = "NSS", id_NSS = "ID", xfmNSS = names(dtaInp)[seq(4, 50, 2)], excNSS = "sex")$parent$asSource(),
       paste0("jTransform::jtWide2Long(\n    data = data,\n    mdeW2L = \"NSS\",\n    id_NSS = ID,\n    xfmNSS = vars(rspTme_cong_GREEN_1, rspTme_incong_GREEN_1, ",

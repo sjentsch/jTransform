@@ -3,25 +3,24 @@ hmeDir <- function() {
     Sys.getenv(ifelse(jmvReadWrite:::getOS() == "windows", "USERPROFILE", "HOME"))
 }
 
-prpPvw <- function(crrTbl = NULL, dtaFrm = NULL, colFst = c(), nonLtd = FALSE) {
+prpPvw <- function(crrTbl = NULL, numRow = NA, colAll = c(), colFst = c(), nonLtd = FALSE) {
     # maxRow, maxCol and useIdx are defined in globals.R
-    lstRow <- min(dim(dtaFrm)[1], ifelse(nonLtd, Inf, maxRow))
-    lstCol <- min(dim(dtaFrm)[2], ifelse(nonLtd, Inf, maxCol))
+    lstRow <- min(numRow,         ifelse(nonLtd, Inf, maxRow))
+    lstCol <- min(length(colAll), ifelse(nonLtd, Inf, maxCol))
     fstRow <- crrTbl$rowCount + 1
     fstCol <- ifelse(useIdx, 1, 2)
     seqRow <- if (lstRow >= fstRow) seq(fstRow, lstRow) else integer(0)
     seqCol <- if (lstCol >= fstCol) seq(fstCol, lstCol) else integer(0)
-    # determine column names, and if required, put the columns in colFst at the beginning
-    colNme <- names(dtaFrm)
+    # arrange column names, and if required, put the columns in colFst at the beginning
     if (length(colFst) > 0) {
-        if (!all(colFst == colNme[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
-        colNme <- unique(c(colFst, colNme))
+        if (!all(colFst == colAll[seq_along(colFst)])) crrTbl$setNote("Note", attr(colFst, "note"))
+        colAll <- unique(c(colFst, colAll))
     }
     # create a list vector with empty entries (to be assigned when adding a new row), change title for
     # the first column (if useIdx is FALSE) and add further columns and rows to the current table
-    valRow <- stats::setNames(as.list(rep("", length(seqCol) + 1)), c("fstCol", colNme[seqCol]))
-    if (!useIdx) crrTbl$getColumn(1)$setTitle(colNme[1])
-    for (i in seqCol) crrTbl$addColumn(name = colNme[i], title = colNme[i])
+    valRow <- stats::setNames(as.list(rep("", length(seqCol) + 1)), c("fstCol", colAll[seqCol]))
+    if (!useIdx) crrTbl$getColumn(1)$setTitle(colAll[1])
+    for (i in seqCol) crrTbl$addColumn(name = colAll[i], title = colAll[i])
     for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
 
     return(invisible(NULL))
@@ -38,8 +37,8 @@ rstPvw <- function(crrTbl = NULL) {
 
 fllPvw <- function(crrTbl = NULL, dtaFrm = NULL, nteRnC = c()) {
     # useIdx is defined in globals.R
-    dtaRow <- dim(dtaFrm)[1]
-    dtaCol <- dim(dtaFrm)[2] + ifelse(useIdx, 1, 0)
+    dtaRow <- nrow(dtaFrm)
+    dtaCol <- ncol(dtaFrm) + ifelse(useIdx, 1, 0)
     pvwRow <- crrTbl$rowCount
     pvwCol <- length(crrTbl$columns)
     pvwClN <- vapply(crrTbl$columns, "[[", character(1), "title", USE.NAMES = FALSE)

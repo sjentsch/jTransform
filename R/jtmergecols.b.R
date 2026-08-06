@@ -6,9 +6,12 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     private = list(
         .crrCmd = "jmvReadWrite::merge_cols_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .fleInp = NULL,
         .nonLtd = FALSE,
         .sfxTtl = "mrg_cols",
+        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -38,7 +41,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .colFst = function() {
-            dtaFrm <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            dtaFrm <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
             colNme <- names(private$.crrDta)
             colBy  <- self$options$varBy
             colDta <- setdiff(names(dtaFrm), colBy)
@@ -49,11 +52,11 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             numMrg <- length(colMrg)
             numOfs <- ifelse(length(colNme) > maxCol, 1, 0)
             if (all(c(numDta, numMrg) >=  numHlO)) {
-                varLst <- c(colBy, colDta[seq(floor(numHlO))], colMrg[seq(ceiling(numHlO))])
+                varLst <- c(colBy, colDta[seq_len(max(0, floor(numHlO)))], colMrg[seq_len(ceiling(numHlO))])
             } else if (numDta >=  numHlO) {
-                varLst <- c(colBy, colDta[seq(numOth - numMrg - numOfs)], colMrg)
+                varLst <- c(colBy, colDta[seq_len(max(0, numOth - numMrg - numOfs))], colMrg)
             } else if (numMrg >=  numHlO) {
-                varLst <- c(colBy, colDta, colMrg[seq(numOth - numDta - numOfs)])
+                varLst <- c(colBy, colDta, colMrg[seq_len(max(0, numOth - numDta - numOfs))])
             } else {
                 varLst <- c(colBy, colDta, colMrg)
             }
@@ -72,10 +75,13 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .crrArg = function(getDta = TRUE) {
             # attach further input files as attribute fleInp to the data frame
             # and assemble the arguments for merge_cols_omv
-            dtaFrm <- private$.getDta(self$options$varBy)$dtaInp
-            attr(dtaFrm, "fleInp") <- private$.fleInp
-            c(if (getDta) list(dtaInp = dtaFrm), 
-              list(varBy = self$options$varBy, typMrg = self$options$typMrg))
+            if (getDta) {
+                dtaFrm <- private$.getDta(self$options$varBy)$dtaInp
+                attr(dtaFrm, "fleInp") <- private$.fleInp
+                list(dtaInp = dtaFrm, varBy = self$options$varBy, typMrg = self$options$typMrg)
+            } else {
+                list(varBy = self$options$varBy, typMrg = self$options$typMrg)
+            }
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,

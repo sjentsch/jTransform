@@ -5,8 +5,11 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     private = list(
         .crrCmd = "jmvReadWrite::sort_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "sort",
+        .xfmFst = TRUE,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -23,7 +26,7 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .crrArg = function(getDta = TRUE) {
             c(if (getDta) private$.getDta(),
               list(varSrt = vapply(self$options$ordSrt,
-                                   function(x) { paste0(gsub("descend", "-", gsub("ascend", "", x[["order"]])), x[["var"]]) },
+                                   function(x) paste0(gsub("descend", "-", gsub("ascend", "", x[["order"]])), x[["var"]]),
                                    character(1))))
         },
 

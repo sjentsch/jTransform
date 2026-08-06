@@ -5,8 +5,11 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
     private = list(
         .crrCmd = "jmvReadWrite::transform_vars_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "transform_vars",
+        .xfmFst = TRUE,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -21,7 +24,7 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         },
 
         .colFst = function() {
-            inpDta <- if (!is.null(self$data) && dim(self$data)[1] > 0) self$data else self$readDataset()
+            inpDta <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
             varLst <- c(setdiff(names(private$.crrDta), names(inpDta)), names(inpDta))
 
             ln1FtN <- ifelse(length(varLst) > 1,

@@ -5,15 +5,19 @@ jtAggregateClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     private = list(
         .crrCmd = "jmvReadWrite::aggregate_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
+        .prsEql = NULL,
         .sfxTtl = "agg",
+        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
         .run  = commonFunc$private_methods$.run,
 
         .chkDtF = function() {
-            (all(dim(self$data) >= 2))
+            (all(dim(private$.crrArg(TRUE)$dtaInp) >= 2))
         },
 
         .chkVar = function() {

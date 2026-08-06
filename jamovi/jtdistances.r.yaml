@@ -4,7 +4,7 @@ title: Calculate Distances
 jrs:   '1.1'
 
 items:
-  # this reults element is only used for formatting the output tables
+  # this results element is only used for formatting the output tables
   # it was checked that it does not affect the styling of later analyses 
   - name: fmtHTM
     type: Html

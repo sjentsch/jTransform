@@ -5,8 +5,12 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
     private = list(
         .crrCmd = "jmvReadWrite::combine_cols_omv",
         .crrDta = NULL,
+        .dtaCol = c(),
+        .dtaRow = NA,
         .nonLtd = FALSE,
+        .prsEql = NULL,
         .sfxTtl = "cmb_cols",
+        .xfmFst = TRUE,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -15,7 +19,9 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         .chkDtF = commonFunc$private_methods$.chkDtF,
 
         .chkEql = function() {
+            if (!is.null(private$.prsEql)) return(private$.prsEql)
             if (self$options$mdeCmb != "none") return(TRUE)
+
             dtaFrm <- private$.crrArg(TRUE)$dtaInp
             varPrs <- self$options$varPrs
             notEql <- vapply(varPrs, function(l) any(dtaFrm[, l[[1]]] != dtaFrm[, l[[2]]], na.rm = TRUE), logical(1))
@@ -25,6 +31,7 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
                                 pairs = paste(vapply(varPrs[notEql], function(l) paste(l, collapse = " - "), character(1)),
                                               collapse = ", "))
             } else {
+                private$.prsEql <- TRUE
                 TRUE
             }
         },
