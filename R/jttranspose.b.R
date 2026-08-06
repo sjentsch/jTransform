@@ -4,12 +4,12 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     inherit = jtTransposeBase,
     private = list(
         .crrCmd = "jmvReadWrite::transpose_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "xpsd",
-        .xfmFst = TRUE,
+        .xfmCol = c(),
+        .xfmDta = NULL,
+        .xfmFst = FALSE,
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -27,10 +27,11 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             varNme <- self$options$varNme
             varOth <- self$options$varOth
             if (getDta) {
-                crrDta <- private$.getDta(c(varNme, varOth))$dtaInp
-                # update .dtaRow and .dtaCol to the value after the transformation
-                private$.dtaRow <- ncol(crrDta) - length(varNme)
-                list(dtaInp = crrDta, varNme = ifelse(is.null(varNme), "", varNme))
+                dtaInp <- private$.getDta(c(varNme, varOth))$dtaInp
+                # update .xfmCol and .xfmRow to the value after the transformation
+                private$.xfmRow <- ncol(dtaInp) - length(varNme)
+                private$.xfmCol <- c("ID", if (!is.null(varNme)) as.character(dtaInp[, varNme]) else sprintf("V_%d", seq_len(private$.xfmRow)))
+                list(dtaInp = dtaInp, varNme = ifelse(is.null(varNme), "", varNme))
             } else {
                 list(varNme = ifelse(is.null(varNme), "", varNme))
             }

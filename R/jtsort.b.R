@@ -4,12 +4,12 @@ jtSortClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     inherit = jtSortBase,
     private = list(
         .crrCmd = "jmvReadWrite::sort_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "sort",
-        .xfmFst = TRUE,
+        .xfmCol = c(),
+        .xfmDta = NULL,
+        .xfmFst = FALSE,
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

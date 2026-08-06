@@ -4,12 +4,12 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
     inherit = jtTransformVarsBase,
     private = list(
         .crrCmd = "jmvReadWrite::transform_vars_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "transform_vars",
-        .xfmFst = TRUE,
+        .xfmCol = c(),
+        .xfmDta = NULL,
+        .xfmFst = FALSE,
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -25,7 +25,7 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
 
         .colFst = function() {
             inpDta <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
-            varLst <- c(setdiff(names(private$.crrDta), names(inpDta)), names(inpDta))
+            varLst <- c(setdiff(private$.xfmCol, names(inpDta)), names(inpDta))
 
             ln1FtN <- ifelse(length(varLst) > 1,
                              jmvcore::format(.("The columns {} are shown first in this preview."), paste0(varLst, collapse = ", ")),
@@ -39,7 +39,16 @@ jtTransformVarsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6C
         .crrArg = function(getDta = TRUE) {
             nmeXfm <- c("posSqr", "negSqr", "posLog", "negLog", "posInv", "negInv")
             varXfm <- stats::setNames(lapply(nmeXfm, function(x) self$options[[x]]), nmeXfm)
-            c(if (getDta) private$.getDta(unique(unlist(varXfm))), list(varXfm = varXfm))
+            varXfm <- varXfm[!vapply(varXfm, is.null, logical(1))]
+            if (getDta) {
+                dtaInp <- private$.getDta(unique(unlist(varXfm)))$dtaInp
+                # update target column order (.xfmCol is first filled in .getDta())
+                private$.xfmCol <- c(names(dtaInp),
+                                     unlist(lapply(names(varXfm), function(n) paste0(varXfm[[n]], "_", toupper(gsub("^pos|^neg", "", n))))))
+                list(dtaInp = dtaInp, varXfm = varXfm)
+            } else {
+                list(varXfm = varXfm)
+            }
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,

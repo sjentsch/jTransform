@@ -4,7 +4,7 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     inherit = jtSearchBase,
     private = list(
         .crrCmd = "jmvReadWrite::search_omv",
-        .dtaCol = c(),
+        .xfmCol = c(),
 
         .run = function() {
             # check whether all required variables are present

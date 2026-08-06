@@ -4,12 +4,12 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
     inherit = jtArrangeColsBase,
     private = list(
         .crrCmd = "jmvReadWrite::arrange_cols_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "arr_cols",
-        .xfmFst = TRUE,
+        .xfmCol = c(),
+        .xfmDta = NULL,
+        .xfmFst = FALSE,
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -24,8 +24,14 @@ jtArrangeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Cla
         .colFst = commonFunc$private_methods$.colFst,
 
         .crrArg = function(getDta = TRUE) {
-            c(if (getDta) private$.getDta(),
-              list(varOrd = unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll)))))
+            varOrd <- unique(c(self$options$varOrd, rep(self$options$varAll, self$options$blnAll)))
+            if (getDta) {
+                dtaInp <- private$.getDta()$dtaInp
+                private$.xfmCol <- varOrd  # update target column order (.xfmCol is first filled in .getDta())
+                list(dtaInp = dtaInp, varOrd = varOrd)
+            } else {
+                list(varOrd = varOrd)
+            }
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,

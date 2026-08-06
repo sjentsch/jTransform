@@ -4,13 +4,12 @@ jtAggregateClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
     inherit = jtAggregateBase,
     private = list(
         .crrCmd = "jmvReadWrite::aggregate_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
-        .prsEql = NULL,
         .sfxTtl = "agg",
+        .xfmCol = c(),
+        .xfmDta = NULL,
         .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,

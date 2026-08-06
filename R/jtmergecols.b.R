@@ -5,13 +5,13 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
     private = list(
         .crrCmd = "jmvReadWrite::merge_cols_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .fleInp = NULL,
         .nonLtd = FALSE,
         .sfxTtl = "mrg_cols",
+        .xfmCol = c(),
+        .xfmDta = NULL,
         .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -42,7 +42,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .colFst = function() {
             dtaFrm <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
-            colNme <- names(private$.crrDta)
+            colNme <- names(private$.xfmDta)
             colBy  <- self$options$varBy
             colDta <- setdiff(names(dtaFrm), colBy)
             colMrg <- setdiff(colNme, c(colBy, colDta))

@@ -8,17 +8,19 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
 
             if (private$.chkVar()) {
-                # calculate the transformed data (if requested by .xfmFst and if crrDta is NULL)
+                # calculate the transformed data (if requested by .xfmFst and if .xfmDta is NULL)
                 # .xfmFst marks analyses where there is no (or at least no easy) way to calculate
                 # the size of the transformed data set
-                if (private$.xfmFst && is.null(private$.crrDta)) {
-                    private$.crrDta <- private$.runXfm()
-                    private$.dtaCol <- names(private$.crrDta)
-                    private$.dtaRow <- nrow(private$.crrDta)
+                if (private$.xfmFst && is.null(private$.xfmDta)) {
+                    private$.xfmDta <- private$.runXfm()
+                    private$.xfmCol <- names(private$.xfmDta)
+                    private$.xfmRow <- nrow(private$.xfmDta)
+                } else if (length(private$.xfmCol) == 0 || is.na(private$.xfmRow)) {
+                    private$.crrArg(TRUE) # run .crrArg to update .xfmCol and .xfmRow
                 }
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, numRow = private$.dtaRow,
-                       colAll = names(private$.crrDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
+                prpPvw(crrTbl = self$results$pvwDta, numRow = private$.xfmRow,
+                       colAll = private$.xfmCol, colFst = private$.colFst(), nonLtd = private$.nonLtd)
             } else {
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
@@ -32,37 +34,40 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             jinfo(sprintf("[%s]: jTransform: run phase started", private$.name))
 
             # assemble or reset data set / create information
-            private$.dtaInf()
+            dtaInf <- self$results$dtaInf
             if (private$.chkVar()) {
-                # calculate the transformed data (if not already done - crrDta were not NULL in such case;
+                # calculate the transformed data (if not already done - .xfmDta were not NULL in such case;
                 # .xfmFst request to calculate in .init())
-                if (!private$.xfmFst && is.null(private$.crrDta)) {
-                    private$.crrDta <- private$.runXfm()
-                    private$.dtaCol <- names(private$.crrDta)
-                    private$.dtaRow <- nrow(private$.crrDta)
+                if (is.null(private$.xfmDta)) {
+                    private$.xfmDta <- private$.runXfm()
                 }
+                # generate information about the (transformed) data set
+                dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
+                dtaInf$setVisible(TRUE)
                 # if “Create” was pressed (btnCrt ==  TRUE), open a new jamovi session with the data
                 if ("btnCrt" %in% names(self$options) && self$options$btnCrt) {
                     btnCrt <- self$options$option("btnCrt")
                     # TO-DO: replace Dataset with the name of the current data set (once this is implemented)
                     crrTtl <- paste("Dataset", private$.sfxTtl, collapse = "_")
                     if (is.null(btnCrt$perform)) {
-                        jmvReadWrite:::jmvOpn(dtaFrm = private$.crrDta, dtaTtl = crrTtl)
+                        jmvReadWrite:::jmvOpn(dtaFrm = private$.xfmDta, dtaTtl = crrTtl)
                     } else {
-                        btnCrt$perform(function(action) list(data = private$.crrDta, title = crrTtl))
+                        btnCrt$perform(function(action) list(data = private$.xfmDta, title = crrTtl))
                     }
                 } else {
                     # if not, create a preview of the data (used by all functions except jtSearch; fllPvw in utils.R)
-                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.crrDta, nteRnC = private$.nteRnC())
+                    fllPvw(crrTbl = self$results$pvwDta, dtaFrm = private$.xfmDta, nteRnC = private$.nteRnC())
                     # ... fill table that shows the repeated measurement factors (used by jtLong2Wide, jtWide2Long)
                     if (utils::hasName(private, ".rpmDta")) {
                         fllPvw(crrTbl = self$results$pvwLvl, dtaFrm = private$.rpmDta, nteRnC = private$.nteRnC())
                     }
                     # ... mark occurences in the preview where the values were changed / replaced (used by jtReplace)
                     if (utils::hasName(private, ".mrkDff")) {
-                        private$.mrkDff(crrTbl = self$results$pvwDta, dtaNew = private$.crrDta, dtaOld = self$data)
+                        private$.mrkDff(crrTbl = self$results$pvwDta, dtaNew = private$.xfmDta, dtaOld = self$data)
                     }
                 }
+            } else {
+                dtaInf$setVisible(FALSE)
             }
             jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
@@ -70,22 +75,6 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         # covers the most common case (the input data frame has at least one row)
         .chkDtF = function() {
             (nrow(private$.crrArg(TRUE)$dtaInp) >= 1)
-        },
-
-        # get the data set and check that all variables in the options in varLst are not empty (contain only NAs)
-        .getDta = function(varLst = c()) {
-            dtaInp <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
-            for (crrVar in varLst) {
-                if (all(is.na(dtaInp[, crrVar])))
-                    jmvcore::reject(.("The variable '{crrVar}' contains only missing / invalid values."), crrVar = crrVar)
-            }
-
-            # return a list with the target data set as entry, the data set either contains all variables
-            # (if varAll is defined) or is restricted to varLst
-            private$.dtaCol <- if (utils::hasName(self$options, "varAll")) names(dtaInp) else varLst
-            if (utils::hasName(private, ".dtaRow")) private$.dtaRow <- nrow(dtaInp)
-
-            list(dtaInp = dtaInp[, private$.dtaCol])
         },
 
         # covers the most common case (colFst is not used)
@@ -100,18 +89,25 @@ commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
                             .("\"Create\""))
         },
 
-        .dtaInf = function() {
-            if (private$.chkVar()) {
-                self$results$dtaInf$setContent(paste(c(private$.dtaMsg(), private$.crtMsg()), collapse = "</p><p>"))
-                self$results$dtaInf$setVisible(TRUE)
-            } else {
-                self$results$dtaInf$setVisible(FALSE)
-            }
-        },
-
         .dtaMsg = function() {
             jmvcore::format(.("<strong>Variables in the Output Data Set</strong> ({} variables in {} rows): {}"),
-                            ncol(private$.crrDta), nrow(private$.crrDta), paste(names(private$.crrDta), collapse = ", "))
+                            ncol(private$.xfmDta), nrow(private$.xfmDta), paste(names(private$.xfmDta), collapse = ", "))
+        },
+
+        # get the data set and check that all variables in the options in varLst are not empty (contain only NAs)
+        .getDta = function(varLst = c()) {
+            dtaInp <- if (!is.null(self$data) && nrow(self$data) > 0) self$data else self$readDataset()
+            for (crrVar in varLst) {
+                if (all(is.na(dtaInp[, crrVar])))
+                    jmvcore::reject(.("The variable '{crrVar}' contains only missing / invalid values."), crrVar = crrVar)
+            }
+
+            # return a list with the target data set as entry, the data set either contains all variables
+            # (if varAll is defined) or is restricted to varLst
+            private$.xfmCol <- if (utils::hasName(self$options, "varAll")) names(dtaInp) else varLst
+            if (utils::hasName(private, ".xfmRow")) private$.xfmRow <- nrow(dtaInp)
+
+            list(dtaInp = dtaInp[, private$.xfmCol])
         },
 
         .nteRnC = function() {

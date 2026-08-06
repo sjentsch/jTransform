@@ -4,12 +4,12 @@ jtDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     inherit = jtDistancesBase,
     private = list(
         .crrCmd = "jmvReadWrite::distances_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .sfxTtl = "dist",
-        .xfmFst = TRUE,
+        .xfmCol = c(),
+        .xfmDta = NULL,
+        .xfmFst = FALSE,
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -29,8 +29,8 @@ jtDistancesClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             varDst <- self$options$varDst
             if (getDta) {
                 dtaFrm <- private$.getDta(varDst)$dtaInp
-                # update .dtaRow to the value after the transformation
-                private$.dtaRow <- length(varDst)
+                # update .xfmRow to the value after the transformation
+                private$.xfmRow <- length(varDst)
             }
             nmeDst <- self$options$nmeDst
             nmeDst <- paste(c(nmeDst,

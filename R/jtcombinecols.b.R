@@ -4,13 +4,13 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
     inherit = jtCombineColsBase,
     private = list(
         .crrCmd = "jmvReadWrite::combine_cols_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .prsEql = NULL,
         .sfxTtl = "cmb_cols",
-        .xfmFst = TRUE,
+        .xfmCol = c(),
+        .xfmDta = NULL,
+        .xfmFst = FALSE,
+        .xfmRow = NA,
 
         # common functions are in incFnc.R
         .init = commonFunc$private_methods$.init,
@@ -45,8 +45,16 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
         .colFst = commonFunc$private_methods$.colFst,
 
         .crrArg = function(getDta = TRUE) {
-            c(if (getDta) private$.getDta(unique(unlist(lapply(self$options$varPrs, unname)))),
-              list(varPrs = lapply(self$options$varPrs, unname), mdeCmb = self$options$mdeCmb))
+            varPrs <- lapply(self$options$varPrs, unname)
+            if (getDta) {
+                dtaInp <- private$.getDta(unique(unlist(varPrs)))$dtaInp
+                # update target column order (.xfmCol is first filled in .getDta())
+                private$.xfmCol <- c(vapply(varPrs, "[[", character(1), 1),
+                                     setdiff(self$options$varAll, unique(unlist(varPrs))))
+                list(dtaInp = dtaInp, varPrs = varPrs, mdeCmb = self$options$mdeCmb)            
+            } else {
+                list(varPrs = varPrs, mdeCmb = self$options$mdeCmb)
+            }         
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,

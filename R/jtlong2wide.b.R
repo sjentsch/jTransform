@@ -4,13 +4,13 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     inherit = jtLong2WideBase,
     private = list(
         .crrCmd = "jmvReadWrite::long2wide_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .rpmDta = NULL,
         .sfxTtl = "wide",
+        .xfmCol = c(),
+        .xfmDta = NULL,
         .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmRow = NA,
 
         .init = function() {
             # update logging flags during the init phase
@@ -18,14 +18,14 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
 
             if (private$.chkVar()) {
-                # calculate the transformed data (if requested by .xfmFst and if crrDta is NULL)
-                if (private$.xfmFst && is.null(private$.crrDta)) {
-                    private$.crrDta <- private$.runXfm()
-                    private$.rpmDta <- private$.prpRpM(runXfm = private$.crrDta)
+                # calculate the transformed data (if requested by .xfmFst and if .xfmDta is NULL)
+                if (private$.xfmFst && is.null(private$.xfmDta)) {
+                    private$.xfmDta <- private$.runXfm()
+                    private$.rpmDta <- private$.prpRpM(runXfm = private$.xfmDta)
                 }
                 # resize / prepare the output table (prpPvw in utils.R)
-                prpPvw(crrTbl = self$results$pvwDta, numRow = nrow(private$.crrDta),
-                       colAll = names(private$.crrDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
+                prpPvw(crrTbl = self$results$pvwDta, numRow = nrow(private$.xfmDta),
+                       colAll = names(private$.xfmDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
                 prpPvw(crrTbl = self$results$pvwLvl, numRow = nrow(private$.rpmDta),
                        colAll = names(private$.rpmDta),                             nonLtd = TRUE)
             } else {
@@ -48,7 +48,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         .colFst = function() {
-            colNme <- names(private$.crrDta)
+            colNme <- names(private$.xfmDta)
             colOth <- c(self$options$varID, self$options$varExc)
             colTgt <- self$options$varTgt
             numRmg <- (min(c(length(colNme), maxCol)) - length(colOth))

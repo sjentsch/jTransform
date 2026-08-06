@@ -4,13 +4,13 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
     inherit = jtWide2LongBase,
     private = list(
         .crrCmd = "jmvReadWrite::wide2long_omv",
-        .crrDta = NULL,
-        .dtaCol = c(),
-        .dtaRow = NA,
         .nonLtd = FALSE,
         .rpmDta = NULL,
         .sfxTtl = "long",
+        .xfmCol = c(),
+        .xfmDta = NULL,
         .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmRow = NA,
 
         .init = function() {
             # update logging flags during the init phase
@@ -18,14 +18,14 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
 
             if (private$.chkVar()) {
-                # calculate the transformed data (if requested by .xfmFst and if crrDta is NULL)
-                if (private$.xfmFst && is.null(private$.crrDta)) {
-                    private$.crrDta <- private$.adjRes(dtaFrm = private$.runXfm())
-                    private$.rpmDta <- private$.prpRpM(dtaFrm = private$.crrDta)
+                # calculate the transformed data (if requested by .xfmFst and if .xfmDta is NULL)
+                if (private$.xfmFst && is.null(private$.xfmDta)) {
+                    private$.xfmDta <- private$.adjRes(dtaFrm = private$.runXfm())
+                    private$.rpmDta <- private$.prpRpM(dtaFrm = private$.xfmDta)
                 }
                 # resize / prepare the output table (prpPvw in utils.R) for both data preview and rep. measures overview
-                prpPvw(crrTbl = self$results$pvwDta, numRow = nrow(private$.crrDta),
-                       colAll = names(private$.crrDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
+                prpPvw(crrTbl = self$results$pvwDta, numRow = nrow(private$.xfmDta),
+                       colAll = names(private$.xfmDta), colFst = private$.colFst(), nonLtd = private$.nonLtd)
                 prpPvw(crrTbl = self$results$pvwLvl, numRow = nrow(private$.rpmDta),
                        colAll = names(private$.rpmDta),                             nonLtd = TRUE)
             } else {
@@ -93,12 +93,12 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
             # obtain input data (incl. checking that all required variables are present and the ID is not invalid) 
             if (getDta) {
-                crrDta <- private$.getDta(varLst)$dtaInp
+                dtaInp <- private$.getDta(varLst)$dtaInp
                 # ensure that the ID variable is unique and that there are no missing values in that column
                 if (!is.null(varID)) {
-                    wrgID <- (any(duplicated(crrDta[, varID])) ||
-                              (is.character(crrDta[, varID]) && any(!nzchar(crrDta[, varID]))) ||
-                              any(is.na(crrDta[, varID])))
+                    wrgID <- (any(duplicated(dtaInp[, varID])) ||
+                              (is.character(dtaInp[, varID]) && any(!nzchar(dtaInp[, varID]))) ||
+                              any(is.na(dtaInp[, varID])))
                     if (wrgID) {
                         jmvcore::reject(.("The values in '{varID}' can not be empty and they need to be unique."),
                                         varID = varID)
@@ -107,15 +107,15 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
 
             if        (crrMde ==  "Sep") {
-                list(dtaInp = if (getDta) crrDta, varID = varID, varTme = self$options$pfxSep,
+                list(dtaInp = if (getDta) dtaInp, varID = varID, varTme = self$options$pfxSep,
                      varLst = self$options$xfmSep, varExc = self$options$excSep, varSep = self$options$chrSep,
                      excLvl = private$.lvl2Nm())
             } else if (crrMde ==  "NSS") {
-                rnmRes <- private$.rnmDta(crrDta)
+                rnmRes <- private$.rnmDta(dtaInp)
                 list(dtaInp = rnmRes$dtaFrm, varID = varID, varLst = rnmRes$tgtLst, varExc = self$options$excNSS,
                      varSep = rnmRes$varSep, excLvl = 1)
             } else if (crrMde ==  "NSA") {
-                rnmRes <- private$.rnmDta(crrDta)
+                rnmRes <- private$.rnmDta(dtaInp)
                 list(dtaInp = rnmRes$dtaFrm, varID = varID, varLst = rnmRes$tgtLst, varExc = self$options$excNSA,
                      varTme = vapply(self$options$idxNSA, "[[", character(1), "var"), varSep = rnmRes$varSep, excLvl = 1)
             }

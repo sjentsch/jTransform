@@ -19,6 +19,24 @@ testthat::test_that("jttranspose works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 103)
 
+    chkRes <- jTransform::jtTranspose(data = dtaInp, varOth = names(dtaInp)[-1])
+    expect_equal(class(chkRes), c("jtTransposeResults", "Group", "ResultsElement", "R6"))
+    expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (17 variables in 75 rows): ID, V_1,\n",
+                                                 "V_2, V_3, V_4, V_5, V_6, V_7, V_8, V_9, V_10, V_11, V_12, V_13, V_14,\n",
+                                                 "V_15, V_16\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
+    expect_equal(names(chkRes$pvwDta$columns), c("fstCol", "V_1", "V_2", "V_3", "V_4", "V_5", "V_6", "V_7", "V_8", "V_9"))
+    expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
+    expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:10)))
+    expect_equal(chkRes$pvwDta$footnotes, c(paste("There are 7 more columns in the data set not shown here. A complete list of variables",
+                                                  "can be found in \"Variables in the Output Data Set\" above this table."),
+                                                  "There are 65 more rows in the data set not shown here."))
+    expect_equal(chkRes$pvwDta$options$varsRequired, as.list(names(dtaInp[-1])))
+    expect_equal(chkRes$pvwDta$rowCount, 10)
+    expect_equal(chkRes$pvwDta$rowSelected, 0)
+    expect_equal(chkRes$pvwDta$width, 78)
+
     # ensure that a completely empty data column is raising an error message
     expect_error(jTransform::jtTranspose(data = cbind(dtaInp, data.frame(V1 = NA)), varNme = "V1", varOth = names(dtaInp)[-1]),
                  "The variable 'V1' contains only missing / invalid values.")
