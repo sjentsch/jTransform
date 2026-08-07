@@ -1,16 +1,18 @@
 testthat::test_that("jtaggregate works", {
     set.seed(1234)
-    dtaInp <- data.frame(ID = rep(sprintf("%03d", seq(1, 100)), each = 10), Measure = rep(seq(10), times = 100),
+    dtaIn1 <- data.frame(ID = rep(sprintf("%03d", seq(1, 100)), each = 10), Measure = rep(seq(10), times = 100),
                          V1 = runif(n = 100 * 10, 0, 100), V2 = as.factor(round(rnorm(n = 100 * 10, 3, 2 / 3))),
                          V3 = rep(NA, 1000))
-    attr(dtaInp[, "V1"], "jmv-desc") <- "Variable V1"
-    attr(dtaInp[, "V2"], "jmv-desc") <- "Variable V2"
-    attr(dtaInp[, "V3"], "jmv-desc") <- "Variable V3"
-    dtaInp[sample(41:100, 10), "V1"] <- NA
-    dtaInp[sample(41:100, 10), "V2"] <- NA
+    attr(dtaIn1[, "V1"], "jmv-desc") <- "Variable V1"
+    attr(dtaIn1[, "V2"], "jmv-desc") <- "Variable V2"
+    attr(dtaIn1[, "V3"], "jmv-desc") <- "Variable V3"
+    dtaIn1[sample(41:100, 10), "V1"] <- NA
+    dtaIn1[sample(41:100, 10), "V2"] <- NA
+    dtaIn2 <- ToothGrowth
+    dtaIn2[sample(11:60, 5), "len"] <- NA
 
     # N, mean, median, mode, sum, drpNA - TRUE ========================================================================
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
                                       clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)
     expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
@@ -49,8 +51,38 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 109)
 
+    chkRes <- jTransform::jtAggregate(data = dtaIn2, varAgg = "len", grpAgg = c("supp", "dose"), drpNA = TRUE,
+                                      clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)
+    expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
+    expect_false(chkRes$genInf$visible)
+    expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (7 variables in 6 rows): supp, dose,\n",
+                                                 "len_N, len_Mn, len_Mdn, len_Mde, len_Sum\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
+    expect_equal(chkRes$pvwDta$asString(),
+      paste0("\n Data Preview                                                                       \n",
+             " ────────────────────────────────────────────────────────────────────────────────── \n",
+             "   supp    dose         len_N    len_Mn       len_Mdn      len_Mde      len_Sum     \n",
+             " ────────────────────────────────────────────────────────────────────────────────── \n",
+             "     OJ    0.5000000        9    13.622222    14.500000     8.200000    122.60000   \n",
+             "     VC    0.5000000       10     7.980000     7.150000    11.200000     79.80000   \n",
+             "     OJ    1.0000000       10    22.700000    23.450000    14.500000    227.00000   \n",
+             "     VC    1.0000000        8    17.200000    16.900000    17.300000    137.60000   \n",
+             "     OJ    2.0000000        9    25.522222    25.500000    26.400000    229.70000   \n",
+             "     VC    2.0000000        9    26.655556    26.400000    18.500000    239.90000   \n",
+             " ────────────────────────────────────────────────────────────────────────────────── \n\n"))
+    expect_equal(names(chkRes$pvwDta$columns),
+                 c("fstCol", "dose", sprintf("len_%s", c("N", "Mn", "Mdn", "Mde", "Sum"))))
+    expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6"))
+    expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:6)))
+    expect_equal(chkRes$pvwDta$footnotes, character(0))
+    expect_equal(chkRes$pvwDta$options$varsRequired, list("len", "supp", "dose"))
+    expect_equal(chkRes$pvwDta$rowCount, 6)
+    expect_equal(chkRes$pvwDta$rowSelected, 0)
+    expect_equal(chkRes$pvwDta$width, 82)
+
     # N, mean, median, mode, sum, drpNA - FALSE =======================================================================
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
                                       clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)
     expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
@@ -89,8 +121,38 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 109)
 
+    chkRes <- jTransform::jtAggregate(data = dtaIn2, varAgg = "len", grpAgg = c("supp", "dose"), drpNA = FALSE,
+                                      clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)
+    expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
+    expect_false(chkRes$genInf$visible)
+    expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (7 variables in 6 rows): supp, dose,\n",
+                                                 "len_N, len_Mn, len_Mdn, len_Mde, len_Sum\n\n",
+                                                 "Pressing the \"Create\"-button opens the modified data set in a new\n",
+                                                 "jamovi window.\n"))
+    expect_equal(chkRes$pvwDta$asString(),
+      paste0("\n Data Preview                                                                      \n",
+             " ───────────────────────────────────────────────────────────────────────────────── \n",
+             "   supp    dose         len_N    len_Mn       len_Mdn      len_Mde     len_Sum     \n",
+             " ───────────────────────────────────────────────────────────────────────────────── \n",
+             "     OJ    0.5000000        9                                                      \n",
+             "     VC    0.5000000       10     7.980000     7.150000    11.20000     79.80000   \n",
+             "     OJ    1.0000000       10    22.700000    23.450000    14.50000    227.00000   \n",
+             "     VC    1.0000000        8                                                      \n",
+             "     OJ    2.0000000        9                                                      \n",
+             "     VC    2.0000000        9                                                      \n",
+             " ───────────────────────────────────────────────────────────────────────────────── \n\n"))
+    expect_equal(names(chkRes$pvwDta$columns),
+                 c("fstCol", "dose", sprintf("len_%s", c("N", "Mn", "Mdn", "Mde", "Sum"))))
+    expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6"))
+    expect_equal(chkRes$pvwDta$rowKeys, c(list("1"), as.list(2:6)))
+    expect_equal(chkRes$pvwDta$footnotes, character(0))
+    expect_equal(chkRes$pvwDta$options$varsRequired, list("len", "supp", "dose"))
+    expect_equal(chkRes$pvwDta$rowCount, 6)
+    expect_equal(chkRes$pvwDta$rowSelected, 0)
+    expect_equal(chkRes$pvwDta$width, 81)
+
     # missing, SD, variance, range, drpNA - TRUE ======================================================================
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
                                       clcMss = TRUE, clcSD = TRUE, clcVar = TRUE, clcRng = TRUE)
     expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
@@ -126,7 +188,7 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$width, 104)
 
     # missing, SD, variance, range, drpNA - FALSE =====================================================================
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
                                       clcMss = TRUE, clcSD = TRUE, clcVar = TRUE, clcRng = TRUE)
     expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
@@ -162,7 +224,7 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$width, 104)
 
     # minimum, maximum, IQR, drpNA - TRUE =============================================================================
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
                                       clcMin = TRUE, clcMax = TRUE, clcIQR = TRUE)
     expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
@@ -198,7 +260,7 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$width, 84)
 
     # minimum, maximum, IQR, drpNA - FALSE ============================================================================
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
                                       clcMin = TRUE, clcMax = TRUE, clcIQR = TRUE)
     expect_equal(class(chkRes), c("jtAggregateResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
@@ -234,41 +296,41 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$width, 83)
 
     # ensure that a completely empty data column is raising an error message
-    expect_error(jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2", "V3"), grpAgg = c("ID"), drpNA = TRUE,
+    expect_error(jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2", "V3"), grpAgg = c("ID"), drpNA = TRUE,
                                          clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE),
                  "The variable 'V3' contains only missing / invalid values.")
 
     # ensure that help is shown
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), clcMin = TRUE, shwHlp = TRUE)
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), clcMin = TRUE, shwHlp = TRUE)
     expect_true(chkRes$genInf$visible)
 
     # check asSource
-    expect_equal(jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
+    expect_equal(jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
                                          clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)$parent$asSource(),
       paste0("jmvReadWrite::aggregate_omv(\n    dtaInp = data,\n    varAgg = c(\"V1\", \"V2\"),\n    grpAgg = \"ID\",\n",
              "    clcN = TRUE,\n    clcMn = TRUE,\n    clcMdn = TRUE,\n    clcMde = TRUE,\n    clcSum = TRUE,\n",
              "    drpNA = FALSE)"))
 
     # check when chkVar fails (varAgg is empty)
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c(), grpAgg = c("ID"), clcN = TRUE)
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c(), grpAgg = c("ID"), clcN = TRUE)
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 
     # check when chkVar fails (grpAgg is empty)
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c(), clcN = TRUE)
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c(), clcN = TRUE)
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 
     # check when chkVar fails (not any clc... set to TRUE)
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"))
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"))
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 
     # check help messages
-    chkRes <- jTransform::jtAggregate(data = dtaInp, varAgg = c("V1", "V2"), grpAgg = c("ID"), clcN = TRUE, shwHlp = TRUE)
+    chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), clcN = TRUE, shwHlp = TRUE)
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE), c(TRUE, TRUE, TRUE, TRUE))
     expect_true(is.character(chkRes$genInf$content))
