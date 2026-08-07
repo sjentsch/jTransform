@@ -1,9 +1,9 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
+about: Suggest an idea for extending the functionality of this jamovi module
 title: "[FEATURE REQUEST] "
-labels: ''
-assignees: ''
+labels: ""
+assignees: ""
 
 ---
 
@@ -19,10 +19,10 @@ A clear and concise description of any alternative solutions or features you've 
 **Environment:**
 - jamovi (incl. version and whether desktop or cloud):
 - OS (incl. version): 
-- R version: (in Rj, available as jamovi module, type "version", run it (green triangle) and report / paste `version.string` from the output)
+- R version: (in Rj, available as jamovi module, type `version`, run it (green triangle) and report / paste `version.string` from the output)
 
 **Additional Information**
-Please provide the data files that can be used in implementing a solution (only if these do not contain sensitive information). If applicable, add screenshots or drawings to help explain what you would like to be improved and (possibly) what you would suggest as solution.
+Please provide the data files that can be used for implementing a solution (only if these do not contain sensitive information). If applicable, add screenshots or drawings to help explain what you would like to be improved and (possibly) what you would suggest as solution.
 
 **Additional context**
 Add any other context about the problem here.

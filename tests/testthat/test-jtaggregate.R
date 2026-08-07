@@ -342,5 +342,4 @@ testthat::test_that("jtaggregate works", {
       "jmvReadWrite::aggregate_omv(\n    dtaInp = data,\n    varAgg = c(\"V1\", \"V2\"),\n    grpAgg = \"ID\",\n    clcN = TRUE)")
     expect_equal(fmtSrc(fcnNme = "jmvReadWrite::aggregate_omv", crrArg = list(varAgg = c("V1", "V2"), grpAgg = c("ID"), clcMn = TRUE)),
       "jmvReadWrite::aggregate_omv(\n    dtaInp = data,\n    varAgg = c(\"V1\", \"V2\"),\n    grpAgg = \"ID\",\n    clcMn = TRUE)")
-
 })
