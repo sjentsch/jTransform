@@ -1,5 +1,4 @@
-commonFunc <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
-    "commonFunc",
+commonFunc <- R6::R6Class("commonFunc",
     private = list(
 
         .init = function() {

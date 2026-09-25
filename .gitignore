@@ -39,9 +39,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# pkgdown site
-docs/
-
 # translation temp files
 po/*~
 
@@ -58,6 +55,7 @@ jamovi/ui/*.options.js
 # files created during build
 build/
 build*/
+docs/
 inst/doc/
 *.jmo
 

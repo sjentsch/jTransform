@@ -11,7 +11,6 @@ items:
     clearWith: [ ]
     content: >
       <style>
-      #fmtHTM { display: none; }
       table { width: 100%; border-collapse: collapse; }
       th { background-color: #3e6da9; color: white; text-align: left; }
       tbody > td { border: 1px solid #ddd; padding: 8px; }
