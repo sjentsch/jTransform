@@ -20,25 +20,17 @@ testthat::test_that("jtaggregate works", {
                                                  "V1_Mn, V1_Mdn, V1_Mde, V1_Sum, V2_N, V2_Mn, V2_Mdn, V2_Mde, V2_Sum\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                                                  \n",
-             " ───────────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ID       V1_N    V1_Mn       V1_Mdn      V1_Mde        V1_Sum      V2_N    V2_Mn       V2_Mdn      V2_Mde   \n",
-             " ───────────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   001        10    48.92264    61.57871     0.9495756    489.2264      10    3.000000    3.000000     ... ᵃ   \n",
-             "   002        10    45.46337    28.92696    18.6722790    454.6337      10    2.700000    3.000000     ...     \n",
-             "   003        10    41.65217    30.96529     3.9995918    416.5217      10    3.100000    3.000000     ...     \n",
-             "   004        10    47.33585    38.03818    18.1096208    473.3585      10    3.000000    3.000000     ...     \n",
-             "   005         9    51.68482    55.33336    24.3928827    465.1634       9    2.888889    3.000000     ...     \n",
-             "   006         8    40.93342    40.18238     7.3779880    327.4674       9    2.444444    2.000000     ...     \n",
-             "   007         7    24.80827    23.90257     1.3749939    173.6579       9    3.000000    3.000000     ...     \n",
-             "   008        10    38.64675    35.24556     1.4627256    386.4675       7    2.571429    3.000000     ...     \n",
-             "   009         9    50.52262    47.19097    14.2615343    454.7036       7    2.714286    3.000000     ...     \n",
-             "   010 ᵇ     ...         ...         ...           ...         ...     ...         ...         ...     ...     \n",
-             " ───────────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ᵃ There are 1 more columns in the data set not shown here. A complete list of variables can be found in\n",
-             "   \"Variables in the Output Data Set\" above this table.\n",
-             "   ᵇ There are 90 more rows in the data set not shown here.\n\n"))
+    expect_equal(lapply(chkRes$pvwDta$asDF[-10, -10], as.numeric),
+                 list(fstCol = seq(9), V1_N = c(rep(10, 4), 9, 8, 7, 10, 9),
+                      V1_Mn  = c(48.92264141, 45.46337429, 41.65216863, 47.33584685, 51.68482201, 40.93342287, 24.80827316, 38.64675246, 50.52261921),
+                      V1_Mdn = c(61.57870688, 28.92695625, 30.96529128, 38.03818427, 55.33335907, 40.18237625, 23.90257267, 35.24555549, 47.19097211),
+                      V1_Mde = c(0.94957564,  18.67227897,  3.99959181, 18.10962083, 24.39288273,  7.37798801,  1.37499392,  1.46272557, 14.26153432),
+                      V1_Sum = c(489.2264142, 454.6337429, 416.5216863, 473.3584685, 465.1633981, 327.4673830, 173.6579121, 386.4675246, 454.7035729),
+                      V2_N   = c(rep(10, 4), rep(9, 3), 7, 7), V2_Mn  = c(3, 2.7, 3.1, 3, 2.88888889, 2.44444444, 3, 2.57142857, 2.71428571),
+                      V2_Mdn = c(rep(3, 5), 2, rep(3, 3))))
+    expect_equal(chkRes$pvwDta$asDF[, "V2_Mde"], rep("...", 10))
+    expect_equal(as.character(chkRes$pvwDta$asDF[10, ]), c("010", rep("...", 9)))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", sprintf("V1_%s", c("N", "Mn", "Mdn", "Mde", "Sum")), sprintf("V2_%s", c("N", "Mn", "Mdn", "Mde"))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -49,7 +41,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("V1", "V2", "ID"))
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 109)
 
     chkRes <- jTransform::jtAggregate(data = dtaIn2, varAgg = "len", grpAgg = c("supp", "dose"), drpNA = TRUE,
                                       clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)
@@ -59,18 +50,14 @@ testthat::test_that("jtaggregate works", {
                                                  "len_N, len_Mn, len_Mdn, len_Mde, len_Sum\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                       \n",
-             " ────────────────────────────────────────────────────────────────────────────────── \n",
-             "   supp    dose         len_N    len_Mn       len_Mdn      len_Mde      len_Sum     \n",
-             " ────────────────────────────────────────────────────────────────────────────────── \n",
-             "     OJ    0.5000000        9    13.622222    14.500000     8.200000    122.60000   \n",
-             "     VC    0.5000000       10     7.980000     7.150000    11.200000     79.80000   \n",
-             "     OJ    1.0000000       10    22.700000    23.450000    14.500000    227.00000   \n",
-             "     VC    1.0000000        8    17.200000    16.900000    17.300000    137.60000   \n",
-             "     OJ    2.0000000        9    25.522222    25.500000    26.400000    229.70000   \n",
-             "     VC    2.0000000        9    26.655556    26.400000    18.500000    239.90000   \n",
-             " ────────────────────────────────────────────────────────────────────────────────── \n\n"))
+    expect_equal(chkRes$pvwDta$asDF,
+                 data.frame(fstCol  = rep(c("OJ", "VC"), 3), dose = rep(c(0.5, 1, 2), each = 2), len_N = c(9, 10, 10, 8, 9, 9),
+                            len_Mn  = c(13.622222, 7.98, 22.7, 17.2, 25.522222, 26.655556),
+                            len_Mdn = c(14.5, 7.15, 23.45, 16.9, 25.5, 26.4),
+                            len_Mde = c(8.2, 11.2, 14.5, 17.3, 26.4, 18.5),
+                            len_Sum = c(122.6, 79.8, 227, 137.6, 229.7, 239.9),
+                            row.names = c("\"1\"", "2", "3", "4", "5", "6")))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", "dose", sprintf("len_%s", c("N", "Mn", "Mdn", "Mde", "Sum"))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6"))
@@ -78,8 +65,7 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$footnotes, character(0))
     expect_equal(chkRes$pvwDta$options$varsRequired, list("len", "supp", "dose"))
     expect_equal(chkRes$pvwDta$rowCount, 6)
-    expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 82)
+      expect_equal(chkRes$pvwDta$rowSelected, 0)
 
     # N, mean, median, mode, sum, drpNA - FALSE =======================================================================
     chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
@@ -90,25 +76,15 @@ testthat::test_that("jtaggregate works", {
                                                  "V1_Mn, V1_Mdn, V1_Mde, V1_Sum, V2_N, V2_Mn, V2_Mdn, V2_Mde, V2_Sum\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                                                  \n",
-             " ───────────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ID       V1_N    V1_Mn       V1_Mdn      V1_Mde        V1_Sum      V2_N    V2_Mn       V2_Mdn      V2_Mde   \n",
-             " ───────────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   001        10    48.92264    61.57871     0.9495756    489.2264      10    3.000000    3.000000     ... ᵃ   \n",
-             "   002        10    45.46337    28.92696    18.6722790    454.6337      10    2.700000    3.000000     ...     \n",
-             "   003        10    41.65217    30.96529     3.9995918    416.5217      10    3.100000    3.000000     ...     \n",
-             "   004        10    47.33585    38.03818    18.1096208    473.3585      10    3.000000    3.000000     ...     \n",
-             "   005         9                                                         9                             ...     \n",
-             "   006         8                                                         9                             ...     \n",
-             "   007         7                                                         9                             ...     \n",
-             "   008        10    38.64675    35.24556     1.4627256    386.4675       7                             ...     \n",
-             "   009         9                                                         7                             ...     \n",
-             "   010 ᵇ     ...         ...         ...           ...         ...     ...         ...         ...     ...     \n",
-             " ───────────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ᵃ There are 1 more columns in the data set not shown here. A complete list of variables can be found in\n",
-             "   \"Variables in the Output Data Set\" above this table.\n",
-             "   ᵇ There are 90 more rows in the data set not shown here.\n\n"))
+    expect_equal(lapply(chkRes$pvwDta$asDF[-10, -10], as.numeric),
+                 list(fstCol = seq(9), V1_N = c(rep(10, 4), 9, 8, 7, 10, 9),
+                      V1_Mn  = c(48.92264141,   45.46337428,  41.65216862,  47.33584685, rep(NA, 3),  38.64675246, NA),
+                      V1_Mdn = c(61.57870688,   28.92695624,  30.96529127,  38.03818427, rep(NA, 3),  35.24555548, NA),
+                      V1_Mde = c(0.94957564,    18.67227897,   3.99959181,  18.10962083, rep(NA, 3),   1.46272557, NA),
+                      V1_Sum = c(489.22641415, 454.63374285, 416.52168629, 473.35846853, rep(NA, 3), 386.46752462, NA),
+                      V2_N   = c(rep(10, 4), rep(9, 3), 7, 7), V2_Mn = c(3, 2.7, 3.1, 3.0, rep(NA, 5)),
+                      V2_Mdn = c(rep(3,  4), rep(NA, 5))))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", sprintf("V1_%s", c("N", "Mn", "Mdn", "Mde", "Sum")), sprintf("V2_%s", c("N", "Mn", "Mdn", "Mde"))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -119,7 +95,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("V1", "V2", "ID"))
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 109)
 
     chkRes <- jTransform::jtAggregate(data = dtaIn2, varAgg = "len", grpAgg = c("supp", "dose"), drpNA = FALSE,
                                       clcN = TRUE, clcMn = TRUE, clcMdn = TRUE, clcMde = TRUE, clcSum = TRUE)
@@ -129,18 +104,12 @@ testthat::test_that("jtaggregate works", {
                                                  "len_N, len_Mn, len_Mdn, len_Mde, len_Sum\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                      \n",
-             " ───────────────────────────────────────────────────────────────────────────────── \n",
-             "   supp    dose         len_N    len_Mn       len_Mdn      len_Mde     len_Sum     \n",
-             " ───────────────────────────────────────────────────────────────────────────────── \n",
-             "     OJ    0.5000000        9                                                      \n",
-             "     VC    0.5000000       10     7.980000     7.150000    11.20000     79.80000   \n",
-             "     OJ    1.0000000       10    22.700000    23.450000    14.50000    227.00000   \n",
-             "     VC    1.0000000        8                                                      \n",
-             "     OJ    2.0000000        9                                                      \n",
-             "     VC    2.0000000        9                                                      \n",
-             " ───────────────────────────────────────────────────────────────────────────────── \n\n"))
+    expect_equal(chkRes$pvwDta$asDF,
+                 data.frame(fstCol  = rep(c("OJ", "VC"), 3), dose = rep(c(0.5, 1, 2), each = 2), len_N = c(9, 10, 10, 8, 9, 9),
+                            len_Mn  = c(NA,  7.98, 22.70, rep(NA, 3)), len_Mdn = c(NA,  7.15,  23.45, rep(NA, 3)),
+                            len_Mde = c(NA, 11.20, 14.50, rep(NA, 3)), len_Sum = c(NA, 79.80, 227.00, rep(NA, 3)),
+                            row.names = c("\"1\"", "2", "3", "4", "5", "6")))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", "dose", sprintf("len_%s", c("N", "Mn", "Mdn", "Mde", "Sum"))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6"))
@@ -149,7 +118,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("len", "supp", "dose"))
     expect_equal(chkRes$pvwDta$rowCount, 6)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 81)
 
     # missing, SD, variance, range, drpNA - TRUE ======================================================================
     chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
@@ -160,23 +128,16 @@ testthat::test_that("jtaggregate works", {
                                                  "V1_Mss, V1_SD, V1_Var, V1_Rng, V2_Mss, V2_SD, V2_Var, V2_Rng\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                                             \n",
-             " ──────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ID       V1_Mss    V1_SD       V1_Var       V1_Rng      V2_Mss    V2_SD        V2_Var       V2_Rng     \n",
-             " ──────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   001           0    27.48823     755.6028    85.14196         0    0.6666667    0.4444444    2.000000   \n",
-             "   002           0    27.33007     746.9329    73.67107         0    0.9486833    0.9000000    3.000000   \n",
-             "   003           0    33.24971    1105.5434    87.46622         0    0.5676462    0.3222222    2.000000   \n",
-             "   004           0    28.70163     823.7836    81.10542         0    0.4714045    0.2222222    2.000000   \n",
-             "   005           1    18.31531     335.4506    52.15310         1    0.6009252    0.3611111    2.000000   \n",
-             "   006           2    27.95453     781.4560    77.46125         1    0.8819171    0.7777778    3.000000   \n",
-             "   007           3    22.68960     514.8179    55.08199         1    0.7071068    0.5000000    2.000000   \n",
-             "   008           0    31.82860    1013.0598    87.82091         3    0.5345225    0.2857143    1.000000   \n",
-             "   009           1    33.00633    1089.4176    78.37851         3    0.4879500    0.2380952    1.000000   \n",
-             "   010 ᵃ       ...         ...          ...         ...       ...          ...          ...         ...   \n",
-             " ──────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ᵃ There are 90 more rows in the data set not shown here.\n\n"))
+    expect_equal(lapply(chkRes$pvwDta$asDF[-10, ], as.numeric),
+                 list(fstCol = seq(9), V1_Mss = c(rep(0, 4), 1, 2, 3, 0, 1),
+                      V1_SD  = c(27.48822952, 27.33007338, 33.24971351, 28.70163147, 18.31530988, 27.95453472, 22.68959828, 31.82860074, 33.00632637),
+                      V1_Var = c(755.6027621, 746.9329107, 1105.543449, 823.7836490, 335.4505761, 781.4560114, 514.8178699, 1013.059825, 1089.417580),
+                      V1_Rng = c(85.14196272, 73.67106946, 87.46622480, 81.10542092, 52.15309602, 77.46125304, 55.08199008, 87.82091259, 78.37851332),
+                      V2_Mss = c(rep(0, 4), rep(1, 3), 3, 3),
+                      V2_SD  = c(0.66666667, 0.94868330, 0.56764621, 0.47140452, 0.60092521, 0.88191710, 0.70710678, 0.53452248, 0.48795004),
+                      V2_Var = c(0.44444444, 0.90000000, 0.32222222, 0.22222222, 0.36111111, 0.77777778, 0.50000000, 0.28571429, 0.23809524),
+                      V2_Rng = c(2, 3, rep(2, 3), 3, 2, 1, 1)))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", sprintf("%s_%s", rep(c("V1", "V2"), each = 4), rep(c("Mss", "SD", "Var", "Rng"), 2))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -185,7 +146,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("V1", "V2", "ID"))
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 104)
 
     # missing, SD, variance, range, drpNA - FALSE =====================================================================
     chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
@@ -196,23 +156,16 @@ testthat::test_that("jtaggregate works", {
                                                  "V1_Mss, V1_SD, V1_Var, V1_Rng, V2_Mss, V2_SD, V2_Var, V2_Rng\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                                             \n",
-             " ──────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ID       V1_Mss    V1_SD       V1_Var       V1_Rng      V2_Mss    V2_SD        V2_Var       V2_Rng     \n",
-             " ──────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   001           0    27.48823     755.6028    85.14196         0    0.6666667    0.4444444    2.000000   \n",
-             "   002           0    27.33007     746.9329    73.67107         0    0.9486833    0.9000000    3.000000   \n",
-             "   003           0    33.24971    1105.5434    87.46622         0    0.5676462    0.3222222    2.000000   \n",
-             "   004           0    28.70163     823.7836    81.10542         0    0.4714045    0.2222222    2.000000   \n",
-             "   005           1                                              1                                         \n",
-             "   006           2                                              1                                         \n",
-             "   007           3                                              1                                         \n",
-             "   008           0    31.82860    1013.0598    87.82091         3                                         \n",
-             "   009           1                                              3                                         \n",
-             "   010 ᵃ       ...         ...          ...         ...       ...          ...          ...         ...   \n",
-             " ──────────────────────────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ᵃ There are 90 more rows in the data set not shown here.\n\n"))
+    expect_equal(lapply(chkRes$pvwDta$asDF[-10, ], as.numeric),
+                 list(fstCol = seq(9), V1_Mss = c(rep(0, 4), 1, 2, 3, 0, 1),
+                      V1_SD  = c(27.48822952, 27.33007338, 33.24971351, 28.70163147, NA, NA, NA, 31.82860074, NA),
+                      V1_Var = c(755.6027621, 746.9329107, 1105.543449, 823.7836490, NA, NA, NA, 1013.059825, NA),
+                      V1_Rng = c(85.14196272, 73.67106946, 87.46622480, 81.10542092, NA, NA, NA, 87.82091259, NA),
+                      V2_Mss = c(rep(0, 4), rep(1, 3), 3, 3),
+                      V2_SD  = c(0.66666667, 0.94868330, 0.56764621, 0.47140452, rep(NA, 5)),
+                      V2_Var = c(0.44444444, 0.90000000, 0.32222222, 0.22222222, rep(NA, 5)),
+                      V2_Rng = c(2, 3, 2, 2, rep(NA, 5))))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", sprintf("%s_%s", rep(c("V1", "V2"), each = 4), rep(c("Mss", "SD", "Var", "Rng"), 2))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -221,7 +174,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("V1", "V2", "ID"))
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 104)
 
     # minimum, maximum, IQR, drpNA - TRUE =============================================================================
     chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = TRUE,
@@ -232,23 +184,13 @@ testthat::test_that("jtaggregate works", {
                                                  "V1_Min, V1_Max, V1_IQR, V2_Min, V2_Max, V2_IQR\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                         \n",
-             " ──────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ID       V1_Min        V1_Max      V1_IQR      V2_Min      V2_Max      V2_IQR      \n",
-             " ──────────────────────────────────────────────────────────────────────────────────── \n",
-             "   001       0.9495756    86.09154    33.31021    2.000000    4.000000    0.0000000   \n",
-             "   002      18.6722790    92.34335    38.56382    1.000000    4.000000    1.0000000   \n",
-             "   003       3.9995918    91.46582    56.53889    2.000000    4.000000    0.0000000   \n",
-             "   004      18.1096208    99.21504    43.61757    2.000000    4.000000    0.0000000   \n",
-             "   005      24.3928827    76.54598    31.66359    2.000000    4.000000    0.0000000   \n",
-             "   006       7.3779880    84.83924    38.80309    1.000000    4.000000    1.0000000   \n",
-             "   007       1.3749939    56.45698    36.61129    2.000000    4.000000    0.0000000   \n",
-             "   008       1.4627256    89.28364    53.33280    2.000000    3.000000    1.0000000   \n",
-             "   009      14.2615343    92.64005    70.00112    2.000000    3.000000    0.5000000   \n",
-             "   010 ᵃ           ...         ...         ...         ...         ...          ...   \n",
-             " ──────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ᵃ There are 90 more rows in the data set not shown here.\n\n"))
+    expect_equal(lapply(chkRes$pvwDta$asDF[-10, ], as.numeric),
+                 list(fstCol = seq(9),
+                      V1_Min = c(0.94957564,  18.67227897,  3.99959181, 18.10962083, 24.39288273,  7.37798801,  1.37499392,  1.46272557, 14.26153432),
+                      V1_Max = c(86.09153836, 92.34334843, 91.46581660, 99.21504175, 76.54597876, 84.83924104, 56.45698400, 89.28363817, 92.64004764),
+                      V1_IQR = c(33.31021495, 38.56381968, 56.53889136, 43.61756622, 31.66359183, 38.80309443, 36.61129132, 53.33279965, 70.00111977),
+                      V2_Min = c(2, 1, rep(2, 3), 1, rep(2, 3)), V2_Max = c(rep(4, 7), 3, 3), V2_IQR = c(0, 1, rep(0, 3), 1, 0, 1, 0.5)))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", sprintf("%s_%s", rep(c("V1", "V2"), each = 3), rep(c("Min", "Max", "IQR"), 2))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -257,7 +199,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("V1", "V2", "ID"))
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 84)
 
     # minimum, maximum, IQR, drpNA - FALSE ============================================================================
     chkRes <- jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2"), grpAgg = c("ID"), drpNA = FALSE,
@@ -268,23 +209,13 @@ testthat::test_that("jtaggregate works", {
                                                  "V1_Min, V1_Max, V1_IQR, V2_Min, V2_Max, V2_IQR\n\n",
                                                  "Pressing the \"Create\"-button opens the modified data set in a new\n",
                                                  "jamovi window.\n"))
-    expect_equal(chkRes$pvwDta$asString(),
-      paste0("\n Data Preview                                                                        \n",
-             " ─────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ID       V1_Min        V1_Max      V1_IQR      V2_Min      V2_Max      V2_IQR     \n",
-             " ─────────────────────────────────────────────────────────────────────────────────── \n",
-             "   001       0.9495756    86.09154    33.31021    2.000000    4.000000    0.000000   \n",
-             "   002      18.6722790    92.34335    38.56382    1.000000    4.000000    1.000000   \n",
-             "   003       3.9995918    91.46582    56.53889    2.000000    4.000000    0.000000   \n",
-             "   004      18.1096208    99.21504    43.61757    2.000000    4.000000    0.000000   \n",
-             "   005                                                                               \n",
-             "   006                                                                               \n",
-             "   007                                                                               \n",
-             "   008       1.4627256    89.28364    53.33280                                       \n",
-             "   009                                                                               \n",
-             "   010 ᵃ           ...         ...         ...         ...         ...         ...   \n",
-             " ─────────────────────────────────────────────────────────────────────────────────── \n",
-             "   ᵃ There are 90 more rows in the data set not shown here.\n\n"))
+    expect_equal(lapply(chkRes$pvwDta$asDF[-10, ], as.numeric),
+                 list(fstCol = seq(9),
+                      V1_Min = c(0.94957564,  18.67227897,  3.99959181, 18.10962083, rep(NA, 3),  1.46272557, NA),
+                      V1_Max = c(86.09153836, 92.34334843, 91.46581660, 99.21504175, rep(NA, 3), 89.28363817, NA),
+                      V1_IQR = c(33.31021495, 38.56381968, 56.53889136, 43.61756622, rep(NA, 3), 53.33279965, NA),
+                      V2_Min = c(2, 1, 2, 2, rep(NA, 5)), V2_Max = c(rep(4, 4), rep(NA, 5)), V2_IQR = c(0, 1, 0, 0, rep(NA, 5))))
+    expect_equal(chkRes$pvwDta$title, "Data Preview")
     expect_equal(names(chkRes$pvwDta$columns),
                  c("fstCol", sprintf("%s_%s", rep(c("V1", "V2"), each = 3), rep(c("Min", "Max", "IQR"), 2))))
     expect_equal(chkRes$pvwDta$names, c("\"1\"", "2", "3", "4", "5", "6", "7", "8", "9", "10"))
@@ -293,7 +224,6 @@ testthat::test_that("jtaggregate works", {
     expect_equal(chkRes$pvwDta$options$varsRequired, list("V1", "V2", "ID"))
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 83)
 
     # ensure that a completely empty data column is raising an error message
     expect_error(jTransform::jtAggregate(data = dtaIn1, varAgg = c("V1", "V2", "V3"), grpAgg = c("ID"), drpNA = TRUE,

@@ -1,5 +1,5 @@
 #' @importFrom jmvcore .
-jtAggregateClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtAggregateClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtAggregateClass",
     inherit = jtAggregateBase,
     private = list(
@@ -62,5 +62,5 @@ jtAggregateClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
         asSource = commonFunc$public_methods$asSource
 
     )
-    
+
 )

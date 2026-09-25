@@ -1,5 +1,5 @@
 #' @importFrom jmvcore .
-jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class(
+jtCombineColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
     "jtCombineColsClass",
     inherit = jtCombineColsBase,
     private = list(
@@ -51,10 +51,10 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
                 # update target column order (.xfmCol is first filled in .getDta())
                 private$.xfmCol <- c(vapply(varPrs, "[[", character(1), 1),
                                      setdiff(self$options$varAll, unique(unlist(varPrs))))
-                list(dtaInp = dtaInp, varPrs = varPrs, mdeCmb = self$options$mdeCmb)            
+                list(dtaInp = dtaInp, varPrs = varPrs, mdeCmb = self$options$mdeCmb)
             } else {
                 list(varPrs = varPrs, mdeCmb = self$options$mdeCmb)
-            }         
+            }
         },
 
         .crtMsg = commonFunc$private_methods$.crtMsg,
@@ -72,4 +72,3 @@ jtCombineColsClass <- if (requireNamespace('jmvcore', quietly=TRUE)) R6::R6Class
 
     )
 )
-

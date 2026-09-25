@@ -114,11 +114,6 @@ commonFunc <- R6::R6Class("commonFunc",
                     .("A complete list of variables can be found in \"Variables in the Output Data Set\" above this table.")),
               .("There are {} more rows in the data set not shown here."))
         },
-        
-        # covers the most common case (number of rows is the same as in the original data set)
-        .numRow = function() {
-        
-        },
 
         .runXfm = function() {
             if (!private$.chkDtF()) {

@@ -9,7 +9,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .sfxTtl = "long",
         .xfmCol = c(),
         .xfmDta = NULL,
-        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation
         .xfmRow = NA,
 
         .init = function() {
@@ -91,7 +91,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                              NSS = c(self$options$id_NSS, self$options$xfmNSS, self$options$excNSS),
                              NSA = c(self$options$id_NSA, unlist(lapply(self$options$xfmNSA, "[[", "vars")), self$options$excNSA))
 
-            # obtain input data (incl. checking that all required variables are present and the ID is not invalid) 
+            # obtain input data (incl. checking that all required variables are present and the ID is not invalid)
             if (getDta) {
                 dtaInp <- private$.getDta(varLst)$dtaInp
                 # ensure that the ID variable is unique and that there are no missing values in that column

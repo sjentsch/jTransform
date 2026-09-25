@@ -10,7 +10,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .sfxTtl = "mrg_cols",
         .xfmCol = c(),
         .xfmDta = NULL,
-        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation
         .xfmRow = NA,
 
         # common functions are in incFnc.R
@@ -30,13 +30,13 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .chkVar = function() {
             if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) &&
                 all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp, fixed = TRUE))) {
-                return(length(self$options$varBy) > 0)
+                length(self$options$varBy) > 0
             } else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
                 private$.fleInp <- vapply(trimws(strsplit(self$options$fleInp, ";")[[1]]), private$.chkFle, character(1), USE.NAMES = FALSE)
-                return(length(self$options$varBy) > 0)
+                length(self$options$varBy) > 0
             } else {
                 private$.fleInp <- NULL
-                return(FALSE)
+                FALSE
             }
         },
 

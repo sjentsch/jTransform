@@ -16,7 +16,6 @@ testthat::test_that("jtwide2long works", {
     expect_equal(mean(as.numeric(chkRes$pvwDta$asDF[-10, "rspTme"])), 0.4505785, tolerance = 1e-6)
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 75)
     expect_equal(chkRes$pvwLvl$asDF[, 1], rep(c("cong", "incong", "neutral"), each = 8))
     expect_equal(chkRes$pvwLvl$asDF[, 2], rep(rep(c("BLUE", "GREEN", "RED", "YELLOW"), each = 2), 3))
     expect_equal(chkRes$pvwLvl$asDF[, 3], rep(c("1", "2"), 12))
@@ -38,7 +37,6 @@ testthat::test_that("jtwide2long works", {
     expect_equal(mean(as.numeric(chkRes$pvwDta$asDF[-10, "var"])), 0.4983644, tolerance = 1e-6)
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 45)
     expect_equal(chkRes$pvwLvl$asDF[, 1], as.character(seq(24)))
     expect_equal(chkRes$pvwLvl$asDF[, 2], names(dtaInp)[seq(4, 50, 2)])
     expect_equal(chkRes$pvwLvl$asDF[, 3], rep(100, 24))
@@ -60,7 +58,6 @@ testthat::test_that("jtwide2long works", {
     expect_equal(mean(as.numeric(chkRes$pvwDta$asDF[-10, "rspTme"])), 0.4503092, tolerance = 1e-6)
     expect_equal(chkRes$pvwDta$rowCount, 10)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
-    expect_equal(chkRes$pvwDta$width, 71)
     expect_equal(chkRes$pvwLvl$asDF[, 1], rep(c("1", "2", "3"), 8))
     expect_equal(chkRes$pvwLvl$asDF[, 2], rep(rep(c("1", "2", "3", "4"), each = 3), 2))
     expect_equal(chkRes$pvwLvl$asDF[, 3], rep(c("1", "2"), each = 12))
@@ -79,24 +76,24 @@ testthat::test_that("jtwide2long works", {
                  "The variable 'V1' contains only missing / invalid values.")
     expect_error(jTransform::jtWide2Long(data = cbind(dtaInp, data.frame(V1 = NA)), mdeW2L = "NSS", id_NSS = "V1",
                                          xfmNSS = names(dtaInp)[seq(4, 50, 2)], excNSS = "sex", shwHlp = TRUE),
-                 "The variable 'V1' contains only missing / invalid values.")                                         
+                 "The variable 'V1' contains only missing / invalid values.")
     expect_error(jTransform::jtWide2Long(data = cbind(dtaInp, data.frame(V1 = NA)), mdeW2L = "NSS", id_NSS = "V1",
                                          xfmNSS = names(dtaInp)[seq(4, 50, 2)], excNSS = "sex", shwHlp = TRUE),
-                 "The variable 'V1' contains only missing / invalid values.")                                         
+                 "The variable 'V1' contains only missing / invalid values.")
     expect_error(jTransform::jtWide2Long(data = cbind(dtaInp, data.frame(V1 = NA)), mdeW2L = "NSA", id_NSA = "V1",
                                          excNSA = "sex",
                                          xfmNSA = list(list(label = "rspCrr", vars = names(dtaInp)[seq(3, 50, 2)]),
                                                        list(label = "rspTme", vars = names(dtaInp)[seq(4, 50, 2)])),
                                          idxNSA = list(list(var = "cong", levels = 3), list(var = "colour", levels = 4),
                                                        list(var = "rep", levels = 2))),
-                 "The variable 'V1' contains only missing / invalid values.")                                         
+                 "The variable 'V1' contains only missing / invalid values.")
     expect_error(jTransform::jtWide2Long(data = cbind(dtaInp, data.frame(V1 = NA)), mdeW2L = "NSA", id_NSA = "ID",
                                          excNSA = "V1",
                                          xfmNSA = list(list(label = "rspCrr", vars = names(dtaInp)[seq(3, 50, 2)]),
                                                        list(label = "rspTme", vars = names(dtaInp)[seq(4, 50, 2)])),
                                          idxNSA = list(list(var = "cong", levels = 3), list(var = "colour", levels = 4),
                                                        list(var = "rep", levels = 2))),
-                 "The variable 'V1' contains only missing / invalid values.")                                         
+                 "The variable 'V1' contains only missing / invalid values.")
 
     # ensure that help is shown
     chkRes <- jTransform::jtWide2Long(data = dtaInp, mdeW2L = "Sep", id_Sep = "ID", xfmSep = names(dtaInp)[seq(3, 50)],

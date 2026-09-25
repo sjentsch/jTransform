@@ -23,7 +23,7 @@ prpPvw <- function(crrTbl = NULL, numRow = NA, colAll = c(), colFst = c(), nonLt
     for (i in seqCol) crrTbl$addColumn(name = colAll[i], title = colAll[i])
     for (i in seqRow) crrTbl$addRow(rowKey = i, values = valRow)
 
-    return(invisible(NULL))
+    invisible(NULL)
 }
 
 rstPvw <- function(crrTbl = NULL) {
@@ -32,7 +32,7 @@ rstPvw <- function(crrTbl = NULL) {
     crrTbl$deleteRows()
     for (i in seq_len(numRow)) crrTbl$addRow(rowKey = i, stats::setNames(as.list(rep("", length(colNme))), colNme))
 
-    return(invisible(NULL))
+    invisible(NULL)
 }
 
 fllPvw <- function(crrTbl = NULL, dtaFrm = NULL, nteRnC = c()) {
@@ -68,7 +68,7 @@ fllPvw <- function(crrTbl = NULL, dtaFrm = NULL, nteRnC = c()) {
         if (i ==  pvwRow && pvwRow < dtaRow) crrTbl$addFootnote(1,      jmvcore::format(nteRnC[2], dtaRow - pvwRow), rowNo = i)
     }
 
-    return(invisible(NULL))
+    invisible(NULL)
 }
 
 str2Fn <- function(strFnc) {

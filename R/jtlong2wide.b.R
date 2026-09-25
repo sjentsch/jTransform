@@ -9,7 +9,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .sfxTtl = "wide",
         .xfmCol = c(),
         .xfmDta = NULL,
-        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation  
+        .xfmFst = TRUE, # run data transformation at .init() - difficult to figure out the rows / columns after transformation
         .xfmRow = NA,
 
         .init = function() {
@@ -98,7 +98,7 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             nmeTgt <- as.data.frame(apply(matrix(nmeTgt, ncol = length(varTgt), dimnames = list(c(), varTgt)), 2, sort), row.names = NULL)
             cbind(tblFrq[, -1, drop = FALSE], nmeTgt, tblFrq[, 1, drop = FALSE])
         },
-        
+
         .runXfm = commonFunc$private_methods$.runXfm
 
     ),
