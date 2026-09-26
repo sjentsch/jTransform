@@ -10,8 +10,7 @@ jtCombineColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varPrs = NULL,
             mdeCmb = "none",
             shwHlp = FALSE,
-            btnCrt = FALSE,
-            jxfLog = FALSE, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -51,33 +50,25 @@ jtCombineColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 "btnCrt",
                 btnCrt,
                 action="open")
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..varPrs)
             self$.addOption(private$..mdeCmb)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varAll = function() private$..varAll$value,
         varPrs = function() private$..varPrs$value,
         mdeCmb = function() private$..mdeCmb$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value,
-        jxfLog = function() private$..jxfLog$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varAll = NA,
         ..varPrs = NA,
         ..mdeCmb = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA,
-        ..jxfLog = NA)
+        ..btnCrt = NA)
 )
 
 jtCombineColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -167,7 +158,6 @@ jtCombineColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param mdeCmb .
 #' @param shwHlp .
 #' @param btnCrt .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
@@ -189,8 +179,7 @@ jtCombineCols <- function(
     varPrs,
     mdeCmb = "none",
     shwHlp = FALSE,
-    btnCrt = FALSE,
-    jxfLog = FALSE) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtCombineCols requires jmvcore to be installed (restart may be required)")
@@ -207,8 +196,7 @@ jtCombineCols <- function(
         varPrs = varPrs,
         mdeCmb = mdeCmb,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
-        jxfLog = jxfLog)
+        btnCrt = btnCrt)
 
     analysis <- jtCombineColsClass$new(
         options = options,

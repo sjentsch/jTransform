@@ -13,10 +13,6 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .xfmRow = NA,
 
         .init = function() {
-            # update logging flags during the init phase
-            set_logflags(self$options$jxfLog)
-            jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
-
             if (private$.chkVar()) {
                 # calculate the transformed data (if requested by .xfmFst and if .xfmDta is NULL)
                 if (private$.xfmFst && is.null(private$.xfmDta)) {
@@ -32,7 +28,6 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
-            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         # common functions are in incFnc.R

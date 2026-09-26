@@ -1,18 +1,9 @@
 // varAll.js
 'use strict';
-require('./css');
-const { enableLoggingIndicator, TooltipManager, DOMUtils } = require('./ModuleUtils');
 const same = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 
 module.exports = {
-    /**
-     * This function is called when the view is loaded in the UI.
-     * Adds the LOGGING ACTIVE indicator to the interface.
-     */
     view_loaded: function(ui, event) {
-
-        // 1. Enable the LOGGING ACTIVE indicator using the utility function
-        enableLoggingIndicator({ ui });
 
         this.getColumnNames = () => {
             return this.requestData('columns', {})
@@ -38,9 +29,7 @@ module.exports = {
         });
     },
 
-    /**
-     * Called to update the UI when data changes.
-     */
+    // Called to update the UI when data changes
     update: function(ui) {
         this.getColumnNames().then((columns) => {
             if (!same(ui.varAll.value(), columns)) {
@@ -49,9 +38,7 @@ module.exports = {
         });
     },
 
-    /**
-     * Called when data changes remotely, e.g., when the dataset is modified.
-     */
+    // Called when data changes remotely, e.g., when the dataset is modified
     dataChanged: function(ui, event) {
         if (event.dataType !== 'columns') return;
 

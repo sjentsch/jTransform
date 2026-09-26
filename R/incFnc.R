@@ -2,10 +2,6 @@ incFnc <- R6::R6Class("incFnc",
     private = list(
 
         .init = function() {
-            # Update logging flags based on current options
-            set_logflags(self$options$jxfLog)
-            jinfo(sprintf("[%s]: jTransform: init phase started", private$.name))
-
             if (private$.chkVar()) {
                 # calculate the transformed data (if requested by .xfmFst and if .xfmDta is NULL)
                 # .xfmFst marks analyses where there is no (or at least no easy) way to calculate
@@ -24,14 +20,9 @@ incFnc <- R6::R6Class("incFnc",
                 # reset the output table (rstPvw in utils.R)
                 rstPvw(crrTbl = self$results$pvwDta)
             }
-            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         .run = function() {
-            # update logging flags during the run phase
-            set_logflags(self$options$jxfLog)
-            jinfo(sprintf("[%s]: jTransform: run phase started", private$.name))
-
             # assemble or reset data set / create information
             dtaInf <- self$results$dtaInf
             if (private$.chkVar()) {
@@ -68,7 +59,6 @@ incFnc <- R6::R6Class("incFnc",
             } else {
                 dtaInf$setVisible(FALSE)
             }
-            jinfo(sprintf("[%s]: jTransform: init phase ended", private$.name))
         },
 
         # covers the most common case (the input data frame has at least one row)

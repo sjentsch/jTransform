@@ -10,8 +10,7 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             varOrd = NULL,
             blnAll = FALSE,
             shwHlp = FALSE,
-            btnCrt = FALSE,
-            jxfLog = FALSE, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -48,33 +47,25 @@ jtArrangeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 "btnCrt",
                 btnCrt,
                 action="open")
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..varOrd)
             self$.addOption(private$..blnAll)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varAll = function() private$..varAll$value,
         varOrd = function() private$..varOrd$value,
         blnAll = function() private$..blnAll$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value,
-        jxfLog = function() private$..jxfLog$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varAll = NA,
         ..varOrd = NA,
         ..blnAll = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA,
-        ..jxfLog = NA)
+        ..btnCrt = NA)
 )
 
 jtArrangeColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -164,7 +155,6 @@ jtArrangeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param blnAll .
 #' @param shwHlp .
 #' @param btnCrt .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
@@ -186,8 +176,7 @@ jtArrangeCols <- function(
     varOrd = NULL,
     blnAll = FALSE,
     shwHlp = FALSE,
-    btnCrt = FALSE,
-    jxfLog = FALSE) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtArrangeCols requires jmvcore to be installed (restart may be required)")
@@ -206,8 +195,7 @@ jtArrangeCols <- function(
         varOrd = varOrd,
         blnAll = blnAll,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
-        jxfLog = jxfLog)
+        btnCrt = btnCrt)
 
     analysis <- jtArrangeColsClass$new(
         options = options,

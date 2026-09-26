@@ -1,19 +1,10 @@
 // jtmergecols.js
 'use strict';
-require('./css');
-const { enableLoggingIndicator, TooltipManager, DOMUtils } = require('./ModuleUtils');
+const same = (a, b) => a.length === b.length && a.every((v, i) => v === b[i]);
 
 module.exports = {
-    /**
-     * This function is called when the view is loaded in the UI.
-     * Adds the LOGGING ACTIVE indicator to the interface.
-     */
     view_loaded: function(ui, event) {
-
-        // 1. Enable the LOGGING ACTIVE indicator using the utility function
-        enableLoggingIndicator({ ui });
-
-        // 2. Add "Browse..." button for file selection
+        // 1. Add "Browse..." button for file selection
         let $btnchs = ui.fleChs.$el;
         $btnchs.append(`
             <label>
@@ -22,14 +13,14 @@ module.exports = {
             </label>
         `);
 
-        // 3. Tooltip for the "Browse..." button
+        // 2. Tooltip for the "Browse..." button
         TooltipManager.createTooltip(
             $btnchs.find('#butsf-file')[0],
             'Click to select a file to merge',
             'left'
         );
 
-        // 4. Custom file dialog trigger
+        // 3. Custom file dialog trigger
         document.getElementById('butsf-file').addEventListener('click', () => {
             DOMUtils.createCustomFileDialog(ui, (filePaths) => {
                 ui.fleInp.setValue(filePaths);
@@ -58,6 +49,26 @@ module.exports = {
         this.getColumnNames().then((columns) => {
             ui.varAll.setValue(columns);
         });
+    },
+
+
+    // Called to update the UI when data changes
+    update: function(ui) {
+        this.getColumnNames().then((columns) => {
+            if (!same(ui.varAll.value(), columns)) {
+                ui.varAll.setValue();
+            }
+        });
+    },
+
+    // Called when data changes remotely, e.g., when the dataset is modified
+    dataChanged: function(ui, event) {
+        if (event.dataType !== 'columns') return;
+
+        this.getColumnNames().then((columns) => {
+            if (!same(ui.varAll.value(), columns)) {
+                ui.varAll.setValue(columns);
+            }
+        });
     }
 };
-

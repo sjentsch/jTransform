@@ -26,8 +26,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             dstBnO = "bseuclid",
             p__BnO = "1",
             np_BnO = "0",
-            shwHlp = FALSE,
-            jxfLog = FALSE, ...) {
+            shwHlp = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -187,11 +186,6 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 "shwHlp",
                 shwHlp,
                 default=FALSE)
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varDst)
             self$.addOption(private$..dstCoR)
@@ -214,7 +208,6 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
             self$.addOption(private$..p__BnO)
             self$.addOption(private$..np_BnO)
             self$.addOption(private$..shwHlp)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varDst = function() private$..varDst$value,
@@ -237,8 +230,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
         dstBnO = function() private$..dstBnO$value,
         p__BnO = function() private$..p__BnO$value,
         np_BnO = function() private$..np_BnO$value,
-        shwHlp = function() private$..shwHlp$value,
-        jxfLog = function() private$..jxfLog$value),
+        shwHlp = function() private$..shwHlp$value),
     private = list(
         ..varDst = NA,
         ..dstCoR = NA,
@@ -260,8 +252,7 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
         ..dstBnO = NA,
         ..p__BnO = NA,
         ..np_BnO = NA,
-        ..shwHlp = NA,
-        ..jxfLog = NA)
+        ..shwHlp = NA)
 )
 
 descDistancesResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -355,7 +346,6 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param p__BnO .
 #' @param np_BnO .
 #' @param shwHlp .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -392,8 +382,7 @@ descDistances <- function(
     dstBnO = "bseuclid",
     p__BnO = "1",
     np_BnO = "0",
-    shwHlp = FALSE,
-    jxfLog = FALSE) {
+    shwHlp = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("descDistances requires jmvcore to be installed (restart may be required)")
@@ -426,8 +415,7 @@ descDistances <- function(
         dstBnO = dstBnO,
         p__BnO = p__BnO,
         np_BnO = np_BnO,
-        shwHlp = shwHlp,
-        jxfLog = jxfLog)
+        shwHlp = shwHlp)
 
     analysis <- descDistancesClass$new(
         options = options,

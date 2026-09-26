@@ -17,8 +17,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             incID = TRUE,
             incNom = TRUE,
             incOrd = TRUE,
-            incNum = TRUE,
-            jxfLog = FALSE, ...) {
+            incNum = TRUE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -81,11 +80,6 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "incNum",
                 incNum,
                 default=TRUE)
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varAll)
             self$.addOption(private$..srcCst)
@@ -99,7 +93,6 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             self$.addOption(private$..incNom)
             self$.addOption(private$..incOrd)
             self$.addOption(private$..incNum)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varAll = function() private$..varAll$value,
@@ -113,8 +106,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         incID = function() private$..incID$value,
         incNom = function() private$..incNom$value,
         incOrd = function() private$..incOrd$value,
-        incNum = function() private$..incNum$value,
-        jxfLog = function() private$..jxfLog$value),
+        incNum = function() private$..incNum$value),
     private = list(
         ..varAll = NA,
         ..srcCst = NA,
@@ -127,8 +119,7 @@ jtSearchOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
         ..incID = NA,
         ..incNom = NA,
         ..incOrd = NA,
-        ..incNum = NA,
-        ..jxfLog = NA)
+        ..incNum = NA)
 )
 
 jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -212,7 +203,6 @@ jtSearchBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param incNom .
 #' @param incOrd .
 #' @param incNum .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$genInf} \tab \tab \tab \tab \tab a html \cr
@@ -233,8 +223,7 @@ jtSearch <- function(
     incID = TRUE,
     incNom = TRUE,
     incOrd = TRUE,
-    incNum = TRUE,
-    jxfLog = FALSE) {
+    incNum = TRUE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtSearch requires jmvcore to be installed (restart may be required)")
@@ -258,8 +247,7 @@ jtSearch <- function(
         incID = incID,
         incNom = incNom,
         incOrd = incOrd,
-        incNum = incNum,
-        jxfLog = jxfLog)
+        incNum = incNum)
 
     analysis <- jtSearchClass$new(
         options = options,

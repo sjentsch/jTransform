@@ -22,8 +22,7 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             clcIQR = FALSE,
             drpNA = TRUE,
             shwHlp = FALSE,
-            btnCrt = FALSE,
-            jxfLog = FALSE, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -97,11 +96,6 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "btnCrt",
                 btnCrt,
                 action="open")
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varAgg)
             self$.addOption(private$..grpAgg)
@@ -120,7 +114,6 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..drpNA)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varAgg = function() private$..varAgg$value,
@@ -139,8 +132,7 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         clcIQR = function() private$..clcIQR$value,
         drpNA = function() private$..drpNA$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value,
-        jxfLog = function() private$..jxfLog$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varAgg = NA,
         ..grpAgg = NA,
@@ -158,8 +150,7 @@ jtAggregateOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..clcIQR = NA,
         ..drpNA = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA,
-        ..jxfLog = NA)
+        ..btnCrt = NA)
 )
 
 jtAggregateResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -287,7 +278,6 @@ jtAggregateBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param drpNA .
 #' @param shwHlp .
 #' @param btnCrt .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
@@ -321,8 +311,7 @@ jtAggregate <- function(
     clcIQR = FALSE,
     drpNA = TRUE,
     shwHlp = FALSE,
-    btnCrt = FALSE,
-    jxfLog = FALSE) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtAggregate requires jmvcore to be installed (restart may be required)")
@@ -353,8 +342,7 @@ jtAggregate <- function(
         clcIQR = clcIQR,
         drpNA = drpNA,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
-        jxfLog = jxfLog)
+        btnCrt = btnCrt)
 
     analysis <- jtAggregateClass$new(
         options = options,

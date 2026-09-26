@@ -105,10 +105,4 @@ options:
       - id
     default:
 
-  - name: jxfLog
-    type: Bool
-    title: Create Log File
-    hidden: true    
-    default: false
-
 ...

@@ -10,8 +10,7 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
             varAll = NULL,
             ordSrt = NULL,
             shwHlp = FALSE,
-            btnCrt = FALSE,
-            jxfLog = FALSE, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -63,33 +62,25 @@ jtSortOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 "btnCrt",
                 btnCrt,
                 action="open")
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varSrt)
             self$.addOption(private$..varAll)
             self$.addOption(private$..ordSrt)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varSrt = function() private$..varSrt$value,
         varAll = function() private$..varAll$value,
         ordSrt = function() private$..ordSrt$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value,
-        jxfLog = function() private$..jxfLog$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varSrt = NA,
         ..varAll = NA,
         ..ordSrt = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA,
-        ..jxfLog = NA)
+        ..btnCrt = NA)
 )
 
 jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -180,7 +171,6 @@ jtSortBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param ordSrt .
 #' @param shwHlp .
 #' @param btnCrt .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
@@ -202,8 +192,7 @@ jtSort <- function(
     varAll = NULL,
     ordSrt = NULL,
     shwHlp = FALSE,
-    btnCrt = FALSE,
-    jxfLog = FALSE) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtSort requires jmvcore to be installed (restart may be required)")
@@ -222,8 +211,7 @@ jtSort <- function(
         varAll = varAll,
         ordSrt = ordSrt,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
-        jxfLog = jxfLog)
+        btnCrt = btnCrt)
 
     analysis <- jtSortClass$new(
         options = options,

@@ -14,8 +14,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             varAgg = "mean",
             varSep = "_",
             shwHlp = FALSE,
-            btnCrt = FALSE,
-            jxfLog = FALSE, ...) {
+            btnCrt = FALSE, ...) {
 
             super$initialize(
                 package="jTransform",
@@ -81,11 +80,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 "btnCrt",
                 btnCrt,
                 action="open")
-            private$..jxfLog <- jmvcore::OptionBool$new(
-                "jxfLog",
-                jxfLog,
-                hidden=TRUE,
-                default=FALSE)
 
             self$.addOption(private$..varID)
             self$.addOption(private$..varTme)
@@ -96,7 +90,6 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
             self$.addOption(private$..varSep)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
-            self$.addOption(private$..jxfLog)
         }),
     active = list(
         varID = function() private$..varID$value,
@@ -107,8 +100,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         varAgg = function() private$..varAgg$value,
         varSep = function() private$..varSep$value,
         shwHlp = function() private$..shwHlp$value,
-        btnCrt = function() private$..btnCrt$value,
-        jxfLog = function() private$..jxfLog$value),
+        btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varID = NA,
         ..varTme = NA,
@@ -118,8 +110,7 @@ jtLong2WideOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         ..varAgg = NA,
         ..varSep = NA,
         ..shwHlp = NA,
-        ..btnCrt = NA,
-        ..jxfLog = NA)
+        ..btnCrt = NA)
 )
 
 jtLong2WideResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
@@ -247,7 +238,6 @@ jtLong2WideBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param varSep .
 #' @param shwHlp .
 #' @param btnCrt .
-#' @param jxfLog .
 #' @return A results object containing:
 #' \tabular{llllll}{
 #'   \code{results$fmtHTM} \tab \tab \tab \tab \tab a html \cr
@@ -275,8 +265,7 @@ jtLong2Wide <- function(
     varAgg = "mean",
     varSep = "_",
     shwHlp = FALSE,
-    btnCrt = FALSE,
-    jxfLog = FALSE) {
+    btnCrt = FALSE) {
 
     if ( ! requireNamespace("jmvcore", quietly=TRUE))
         stop("jtLong2Wide requires jmvcore to be installed (restart may be required)")
@@ -303,8 +292,7 @@ jtLong2Wide <- function(
         varAgg = varAgg,
         varSep = varSep,
         shwHlp = shwHlp,
-        btnCrt = btnCrt,
-        jxfLog = jxfLog)
+        btnCrt = btnCrt)
 
     analysis <- jtLong2WideClass$new(
         options = options,
