@@ -41,7 +41,7 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         },
 
         # common functions are in incFnc.R
-        .chkDtF = commonFunc$private_methods$.chkDtF,
+        .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkVar = function() {
             (nzchar(trimws(self$options$srcTrm)))
@@ -51,14 +51,14 @@ jtSearchClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             c(if (getDta) private$.getDta(), list(srcTrm = trimws(self$options$srcTrm)), optSnR(self$options))
         },
 
-        .getDta = commonFunc$private_methods$.getDta,
-        .runXfm = commonFunc$private_methods$.runXfm
+        .getDta = incFnc$private_methods$.getDta,
+        .runXfm = incFnc$private_methods$.runXfm
 
     ),
 
     public = list(
 
-        asSource = commonFunc$public_methods$asSource
+        asSource = incFnc$public_methods$asSource
 
     )
 )

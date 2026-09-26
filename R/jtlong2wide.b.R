@@ -36,9 +36,9 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         # common functions are in incFnc.R
-        .run = commonFunc$private_methods$.run,
+        .run = incFnc$private_methods$.run,
 
-        .chkDtF = commonFunc$private_methods$.chkDtF,
+        .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkVar = function() {
             (length(self$options$varID) > 0 &&
@@ -78,11 +78,11 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
                    varAgg = self$options$varAgg))
         },
 
-        .crtMsg = commonFunc$private_methods$.crtMsg,
-        .dtaInf = commonFunc$private_methods$.dtaInf,
-        .dtaMsg = commonFunc$private_methods$.dtaMsg,
-        .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC,
+        .crtMsg = incFnc$private_methods$.crtMsg,
+        .dtaInf = incFnc$private_methods$.dtaInf,
+        .dtaMsg = incFnc$private_methods$.dtaMsg,
+        .getDta = incFnc$private_methods$.getDta,
+        .nteRnC = incFnc$private_methods$.nteRnC,
 
         .prpRpM = function(runXfm = NULL) {
             # exclude self$options$varID and self$options$varExc
@@ -99,13 +99,13 @@ jtLong2WideClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             cbind(tblFrq[, -1, drop = FALSE], nmeTgt, tblFrq[, 1, drop = FALSE])
         },
 
-        .runXfm = commonFunc$private_methods$.runXfm
+        .runXfm = incFnc$private_methods$.runXfm
 
     ),
 
     public = list(
 
-        asSource = commonFunc$public_methods$asSource
+        asSource = incFnc$public_methods$asSource
 
     )
 )

@@ -12,22 +12,22 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
         .xfmRow = NA,
 
         # common functions are in incFnc.R
-        .init = commonFunc$private_methods$.init,
-        .run  = commonFunc$private_methods$.run,
+        .init = incFnc$private_methods$.init,
+        .run  = incFnc$private_methods$.run,
 
         # marking differences is not included in the common function
         .chkDff = function(dtaOld = NULL, dtaNew = NULL) {
              (any(is.na(dtaOld) !=  is.na(dtaNew)) || any(dtaOld[!is.na(dtaOld)] !=  dtaNew[!is.na(dtaNew)]))
         },
 
-        .chkDtF = commonFunc$private_methods$.chkDtF,
+        .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkVar = function() {
             (length(self$options$rplTrm) > 0 &&
              all(vapply(self$options$rplTrm, function(x) !is.null(x[[1]]) && nzchar(x[[1]]), logical(1))))
         },
 
-        .colFst = commonFunc$private_methods$.colFst,
+        .colFst = incFnc$private_methods$.colFst,
 
         .crrArg = function(getDta = TRUE) {
             rplLst <- lapply(self$options$rplTrm, function(x) {
@@ -37,11 +37,11 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             c(if (getDta) private$.getDta(), list(rplLst = rplLst), optSnR(self$options))
         },
 
-        .crtMsg = commonFunc$private_methods$.crtMsg,
-        .dtaInf = commonFunc$private_methods$.dtaInf,
-        .dtaMsg = commonFunc$private_methods$.dtaMsg,
-        .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC,
+        .crtMsg = incFnc$private_methods$.crtMsg,
+        .dtaInf = incFnc$private_methods$.dtaInf,
+        .dtaMsg = incFnc$private_methods$.dtaMsg,
+        .getDta = incFnc$private_methods$.getDta,
+        .nteRnC = incFnc$private_methods$.nteRnC,
 
         .mrkDff = function(crrTbl = NULL, dtaNew = NULL, dtaOld = NULL) {
             selFac <- vapply(dtaOld, is.factor, logical(1))
@@ -67,13 +67,13 @@ jtReplaceClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class(
             }
         },
 
-        .runXfm = commonFunc$private_methods$.runXfm
+        .runXfm = incFnc$private_methods$.runXfm
 
     ),
 
     public = list(
 
-        asSource = commonFunc$public_methods$asSource
+        asSource = incFnc$public_methods$asSource
 
     )
 )

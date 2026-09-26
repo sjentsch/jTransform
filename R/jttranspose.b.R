@@ -12,16 +12,16 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .xfmRow = NA,
 
         # common functions are in incFnc.R
-        .init = commonFunc$private_methods$.init,
-        .run  = commonFunc$private_methods$.run,
+        .init = incFnc$private_methods$.init,
+        .run  = incFnc$private_methods$.run,
 
-        .chkDtF = commonFunc$private_methods$.chkDtF,
+        .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkVar = function() {
             (length(self$options$varOth) > 1)
         },
 
-        .colFst = commonFunc$private_methods$.colFst,
+        .colFst = incFnc$private_methods$.colFst,
 
         .crrArg = function(getDta = TRUE) {
             varNme <- self$options$varNme
@@ -37,18 +37,18 @@ jtTransposeClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .crtMsg = commonFunc$private_methods$.crtMsg,
-        .dtaInf = commonFunc$private_methods$.dtaInf,
-        .dtaMsg = commonFunc$private_methods$.dtaMsg,
-        .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC,
-        .runXfm = commonFunc$private_methods$.runXfm
+        .crtMsg = incFnc$private_methods$.crtMsg,
+        .dtaInf = incFnc$private_methods$.dtaInf,
+        .dtaMsg = incFnc$private_methods$.dtaMsg,
+        .getDta = incFnc$private_methods$.getDta,
+        .nteRnC = incFnc$private_methods$.nteRnC,
+        .runXfm = incFnc$private_methods$.runXfm
 
     ),
 
     public = list(
 
-        asSource = commonFunc$public_methods$asSource
+        asSource = incFnc$public_methods$asSource
 
     )
 )

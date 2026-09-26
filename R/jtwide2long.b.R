@@ -36,7 +36,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         },
 
         # common functions are in incFnc.R
-        .run = commonFunc$private_methods$.run,
+        .run = incFnc$private_methods$.run,
 
         .adjRes = function(dtaFrm = NULL) {
             crrMde <- self$options$mdeW2L
@@ -53,7 +53,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             dtaFrm
         },
 
-        .chkDtF = commonFunc$private_methods$.chkDtF,
+        .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkNSA = function() {
             xfmNSA <- self$options$xfmNSA
@@ -77,7 +77,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
              (crrMde ==  "NSA" && private$.chkNSA()))
         },
 
-        .colFst = commonFunc$private_methods$.colFst,
+        .colFst = incFnc$private_methods$.colFst,
 
         .crrArg = function(getDta = TRUE) {
             crrMde <- self$options$mdeW2L
@@ -121,7 +121,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .crtMsg = commonFunc$private_methods$.crtMsg,
+        .crtMsg = incFnc$private_methods$.crtMsg,
 
         .detSep = function(varLst = c()) {
             for (varSep in c("_", ".", "-", "!", "#", "%")) {
@@ -132,10 +132,10 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             jmvcore::reject(.("The Long Variables in 'Variables To Be Transformed' are invalid, remove _, . and - from the names."))
         },
 
-        .dtaInf = commonFunc$private_methods$.dtaInf,
-        .dtaMsg = commonFunc$private_methods$.dtaMsg,
-        .getDta = commonFunc$private_methods$.getDta,
-        .nteRnC = commonFunc$private_methods$.nteRnC,
+        .dtaInf = incFnc$private_methods$.dtaInf,
+        .dtaMsg = incFnc$private_methods$.dtaMsg,
+        .getDta = incFnc$private_methods$.getDta,
+        .nteRnC = incFnc$private_methods$.nteRnC,
 
         .lvl2Nm = function() {
             lvlSep <- trimws(self$options$lvlSep)
@@ -208,7 +208,7 @@ jtWide2LongClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
             }
         },
 
-        .runXfm = commonFunc$private_methods$.runXfm,
+        .runXfm = incFnc$private_methods$.runXfm,
 
         .spfNum = function(crrNum = NA, crrSep = "_") {
              sprintf(paste0(crrSep, "%0", as.character(ceiling(log10(crrNum + 1e-6))), "d"), seq(crrNum))

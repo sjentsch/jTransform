@@ -1,4 +1,4 @@
-commonFunc <- R6::R6Class("commonFunc",
+incFnc <- R6::R6Class("incFnc",
     private = list(
 
         .init = function() {
