@@ -196,7 +196,7 @@ items:
       part of the variable name, 1 would have to be put into this field. If all
       levels are to be transformed, the field needs to be blank.</p>
       <p></p>
-      <p>The principle of the transformation from long to wide can perhaps
+      <p>The principle of the transformation from wide to long can perhaps
       easiest be understood by looking at example4jtWide2Long from the Data
       Library of this module. It contains results from a Stroop experiment (in
       wide format) with fifty variables: ID (identifies the participant), sex

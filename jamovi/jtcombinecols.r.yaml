@@ -29,10 +29,11 @@ items:
       first variable whereas the second variable is removed from the data set.
       "Mode of Combining" determines what the function does if the values in
       the variable pair are not in accordance (i.e., if they are unequal).
-      "" throws an error and stops, "First Variable takes Precedence" means
-      that the values from the first variable of each pair are taken if the
-      values do not match up, when "Second Variable takes Precedence" is set,
-      the values of the second variable are taken in such cases.
+      "Do Not Combine" throws an error and stops, "First Variable takes
+      Precedence" means that the values from the first variable of each pair
+      are taken if the values do not match up, when "Second Variable takes
+      Precedence" is set, the values of the second variable are taken in such
+      cases.
 
   - name:  dtaInf
     type:  Html

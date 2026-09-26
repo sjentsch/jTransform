@@ -90,7 +90,7 @@ items:
       variables, e.g., age or sex. However, they are not unique (and thus
       no ID variables; there may be several participants with the same age or
       sex).</p>
-      <p>"Variable organization in the output" determines how the variables
+      <p>"Organization of Variables in the Output" determines how the variables
       are to be arranged in the output data set. This is only relevant if
       there is more than one target variable (e.g., if you want to transform
       both correct responses and reaction times). "Variables are adjacent"
