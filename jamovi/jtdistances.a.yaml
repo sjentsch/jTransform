@@ -27,7 +27,7 @@ options:
 #      a vector of strings containing the names of the variables for
 #      which distances are to be calculated
 
-  - name: clmDst
+  - name: dstCoR
     type: List
     options:
       - title: Columns
@@ -36,7 +36,7 @@ options:
         name:  rows
     default: columns
     
-  - name: stdDst
+  - name: dstStd
     type: List
     options:
       - title: Do Not Standardize
@@ -55,109 +55,179 @@ options:
         name:  rescale
     default: none
 
-  - name: nmeDst
+  - name: dstCtg
     type: List
     options:
-      - title: CONTINUOUS VARIABLES - Euclidean Distance
+      - title: Continuous Variables
+        name:  ctgCnt
+      - title: Frequency Counts
+        name:  ctgFrq
+      - title: Binary Vars. - Matching Coefficients
+        name:  ctgBnM
+      - title: Binary Vars. - Conditional Probabilities
+        name:  ctgBnC
+      - title: Binary Vars. - Predictability Measures
+        name:  ctgBnP
+      - title: Binary Vars. - Other Measures
+        name:  ctgBnO
+      - title: Do Not Calculate Distances
+        name:  ctgNot
+    default: ctgCnt
+
+  - name: dstCnt
+    type: List
+    options:
+      - title: Euclidean Distance
         name:  euclid
-      - title: CONTINUOUS VARIABLES - Squared Euclidean Distance
+      - title: Squared Euclidean Distance
         name:  seuclid
-      - title: CONTINUOUS VARIABLES - City Block / Manhattan Distance
+      - title: City Block / Manhattan Distance
         name:  block
-      - title: CONTINUOUS VARIABLES - Canberra Distance
-        name:  canberra
-      - title: CONTINUOUS VARIABLES - Chebychev / Maximum Distance
-        name:  chebychev
-      - title: CONTINUOUS VARIABLES - Minkowski Distance With Power
-        name:  minkowski
-      - title: CONTINUOUS VARIABLES - Minkowski Distance With Power and Root
-        name:  power
-      - title: CONTINUOUS VARIABLES - Cosine Between Vectors (Similiarity)
+      - title: Cosine Between Vectors (Similarity)
         name:  cosine
-      - title: CONTINUOUS VARIABLES - Correlation (Similiarity)
+      - title: Correlation (Similarity)
         name:  correlation
-      # -----------------------------------------------------------------------
-      - title: FREQUENCY COUNTS - Chi-Square Dissimilarity
-        name:  chisq
-      - title: FREQUENCY COUNTS - Normalized Chi-Square Dissimilarity
-        name:  ph2
-      # -----------------------------------------------------------------------
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Russell and Rao
-        name:  rr
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Simple Matching
-        name:  sm
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Jaccard Similarity (like SPSS)
-        name:  jaccards
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Jaccard Dissimilarity (like R)
-        name:  jaccardd
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Dice / Czekanowski / Sorenson Sim.
-        name:  dice
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Rogers and Tanimoto
-        name:  rt
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Kulczynski Measure 1
-        name:  k1
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Sokal and Sneath Measure 1
-        name:  ss1
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Sokal and Sneath Measure 2
-        name:  ss2
-      - title: BINARY VARS. - MATCHING COEFFICIENTS - Sokal and Sneath Measure 3
-        name:  ss3
-      - title: BINARY VARS. - CONDIT. PROBABILITIES - Kulczynski Measure 2
-        name:  k2
-      - title: BINARY VARS. - CONDIT. PROBABILITIES - Sokal and Sneath Measure 4
-        name:  ss4
-      - title: BINARY VARS. - CONDIT. PROBABILITIES - Hamann
-        name:  hamann
-      - title: BINARY VARS. - PREDICTABILITY MEASURES - Goodman and Kruskal Lambda
-        name:  lambda
-      - title: BINARY VARS. - PREDICTABILITY MEASURES - Anderberg’s D
-        name:  d
-      - title: BINARY VARS. - PREDICTABILITY MEASURES - Yule’s Y
-        name:  y
-      - title: BINARY VARS. - PREDICTABILITY MEASURES - Yule’s Q
-        name:  q
-      - title: BINARY VARS. - OTHER MEASURES - Ochiai
-        name:  ochiai
-      - title: BINARY VARS. - OTHER MEASURES - Sokal and Sneath Measure 5
-        name:  ss5
-      - title: BINARY VARS. - OTHER MEASURES - Fourfold Point Correlation
-        name:  phi
-      - title: BINARY VARS. - OTHER MEASURES - Binary Euclidean Distance
-        name:  beuclid
-      - title: BINARY VARS. - OTHER MEASURES - Binary Squared Euclidean Distance
-        name:  bseuclid
-      - title: BINARY VARS. - OTHER MEASURES - Size Difference
-        name:  size
-      - title: BINARY VARS. - OTHER MEASURES - Pattern Difference
-        name:  pattern
-      - title: BINARY VARS. - OTHER MEASURES - Binary Shape Difference
-        name:  bshape
-      - title: BINARY VARS. - OTHER MEASURES - Dispersion Similarity
-        name:  disper
-      - title: BINARY VARS. - OTHER MEASURES - Variance Dissimilarity
-        name:  variance
-      - title: BINARY VARS. - OTHER MEASURES - Lance and Williams Non-Metric Dissim.
-        name:  blwmn
-      - title: NONE - Do Not Calculate Distances
-        name:  none
+      - title: Chebychev / Maximum Distance
+        name:  chebychev
+      - title: Minkowski Distance With Power
+        name:  minkowski
+      - title: Minkowski Distance With Power and Root
+        name:  power
+      - title: Canberra Distance
+        name:  canberra
     default: euclid
-    
-  - name: pwrDst
+
+  - name: pwrCnt
     type: Integer
     title: Power
     default: 2
 
-  - name: rt_Dst
+  - name: rt_Cnt
     type: Integer
     title: Root
     default: 2
 
-  - name: p__Dst
+  - name: dstFrq
+    type: List
+    options:
+      - title: Chi-Square Dissimilarity
+        name:  chisq
+      - title: Normalized Chi-Square Dissimilarity
+        name:  ph2
+    default: chisq
+
+  - name: dstBnM
+    type: List
+    options:
+      - title: Jaccard Similarity
+        name:  jaccards
+      - title: Jaccard Dissimilarity
+        name:  jaccardd
+      - title: Simple Matching
+        name:  sm
+      - title: Dice / Czekanowski / Sørenson Sim.
+        name:  dice
+      - title: Russell and Rao
+        name:  rr
+      - title: Rogers and Tanimoto
+        name:  rt
+      - title: Sokal and Sneath Measure 1
+        name:  ss1
+      - title: Sokal and Sneath Measure 2
+        name:  ss2
+      - title: Sokal and Sneath Measure 3
+        name:  ss3
+      - title: Kulczynski Measure 1
+        name:  k1
+    default: jaccards
+
+  - name: p__BnM
     type: String
     title: Present
     default: "1"
 
-  - name: np_Dst
+  - name: np_BnM
+    type: String
+    title: Not Present
+    default: "0"
+
+  - name: dstBnC
+    type: List
+    options:
+      - title: Kulczynski Measure 2
+        name:  k2
+      - title: Hamann
+        name:  hamann
+      - title: Sokal and Sneath Measure 4
+        name:  ss4
+    default: k2
+
+  - name: p__BnC
+    type: String
+    title: Present
+    default: "1"
+
+  - name: np_BnC
+    type: String
+    title: Not Present
+    default: "0"
+
+  - name: dstBnP
+    type: List
+    options:
+      - title: Yule’s Q
+        name:  q
+      - title: Goodman and Kruskal Lambda
+        name:  lambda
+      - title: Yule’s Y
+        name:  y
+      - title: Anderberg’s D
+        name:  d
+    default: q
+
+  - name: p__BnP
+    type: String
+    title: Present
+    default: "1"
+
+  - name: np_BnP
+    type: String
+    title: Not Present
+    default: "0"
+
+  - name: dstBnO
+    type: List
+    options:
+      - title: Binary Squared Euclidean Distance
+        name:  bseuclid
+      - title: Binary Euclidean Distance
+        name:  beuclid
+      - title: Fourfold Point Correlation
+        name:  phi
+      - title: Ochiai
+        name:  ochiai
+      - title: Pattern Difference
+        name:  pattern
+      - title: Binary Shape Difference
+        name:  bshape
+      - title: Dispersion Similarity
+        name:  disper
+      - title: Size Difference
+        name:  size
+      - title: Lance and Williams Non-Metric Dissim.
+        name:  blwmn
+      - title: Variance Dissimilarity
+        name:  variance
+      - title: Sokal and Sneath Measure 5
+        name:  ss5
+    default: bseuclid
+
+  - name: p__BnO
+    type: String
+    title: Present
+    default: "1"
+
+  - name: np_BnO
     type: String
     title: Not Present
     default: "0"

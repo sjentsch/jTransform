@@ -30,13 +30,13 @@ children:
         stretchFactor: 1
         children:
           - type: RadioButton
-            name: clmDst_true
-            optionName: clmDst
+            name: dstCoR_Col
+            optionName: dstCoR
             optionPart: columns
             label: Columns
           - type: RadioButton
-            name: clmDst_false
-            optionName: clmDst
+            name: dstCoR_Row
+            optionName: dstCoR
             optionPart: rows
             label: Rows
 
@@ -45,7 +45,7 @@ children:
     stretchFactor: 1
     children:
       - type: ComboBox
-        name: stdDst
+        name: dstStd
         stretchFactor: 1
 #       minWidth: 200
 
@@ -58,58 +58,199 @@ children:
         style: list
         stretchFactor: 1
         children:
-          - type: ComboBox
-            name: nmeDst
-            stretchFactor: 1
-#           minWidth: 200
+          - type: RadioButton
+            name: dstCtg_ctgCnt
+            cell:
+              column: 0
+              row: 0
+            optionName: dstCtg
+            optionPart: ctgCnt
           - type: LayoutBox
-            style: inline
-            stretchFactor: 1
+            cell:
+              column: 0
+              row: 1
             children:
-              - type: LayoutBox
-                margin: large
-                style: inline
-                stretchFactor: 1
-                children:
-                  - type: TextBox
-                    name: p__Dst
-                    format: string
-                    enable: >-
-                             (nmeDst:rr || nmeDst:sm || nmeDst:jaccards ||
-                             nmeDst:jaccardd || nmeDst:dice || nmeDst:rt ||
-                             nmeDst:k1 || nmeDst:ss1 || nmeDst:ss2 || nmeDst:ss3 ||
-                             nmeDst:k2 || nmeDst:ss4 || nmeDst:hamann ||
-                             nmeDst:lambda || nmeDst:d || nmeDst:y || nmeDst:q ||
-                             nmeDst:ochiai || nmeDst:ss5 || nmeDst:phi ||
-                             nmeDst:beuclid || nmeDst:bseuclid || nmeDst:size ||
-                             nmeDst:pattern || nmeDst:bshape || nmeDst:disper ||
-                             nmeDst:variance || nmeDst:blwmn)
-                  - type: TextBox
-                    name: np_Dst
-                    format: string
-                    enable: >-
-                              (nmeDst:rr || nmeDst:sm || nmeDst:jaccards ||
-                              nmeDst:jaccardd || nmeDst:dice || nmeDst:rt ||
-                              nmeDst:k1 || nmeDst:ss1 || nmeDst:ss2 || nmeDst:ss3 ||
-                              nmeDst:k2 || nmeDst:ss4 || nmeDst:hamann ||
-                              nmeDst:lambda || nmeDst:d || nmeDst:y || nmeDst:q ||
-                              nmeDst:ochiai || nmeDst:ss5 || nmeDst:phi ||
-                              nmeDst:beuclid || nmeDst:bseuclid || nmeDst:size ||
-                              nmeDst:pattern || nmeDst:bshape || nmeDst:disper ||
-                              nmeDst:variance || nmeDst:blwmn)
-              - type: LayoutBox
-                margin: large
-                style: inline
-                stretchFactor: 1
-                children:
-                  - type: TextBox
-                    name: pwrDst
-                    format: number
-                    enable: (nmeDst:minkowski || nmeDst:power)
-                  - type: TextBox
-                    name: rt_Dst
-                    format: number
-                    enable: (nmeDst:power)
+              - type: ComboBox
+                name: dstCnt
+#                   minWidth: 200
+                enable: (dstCtg_ctgCnt)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 1
+            children:
+              - type: TextBox
+                name: pwrCnt
+                format: number
+                enable: (dstCtg_ctgCnt && (dstCnt:minkowski || dstCnt:power))
+          - type: LayoutBox
+            cell:
+              column: 2
+              row: 1
+            children:
+              - type: TextBox
+                name: rt_Cnt
+                format: number
+                enable: (dstCtg_ctgCnt && dstCnt:power)
+          - type: RadioButton
+            name: dstCtg_ctgFrq
+            cell:
+              column: 0
+              row: 2
+            optionName: dstCtg
+            optionPart: ctgFrq
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 3
+            children:
+              - type: ComboBox
+                name: dstFrq
+#                   minWidth: 200
+                enable: (dstCtg_ctgFrq)
+          - type: RadioButton
+            name: dstCtg_ctgBnM
+            cell:
+              column: 0
+              row: 4
+            optionName: dstCtg
+            optionPart: ctgBnM
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 5
+            children:
+              - type: ComboBox
+                name: dstBnM
+#                   minWidth: 200
+                enable: (dstCtg_ctgBnM)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 5
+            children:
+              - type: TextBox
+                name: p__BnM
+                format: string
+                enable: (dstCtg_ctgBnM)
+          - type: LayoutBox
+            cell:
+              column: 2
+              row: 5
+            children:
+              - type: TextBox
+                name: np_BnM
+                format: string
+                enable: (dstCtg_ctgBnM)
+          - type: RadioButton
+            name: dstCtg_ctgBnC
+            cell:
+              column: 0
+              row: 6
+            optionName: dstCtg
+            optionPart: ctgBnC
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 7
+            children:
+              - type: ComboBox
+                name: dstBnC
+#                       minWidth: 200
+                enable: (dstCtg_ctgBnC)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 7
+            children:
+              - type: TextBox
+                name: p__BnC
+                format: string
+                enable: (dstCtg_ctgBnC)
+          - type: LayoutBox
+            cell:
+              column: 2
+              row: 7
+            children:
+              - type: TextBox
+                name: np_BnC
+                format: string
+                enable: (dstCtg_ctgBnC)
+          - type: RadioButton
+            name: dstCtg_ctgBnP
+            cell:
+              column: 0
+              row: 8
+            optionName: dstCtg
+            optionPart: ctgBnP
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 9
+            children:
+              - type: ComboBox
+                name: dstBnP
+#                       minWidth: 200
+                enable: (dstCtg_ctgBnP)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 9
+            children:
+              - type: TextBox
+                name: p__BnP
+                format: string
+                enable: (dstCtg_ctgBnP)
+          - type: LayoutBox
+            cell:
+              column: 2
+              row: 9
+            children:
+              - type: TextBox
+                name: np_BnP
+                format: string
+                enable: (dstCtg_ctgBnP)
+          - type: RadioButton
+            name: dstCtg_ctgBnO
+            cell:
+              column: 0
+              row: 10
+            optionName: dstCtg
+            optionPart: ctgBnO
+          - type: LayoutBox
+            cell:
+              column: 0
+              row: 11
+            children:
+              - type: ComboBox
+                name: dstBnO
+#                       minWidth: 200
+                enable: (dstCtg_ctgBnO)
+          - type: LayoutBox
+            cell:
+              column: 1
+              row: 11
+            children:
+              - type: TextBox
+                name: p__BnO
+                format: string
+                enable: (dstCtg_ctgBnO)
+          - type: LayoutBox
+            cell:
+              column: 2
+              row: 11
+            children:
+              - type: TextBox
+                name: np_BnO
+                format: string
+                enable: (dstCtg_ctgBnO)
+          - type: RadioButton
+            name: dstCtg_ctgNot
+            cell:
+              column: 0
+              row: 12
+            optionName: dstCtg
+            optionPart: ctgNot
 
   - type: LayoutBox
     style: inline

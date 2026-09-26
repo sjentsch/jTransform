@@ -7,13 +7,25 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
     public = list(
         initialize = function(
             varDst = NULL,
-            clmDst = "columns",
-            stdDst = "none",
-            nmeDst = "euclid",
-            pwrDst = 2,
-            rt_Dst = 2,
-            p__Dst = "1",
-            np_Dst = "0",
+            dstCoR = "columns",
+            dstStd = "none",
+            dstCtg = "ctgCnt",
+            dstCnt = "euclid",
+            pwrCnt = 2,
+            rt_Cnt = 2,
+            dstFrq = "chisq",
+            dstBnM = "jaccards",
+            p__BnM = "1",
+            np_BnM = "0",
+            dstBnC = "k2",
+            p__BnC = "1",
+            np_BnC = "0",
+            dstBnP = "q",
+            p__BnP = "1",
+            np_BnP = "0",
+            dstBnO = "bseuclid",
+            p__BnO = "1",
+            np_BnO = "0",
             shwHlp = FALSE,
             jxfLog = FALSE, ...) {
 
@@ -31,16 +43,16 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                     "factor"),
                 required=TRUE,
                 default=NULL)
-            private$..clmDst <- jmvcore::OptionList$new(
-                "clmDst",
-                clmDst,
+            private$..dstCoR <- jmvcore::OptionList$new(
+                "dstCoR",
+                dstCoR,
                 options=list(
                     "columns",
                     "rows"),
                 default="columns")
-            private$..stdDst <- jmvcore::OptionList$new(
-                "stdDst",
-                stdDst,
+            private$..dstStd <- jmvcore::OptionList$new(
+                "dstStd",
+                dstStd,
                 options=list(
                     "none",
                     "z",
@@ -50,66 +62,126 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                     "mean",
                     "rescale"),
                 default="none")
-            private$..nmeDst <- jmvcore::OptionList$new(
-                "nmeDst",
-                nmeDst,
+            private$..dstCtg <- jmvcore::OptionList$new(
+                "dstCtg",
+                dstCtg,
+                options=list(
+                    "ctgCnt",
+                    "ctgFrq",
+                    "ctgBnM",
+                    "ctgBnC",
+                    "ctgBnP",
+                    "ctgBnO",
+                    "ctgNot"),
+                default="ctgCnt")
+            private$..dstCnt <- jmvcore::OptionList$new(
+                "dstCnt",
+                dstCnt,
                 options=list(
                     "euclid",
                     "seuclid",
                     "block",
-                    "canberra",
+                    "cosine",
+                    "correlation",
                     "chebychev",
                     "minkowski",
                     "power",
-                    "cosine",
-                    "correlation",
+                    "canberra"),
+                default="euclid")
+            private$..pwrCnt <- jmvcore::OptionInteger$new(
+                "pwrCnt",
+                pwrCnt,
+                default=2)
+            private$..rt_Cnt <- jmvcore::OptionInteger$new(
+                "rt_Cnt",
+                rt_Cnt,
+                default=2)
+            private$..dstFrq <- jmvcore::OptionList$new(
+                "dstFrq",
+                dstFrq,
+                options=list(
                     "chisq",
-                    "ph2",
-                    "rr",
-                    "sm",
+                    "ph2"),
+                default="chisq")
+            private$..dstBnM <- jmvcore::OptionList$new(
+                "dstBnM",
+                dstBnM,
+                options=list(
                     "jaccards",
                     "jaccardd",
+                    "sm",
                     "dice",
+                    "rr",
                     "rt",
-                    "k1",
                     "ss1",
                     "ss2",
                     "ss3",
+                    "k1"),
+                default="jaccards")
+            private$..p__BnM <- jmvcore::OptionString$new(
+                "p__BnM",
+                p__BnM,
+                default="1")
+            private$..np_BnM <- jmvcore::OptionString$new(
+                "np_BnM",
+                np_BnM,
+                default="0")
+            private$..dstBnC <- jmvcore::OptionList$new(
+                "dstBnC",
+                dstBnC,
+                options=list(
                     "k2",
-                    "ss4",
                     "hamann",
-                    "lambda",
-                    "d",
-                    "y",
+                    "ss4"),
+                default="k2")
+            private$..p__BnC <- jmvcore::OptionString$new(
+                "p__BnC",
+                p__BnC,
+                default="1")
+            private$..np_BnC <- jmvcore::OptionString$new(
+                "np_BnC",
+                np_BnC,
+                default="0")
+            private$..dstBnP <- jmvcore::OptionList$new(
+                "dstBnP",
+                dstBnP,
+                options=list(
                     "q",
-                    "ochiai",
-                    "ss5",
-                    "phi",
-                    "beuclid",
+                    "lambda",
+                    "y",
+                    "d"),
+                default="q")
+            private$..p__BnP <- jmvcore::OptionString$new(
+                "p__BnP",
+                p__BnP,
+                default="1")
+            private$..np_BnP <- jmvcore::OptionString$new(
+                "np_BnP",
+                np_BnP,
+                default="0")
+            private$..dstBnO <- jmvcore::OptionList$new(
+                "dstBnO",
+                dstBnO,
+                options=list(
                     "bseuclid",
-                    "size",
+                    "beuclid",
+                    "phi",
+                    "ochiai",
                     "pattern",
                     "bshape",
                     "disper",
-                    "variance",
+                    "size",
                     "blwmn",
-                    "none"),
-                default="euclid")
-            private$..pwrDst <- jmvcore::OptionInteger$new(
-                "pwrDst",
-                pwrDst,
-                default=2)
-            private$..rt_Dst <- jmvcore::OptionInteger$new(
-                "rt_Dst",
-                rt_Dst,
-                default=2)
-            private$..p__Dst <- jmvcore::OptionString$new(
-                "p__Dst",
-                p__Dst,
+                    "variance",
+                    "ss5"),
+                default="bseuclid")
+            private$..p__BnO <- jmvcore::OptionString$new(
+                "p__BnO",
+                p__BnO,
                 default="1")
-            private$..np_Dst <- jmvcore::OptionString$new(
-                "np_Dst",
-                np_Dst,
+            private$..np_BnO <- jmvcore::OptionString$new(
+                "np_BnO",
+                np_BnO,
                 default="0")
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
@@ -122,36 +194,72 @@ descDistancesOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 default=FALSE)
 
             self$.addOption(private$..varDst)
-            self$.addOption(private$..clmDst)
-            self$.addOption(private$..stdDst)
-            self$.addOption(private$..nmeDst)
-            self$.addOption(private$..pwrDst)
-            self$.addOption(private$..rt_Dst)
-            self$.addOption(private$..p__Dst)
-            self$.addOption(private$..np_Dst)
+            self$.addOption(private$..dstCoR)
+            self$.addOption(private$..dstStd)
+            self$.addOption(private$..dstCtg)
+            self$.addOption(private$..dstCnt)
+            self$.addOption(private$..pwrCnt)
+            self$.addOption(private$..rt_Cnt)
+            self$.addOption(private$..dstFrq)
+            self$.addOption(private$..dstBnM)
+            self$.addOption(private$..p__BnM)
+            self$.addOption(private$..np_BnM)
+            self$.addOption(private$..dstBnC)
+            self$.addOption(private$..p__BnC)
+            self$.addOption(private$..np_BnC)
+            self$.addOption(private$..dstBnP)
+            self$.addOption(private$..p__BnP)
+            self$.addOption(private$..np_BnP)
+            self$.addOption(private$..dstBnO)
+            self$.addOption(private$..p__BnO)
+            self$.addOption(private$..np_BnO)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..jxfLog)
         }),
     active = list(
         varDst = function() private$..varDst$value,
-        clmDst = function() private$..clmDst$value,
-        stdDst = function() private$..stdDst$value,
-        nmeDst = function() private$..nmeDst$value,
-        pwrDst = function() private$..pwrDst$value,
-        rt_Dst = function() private$..rt_Dst$value,
-        p__Dst = function() private$..p__Dst$value,
-        np_Dst = function() private$..np_Dst$value,
+        dstCoR = function() private$..dstCoR$value,
+        dstStd = function() private$..dstStd$value,
+        dstCtg = function() private$..dstCtg$value,
+        dstCnt = function() private$..dstCnt$value,
+        pwrCnt = function() private$..pwrCnt$value,
+        rt_Cnt = function() private$..rt_Cnt$value,
+        dstFrq = function() private$..dstFrq$value,
+        dstBnM = function() private$..dstBnM$value,
+        p__BnM = function() private$..p__BnM$value,
+        np_BnM = function() private$..np_BnM$value,
+        dstBnC = function() private$..dstBnC$value,
+        p__BnC = function() private$..p__BnC$value,
+        np_BnC = function() private$..np_BnC$value,
+        dstBnP = function() private$..dstBnP$value,
+        p__BnP = function() private$..p__BnP$value,
+        np_BnP = function() private$..np_BnP$value,
+        dstBnO = function() private$..dstBnO$value,
+        p__BnO = function() private$..p__BnO$value,
+        np_BnO = function() private$..np_BnO$value,
         shwHlp = function() private$..shwHlp$value,
         jxfLog = function() private$..jxfLog$value),
     private = list(
         ..varDst = NA,
-        ..clmDst = NA,
-        ..stdDst = NA,
-        ..nmeDst = NA,
-        ..pwrDst = NA,
-        ..rt_Dst = NA,
-        ..p__Dst = NA,
-        ..np_Dst = NA,
+        ..dstCoR = NA,
+        ..dstStd = NA,
+        ..dstCtg = NA,
+        ..dstCnt = NA,
+        ..pwrCnt = NA,
+        ..rt_Cnt = NA,
+        ..dstFrq = NA,
+        ..dstBnM = NA,
+        ..p__BnM = NA,
+        ..np_BnM = NA,
+        ..dstBnC = NA,
+        ..p__BnC = NA,
+        ..np_BnC = NA,
+        ..dstBnP = NA,
+        ..p__BnP = NA,
+        ..np_BnP = NA,
+        ..dstBnO = NA,
+        ..p__BnO = NA,
+        ..np_BnO = NA,
         ..shwHlp = NA,
         ..jxfLog = NA)
 )
@@ -227,13 +335,25 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' 
 #' @param data .
 #' @param varDst .
-#' @param clmDst .
-#' @param stdDst .
-#' @param nmeDst .
-#' @param pwrDst .
-#' @param rt_Dst .
-#' @param p__Dst .
-#' @param np_Dst .
+#' @param dstCoR .
+#' @param dstStd .
+#' @param dstCtg .
+#' @param dstCnt .
+#' @param pwrCnt .
+#' @param rt_Cnt .
+#' @param dstFrq .
+#' @param dstBnM .
+#' @param p__BnM .
+#' @param np_BnM .
+#' @param dstBnC .
+#' @param p__BnC .
+#' @param np_BnC .
+#' @param dstBnP .
+#' @param p__BnP .
+#' @param np_BnP .
+#' @param dstBnO .
+#' @param p__BnO .
+#' @param np_BnO .
 #' @param shwHlp .
 #' @param jxfLog .
 #' @return A results object containing:
@@ -253,13 +373,25 @@ descDistancesBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 descDistances <- function(
     data,
     varDst = NULL,
-    clmDst = "columns",
-    stdDst = "none",
-    nmeDst = "euclid",
-    pwrDst = 2,
-    rt_Dst = 2,
-    p__Dst = "1",
-    np_Dst = "0",
+    dstCoR = "columns",
+    dstStd = "none",
+    dstCtg = "ctgCnt",
+    dstCnt = "euclid",
+    pwrCnt = 2,
+    rt_Cnt = 2,
+    dstFrq = "chisq",
+    dstBnM = "jaccards",
+    p__BnM = "1",
+    np_BnM = "0",
+    dstBnC = "k2",
+    p__BnC = "1",
+    np_BnC = "0",
+    dstBnP = "q",
+    p__BnP = "1",
+    np_BnP = "0",
+    dstBnO = "bseuclid",
+    p__BnO = "1",
+    np_BnO = "0",
     shwHlp = FALSE,
     jxfLog = FALSE) {
 
@@ -275,13 +407,25 @@ descDistances <- function(
 
     options <- descDistancesOptions$new(
         varDst = varDst,
-        clmDst = clmDst,
-        stdDst = stdDst,
-        nmeDst = nmeDst,
-        pwrDst = pwrDst,
-        rt_Dst = rt_Dst,
-        p__Dst = p__Dst,
-        np_Dst = np_Dst,
+        dstCoR = dstCoR,
+        dstStd = dstStd,
+        dstCtg = dstCtg,
+        dstCnt = dstCnt,
+        pwrCnt = pwrCnt,
+        rt_Cnt = rt_Cnt,
+        dstFrq = dstFrq,
+        dstBnM = dstBnM,
+        p__BnM = p__BnM,
+        np_BnM = np_BnM,
+        dstBnC = dstBnC,
+        p__BnC = p__BnC,
+        np_BnC = np_BnC,
+        dstBnP = dstBnP,
+        p__BnP = p__BnP,
+        np_BnP = np_BnP,
+        dstBnO = dstBnO,
+        p__BnO = p__BnO,
+        np_BnO = np_BnO,
         shwHlp = shwHlp,
         jxfLog = jxfLog)
 

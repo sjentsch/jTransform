@@ -34,14 +34,14 @@ items:
 
   - name:  dtaInf
     type:  Html
-    clearWith: [ varDst, clmDst, btnCrt ]
+    clearWith: [ varDst, dstCoR, btnCrt ]
     content: ""
 
   - name:  pvwDta
     type:  Table
     title: "Data Preview"
     refs:  [ jTransform, jmvReadWrite ]
-    clearWith: [ varDst, clmDst, stdDst, nmeDst ]
+    clearWith: [ varDst, dstCoR, dstStd, dstCtg ]
     rows: 1
     columns:
       - name: fstCol

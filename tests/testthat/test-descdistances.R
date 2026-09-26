@@ -2,7 +2,7 @@ testthat::test_that("descdistances works", {
     set.seed(1)
     dtaInp <- as.data.frame(matrix(rnorm(11000), nrow = 1000))
 
-    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid")
+    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), dstStd = "none", dstCtg = "ctgCnt", dstCnt = "euclid")
     expect_equal(class(chkRes), c("jtDistancesResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
     expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (11 variables in 11 rows): V1, V2,\n",
@@ -30,7 +30,7 @@ testthat::test_that("descdistances works", {
     expect_equal(chkRes$pvwDta$rowCount, 11)
     expect_equal(chkRes$pvwDta$rowSelected, 0)
 
-    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "range", nmeDst = "euclid")
+    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), dstStd = "range", dstCtg = "ctgCnt", dstCnt = "euclid")
     expect_equal(class(chkRes), c("jtDistancesResults", "Group", "ResultsElement", "R6"))
     expect_false(chkRes$genInf$visible)
     expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (11 variables in 11 rows): V1, V2,\n",
@@ -59,40 +59,45 @@ testthat::test_that("descdistances works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
 
     # ensure that help is shown
-    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid", shwHlp = TRUE)
+    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), dstStd = "none", dstCtg = "ctgCnt",
+                                        dstCnt = "euclid", shwHlp = TRUE)
     expect_true(chkRes$genInf$visible)
 
     # check asSource
-    expect_equal(jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "range", nmeDst = "euclid")$parent$asSource(),
+    expect_equal(jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), dstStd = "range", dstCtg = "ctgCnt",
+                                           dstCnt = "euclid")$parent$asSource(),
       paste0("jmvReadWrite::distances_omv(\n    dtaInp = data,\n    varDst = c(\n        \"V1\",\n        \"V2\",\n        \"V3\",\n        \"V4\",",
              "\n        \"V5\",\n        \"V6\",\n        \"V7\",\n        \"V8\",\n        \"V9\",\n        \"V10\",\n        \"V11\"),",
              "\n    stdDst = \"range\")"))
 
     # check when chkVar fails (varDst has only one variable)
-    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp)[1], stdDst = "none", nmeDst = "euclid")
+    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp)[1], dstStd = "none", dstCtg = "ctgCnt", dstCnt = "euclid")
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
     expect_equal(chkRes$dtaInf$content, "")
 
     # check help messages
-    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid", shwHlp = TRUE)
+    chkRes <- jTransform::descDistances(data = dtaInp, varDst = names(dtaInp), dstStd = "none", dstCtg = "ctgCnt", 
+                                        dstCnt = "euclid", shwHlp = TRUE)
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta"))
     expect_equal(vapply(names(chkRes), function(N) chkRes[[N]]$visible, logical(1), USE.NAMES = FALSE), c(TRUE, TRUE, TRUE, TRUE))
     expect_true(is.character(chkRes$genInf$content))
     expect_true(nzchar(chkRes$genInf$content))
 
     # ensure that an error is thrown if no data are submitted
-    expect_error(jTransform::descDistances(varDst = names(dtaInp)[1:5], , stdDst = "none", nmeDst = "euclid"),
+    expect_error(jTransform::descDistances(varDst = names(dtaInp)[1:5], , dstStd = "none", dstCtg = "ctgCnt", dstCnt = "euclid"),
       regexp = paste("Argument 'varDst' contains 'V1', 'V2', 'V3', 'V4', 'V5' which are not present in the dataset"))
 
     # additional tests for functions in utils.R
     expect_true(hmeDir() %in% Sys.getenv(c("USERPROFILE", "HOME")))
-    expect_equal(fmtSrc(fcnNme = "jmvReadWrite::distances_omv", crrArg = list(varDst = names(dtaInp), stdDst = "none", nmeDst = "euclid")),
+    expect_equal(fmtSrc(fcnNme = "jmvReadWrite::distances_omv", crrArg = list(varDst = names(dtaInp), stdDst = "none",
+                        nmeDst = "euclid")),
       paste("jmvReadWrite::distances_omv(\n    dtaInp = data,\n    varDst = c(\n        \"V1\",\n        \"V2\",\n        \"V3\",\n",
             "       \"V4\",\n        \"V5\",\n        \"V6\",\n        \"V7\",\n        \"V8\",\n        \"V9\",\n        \"V10\",\n",
             "       \"V11\"))"))
-    expect_equal(fmtSrc(fcnNme = "jmvReadWrite::distances_omv", crrArg = list(varDst = names(dtaInp)[seq(3)], stdDst = "z", nmeDst = "laplace")),
+    expect_equal(fmtSrc(fcnNme = "jmvReadWrite::distances_omv", crrArg = list(varDst = names(dtaInp)[seq(3)], stdDst = "z",
+                        nmeDst = "jaccards")),
       paste("jmvReadWrite::distances_omv(\n    dtaInp = data,\n    varDst = c(\"V1\", \"V2\", \"V3\"),\n",
-            "   stdDst = \"z\",\n    nmeDst = \"laplace\")"))
+            "   stdDst = \"z\",\n    nmeDst = \"jaccards\")"))
 
 })
