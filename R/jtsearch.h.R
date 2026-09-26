@@ -149,7 +149,7 @@ jtSearchResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="genInf",
                 visible="(shwHlp)",
                 clearWith=list(),
-                content="Please type the term to be search for into the text box. If you want that partial matches (i.e., the search term appears within values) are found, leave the tick box \"Whole Word\" unset.</p> <p>The <strong>\"Include / Exclude\"</strong> collapse box permits to specifically select in which column and measurement types the <strong> search</strong> shall be conducted. Ticking the check boxes includes that variable or measurement type.\n"))
+                content="Please type the term to be searched for into the text box. If you want that partial matches (i.e., the search term appears within values) are found, leave the tick box \"Whole Word\" unset.</p> <p>The <strong>\"Include / Exclude\"</strong> collapse box permits to specifically select in which column and measurement types the <strong> search</strong> shall be conducted. Ticking the check boxes includes that variable or measurement type.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="srcRes",

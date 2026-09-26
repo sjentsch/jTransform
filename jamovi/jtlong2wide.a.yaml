@@ -89,9 +89,9 @@ options:
     title: How to Accumulate?
     type: List
     options:
-    - title: Calculate Mean
+    - title: Calculate mean
       name:  mean
-    - title: First Occurence
+    - title: First occurrence
       name:  first
     default: mean
 

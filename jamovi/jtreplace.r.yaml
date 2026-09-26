@@ -25,9 +25,9 @@ items:
     clearWith: [ ]
     content: >
       Please type the original value and the replacement into the entry fields.
-      If you want to have several pairs of original and replacment values, use
+      If you want to have several pairs of original and replacement values, use
       separate lines. To replace partial matches, unset the tick box "Whole
-      Word" (e.g., for orginal: 24 and replacement: 34, 241 will be changed
+      Word" (e.g., for original: 24 and replacement: 34, 241 will be changed
       into 341).</p>
       <p>The <strong>"Include / Exclude"</strong> collapse box permits to
       specifically select in which column types, for which measurement type,

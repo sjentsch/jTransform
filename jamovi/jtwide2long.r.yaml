@@ -37,9 +37,9 @@ items:
       paragraph and you can check using the two output tables (the first
       containing a data preview, the second an overview over how the repeated
       measurement levels - i.e., the original variables - were converted).</p>
-      <p>Please assign the variables that identify participant (or another
+      <p>Please assign the variables that identify participants (or another
       measurement unit; e.g., a number or an ID) to "Variables that Identify
-      the Same Unit", and those that are unique to an unit but not an
+      the Same Unit", and those that are unique to a unit but not an
       identifier (e.g., gender, age group) to "Variables NOT To Be
       Transformed". If no variable that identifies a participant is given, such
       variable will be created (and named "ID"). Then assign all variables to
@@ -113,7 +113,7 @@ items:
       and assign the respective selection of original variables (columns) from
       the original data set that you want to convert into different long format
       variables under "Variables To Be Transformed": For each long format
-      variable that you want to create, there is is a text field for the name
+      variable that you want to create, there is a text field for the name
       of that variable and a field where you can drag or assign the original
       variables that "belong" (are to be converted to) this variable. Please
       note that all (original) variable lists assigned to the target variables
@@ -177,7 +177,7 @@ items:
       result in four columns (starting with the string defined as "Prefix" and
       ending with 1, 2, 3, and 4). The number of rows would be increased by the
       number of all possible combinations of steps (in the example above 2 * 2
-      * 2 * 2 = 16, mulitiplied by the number of rows in the input data set,
+      * 2 * 2 = 16, multiplied by the number of rows in the input data set,
       e.g., 50 rows becoming 50 * 16 = 800 rows).</p>
       <p>"Variables NOT To Be Transformed" are variables that "characterize" a
       participant (or another unit), often also called between-subjects
@@ -208,7 +208,7 @@ items:
       part; BLUE, GREEN, RED or YELLOW) and which repetition of a particular
       combination of experimental conditions the variable represents (fourth
       part, 1 or 2). These variables have to be assigned to the following
-      fields: ID to "Variables That Identify the Same Unit" (it is an unique
+      fields: ID to "Variables That Identify the Same Unit" (it is a unique
       identifier of each participant); sex to "Variables NOT To Be Transformed"
       (sex is a between-subjects variable that doesn't change between
       experimental conditions; however, it is not unique and thus not suited as
@@ -287,7 +287,7 @@ items:
       part; BLUE, GREEN, RED or YELLOW) and which repetition of a particular
       combination of experimental conditions the variable represents (fourth
       part, 1 or 2). These variables have to be assigned to the following
-      fields: ID to "Variables That Identify the Same Unit" (it is an unique
+      fields: ID to "Variables That Identify the Same Unit" (it is a unique
       identifier of each participant); sex to "Variables NOT To Be Transformed"
       (sex is a between-subjects variable that doesn't change between
       experimental conditions; however, it is not unique and thus not suited as

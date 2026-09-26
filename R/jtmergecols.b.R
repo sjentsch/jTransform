@@ -21,7 +21,7 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         .chkFle = function(crrFle = "") {
             if (!file.exists(crrFle) || !jmvReadWrite:::hasExt(crrFle, jmvReadWrite:::vldExt)) {
-                jmvcore::reject(.("'{file}' doesn't exists or has an unsupported file type."), file = crrFle)
+                jmvcore::reject(.("'{file}' doesn't exist or has an unsupported file type."), file = crrFle)
             }
 
             jmvReadWrite:::nrmFle(crrFle)

@@ -24,9 +24,9 @@ items:
     visible: (shwHlp)
     clearWith: [ ]
     content: >
-      Please assign the variables that identify participant (or another
+      Please assign the variables that identify participants (or another
       measurement unit; e.g., a number or an ID) to "Variables that identify
-      the same unit", and those that are unique to an unit but not an
+      the same unit", and those that are unique to a unit but not an
       identifier (e.g., gender, age group) to "Variables NOT to be
       Transformed". "Variables That Differentiate Within a Unit" typically
       contain different (e.g., experimental) conditions, and "Variables To Be
@@ -68,13 +68,13 @@ items:
       participant code). This code needs to be unique (i.e., there can't be
       two participants, or other units, with the same ID).</p>
       <p>
-      "Variables that differentiate within an unit" are the so-called
+      "Variables that differentiate within a unit" are the so-called
       time-varying variables, i.e., variables that are originally are
       arranged in rows and whose steps shall be transformed into columns
       (a new column created for the each combination of a target variable,
       e.g., reaction time [RT], with each experimental condition [cond…]
       leading RT_cond1, RT_cond2, …). There can be several time-varying
-      variables (e.g., several facors in an experiment, each represented
+      variables (e.g., several factors in an experiment, each represented
       by a different column in the input data set).</p>
       <p>"Variables to be transformed" are the so-called target variables,
       i.e., variables that exist as one column in the input data set and are
@@ -88,7 +88,7 @@ items:
       <p>"Variables NOT to be transformed" are variables that "characterize"
       a participant (or another unit), often also called between-subjects
       variables, e.g., age or sex. However, they are not unique (and thus
-      no ID variables; there may be several participant with the same age or
+      no ID variables; there may be several participants with the same age or
       sex).</p>
       <p>"Variable organization in the output" determines how the variables
       are to be arranged in the output data set. This is only relevant if
@@ -102,15 +102,15 @@ items:
       variable are adjacent, followed by a block of all conditions of the
       second variable and so on.</p>
       <p>"How to accumulate?" determines how different rows may be
-      accumulated. The setting does not apply if there is only one occurence
+      accumulated. The setting does not apply if there is only one occurrence
       / row for each possible combination of conditions. Let's assume that
       you ran an experiment with two factors: the experimental condition and
       which repetition of that condition an entry represents. For evaluation,
       you want to drop the repetition (you thus only assign the variable
       representing the condition to "Variables that differentiate within an
       unit". The setting determines if the mean of these occurrences shall
-      be calculated ("Calculate mean") or if all occurences after the first
-      should be dropped ("First occurence").</p>
+      be calculated ("Calculate mean") or if all occurrences after the first
+      should be dropped ("First occurrence").</p>
       <p>"Separator" defines which character(s) should be placed between the
       target variable and the steps of the time-varying variable /
       conditions when assembling the variable names (e.g., VAR_COND).</p>
@@ -125,9 +125,9 @@ items:
       this entry is), rspCrr (whether the participant named the correct
       colour), and rspTme (the reaction time for that response). These
       variables have to be assigned to the following fields: ID to "Variables
-      that identify the same unit" (it is an unique identifier of each
+      that identify the same unit" (it is a unique identifier of each
       participant); cond, colour and rep to "Variables that differentiate
-      within an unit" (representing all possible combinations of experimental
+      within a unit" (representing all possible combinations of experimental
       conditions); rspCrr and rspTme to "Variables to be transformed" (these
       measurements are repeated for each combination of conditions, and in a
       result we want a column each for all possible combinations of those

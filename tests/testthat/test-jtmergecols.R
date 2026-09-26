@@ -1,7 +1,8 @@
 testthat::test_that("jtmergecols works", {
     dtaInp <- jmvReadWrite::read_omv("../example4jtMergeCols_1.omv")
 
-    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "outer")
+    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp),
+                                      fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "outer")
     expect_equal(class(chkRes), c("jtMergeColsResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (55 variables in 250 rows): ID, A1,\n",
                                                  "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
@@ -24,7 +25,8 @@ testthat::test_that("jtmergecols works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 80)
 
-    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "inner")
+    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp),
+                                      fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "inner")
     expect_equal(class(chkRes), c("jtMergeColsResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (55 variables in 225 rows): ID, A1,\n",
                                                  "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
@@ -47,7 +49,8 @@ testthat::test_that("jtmergecols works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 80)
 
-    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "left")
+    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp),
+                                      fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "left")
     expect_equal(class(chkRes), c("jtMergeColsResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (55 variables in 250 rows): ID, A1,\n",
                                                  "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
@@ -70,7 +73,8 @@ testthat::test_that("jtmergecols works", {
     expect_equal(chkRes$pvwDta$rowSelected, 0)
     expect_equal(chkRes$pvwDta$width, 80)
 
-    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "right")
+    chkRes <- jTransform::jtMergeCols(data = dtaInp, varBy = "ID", varAll = names(dtaInp),
+                                      fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "right")
     expect_equal(class(chkRes), c("jtMergeColsResults", "Group", "ResultsElement", "R6"))
     expect_equal(chkRes$dtaInf$asString(), paste("\n Variables in the Output Data Set (55 variables in 225 rows): ID, A1,\n",
                                                  "A2, A3, A4, A5, C1, C2, C3, C4, C5, E1, E2, E3, E4, E5, N1, N2, N3,\n",
@@ -108,7 +112,8 @@ testthat::test_that("jtmergecols works", {
              "jmvReadWrite::merge_cols_omv\\(\n    dtaInp = data,\n    varBy = \"ID\",\n    typMrg = \"outer\"\\)"))
 
     # check instructions when chkVar fails (varBy is empty)
-    chkRes <- jTransform::jtMergeCols(data = dtaInp, varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "right")
+    chkRes <- jTransform::jtMergeCols(data = dtaInp, varAll = names(dtaInp),
+                                      fleInp = "../example4jtMergeCols_2.omv; ../example4jtMergeCols_3.omv", typMrg = "right")
     expect_equal(names(chkRes), c("fmtHTM", "genInf", "dtaInf", "pvwDta", "addInf"))
     expect_equal(chkRes$dtaInf$content, "")
     expect_equal(chkRes$pvwDta$asDF, data.frame(fstCol = NA, row.names = "1"))
@@ -119,6 +124,6 @@ testthat::test_that("jtmergecols works", {
 
     # ensure that an error is thrown if fleInp contains an invalid file format
     expect_error(jTransform::jtMergeCols(data = dtaInp, varAll = names(dtaInp), fleInp = "../example4jtMergeCols_2.not", typMrg = "right"),
-      regexp = "'\\.\\./example4jtMergeCols_2\\.not' doesn't exists or has an unsupported file type\\.")
+      regexp = "'\\.\\./example4jtMergeCols_2\\.not' doesn't exist or has an unsupported file type\\.")
 
 })

@@ -154,7 +154,7 @@ jtTransformVarsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6C
                 name="genInf",
                 visible="(shwHlp)",
                 clearWith=list(),
-                content="Please assign at least one variable to at least one of the variable boxes indicating what (approximate) degree (moderate, strong, extreme and kind (postive or negative) of skewness this variable has. For moderately skewed variables, a square-root-transformation is used, for strongly skewed variables, a logarithic transformation, and for severly skewed variables an inversion. If necessary, a constant is added (automatically) in order to avoid the transformation returning NA-values.</p> <p>NB: The transformations work only for numeric variables (integer or decimal); please adjust the measure / data type if necessary.\n"))
+                content="Please assign at least one variable to at least one of the variable boxes indicating what (approximate) degree (moderate, strong, extreme and kind (positive or negative) of skewness this variable has. For moderately skewed variables, a square-root-transformation is used, for strongly skewed variables, a logarithmic transformation, and for severely skewed variables an inversion. If necessary, a constant is added (automatically) in order to avoid the transformation returning NA-values.</p> <p>NB: The transformations work only for numeric variables (integer or decimal); please adjust the measure / data type if necessary.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="dtaInf",
