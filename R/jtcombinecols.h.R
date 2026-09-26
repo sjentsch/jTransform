@@ -96,7 +96,7 @@ jtCombineColsResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Cla
                 name="genInf",
                 visible="(shwHlp)",
                 clearWith=list(),
-                content="Please assign the pairs of variables to be combined to \"Variable Pairs to Combine\". The two variables in a pair are combined into the first variable whereas the second variable is removed from the data set. \"Mode of Combining\" determines what the function does if the values in the variable pair are not in accordance (i.e., if they are unequal). \"\" throws an error and stops, \"First Variable takes Precedence\" means that the values from the first variable of each pair are taken if the values do not match up, when \"Second Variable takes Precedence\" is set, the values of the second variable are taken in such cases.\n"))
+                content="Please assign the pairs of variables to be combined to \"Variable Pairs to Combine\". The two variables in a pair are combined into the first variable whereas the second variable is removed from the data set. \"Mode of Combining\" determines what the function does if the values in the variable pair are not in accordance (i.e., if they are unequal). \"Do Not Combine\" throws an error and stops, \"First Variable takes Precedence\" means that the values from the first variable of each pair are taken if the values do not match up, when \"Second Variable takes Precedence\" is set, the values of the second variable are taken in such cases.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="dtaInf",

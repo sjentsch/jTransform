@@ -86,7 +86,7 @@ jtTransposeResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                 name="genInf",
                 visible="(shwHlp)",
                 clearWith=list(),
-                content="Please assign up to one variable to the variable box \"Column Names for the Output\" (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\"V_...\"). The variables to become rows in your output data set have to be assigned to \"Variables To Be Transposed\".\n"))
+                content="Please assign up to one variable to the variable box \"Variable Names for the Output\" (this variable might contain names of trials or questionnaire items). If you leave the box empty, generic variable names are generated (\"V_...\"). The variables to become rows in your output data set have to be assigned to \"Variables To Be Transposed\".\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="dtaInf",

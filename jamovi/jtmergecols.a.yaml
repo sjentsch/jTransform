@@ -49,11 +49,6 @@ options:
     title: "Data Set(s) to Add:"
     default: ""
 
-  - name: tglChs
-    type: Bool
-    hidden: true
-    default: false
-
   - name: fleChs
     type: String
     hidden: true

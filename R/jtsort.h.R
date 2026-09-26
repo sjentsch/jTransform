@@ -108,7 +108,7 @@ jtSortResults <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
                 name="genInf",
                 visible="(shwHlp)",
                 clearWith=list(),
-                content="Please assign one or more variables to the variable box \"Variable(s) to be Sorted After\". The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age). Variables are sorted in \"Ascending\" order (as default), but you can change the order if desired.\n"))
+                content="Please assign one or more variables to the variable box \"Variable(s) to Sort After\". The order in which the variables appear in the variable box determines after which variable is sorted first (one could, e.g., first sort after gender and afterwards after age). Variables are sorted in \"Ascending\" order (as default), but you can change the order if desired.\n"))
             self$add(jmvcore::Html$new(
                 options=options,
                 name="dtaInf",
