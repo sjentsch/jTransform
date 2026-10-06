@@ -8,7 +8,7 @@ authors:
   - Maurizio Agosti
   - Marcello Gallucci
 maintainer: Sebastian Jentschke <sebastian.jentschke@uib.no>
-date: '2026-09-27'
+date: '2026-10-06'
 type: R
 description: >-
   The jamovi module jTransform carries out common data management tasks and
@@ -164,6 +164,6 @@ datasets:
     path: example4jtWide2Long.omv
     description: A Data Set to Demonstrate Wide To Long
 usesNative: true
-minApp: 28.3.0
+minApp: 28.4.0
 
 ...
