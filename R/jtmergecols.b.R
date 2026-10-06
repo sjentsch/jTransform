@@ -20,10 +20,10 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkFle = function(crrFle = "") {
-            if (file.exists(crrFle) && jmvReadWrite:::hasExt(crrFle, jmvReadWrite:::vldExt)) {
+            if (jmvReadWrite:::hasExt(crrFle, jmvReadWrite:::vldExt)) {
                 TRUE
             } else {
-                jmvcore::reject(.("'{file}' doesn't exist or has an unsupported file type."), file = crrFle)
+                jmvcore::reject(.("'{file}' has an unsupported file type."), file = crrFle)
             }
         },
 

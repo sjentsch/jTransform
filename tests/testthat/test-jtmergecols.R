@@ -128,6 +128,6 @@ testthat::test_that("jtmergecols works", {
     file.create("../example4jtMergeCols_2.not")
     expect_error(jTransform::jtMergeCols(data = dtaInp, varAll = names(dtaInp), fleInp = list("../example4jtMergeCols_2.not"),
                                          typMrg = "right"),
-      regexp = "'\\.\\./example4jtMergeCols_2\\.not' doesn't exist or has an unsupported file type\\.")
+      regexp = "'\\.\\./example4jtMergeCols_2\\.not' has an unsupported file type\\.")
     unlink("../example4jtMergeCols_2.not")
 })
