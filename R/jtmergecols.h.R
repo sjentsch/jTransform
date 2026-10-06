@@ -8,10 +8,8 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
         initialize = function(
             varBy = NULL,
             varAll = NULL,
-            fleInp = "",
-            tglChs = FALSE,
-            fleChs = "",
             typMrg = "outer",
+            fleInp = NULL,
             shwHlp = FALSE,
             btnCrt = FALSE, ...) {
 
@@ -40,20 +38,6 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "factor",
                     "numeric"),
                 default=NULL)
-            private$..fleInp <- jmvcore::OptionString$new(
-                "fleInp",
-                fleInp,
-                default="")
-            private$..tglChs <- jmvcore::OptionBool$new(
-                "tglChs",
-                tglChs,
-                hidden=TRUE,
-                default=FALSE)
-            private$..fleChs <- jmvcore::OptionString$new(
-                "fleChs",
-                fleChs,
-                hidden=TRUE,
-                default="")
             private$..typMrg <- jmvcore::OptionList$new(
                 "typMrg",
                 typMrg,
@@ -63,6 +47,27 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
                     "left",
                     "right"),
                 default="outer")
+            private$..fleInp <- jmvcore::OptionFile$new(
+                "fleInp",
+                fleInp,
+                multiple=TRUE,
+                extensions=list(
+                    "omv",
+                    "omt",
+                    "csv",
+                    "tsv",
+                    "rdata",
+                    "rda",
+                    "rds",
+                    "sav",
+                    "zsav",
+                    "dta",
+                    "sas7bdat",
+                    "sd2",
+                    "sd7",
+                    "xpt",
+                    "stx",
+                    "stc"))
             private$..shwHlp <- jmvcore::OptionBool$new(
                 "shwHlp",
                 shwHlp,
@@ -74,29 +79,23 @@ jtMergeColsOptions <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class
 
             self$.addOption(private$..varBy)
             self$.addOption(private$..varAll)
-            self$.addOption(private$..fleInp)
-            self$.addOption(private$..tglChs)
-            self$.addOption(private$..fleChs)
             self$.addOption(private$..typMrg)
+            self$.addOption(private$..fleInp)
             self$.addOption(private$..shwHlp)
             self$.addOption(private$..btnCrt)
         }),
     active = list(
         varBy = function() private$..varBy$value,
         varAll = function() private$..varAll$value,
-        fleInp = function() private$..fleInp$value,
-        tglChs = function() private$..tglChs$value,
-        fleChs = function() private$..fleChs$value,
         typMrg = function() private$..typMrg$value,
+        fleInp = function() private$..fleInp$value,
         shwHlp = function() private$..shwHlp$value,
         btnCrt = function() private$..btnCrt$value),
     private = list(
         ..varBy = NA,
         ..varAll = NA,
-        ..fleInp = NA,
-        ..tglChs = NA,
-        ..fleChs = NA,
         ..typMrg = NA,
+        ..fleInp = NA,
         ..shwHlp = NA,
         ..btnCrt = NA)
 )
@@ -196,10 +195,9 @@ jtMergeColsBase <- if (requireNamespace("jmvcore", quietly=TRUE)) R6::R6Class(
 #' @param data the data as a data frame
 #' @param varBy .
 #' @param varAll .
-#' @param fleInp .
-#' @param tglChs .
-#' @param fleChs .
 #' @param typMrg .
+#' @param fleInp Select a file / several files to merge with the currently
+#'   opened dataset
 #' @param shwHlp .
 #' @param btnCrt .
 #' @return A results object containing:
@@ -222,10 +220,8 @@ jtMergeCols <- function(
     data,
     varBy = NULL,
     varAll = NULL,
-    fleInp = "",
-    tglChs = FALSE,
-    fleChs = "",
     typMrg = "outer",
+    fleInp = NULL,
     shwHlp = FALSE,
     btnCrt = FALSE) {
 
@@ -244,10 +240,8 @@ jtMergeCols <- function(
     options <- jtMergeColsOptions$new(
         varBy = varBy,
         varAll = varAll,
-        fleInp = fleInp,
-        tglChs = tglChs,
-        fleChs = fleChs,
         typMrg = typMrg,
+        fleInp = fleInp,
         shwHlp = shwHlp,
         btnCrt = btnCrt)
 

@@ -20,20 +20,20 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
         .chkDtF = incFnc$private_methods$.chkDtF,
 
         .chkFle = function(crrFle = "") {
-            if (!file.exists(crrFle) || !jmvReadWrite:::hasExt(crrFle, jmvReadWrite:::vldExt)) {
+            if (file.exists(crrFle) && jmvReadWrite:::hasExt(crrFle, jmvReadWrite:::vldExt)) {
+                TRUE
+            } else {
                 jmvcore::reject(.("'{file}' doesn't exist or has an unsupported file type."), file = crrFle)
             }
-
-            jmvReadWrite:::nrmFle(crrFle)
         },
 
         .chkVar = function() {
-            if (!is.null(self$options$fleInp) && !is.null(private$.fleInp) &&
-                all(vapply(private$.fleInp, grepl, logical(1), self$options$fleInp, fixed = TRUE))) {
-                length(self$options$varBy) > 0
-            } else if (!is.null(self$options$fleInp) && nzchar(self$options$fleInp)) {
-                private$.fleInp <- vapply(trimws(strsplit(self$options$fleInp, ";")[[1]]), private$.chkFle, character(1), USE.NAMES = FALSE)
-                length(self$options$varBy) > 0
+            if (length(self$options$fleInp) > 0) {
+                tmpFlI <- vapply(self$options$fleInp, "[[", character(1), "path")
+                if (is.null(private$.fleInp) || !identical(private$.fleInp, tmpFlI)) {
+                    private$.fleInp <- tmpFlI
+                }
+                all(vapply(private$.fleInp, private$.chkFle, logical(1))) && length(self$options$varBy) > 0
             } else {
                 private$.fleInp <- NULL
                 FALSE
@@ -97,7 +97,9 @@ jtMergeColsClass <- if (requireNamespace("jmvcore", quietly = TRUE)) R6::R6Class
 
         asSource = function() {
             if (private$.chkVar()) {
-                paste0("attr(data, \"fleInp\") <- c(\n    \"", paste0(private$.fleInp, collapse = "\",\n    \""), "\")\n",
+                paste0("# the syntax below assumes that the files you want to merge are in the working directory",
+                       "# if this is not the case, you have to add a path",
+                       "attr(data, \"fleInp\") <- c(\n    \"", paste0(private$.fleInp, collapse = "\",\n    \""), "\")\n",
                        fmtSrc(private$.crrCmd, private$.crrArg(FALSE)))
             }
         }

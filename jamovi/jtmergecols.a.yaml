@@ -44,16 +44,6 @@ options:
     - numeric
     default:
 
-  - name: fleInp
-    type: String
-    title: "Data Set(s) to Add:"
-    default: ""
-
-  - name: fleChs
-    type: String
-    hidden: true
-    default: ""
-
   - name: typMrg
     title: Type of Merging Operation
     type: List
@@ -67,6 +57,13 @@ options:
     - title: Keeps All Cases From the Data Sets To Be Added
       name:  right
     default: outer
+
+  - name: fleInp
+    type: File
+    title: ""
+    multiple: true
+    extensions:	[omv, omt, csv, tsv, rdata, rda, rds, sav, zsav, dta, sas7bdat, sd2, sd7, xpt, stx, stc]
+    description: Select a file / several files to merge with the currently opened dataset
 
   - name: shwHlp
     type: Bool

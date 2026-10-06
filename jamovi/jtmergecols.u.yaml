@@ -4,9 +4,9 @@ jus: '3.0'
 stage: 0
 compilerMode: tame
 events:
-   loaded: './jtmergecols::view_loaded'
-   update: './varAll::update'
-   remoteDataChanged: './varAll::dataChanged'
+  loaded: './varAll::view_loaded'
+  update: './varAll::update'
+  remoteDataChanged: './varAll::dataChanged'
 
 children:
   - type: VariableSupplier
@@ -25,27 +25,34 @@ children:
             isTarget: true
 
   - type: LayoutBox
-    style: inline
-    stretchFactor: 1
-    margin: large
-    children:
-      - type: TextBox
-        name: fleInp
-        format: string
-        stretchFactor: 6
-        margin: large
-      - type: CustomControl
-        name: fleChs
-        stretchFactor: 1
-        horizontalAlignment: right
-        verticalAlignment: center
-
-  - type: LayoutBox
     margin: large
     children:
       - type: ComboBox
         name: typMrg
         stretchFactor: 1
+
+  - type: LayoutBox
+    style: inline
+    stretchFactor: 1
+    margin: large
+    children:
+      - type: LayoutBox
+        style: list
+        stretchFactor: 1
+        margin: none
+        horizontalAlignment: left
+        children:
+          - type: Label
+            label: "Select Files to be Merged With the Current Dataset:"
+      - type: LayoutBox
+        style: list
+        stretchFactor: 1
+        margin: none
+        horizontalAlignment: right
+        children:
+          - type: File
+            name: fleInp
+            horizontalAlignment: right
 
   - type: LayoutBox
     style: inline
